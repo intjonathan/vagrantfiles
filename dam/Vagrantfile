@@ -1,0 +1,22 @@
+Vagrant.configure("2") do |config|
+  # All Vagrant configuration is done here. The most common configuration
+  # options are documented and commented below. For a complete reference,
+  # please see the online documentation at vagrantup.com.
+  
+  config.hostmanager.enabled = true
+  config.hostmanager.ignore_private_ip = false
+  
+ #DAM machine
+ config.vm.define "dam".to_sym do |dam_config|
+  dam_config.vm.box = "ubuntu-12.10-server-amd64-dammaster"
+	dam_config.vm.hostname = "dam"
+	dam_config.hostmanager.enabled = true
+	dam_config.vm.network :private_network, ip: "10.0.1.80"
+	#set some machine-specific options	
+	dam_config.vm.provider "virtualbox" do |v|
+       #change the amount of RAM 
+        v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+    dam_config.vm.synced_folder "modules", "/etc/dam/modules", :nfs => true
+  end
+end

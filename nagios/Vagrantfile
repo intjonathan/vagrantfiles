@@ -1,0 +1,49 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant::Config.run do |config|
+  # All Vagrant configuration is done here. The most common configuration
+  # options are documented and commented below. For a complete reference,
+  # please see the online documentation at vagrantup.com.
+
+  # Every Vagrant virtual environment requires a box to build off of.
+  config.vm.box = "centos-6.3-amd64-minial"
+
+
+  #Nagios server
+  config.vm.define :nagiosserver do |nagiosserver_config|
+	nagiosserver_config.vm.box = "centos-6.3-amd64-minial"
+	nagiosserver_config.vm.host_name = "nagiosserver"
+	nagiosserver_config.vm.network :hostonly, "10.0.1.80"
+	nagiosserver_config.vm.customize ["modifyvm", :id, "--memory", 1024]
+	nagiosserver_config.vm.share_folder "nagiosserver-packages", "/packages", "packages", :nfs=> true
+	nagiosserver_config.vm.host_name = "nagiosserver"
+  end	
+  
+    #nagios node 1
+  config.vm.define :nagios1 do |nagios1_config|
+	nagios1_config.vm.box = "centos-6.3-amd64-minial"
+	nagios1_config.vm.host_name = "client1"
+	nagios1_config.vm.network :hostonly, "10.0.1.81"
+	nagios1_config.vm.customize ["modifyvm", :id, "--memory", 512]
+	nagios1_config.vm.host_name = "nagios1"
+  end	
+  
+    #nagios node 2
+  config.vm.define :nagios2 do |nagios2_config|
+	nagios2_config.vm.box = "centos-6.3-amd64-minial"
+	nagios2_config.vm.host_name = "client2"
+	nagios2_config.vm.network :hostonly, "10.0.1.82"
+	nagios2_config.vm.customize ["modifyvm", :id, "--memory", 512]
+	nagios2_config.vm.host_name = "nagios2"
+  end	
+  
+    #nagios node 3
+  config.vm.define :nagios3 do |nagios3_config|
+	nagios3_config.vm.box = "centos-6.3-amd64-minial"
+	nagios3_config.vm.host_name = "client3"
+	nagios3_config.vm.network :hostonly, "10.0.1.83"
+	nagios3_config.vm.customize ["modifyvm", :id, "--memory", 512]
+	nagios3_config.vm.host_name = "nagios3"
+  end	
+end

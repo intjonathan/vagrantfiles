@@ -1,0 +1,89 @@
+Vagrant.configure("2") do |config|
+  # All Vagrant configuration is done here. The most common configuration
+  # options are documented and commented below. For a complete reference,
+  # please see the online documentation at vagrantup.com.
+  
+  ####################
+  # Snippets to use
+  ####################
+  
+  #NFS folder sharing
+  #onfig.vm.synced_folder "modules", "/etc/puppet/modules", :nfs => true
+  
+  ####################
+  ####################
+  config.vm.box = "centos-6.4-amd64"
+  config.hostmanager.enabled = true
+  config.hostmanager.ignore_private_ip = false
+  
+ #puppet
+ config.vm.define "puppet".to_sym do |puppet_config|
+  puppet_config.vm.box = "centos-6.4-amd64"
+	puppet_config.vm.hostname = "puppet"
+	puppet_config.hostmanager.enabled = true
+	puppet_config.vm.network :private_network, ip: "10.0.1.60"
+	#set some machine-specific options	
+	puppet_config.vm.provider "virtualbox" do |v|
+       #change the amount of RAM 
+        v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+    #puppet_config.vm.synced_folder "modules", "/etc/puppet/modules", :nfs => true
+    #puppet_config.vm.provision :shell, :inline => $puppet_agent_script
+  end
+end
+
+$puppet_agent_script = <<SCRIPT
+#! /bin/bash
+echo Checking to see if Puppet Labs Ubuntu repo needs to be added...
+if [ ! -f /home/vagrant/ ];
+then    
+    echo Adding repo...
+    sudo sudo rpm -ivh http://yum.puppetlabs.com/el/6/products/i386/puppetlabs-release-6-7.noarch.rpm
+    sudo dpkg -i puppetlabs-release-quantal.deb
+    echo Updating package lists with new repo...
+    sudo apt-get update
+    echo Installing Puppet...
+    sudo apt-get -y install puppet
+fi
+
+if [ ! -f /home/vagrant/puppet.conf ];
+then
+
+echo Creating a puppet.conf file now...
+
+cat <<EOF > /home/vagrant/puppet.conf
+[main]
+logdir=/var/log/puppet
+vardir=/var/lib/puppet
+ssldir=/var/lib/puppet/ssl
+rundir=/var/run/puppet
+factpath=$vardir/lib/facter
+templatedir=$confdir/templates
+server=puppet
+reports=false
+pluginsync=true
+
+[master]
+# These are needed when the puppetmaster is run by passenger
+# and can safely be removed if webrick is used.
+ssl_client_header = SSL_CLIENT_S_DN 
+ssl_client_verify_header = SSL_CLIENT_VERIFY
+EOF
+
+echo Putting puppet.conf into place at /etc/puppet/puppet.conf
+
+sudo cp /home/vagrant/puppet.conf /etc/puppet/puppet.conf
+fi
+
+echo DONE!
+SCRIPT
+
+$puppet_master_script = <<SCRIPT
+echo I am provisioning...
+date > /etc/vagrant_provisioned_at
+date > /etc/vagrant_provisioned_at2
+wget -N http://apt.puppetlabs.com/puppetlabs-release-quantal.deb
+sudo dpkg -i puppetlabs-release-quantal.deb
+sudo apt-get update
+sudo apt-get -y install puppet
+SCRIPT
