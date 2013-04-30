@@ -9,3 +9,6 @@
 
 #Track .gitignore so others who pull down the repo won't have to create it manually.
 !.gitignore
+
+#Track the README
+!README.md
