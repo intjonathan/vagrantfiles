@@ -55,7 +55,7 @@ echo Checking to see if the Puppet agent package needs to be installed...
 if [ ! -f /home/vagrant/puppet_installed.txt ];
 then
 	echo Installing the Puppet agent...
-	sudo yum install puppet
+	sudo yum install puppet -y
 	echo DONE installing the Puppet agent!
 	
 	#Touch the puppet_installed.txt file to skip this block the next time around
