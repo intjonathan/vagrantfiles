@@ -28,11 +28,11 @@ Vagrant.configure("2") do |config|
         v.customize ["modifyvm", :id, "--memory", "1024"]
     end
     #puppet_config.vm.synced_folder "modules", "/etc/puppet/modules", :nfs => true
-    puppet_config.vm.provision :shell, :inline => $test_script
+    puppet_config.vm.provision :shell, :inline => $rhel_centos_puppet_agent_script
   end
 end
 
-$test_script = <<SCRIPT
+$rhel_centos_puppet_agent_script = <<SCRIPT
 #! /bin/bash
 echo Checking to see if the Puppet Labs RHEL/CentOS repo needs to be added...
 
@@ -55,7 +55,7 @@ echo Checking to see if the Puppet agent package needs to be installed...
 if [ ! -f /home/vagrant/puppet_installed.txt ];
 then
 	echo Installing the Puppet agent...
-	sudo yum install puppet -y
+	sudo yum install puppet
 	echo DONE installing the Puppet agent!
 	
 	#Touch the puppet_installed.txt file to skip this block the next time around
