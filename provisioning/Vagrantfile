@@ -28,54 +28,56 @@ Vagrant.configure("2") do |config|
         v.customize ["modifyvm", :id, "--memory", "1024"]
     end
     #puppet_config.vm.synced_folder "modules", "/etc/puppet/modules", :nfs => true
-    #puppet_config.vm.provision :shell, :inline => $puppet_agent_script
+    puppet_config.vm.provision :shell, :inline => $test_script
   end
 end
+
+$test_script = <<SCRIPT
+#! /bin/bash
+echo Checking to see if the Puppet Labs RHEL/CentOS repo needs to be added...
+
+if [ ! -f /home/vagrant/repos_added.txt ];
+then    
+    echo Adding repo...
+	sudo rpm -ivh http://yum.puppetlabs.com/el/6/products/i386/puppetlabs-release-6-7.noarch.rpm
+	echo DONE adding repo!
+    echo Updating package lists with new repo...
+	sudo yum check-update
+	#Touch the repos_added file to skip this block the next time around
+	touch /home/vagrant/repos_added.txt
+
+else
+	echo Skipping repo addition...
+fi
+
+echo Checking to see if the Puppet agent package needs to be installed...
+
+if [ ! -f /home/vagrant/puppet_installed.txt ];
+then
+	echo Installing the Puppet agent...
+	sudo yum install puppet -y
+	echo DONE installing the Puppet agent!
+	
+	#Touch the puppet_installed.txt file to skip this block the next time around
+	touch /home/vagrant/puppet_installed.txt
+else
+	echo Skipping Puppet agent package installation...
+fi
+SCRIPT
 
 $puppet_agent_script = <<SCRIPT
 #! /bin/bash
 echo Checking to see if Puppet Labs Ubuntu repo needs to be added...
-if [ ! -f /home/vagrant/ ];
+if [ ! -f /home/vagrant/repos_added.txt ];
 then    
     echo Adding repo...
-    sudo sudo rpm -ivh http://yum.puppetlabs.com/el/6/products/i386/puppetlabs-release-6-7.noarch.rpm
-    sudo dpkg -i puppetlabs-release-quantal.deb
+
     echo Updating package lists with new repo...
-    sudo apt-get update
+
     echo Installing Puppet...
-    sudo apt-get -y install puppet
+	touch /home/vagrant/repos_added.txt
 fi
 
-if [ ! -f /home/vagrant/puppet.conf ];
-then
-
-echo Creating a puppet.conf file now...
-
-cat <<EOF > /home/vagrant/puppet.conf
-[main]
-logdir=/var/log/puppet
-vardir=/var/lib/puppet
-ssldir=/var/lib/puppet/ssl
-rundir=/var/run/puppet
-factpath=$vardir/lib/facter
-templatedir=$confdir/templates
-server=puppet
-reports=false
-pluginsync=true
-
-[master]
-# These are needed when the puppetmaster is run by passenger
-# and can safely be removed if webrick is used.
-ssl_client_header = SSL_CLIENT_S_DN 
-ssl_client_verify_header = SSL_CLIENT_VERIFY
-EOF
-
-echo Putting puppet.conf into place at /etc/puppet/puppet.conf
-
-sudo cp /home/vagrant/puppet.conf /etc/puppet/puppet.conf
-fi
-
-echo DONE!
 SCRIPT
 
 $puppet_master_script = <<SCRIPT
