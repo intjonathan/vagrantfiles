@@ -79,6 +79,10 @@ cat <<EOF > /home/vagrant/puppet.conf
     # Where SSL certificates are kept.
     # The default value is '$confdir/ssl'.
     ssldir = $vardir/ssl
+    
+    server=puppet
+    reports=false
+    pluginsync=true
 
 [agent]
     # The file in which puppetd stores a list of the classes
