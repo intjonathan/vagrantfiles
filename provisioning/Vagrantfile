@@ -28,11 +28,11 @@ Vagrant.configure("2") do |config|
         v.customize ["modifyvm", :id, "--memory", "1024"]
     end
     #puppet_config.vm.synced_folder "modules", "/etc/puppet/modules", :nfs => true
-    puppet_config.vm.provision :shell, :inline => $rhel-centos_puppet_agent_script
+    puppet_config.vm.provision :shell, :inline => $rhel_centos_puppet_agent_script
   end
 end
 
-$rhel-centos_puppet_agent_script = <<SCRIPT
+$rhel_centos_puppet_agent_script = <<SCRIPT
 #! /bin/bash
 echo Checking to see if the Puppet Labs RHEL/CentOS repo needs to be added...
 
@@ -95,7 +95,7 @@ EOF
 
 SCRIPT
 
-$debian-ubuntu_puppet_agent_script = <<SCRIPT
+$debian_ubuntu_puppet_agent_script = <<SCRIPT
 #! /bin/bash
 echo Checking to see if Puppet Labs Ubuntu repo needs to be added...
 if [ ! -f /home/vagrant/repos_added.txt ];
