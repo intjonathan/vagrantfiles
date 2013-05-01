@@ -16,6 +16,22 @@ Vagrant.configure("2") do |config|
   config.hostmanager.enabled = true
   config.hostmanager.ignore_private_ip = false
   
+ #a puppet master
+ config.vm.define "master".to_sym do |master_config|
+  master_config.vm.box = "centos-6.4-amd64"
+	master_config.vm.hostname = "master"
+	master_config.hostmanager.enabled = true
+	#giving it 'puppet' as an alias so that the agents can connect to it with their default settings
+	master_config.hostmanager.aliases = w%(puppet master)
+	master_config.vm.network :private_network, ip: "10.0.1.60"
+	#set some machine-specific options	
+	master_config.vm.provider "virtualbox" do |v|
+       #change the amount of RAM 
+        v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+    #master_config.vm.synced_folder "modules", "/etc/puppet/modules", :nfs => true
+    master_config.vm.provision :shell, :inline => $rhel_centos_puppet_master_script
+  end  
  #a puppet agent
  config.vm.define "agent1".to_sym do |puppet_config|
   puppet_config.vm.box = "centos-6.4-amd64"
