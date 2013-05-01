@@ -35,17 +35,16 @@ The complete `.gitignore` file:
 <pre>
 #Start off by ignoring everything
 *
-
-#Don't ignore top-level subdirectories (`!` tells git to NOT ignore things that match the pattern after the `!`; we nee\
-d git to be able to look inside of them so it can....
+ 
+#Don't ignore top-level subdirectories (`!` tells git to NOT ignore things that match the pattern after the `!`); we need git to be able to look inside of them so it can....
 !*/
-
+ 
 #...track the Vagrantfiles inside.
 !*/Vagrantfile
 
-#Track .gitignore so others who pull down the repo won't have to create it manually.
-!.gitignore
+#Track only this repo's .gitignore so others who pull down the repo won't have to create it manually.
+!./.gitignore
 
-#Track the README
-!README.md
+#Track only this repo's README.md
+!./README.md
 </pre>
