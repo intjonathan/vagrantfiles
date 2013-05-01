@@ -1,5 +1,5 @@
 #vagrantfiles
-- - - 
+--- 
 
 A repository for tracking just the `Vagrantfile`s in Vagrant projects.
 
