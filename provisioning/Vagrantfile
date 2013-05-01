@@ -30,7 +30,7 @@ Vagrant.configure("2") do |config|
         v.customize ["modifyvm", :id, "--memory", "1024"]
     end
     #master_config.vm.synced_folder "modules", "/etc/puppet/modules", :nfs => true
-    master_config.vm.provision :shell, :inline => $rhel_centos_puppet_master_script
+    #master_config.vm.provision :shell, :inline => $rhel_centos_puppet_master_script
   end  
  #a puppet agent
  config.vm.define "agent1".to_sym do |puppet_config|
@@ -169,6 +169,28 @@ then
 
 else
 	echo Skipping repo addition...
+fi
+
+
+
+
+if [ ! -f /home/vagrant/puppet_installed.txt ];
+then
+	echo Installing the Puppet master...
+	sudo yum install puppet-server -y
+	echo DONE installing the Puppet master packages!
+	
+	sudo chkconfig --levels 2345 puppetmaster on
+	echo DONE adding the Puppet master daemon to start up on system boot!
+	
+	echo Starting the Puppet master daemon... 
+	sudo /etc/init.d/puppetmaster start
+	echo DONE starting the daemon!
+	
+	#Touch the puppet_installed.txt file to skip this block the next time around
+	touch /home/vagrant/puppet_installed.txt
+else
+	echo Skipping Puppet agent package installation...
 fi
 
 SCRIPT
