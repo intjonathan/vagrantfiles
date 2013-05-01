@@ -1,0 +1,53 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant::Config.run do |config|
+  # All Vagrant configuration is done here. The most common configuration
+  # options are documented and commented below. For a complete reference,
+  # please see the online documentation at vagrantup.com.
+
+  
+  #chef server
+  config.vm.define :chef do |chef_config|
+	chef_config.vm.box = "ubuntu-11.04-server-amd64"
+	chef_config.vm.host_name = "chef"
+	chef_config.vm.network :hostonly, "10.0.1.90"
+	chef_config.vm.customize ["modifyvm", :id, "--memory", 1024]
+	#chef_config.ssh.port = 22
+	chef_config.vm.share_folder "chef-packages", "/packages", "packages", :nfs=> true
+	chef_config.vm.host_name = "chef"
+  end	
+  
+    #chef server
+  config.vm.define :node1 do |node1_config|
+	node1_config.vm.box = "ubuntu-11.04-server-amd64"
+	node1_config.vm.host_name = "node1"
+	node1_config.vm.network :hostonly, "10.0.1.91"
+	node1_config.vm.customize ["modifyvm", :id, "--memory", 512]
+	#node1_config.ssh.port = 22
+	#node1_config.vm.share_folder "chef-packages", "/packages", "packages", :nfs=> true
+	node1_config.vm.host_name = "node1"
+  end	
+  
+    #chef node 2
+  config.vm.define :node2 do |node2_config|
+	node2_config.vm.box = "ubuntu-11.04-server-amd64"
+	node2_config.vm.host_name = "node2"
+	node2_config.vm.network :hostonly, "10.0.1.92"
+	node2_config.vm.customize ["modifyvm", :id, "--memory", 512]
+	#node2_config.ssh.port = 22
+	#node2_config.vm.share_folder "chef-packages", "/packages", "packages", :nfs=> true
+	node2_config.vm.host_name = "node2"
+  end	
+  
+    #chef server
+  config.vm.define :node3 do |node3_config|
+	node3_config.vm.box = "ubuntu-11.04-server-amd64"
+	node3_config.vm.host_name = "node3"
+	node3_config.vm.network :hostonly, "10.0.1.93"
+	node3_config.vm.customize ["modifyvm", :id, "--memory", 512]
+	#node3_config.ssh.port = 22
+	#node3_config.vm.share_folder "chef-packages", "/packages", "packages", :nfs=> true
+	node3_config.vm.host_name = "node3"
+  end	
+end

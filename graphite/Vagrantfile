@@ -1,0 +1,56 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant::Config.run do |config|
+  # All Vagrant configuration is done here. The most common configuration
+  # options are documented and commented below. For a complete reference,
+  # please see the online documentation at vagrantup.com.
+
+  # Every Vagrant virtual environment requires a box to build off of.
+  config.vm.box = "debian-6.0.7-amd64"
+
+
+  #Nagios server
+  config.vm.define :graphite do |graphite_config|
+  graphite_config.vm.box = "debian-6.0.7-amd64"
+  graphite_config.vm.host_name = "graphite"
+  graphite_config.vm.network :hostonly, "10.0.1.80"
+  graphite_config.vm.customize ["modifyvm", :id, "--memory", 1024]
+  #graphite_config.ssh.port = 22
+  graphite_config.vm.share_folder "graphite-packages", "/packages", "packages", :nfs=> true
+  graphite_config.vm.host_name = "graphite"
+  end			       
+  
+  #nagios node 1
+  config.vm.define :client1 do |client1_config|
+  client1_config.vm.box = "debian-6.0.7-amd64"
+  client1_config.vm.host_name = "client1"
+  client1_config.vm.network :hostonly, "10.0.1.81"
+  client1_config.vm.customize ["modifyvm", :id, "--memory", 512]
+  #client1_config.ssh.port = 22
+  #client1_config.vm.share_folder "graphite-packages", "/packages", "packages", :nfs=> true
+  client1_config.vm.host_name = "client1"
+  end			      
+  
+    #nagios node 2
+  config.vm.define :client2 do |client2_config|
+  client2_config.vm.box = "debian-6.0.7-amd64"
+  client2_config.vm.host_name = "client2"
+  client2_config.vm.network :hostonly, "10.0.1.82"
+  client2_config.vm.customize ["modifyvm", :id, "--memory", 512]
+  #client2_config.ssh.port = 22
+  #client2_config.vm.share_folder "graphite-packages", "/packages", "packages", :nfs=> true
+  client2_config.vm.host_name = "client2"
+  end			      
+  
+    #nagios node 3
+  config.vm.define :client3 do |client3_config|
+  client3_config.vm.box = "debian-6.0.7-amd64"
+  client3_config.vm.host_name = "client3"
+  client3_config.vm.network :hostonly, "10.0.1.83"
+  client3_config.vm.customize ["modifyvm", :id, "--memory", 512]
+  #client3_config.ssh.port = 22
+  #client3_config.vm.share_folder "graphite-packages", "/packages", "packages", :nfs=> true
+  client3_config.vm.host_name = "client3"
+  end			      
+end

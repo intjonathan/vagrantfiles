@@ -1,0 +1,21 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant::Config.run do |config|
+  # All Vagrant configuration is done here. The most common configuration
+  # options are documented and commented below. For a complete reference,
+  # please see the online documentation at vagrantup.com.
+
+  # Every Vagrant virtual environment requires a box to build off of.
+  config.vm.box = "ubuntu-12.10-server-64bit"
+
+
+  config.vm.define :rt do |rt_config|
+    rt_config.vm.box = "ubuntu-12.10-server-64bit"
+    rt_config.vm.host_name = "rt"
+    rt_config.vm.network :hostonly, "10.0.1.83"#:adapter=> 1
+    rt_config.vm.customize ["modifyvm", :id, "--memory", 1024]
+    rt_config.vm.host_name = "rt"
+  end  
+
+end

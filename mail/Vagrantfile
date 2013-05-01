@@ -1,0 +1,32 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant::Config.run do |config|
+  # All Vagrant configuration is done here. The most common configuration
+  # options are documented and commented below. For a complete reference,
+  # please see the online documentation at vagrantup.com.
+
+  #the base box we're using
+  box = "ubuntu-12.10-server-64bit"
+  
+    #mail server 1
+  config.vm.define :mailserver1 do |mailserver1_config|
+	mailserver1_config.vm.box = "ubuntu-12.10-server-64bit"
+	mailserver1_config.vm.host_name = "mailserver1"
+	mailserver1_config.vm.network :hostonly, "10.0.1.91"#:adapter=> 1
+	mailserver1_config.vm.customize ["modifyvm", :id, "--memory", 1024]
+	mailserver1_config.vm.host_name = "mailserver1"
+  end
+
+#mail server 1
+  config.vm.define :mailserver2 do |mailserver2_config|
+	mailserver2_config.vm.box = "ubuntu-12.10-server-64bit"
+	mailserver2_config.vm.host_name = "mailserver2"
+	mailserver2_config.vm.network :hostonly, "10.0.1.92"#:adapter=> 1
+	mailserver2_config.vm.customize ["modifyvm", :id, "--memory", 1024]
+	mailserver2_config.vm.host_name = "mailserver2"
+  end
+
+
+
+end
