@@ -122,7 +122,6 @@ sudo cat <<EOF > /etc/puppet/puppet.conf
     localconfig = $vardir/localconfig
 
 EOF
-
 SCRIPT
 
 $rhel_centos_puppet_agent_script = <<SCRIPT
@@ -203,9 +202,9 @@ sudo cat <<EOF > /etc/puppet/puppet.conf
 EOF
 
 #Restart the Puppet agent to pick up the changes
-echo restarting Puppet agent...
-sudo /etc/init.d/puppet restart
-echo DONE restarting the Puppet agent!
+#echo restarting Puppet agent...
+#sudo /etc/init.d/puppet restart
+#echo DONE restarting the Puppet agent!
 
 SCRIPT
 
