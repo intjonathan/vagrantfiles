@@ -68,9 +68,6 @@ else
 	echo Skipping repo addition...
 fi
 
-
-
-
 if [ ! -f /home/vagrant/puppet_master_installed.txt ];
 then
 	echo Installing the Puppet master...
