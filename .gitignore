@@ -1,3 +1,5 @@
+
+
 #Start off by ignoring everything
 *
  
@@ -7,8 +9,8 @@
 #...track the Vagrantfiles inside.
 !*/Vagrantfile
 
-#Track .gitignore so others who pull down the repo won't have to create it manually.
-!.gitignore
+#Track only this repo's .gitignore so others who pull down the repo won't have to create it manually.
+!./.gitignore
 
-#Track the README
-!README.md
+#Track only this repo's README
+!./README.md
