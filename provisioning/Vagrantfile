@@ -82,6 +82,10 @@ then
 	sudo /etc/init.d/puppetmaster start
 	echo DONE starting the daemon!
 	
+	echo Disabling IP tables...
+	sudo service iptables stop
+	echo DONE disabling iptables!
+	
 	#Touch the puppet_installed.txt file to skip this block the next time around
 	touch /home/vagrant/puppet_master_installed.txt
 else
@@ -146,16 +150,21 @@ then
 	echo Installing the Puppet agent...
 	sudo yum install puppet -y
 	echo DONE installing the Puppet agent!
-	
-	#Touch the puppet_installed.txt file to skip this block the next time around
-	touch /home/vagrant/puppet_agent_installed.txt
-	
+		
 	sudo chkconfig --levels 2345 puppet on
 	echo DONE adding the Puppet agent daemon to start up on system boot!
 	
 	echo Starting the Puppet master daemon... 
 	sudo /etc/init.d/puppet start
 	echo DONE starting the daemon!
+	
+	echo Disabling IP tables...
+	sudo service iptables stop
+	echo DONE disabling iptables!
+	
+	#Touch the puppet_installed.txt file to skip this block the next time around
+	touch /home/vagrant/puppet_agent_installed.txt
+	
 else
 	echo Skipping Puppet agent package installation...
 fi
