@@ -50,6 +50,48 @@ Vagrant.configure("2") do |config|
 
 end
 
+$rhel_centos_puppet_master_script = <<SCRIPT
+#! /bin/bash
+echo Checking to see if the Puppet Labs RHEL/CentOS repo needs to be added...
+
+if [ ! -f /home/vagrant/repos_added.txt ];
+then    
+    echo Adding repo...
+	sudo rpm -ivh http://yum.puppetlabs.com/el/6/products/x86_64/puppetlabs-release-6-7.noarch.rpm
+	echo DONE adding repo!
+    echo Updating package lists with new repo...
+	sudo yum check-update
+	#Touch the repos_added file to skip this block the next time around
+	touch /home/vagrant/repos_added.txt
+
+else
+	echo Skipping repo addition...
+fi
+
+
+
+
+if [ ! -f /home/vagrant/puppet_master_installed.txt ];
+then
+	echo Installing the Puppet master...
+	sudo yum install puppet-server -y
+	echo DONE installing the Puppet master packages!
+	
+	sudo chkconfig --levels 2345 puppetmaster on
+	echo DONE adding the Puppet master daemon to start up on system boot!
+	
+	echo Starting the Puppet master daemon... 
+	sudo /etc/init.d/puppetmaster start
+	echo DONE starting the daemon!
+	
+	#Touch the puppet_installed.txt file to skip this block the next time around
+	touch /home/vagrant/puppet_master_installed.txt
+else
+	echo Skipping Puppet agent package installation...
+fi
+
+SCRIPT
+
 $rhel_centos_puppet_agent_script = <<SCRIPT
 #! /bin/bash
 echo Checking to see if the Puppet Labs RHEL/CentOS repo needs to be added...
@@ -70,14 +112,14 @@ fi
 
 echo Checking to see if the Puppet agent package needs to be installed...
 
-if [ ! -f /home/vagrant/puppet_installed.txt ];
+if [ ! -f /home/vagrant/puppet_agent_installed.txt ];
 then
 	echo Installing the Puppet agent...
 	sudo yum install puppet -y
 	echo DONE installing the Puppet agent!
 	
 	#Touch the puppet_installed.txt file to skip this block the next time around
-	touch /home/vagrant/puppet_installed.txt
+	touch /home/vagrant/puppet_agent_installed.txt
 else
 	echo Skipping Puppet agent package installation...
 fi
@@ -119,6 +161,16 @@ EOF
 
 SCRIPT
 
+$debian_ubuntu_puppet_master_script = <<SCRIPT
+echo I am provisioning...
+date > /etc/vagrant_provisioned_at
+date > /etc/vagrant_provisioned_at2
+wget -N http://apt.puppetlabs.com/puppetlabs-release-quantal.deb
+sudo dpkg -i puppetlabs-release-quantal.deb
+sudo apt-get update
+sudo apt-get -y install puppet
+SCRIPT
+
 $debian_ubuntu_puppet_agent_script = <<SCRIPT
 #! /bin/bash
 echo Checking to see if Puppet Labs Ubuntu repo needs to be added...
@@ -151,57 +203,4 @@ ssl_client_header = SSL_CLIENT_S_DN
 ssl_client_verify_header = SSL_CLIENT_VERIFY
 EOF
 
-SCRIPT
-
-$rhel_centos_puppet_master_script = <<SCRIPT
-#! /bin/bash
-echo Checking to see if the Puppet Labs RHEL/CentOS repo needs to be added...
-
-if [ ! -f /home/vagrant/repos_added.txt ];
-then    
-    echo Adding repo...
-	sudo rpm -ivh http://yum.puppetlabs.com/el/6/products/x86_64/puppetlabs-release-6-7.noarch.rpm
-	echo DONE adding repo!
-    echo Updating package lists with new repo...
-	sudo yum check-update
-	#Touch the repos_added file to skip this block the next time around
-	touch /home/vagrant/repos_added.txt
-
-else
-	echo Skipping repo addition...
-fi
-
-
-
-
-if [ ! -f /home/vagrant/puppet_installed.txt ];
-then
-	echo Installing the Puppet master...
-	sudo yum install puppet-server -y
-	echo DONE installing the Puppet master packages!
-	
-	sudo chkconfig --levels 2345 puppetmaster on
-	echo DONE adding the Puppet master daemon to start up on system boot!
-	
-	echo Starting the Puppet master daemon... 
-	sudo /etc/init.d/puppetmaster start
-	echo DONE starting the daemon!
-	
-	#Touch the puppet_installed.txt file to skip this block the next time around
-	touch /home/vagrant/puppet_installed.txt
-else
-	echo Skipping Puppet agent package installation...
-fi
-
-SCRIPT
-
-
-$debian_ubuntu_puppet_master_script = <<SCRIPT
-echo I am provisioning...
-date > /etc/vagrant_provisioned_at
-date > /etc/vagrant_provisioned_at2
-wget -N http://apt.puppetlabs.com/puppetlabs-release-quantal.deb
-sudo dpkg -i puppetlabs-release-quantal.deb
-sudo apt-get update
-sudo apt-get -y install puppet
 SCRIPT
