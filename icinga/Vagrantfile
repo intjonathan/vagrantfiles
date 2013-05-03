@@ -1,59 +1,72 @@
-# -*- mode: ruby -*-
-# vi: set ft=ruby :
-
-Vagrant::Config.run do |config|
+Vagrant.configure("2") do |config|
   # All Vagrant configuration is done here. The most common configuration
   # options are documented and commented below. For a complete reference,
   # please see the online documentation at vagrantup.com.
-
-  # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "centos-6.4-amd64-minimal"
   
-  #Icinga server
-  config.vm.define :icingaserver do |nagiosserver_config|
-	nagiosserver_config.vm.box = "centos-6.4-amd64-minimal"
-	nagiosserver_config.vm.host_name = "icingaserver"
-	nagiosserver_config.vm.network :hostonly, "10.0.1.80"
-	nagiosserver_config.vm.customize ["modifyvm", :id, "--memory", 1024]
-	nagiosserver_config.vm.host_name = "icingaserver"
-  end	
+  ####################
+  # Snippets to use
+  ####################
   
-  #icinga node 1
-  config.vm.define :client1 do |client1_config|
-	client1_config.vm.box = "centos-6.4-amd64-minimal"
-	client1_config.vm.host_name = "client1"
-	client1_config.vm.network :hostonly, "10.0.1.81"
-	client1_config.vm.customize ["modifyvm", :id, "--memory", 512]
-	client1_config.vm.host_name = "client1"
-  end	
+  #NFS folder sharing
+  #onfig.vm.synced_folder "modules", "/etc/puppet/modules", :nfs => true
   
-  #icinga node 2
-  config.vm.define :client2 do |client2_config|
-	client2_config.vm.box = "centos-6.4-amd64-minimal"
-	client2_config.vm.host_name = "client2"
-	client2_config.vm.network :hostonly, "10.0.1.82"
-	client2_config.vm.customize ["modifyvm", :id, "--memory", 512]
-	client2_config.vm.host_name = "client2"
-  end	
+  ####################
+  ####################
+  config.vm.box = "centos-6.4-amd64"
+  config.hostmanager.enabled = true
+  config.hostmanager.ignore_private_ip = false
   
-  #icinga node 3
-  #config.vm.define :nagios3 do |nagios3_config|
-	#nagios3_config.vm.box = "centos-6.4-amd64-minimal"
-	#nagios3_config.vm.host_name = "client3"
-	#nagios3_config.vm.network :hostonly, "10.0.1.83"
-	#nagios3_config.vm.customize ["modifyvm", :id, "--memory", 512]
-	#nagios3_config.vm.host_name = "client3"
-  #end	
+ #Icinga server
+config.vm.define "icinga".to_sym do |icinga_config|
+	icinga_config.vm.box = "centos-6.4-amd64"
+	icinga_config.vm.hostname = "icinga"
+	icinga_config.hostmanager.enabled = true
+	#giving it 'puppet' as an alias so that the agents can connect to it with their default settings
+	icinga_config.hostmanager.aliases = %w(icinga)
+	icinga_config.vm.network :private_network, ip: "10.0.1.80"
+	#set some machine-specific options	
+	icinga_config.vm.provider "virtualbox" do |v|
+       #change the amount of RAM 
+        v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+end
 
-  #icinga mail server
-  config.vm.define :mail do |mail_config|
-	mail_config.vm.box = "centos-6.4-amd64-minimal"
-	mail_config.vm.host_name = "mail"
-	mail_config.vm.network :hostonly, "10.0.1.84"
-	mail_config.vm.customize ["modifyvm", :id, "--memory", 512]
-	mail_config.vm.host_name = "mail"
-  end	
+#an icinga client
+config.vm.define "client1".to_sym do |client1_config|
+	client1_config.vm.box = "centos-6.4-amd64"
+	client1_config.vm.hostname = "client1"
+	client1_config.hostmanager.enabled = true
+	client1_config.vm.network :private_network, ip: "10.0.1.81"
+	#set some machine-specific options	
+	client1_config.vm.provider "virtualbox" do |v|
+       #change the amount of RAM 
+        v.customize ["modifyvm", :id, "--memory", "512"]
+	end
+end
 
-
-
+ #an icinga client
+config.vm.define "client2".to_sym do |client2_config|
+	client2_config.vm.box = "centos-6.4-amd64"
+	client2_config.vm.hostname = "client2"
+	client2_config.hostmanager.enabled = true
+	client2_config.vm.network :private_network, ip: "10.0.1.82"
+	#set some machine-specific options	
+	client2_config.vm.provider "virtualbox" do |v|
+    	#change the amount of RAM 
+    	v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+end
+  
+#a mail server for Icinga to send notifications to
+config.vm.define "mail".to_sym do |mail_config|
+	mail_config.vm.box = "centos-6.4-amd64"
+	mail_config.vm.hostname = "mail"
+	mail_config.hostmanager.enabled = true
+	mail_config.vm.network :private_network, ip: "10.0.1.84"
+	#set some machine-specific options	
+	mail_config.vm.provider "virtualbox" do |v|
+       #change the amount of RAM 
+        v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+  end
 end
