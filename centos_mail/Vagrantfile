@@ -29,4 +29,20 @@ config.vm.define "mail".to_sym do |mail_config|
         v.customize ["modifyvm", :id, "--memory", "1024"]
     end
   end
+  
+  
+#a mail server for Icinga to send notifications to
+config.vm.define "mail2".to_sym do |mail_config|
+	mail_config.vm.box = "centos-6.4-amd64"
+	mail_config.vm.hostname = "mail2.local"
+	mail_config.hostmanager.enabled = true
+	mail_config.vm.network :private_network, ip: "10.0.1.15"
+	#set some machine-specific options	
+	mail_config.vm.provider "virtualbox" do |v|
+       #change the amount of RAM 
+        v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+  end
+  
+  
 end
