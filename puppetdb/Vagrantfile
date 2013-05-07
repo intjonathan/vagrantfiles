@@ -3,13 +3,13 @@ Vagrant.configure("2") do |config|
   # options are documented and commented below. For a complete reference,
   # please see the online documentation at vagrantup.com.
   
-  config.vm.box = "ubuntu-12.10-server-amd64"
+  config.vm.box = "centos-6.4-amd64"
   config.hostmanager.enabled = true
   config.hostmanager.ignore_private_ip = false
   
  #puppet master
  config.vm.define "puppetmaster".to_sym do |puppetmaster_config|
-  puppetmaster_config.vm.box = "ubuntu-12.10-server-amd64-puppetmastermaster"
+  puppetmaster_config.vm.box = "centos-6.4-amd64master"
     puppetmaster_config.vm.hostname = "puppetmaster"
     puppetmaster_config.hostmanager.enabled = true
     puppetmaster_config.vm.network :private_network, ip: "10.0.1.69"
@@ -23,7 +23,7 @@ Vagrant.configure("2") do |config|
   
   #PuppetDB server
   config.vm.define "puppetdb".to_sym do |puppetdb_config|
-    puppetdb_config.vm.box = "ubuntu-12.10-server-amd64"
+    puppetdb_config.vm.box = "centos-6.4-amd64"
     puppetdb_config.vm.hostname = "puppetdb"
     puppetdb_config.hostmanager.enabled = true
     puppetdb_config.vm.network :private_network, ip: "10.0.1.70"
@@ -35,28 +35,28 @@ Vagrant.configure("2") do |config|
   end
   
   #Puppet client
-#  config.vm.define "client1".to_sym do |client1_config|
-#    client1_config.vm.box = "ubuntu-12.10-server-amd64"
-#    client1_config.vm.hostname = "client1"
-#    client1_config.hostmanager.enabled = true
-#    client1_config.vm.network :private_network, ip: "10.0.1.71"
-#    #set some machine-specific options
-#    client1_config.vm.provider "virtualbox" do |v|
-#       #change the amount of RAM 
-#        v.customize ["modifyvm", :id, "--memory", "512"]
-#    end
-#  end
-  
-#  #another Puppet client machine
-#  config.vm.define "client2".to_sym do |client2_config|
-#    client2_config.vm.box = "ubuntu-12.10-server-amd64"
-#    client2_config.vm.hostname = "client2"
-#    client2_config.hostmanager.enabled = true
-#    client2_config.vm.network :private_network, ip: "10.0.1.72"
-    #set some machine-specific options
-#    client2_config.vm.provider "virtualbox" do |v|
-       #change the amount of RAM 
-#        v.customize ["modifyvm", :id, "--memory", "512"]
-#    end
-#  end
+ config.vm.define "client1".to_sym do |client1_config|
+   client1_config.vm.box = "centos-6.4-amd64"
+   client1_config.vm.hostname = "client1"
+   client1_config.hostmanager.enabled = true
+   client1_config.vm.network :private_network, ip: "10.0.1.71"
+   #set some machine-specific options
+   client1_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+       v.customize ["modifyvm", :id, "--memory", "512"]
+   end
+ end
+
+ #another Puppet client machine
+ config.vm.define "client2".to_sym do |client2_config|
+   client2_config.vm.box = "centos-6.4-amd64"
+   client2_config.vm.hostname = "client2"
+   client2_config.hostmanager.enabled = true
+   client2_config.vm.network :private_network, ip: "10.0.1.72"
+  #set some machine-specific options
+   client2_config.vm.provider "virtualbox" do |v|
+     #change the amount of RAM 
+       v.customize ["modifyvm", :id, "--memory", "512"]
+   end
+ end
 end
