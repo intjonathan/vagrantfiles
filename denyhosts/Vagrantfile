@@ -29,7 +29,7 @@ config.vm.define "sshserver".to_sym do |icinga_config|
     end
 end
 
-#an icinga client
+#an SSH client
 config.vm.define "client1".to_sym do |client1_config|
 	client1_config.vm.box = "centos-6.4-amd64"
 	client1_config.vm.hostname = "sshclient1.local"
@@ -42,7 +42,7 @@ config.vm.define "client1".to_sym do |client1_config|
 	end
 end
 
- #an icinga client
+ #an SSH client
 config.vm.define "client2".to_sym do |client2_config|
 	client2_config.vm.box = "centos-6.4-amd64"
 	client2_config.vm.hostname = "sshclient2.local"
