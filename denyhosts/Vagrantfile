@@ -54,4 +54,17 @@ config.vm.define "client2".to_sym do |client2_config|
     	v.customize ["modifyvm", :id, "--memory", "512"]
     end
 end
+
+#a mail server
+config.vm.define "denymail".to_sym do |denymail_config|
+	denymail_config.vm.box = "centos-6.4-amd64"
+	denymail_config.vm.hostname = "denymail.local"
+	denymail_config.hostmanager.enabled = true
+	denymail_config.vm.network :private_network, ip: "10.0.1.73"
+	#set some machine-specific options	
+	denymail_config.vm.provider "virtualbox" do |v|
+    	#change the amount of RAM 
+    	v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+end
 end
