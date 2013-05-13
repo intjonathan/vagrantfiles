@@ -1,0 +1,72 @@
+Vagrant.configure("2") do |config|
+  # All Vagrant configuration is done here. The most common configuration
+  # options are documented and commented below. For a complete reference,
+  # please see the online documentation at vagrantup.com.
+  
+  ####################
+  # Snippets to use
+  ####################
+  
+  #NFS folder sharing
+  #onfig.vm.synced_folder "modules", "/etc/puppet/modules", :nfs => true
+  
+  ####################
+  ####################
+  config.vm.box = "centos-6.4-amd64"
+  config.hostmanager.enabled = true
+  config.hostmanager.ignore_private_ip = false
+  
+ #snortserver server
+config.vm.define "snortserver".to_sym do |snortserver_config|
+	snortserver_config.vm.box = "centos-6.4-amd64"
+	snortserver_config.vm.hostname = "snortserver.local"
+	snortserver_config.hostmanager.enabled = true
+	#giving it 'puppet' as an alias so that the agents can connect to it with their default settings
+	snortserver_config.hostmanager.aliases = %w(snortserver)
+	snortserver_config.vm.network :private_network, ip: "10.0.1.63"
+	#set some machine-specific options	
+	snortserver_config.vm.provider "virtualbox" do |v|
+       #change the amount of RAM 
+        v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+end
+
+#an icinga client
+config.vm.define "snortclient1".to_sym do |snortclient1_config|
+	snortclient1_config.vm.box = "centos-6.4-amd64"
+	snortclient1_config.vm.hostname = "snortclient1.local"
+	snortclient1_config.hostmanager.enabled = true
+	snortclient1_config.vm.network :private_network, ip: "10.0.1.64"
+	#set some machine-specific options	
+	snortclient1_config.vm.provider "virtualbox" do |v|
+       #change the amount of RAM 
+        v.customize ["modifyvm", :id, "--memory", "512"]
+	end
+end
+
+ #an icinga client
+config.vm.define "snortclient2".to_sym do |snortclient2_config|
+	snortclient2_config.vm.box = "centos-6.4-amd64"
+	snortclient2_config.vm.hostname = "snortclient2.local"
+	snortclient2_config.hostmanager.enabled = true
+	snortclient2_config.vm.network :private_network, ip: "10.0.1.65"
+	#set some machine-specific options	
+	snortclient2_config.vm.provider "virtualbox" do |v|
+    	#change the amount of RAM 
+    	v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+end
+  
+#a snortmail server for Icinga to send notifications to
+config.vm.define "snortmail".to_sym do |snortmail_config|
+	snortmail_config.vm.box = "centos-6.4-amd64"
+	snortmail_config.vm.hostname = "snortmail.local"
+	snortmail_config.hostmanager.enabled = true
+	snortmail_config.vm.network :private_network, ip: "10.0.1.66"
+	#set some machine-specific options	
+	snortmail_config.vm.provider "virtualbox" do |v|
+       #change the amount of RAM 
+        v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+  end
+end
