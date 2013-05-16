@@ -30,7 +30,7 @@ Vagrant.configure("2") do |config|
        #change the amount of RAM 
         v.customize ["modifyvm", :id, "--memory", "1024"]
     end
-    master_config.vm.synced_folder "/Users/nick/git/puppet-code/modules", "/etc/puppet/modules", :nfs => true
+    master_config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/modules", :nfs => true
     master_config.vm.provision :shell, :inline => $rhel_centos_puppet_master_script
   end
 
