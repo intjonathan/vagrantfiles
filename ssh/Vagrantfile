@@ -48,7 +48,6 @@ Vagrant.configure("2") do |config|
     #ssh1_config.vm.synced_folder "modules", "/etc/puppet/modules", :nfs => true
     #ssh1_config.vm.provision :shell, :inline => $rhel_centos_puppet_agent_script
   end
-end
 
 
  #another ssh client
