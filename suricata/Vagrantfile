@@ -1,0 +1,73 @@
+Vagrant.configure("2") do |config|
+  # All Vagrant configuration is done here. The most common configuration
+  # options are documented and commented below. For a complete reference,
+  # please see the online documentation at vagrantup.com.
+  
+  ####################
+  # Snippets to use
+  ####################
+  
+  #NFS folder sharing
+  #onfig.vm.synced_folder "modules", "/etc/puppet/modules", :nfs => true
+  
+  ####################
+  ####################
+  config.vm.box = "centos-6.4-amd64"
+  config.hostmanager.enabled = true
+  config.hostmanager.ignore_private_ip = false
+  
+ #suricataserver server
+config.vm.define "suricataserver".to_sym do |suricataserver_config|
+	suricataserver_config.vm.box = "centos-6.4-amd64"
+	suricataserver_config.vm.hostname = "suricataserver.local"
+	suricataserver_config.hostmanager.enabled = true
+	#giving it 'puppet' as an alias so that the agents can connect to it with their default settings
+	suricataserver_config.hostmanager.aliases = %w(suricataserver)
+	suricataserver_config.vm.network :private_network, ip: "10.0.1.63"
+	#set some machine-specific options	
+	suricataserver_config.vm.provider "virtualbox" do |v|
+       #change the amount of RAM 
+        v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+end
+
+# #an icinga client
+# config.vm.define "suricataclient1".to_sym do |suricataclient1_config|
+# 	suricataclient1_config.vm.box = "centos-6.4-amd64"
+# 	suricataclient1_config.vm.hostname = "suricataclient1.local"
+# 	suricataclient1_config.hostmanager.enabled = true
+# 	suricataclient1_config.vm.network :private_network, ip: "10.0.1.64"
+# 	#set some machine-specific options	
+# 	suricataclient1_config.vm.provider "virtualbox" do |v|
+#        #change the amount of RAM 
+#         v.customize ["modifyvm", :id, "--memory", "512"]
+# 	end
+# end
+
+ #an icinga client
+# config.vm.define "suricataclient2".to_sym do |suricataclient2_config|
+# 	suricataclient2_config.vm.box = "centos-6.4-amd64"
+# 	suricataclient2_config.vm.hostname = "suricataclient2.local"
+# 	suricataclient2_config.hostmanager.enabled = true
+# 	suricataclient2_config.vm.network :private_network, ip: "10.0.1.65"
+# 	#set some machine-specific options	
+# 	suricataclient2_config.vm.provider "virtualbox" do |v|
+#     	#change the amount of RAM 
+#     	v.customize ["modifyvm", :id, "--memory", "512"]
+#     end
+# end
+#   
+
+#a suricatamail server for Icinga to send notifications to
+# config.vm.define "suricatamail".to_sym do |suricatamail_config|
+# 	suricatamail_config.vm.box = "centos-6.4-amd64"
+# 	suricatamail_config.vm.hostname = "suricatamail.local"
+# 	suricatamail_config.hostmanager.enabled = true
+# 	suricatamail_config.vm.network :private_network, ip: "10.0.1.66"
+# 	#set some machine-specific options	
+# 	suricatamail_config.vm.provider "virtualbox" do |v|
+#        #change the amount of RAM 
+#         v.customize ["modifyvm", :id, "--memory", "512"]
+#     end
+#   end
+end
