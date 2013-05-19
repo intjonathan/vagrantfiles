@@ -1,0 +1,58 @@
+Vagrant.configure("2") do |config|
+  # All Vagrant configuration is done here. The most common configuration
+  # options are documented and commented below. For a complete reference,
+  # please see the online documentation at vagrantup.com.
+  
+  ####################
+  # Snippets to use
+  ####################
+  
+  #NFS folder sharing
+  #onfig.vm.synced_folder "modules", "/etc/puppet/modules", :nfs => true
+  
+  ####################
+  ####################
+  config.vm.box = "centos-6.4-amd64"
+  config.hostmanager.enabled = true
+  config.hostmanager.ignore_private_ip = false
+  
+ #rsyslogserver server
+config.vm.define "rsyslogserver".to_sym do |rsyslogserver_config|
+	rsyslogserver_config.vm.box = "centos-6.4-amd64"
+	rsyslogserver_config.vm.hostname = "rsyslogserver.local"
+	rsyslogserver_config.hostmanager.enabled = true
+	#giving it 'puppet' as an alias so that the agents can connect to it with their default settings
+	rsyslogserver_config.hostmanager.aliases = %w(rsyslogserver)
+	rsyslogserver_config.vm.network :private_network, ip: "10.0.1.50"
+	#set some machine-specific options	
+	rsyslogserver_config.vm.provider "virtualbox" do |v|
+       #change the amount of RAM 
+        v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+end
+
+#an icinga client
+config.vm.define "loglogclient1".to_sym do |logclient1_config|
+	logclient1_config.vm.box = "centos-6.4-amd64"
+	logclient1_config.vm.hostname = "logclient1.local"
+	logclient1_config.hostmanager.enabled = true
+	logclient1_config.vm.network :private_network, ip: "10.0.1.51"
+	#set some machine-specific options	
+	logclient1_config.vm.provider "virtualbox" do |v|
+       #change the amount of RAM 
+        v.customize ["modifyvm", :id, "--memory", "512"]
+	end
+end
+
+ #an icinga client
+config.vm.define "loglogclient2".to_sym do |logclient2_config|
+	logclient2_config.vm.box = "centos-6.4-amd64"
+	logclient2_config.vm.hostname = "logclient2.local"
+	logclient2_config.hostmanager.enabled = true
+	logclient2_config.vm.network :private_network, ip: "10.0.1.52"
+	#set some machine-specific options	
+	logclient2_config.vm.provider "virtualbox" do |v|
+    	#change the amount of RAM 
+    	v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+end
