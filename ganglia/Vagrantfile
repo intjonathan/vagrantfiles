@@ -70,7 +70,7 @@ config.hostmanager.ignore_private_ip = false
 
      #a ganglia client
     config.vm.define "gangliaclient3".to_sym do |gangliaclient3_config|
-        gangliaclient3_config.vm.box = "ubuntu-12.10-server-amd64"
+        gangliaclient3_config.vm.box = "ubuntu-13.04-server-amd64"
         gangliaclient3_config.vm.hostname = "gangliaclient3.local"
         gangliaclient3_config.hostmanager.enabled = true
         gangliaclient3_config.vm.network :private_network, ip: "10.0.1.53"
