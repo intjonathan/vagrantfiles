@@ -16,16 +16,31 @@ Vagrant.configure("2") do |config|
   config.hostmanager.enabled = true
   config.hostmanager.ignore_private_ip = false
   
- #snortserver server
-config.vm.define "snortserver".to_sym do |snortserver_config|
-	snortserver_config.vm.box = "centos-6.4-amd64"
-	snortserver_config.vm.hostname = "snortserver.local"
-	snortserver_config.hostmanager.enabled = true
+ #CentOS Snort server
+config.vm.define "centossnort".to_sym do |centossnort_config|
+	centossnort_config.vm.box = "centos-6.4-amd64"
+	centossnort_config.vm.hostname = "centossnort.local"
+	centossnort_config.hostmanager.enabled = true
 	#giving it 'puppet' as an alias so that the agents can connect to it with their default settings
-	snortserver_config.hostmanager.aliases = %w(snortserver)
-	snortserver_config.vm.network :private_network, ip: "10.0.1.63"
+	centossnort_config.hostmanager.aliases = %w(centossnort)
+	centossnort_config.vm.network :private_network, ip: "10.0.1.63"
 	#set some machine-specific options	
-	snortserver_config.vm.provider "virtualbox" do |v|
+	centossnort_config.vm.provider "virtualbox" do |v|
+       #change the amount of RAM 
+        v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+end
+
+#Ubuntu Snort server
+config.vm.define "ubuntusnort".to_sym do |ubuntusnort_config|
+	ubuntusnort_config.vm.box = "ubuntu-13.04-server-amd64"
+	ubuntusnort_config.vm.hostname = "ubuntusnort.local"
+	ubuntusnort_config.hostmanager.enabled = true
+	#giving it 'puppet' as an alias so that the agents can connect to it with their default settings
+	ubuntusnort_config.hostmanager.aliases = %w(ubuntusnort)
+	ubuntusnort_config.vm.network :private_network, ip: "10.0.1.64"
+	#set some machine-specific options	
+	ubuntusnort_config.vm.provider "virtualbox" do |v|
        #change the amount of RAM 
         v.customize ["modifyvm", :id, "--memory", "512"]
     end
