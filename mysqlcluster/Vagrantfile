@@ -1,0 +1,57 @@
+Vagrant.configure("2") do |config|
+# All Vagrant configuration is done here. The most common configuration
+# options are documented and commented below. For a complete reference,
+# please see the online documentation at vagrantup.com.
+
+####################
+# Snippets to use
+####################
+
+#NFS folder sharing
+#onfig.vm.synced_folder "modules", "/etc/puppet/modules", :nfs => true
+
+####################
+####################
+config.vm.box = "ubuntu-12.10-server-amd64"
+config.hostmanager.enabled = true
+config.hostmanager.ignore_private_ip = false
+
+    #MySQL node 1
+    config.vm.define "mysqlnode3".to_sym do |mysqlnode3_config|
+        mysqlnode3_config.vm.box = "ubuntu-12.10-server-amd64"
+        mysqlnode3_config.vm.hostname = "mysqlnode3.local"
+        mysqlnode3_config.hostmanager.enabled = true
+        mysqlnode3_config.vm.network :private_network, ip: "10.0.1.36"
+        #set some machine-specific options	
+        mysqlnode3_config.vm.provider "virtualbox" do |v|
+           #change the amount of RAM 
+            v.customize ["modifyvm", :id, "--memory", "512"]
+        end
+    end
+    
+    #MySQL node 2
+    config.vm.define "mysqlnode3".to_sym do |mysqlnode3_config|
+        mysqlnode3_config.vm.box = "ubuntu-12.10-server-amd64"
+        mysqlnode3_config.vm.hostname = "mysqlnode3.local"
+        mysqlnode3_config.hostmanager.enabled = true
+        mysqlnode3_config.vm.network :private_network, ip: "10.0.1.35"
+        #set some machine-specific options	
+        mysqlnode3_config.vm.provider "virtualbox" do |v|
+           #change the amount of RAM 
+            v.customize ["modifyvm", :id, "--memory", "512"]
+        end
+    end
+    
+    #MySQL node 3
+    config.vm.define "mysqlnode3".to_sym do |mysqlnode3_config|
+        mysqlnode3_config.vm.box = "ubuntu-12.10-server-amd64"
+        mysqlnode3_config.vm.hostname = "mysqlnode3.local"
+        mysqlnode3_config.hostmanager.enabled = true
+        mysqlnode3_config.vm.network :private_network, ip: "10.0.1.34"
+        #set some machine-specific options	
+        mysqlnode3_config.vm.provider "virtualbox" do |v|
+           #change the amount of RAM 
+            v.customize ["modifyvm", :id, "--memory", "512"]
+        end
+    end
+end
