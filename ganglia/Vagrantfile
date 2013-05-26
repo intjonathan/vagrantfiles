@@ -21,22 +21,9 @@ config.hostmanager.ignore_private_ip = false
         gangliaweb_config.vm.box = "ubuntu-13.04-server-amd64"
         gangliaweb_config.vm.hostname = "gangliaweb.local"
         gangliaweb_config.hostmanager.enabled = true
-        gangliaweb_config.vm.network :private_network, ip: "10.0.1.49"
+        gangliaweb_config.vm.network :private_network, ip: "10.0.1.50"
         #set some machine-specific options	
         gangliaweb_config.vm.provider "virtualbox" do |v|
-           #change the amount of RAM 
-            v.customize ["modifyvm", :id, "--memory", "1024"]
-        end
-    end
-  
-    #ganglia metadata server
-    config.vm.define "gangliameta".to_sym do |gangliameta_config|
-        gangliameta_config.vm.box = "ubuntu-13.04-server-amd64"
-        gangliameta_config.vm.hostname = "gangliameta.local"
-        gangliameta_config.hostmanager.enabled = true
-        gangliameta_config.vm.network :private_network, ip: "10.0.1.50"
-        #set some machine-specific options	
-        gangliameta_config.vm.provider "virtualbox" do |v|
            #change the amount of RAM 
             v.customize ["modifyvm", :id, "--memory", "1024"]
         end
