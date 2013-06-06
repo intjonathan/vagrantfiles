@@ -1,0 +1,70 @@
+Vagrant.configure("2") do |config|
+# All Vagrant configuration is done here. The most common configuration
+# options are documented and commented below. For a complete reference,
+# please see the online documentation at vagrantup.com.
+
+####################
+# Snippets to use
+####################
+
+#NFS folder sharing
+#config.vm.synced_folder "modules", "/etc/puppet/modules", :nfs => true
+
+####################
+####################
+config.vm.box = "centos-6.4-amd64"
+config.hostmanager.enabled = true
+config.hostmanager.ignore_private_ip = false
+
+    #ganglia web server
+    config.vm.define "spacewalkserver".to_sym do |spacewalkserver_config|
+        spacewalkserver_config.vm.box = "centos-6.4-amd64"
+        spacewalkserver_config.vm.hostname = "spacewalkserver.local"
+        spacewalkserver_config.hostmanager.enabled = true
+        spacewalkserver_config.vm.network :private_network, ip: "10.0.1.40"
+        #set some machine-specific options	
+        spacewalkserver_config.vm.provider "virtualbox" do |v|
+           #change the amount of RAM 
+            v.customize ["modifyvm", :id, "--memory", "1024"]
+        end
+    end
+
+    #a spacwalk client
+    config.vm.define "spaceclient1".to_sym do |spaceclient1_config|
+        spaceclient1_config.vm.box = "centos-6.4-amd64"
+        spaceclient1_config.vm.hostname = "spaceclient1.local"
+        spaceclient1_config.hostmanager.enabled = true
+        spaceclient1_config.vm.network :private_network, ip: "10.0.1.41"
+        #set some machine-specific options	
+        spaceclient1_config.vm.provider "virtualbox" do |v|
+           #change the amount of RAM 
+            v.customize ["modifyvm", :id, "--memory", "512"]
+        end
+    end
+
+    #a spacwalk client
+    config.vm.define "spaceclient2".to_sym do |spaceclient2_config|
+        spaceclient2_config.vm.box = "centos-6.4-amd64"
+        spaceclient2_config.vm.hostname = "spaceclient2.local"
+        spaceclient2_config.hostmanager.enabled = true
+        spaceclient2_config.vm.network :private_network, ip: "10.0.1.42"
+        #set some machine-specific options	
+        spaceclient2_config.vm.provider "virtualbox" do |v|
+            #change the amount of RAM 
+            v.customize ["modifyvm", :id, "--memory", "512"]
+        end
+    end
+
+    #a spacwalk client
+    config.vm.define "spaceclient3".to_sym do |spaceclient3_config|
+        spaceclient3_config.vm.box = "centos-6.4-amd64"
+        spaceclient3_config.vm.hostname = "spaceclient3.local"
+        spaceclient3_config.hostmanager.enabled = true
+        spaceclient3_config.vm.network :private_network, ip: "10.0.1.43"
+        #set some machine-specific options	
+        spaceclient3_config.vm.provider "virtualbox" do |v|
+            #change the amount of RAM 
+            v.customize ["modifyvm", :id, "--memory", "512"]
+        end
+    end
+end
