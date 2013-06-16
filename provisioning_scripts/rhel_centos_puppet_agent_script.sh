@@ -72,6 +72,6 @@ EOF
 	touch /home/vagrant/puppet_agent_installed.txt
 
 else
-	echo Skipping Puppet agent package installation...
+	echo "Skipping Puppet agent package installation..."
 fi
 

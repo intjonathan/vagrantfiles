@@ -57,5 +57,5 @@ EOF
     #Touch the puppet_installed.txt file to skip this block the next time around
 	touch /home/vagrant/puppet_master_installed.txt
 else
-	echo Skipping Puppet master installation...
+	echo "Skipping Puppet master installation..."
 fi
