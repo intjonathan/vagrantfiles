@@ -39,7 +39,7 @@ else
 fi
 
 echo "cating sample puppet.conf into puppet.conf file..."
-sudo cat <<EOF > /etc/puppet/puppet.conf
+sudo cat > /etc/puppet/puppet.conf <<"EOF"
 [main]
     # The Puppet log directory.
     # The default value is '$vardir/log'.
@@ -66,9 +66,17 @@ sudo cat <<EOF > /etc/puppet/puppet.conf
     # extension indicating the cache format is added automatically.
     # The default value is '$confdir/localconfig'.
     localconfig = $vardir/localconfig
-
 EOF
-
-sudo puppet cert clean master
-sudo puppet cert generate master --dns_alt_names=puppet
-sudo /etc/init.d/puppetmaster restart
+    
+    echo "Regenerating Puppet master certificate with the 'puppet' DNS altname..."
+    sudo /etc/init.d/puppetmaster stop
+    sudo puppet cert clean --all
+    sudo puppet cert generate master --dns_alt_names=puppet,master,puppetmaster,puppet.local,master.local,puppetmaster.local
+    sudo /etc/init.d/puppetmaster restart
+    echo "DONE regenerating the master certificate!"
+    
+    #Touch the puppet_installed.txt file to skip this block the next time around
+	touch /home/vagrant/puppet_master_installed.txt
+else
+	echo "Skipping Puppet master installation..."
+fi
