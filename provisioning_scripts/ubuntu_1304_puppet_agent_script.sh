@@ -15,7 +15,7 @@ else
 	echo "Skipping repo addition and package installation..."
 fi
 
-echo Checking to see if the Puppet agent package needs to be installed...
+echo "Checking to see if the Puppet agent package needs to be installed..."
 
 if [ ! -f /home/vagrant/puppet_agent_installed.txt ];
 then
@@ -31,7 +31,7 @@ then
 	sudo service ufw stop
 	echo "DONE stopping ufw!"
 
-    echo cating sample puppet.conf into puppet.conf file...
+    echo "cating sample puppet.conf into puppet.conf file..."
 
    sudo cat > /etc/puppet/puppet.conf <<"EOF"
     [main]
@@ -64,13 +64,11 @@ then
         # The default value is '$confdir/localconfig'.
         localconfig = $vardir/localconfig
 EOF
-
-
 	
 	#Touch the puppet_installed.txt file to skip this block the next time around
 	touch /home/vagrant/puppet_agent_installed.txt
 	
 else
-	echo Skipping Puppet agent package installation...
+	echo "Skipping Puppet agent package installation..."
 fi
 
