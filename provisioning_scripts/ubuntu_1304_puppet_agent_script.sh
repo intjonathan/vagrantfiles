@@ -33,7 +33,7 @@ then
 
     echo cating sample puppet.conf into puppet.conf file...
 
-    sudo cat <<EOF > /etc/puppet/puppet.conf
+   sudo cat > /etc/puppet/puppet.conf <<"EOF"
     [main]
         # The Puppet log directory.
         # The default value is '$vardir/log'.
