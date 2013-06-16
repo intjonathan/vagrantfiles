@@ -1,47 +1,40 @@
 #! /bin/bash
-echo Checking to see if the Puppet Labs RHEL/CentOS repo needs to be added...
+echo "Checking to see if the Puppet Labs RHEL/CentOS repo needs to be added..."
 
 if [ ! -f /home/vagrant/repos_added.txt ];
 then    
-    echo Adding repo...
+    echo "Adding repo..."
 	sudo rpm -ivh http://yum.puppetlabs.com/el/6/products/x86_64/puppetlabs-release-6-7.noarch.rpm
-	echo DONE adding repo!
-    echo Updating package lists with new repo...
+	echo "DONE adding repo!"
+    echo "Updating package lists with new repo..."
 	sudo yum check-update
 	#Touch the repos_added file to skip this block the next time around
 	touch /home/vagrant/repos_added.txt
 
 else
-	echo Skipping repo addition...
+	echo "Skipping repo addition..."
 fi
 
-echo Checking to see if the Puppet agent package needs to be installed...
+echo "Checking to see if the Puppet agent package needs to be installed..."
 
 if [ ! -f /home/vagrant/puppet_agent_installed.txt ];
 then
-	echo Installing the Puppet agent...
+	echo "Installing the Puppet agent..."
 	sudo yum install puppet -y
-	echo DONE installing the Puppet agent!
+	echo "DONE installing the Puppet agent!"
 		
 	sudo chkconfig --levels 2345 puppet on
-	echo DONE adding the Puppet agent daemon to start up on system boot!
+	echo "DONE adding the Puppet agent daemon to start up on system boot!"
 	
-	echo Starting the Puppet master daemon... 
+	echo "Starting the Puppet master daemon..." 
 	sudo /etc/init.d/puppet start
-	echo DONE starting the daemon!
+	echo "DONE starting the daemon!"
 	
-	echo Disabling IP tables...
+	echo "Disabling IP tables..."
 	sudo service iptables stop
-	echo DONE disabling iptables!
-	
-	#Touch the puppet_installed.txt file to skip this block the next time around
-	touch /home/vagrant/puppet_agent_installed.txt
-	
-else
-	echo Skipping Puppet agent package installation...
-fi
+	echo "DONE disabling iptables!"
 
-echo cating sample puppet.conf into puppet.conf file...
+    echo "cating sample puppet.conf into puppet.conf file..."
 
 sudo cat <<EOF > /etc/puppet/puppet.conf
 [main]
@@ -74,3 +67,11 @@ sudo cat <<EOF > /etc/puppet/puppet.conf
     # The default value is '$confdir/localconfig'.
     localconfig = $vardir/localconfig
 EOF
+
+	#Touch the puppet_installed.txt file to skip this block the next time around
+	touch /home/vagrant/puppet_agent_installed.txt
+
+else
+	echo Skipping Puppet agent package installation...
+fi
+
