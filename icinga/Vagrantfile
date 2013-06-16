@@ -31,6 +31,8 @@ config.vm.define "master".to_sym do |master_config|
     #NFS folder sharing for Puppet modules and manifests
     config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/modules", :nfs => true
     config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/manifests", "/etc/puppet/manifests", :nfs => true
+    #Puppet master provisioning script
+    master_config.vm.provision :shell, :inline => $debian_ubuntu_puppet_master_script
 end  
   
  #Icinga server
