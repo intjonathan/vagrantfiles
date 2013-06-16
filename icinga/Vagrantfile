@@ -28,6 +28,9 @@ config.vm.define "master".to_sym do |master_config|
        #change the amount of RAM 
         v.customize ["modifyvm", :id, "--memory", "1024"]
     end
+    #NFS folder sharing for Puppet modules and manifests
+    config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/modules", :nfs => true
+    config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/manifests", "/etc/puppet/manifests", :nfs => true
 end  
   
  #Icinga server
