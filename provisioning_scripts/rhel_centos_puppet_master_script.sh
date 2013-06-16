@@ -3,10 +3,10 @@ echo Checking to see if the Puppet Labs RHEL/CentOS repo needs to be added...
 
 if [ ! -f /home/vagrant/repos_added.txt ];
 then    
-    echo Adding repo...
+    echo "Adding repo..."
 	sudo rpm -ivh http://yum.puppetlabs.com/el/6/products/x86_64/puppetlabs-release-6-7.noarch.rpm
-	echo DONE adding repo!
-    echo Updating package lists with new repo...
+	echo "DONE adding repo!"
+    echo "Updating package lists with new repo..."
 	sudo yum check-update
 	#Touch the repos_added file to skip this block the next time around
 	touch /home/vagrant/repos_added.txt
@@ -17,28 +17,28 @@ fi
 
 if [ ! -f /home/vagrant/puppet_master_installed.txt ];
 then
-	echo Installing the Puppet master...
+	echo "Installing the Puppet master..."
 	sudo yum install puppet-server -y
-	echo DONE installing the Puppet master packages!
+	echo "DONE installing the Puppet master packages!"
 	
 	sudo chkconfig --levels 2345 puppetmaster on
-	echo DONE adding the Puppet master daemon to start up on system boot!
+	echo "DONE adding the Puppet master daemon to start up on system boot!"
 	
-	echo Starting the Puppet master daemon... 
+	echo "Starting the Puppet master daemon..."
 	sudo /etc/init.d/puppetmaster start
-	echo DONE starting the daemon!
+	echo "DONE starting the daemon!"
 	
-	echo Disabling IP tables...
+	echo "Disabling IP tables..."
 	sudo service iptables stop
-	echo DONE disabling iptables!
+	echo "DONE disabling iptables!"
 	
 	#Touch the puppet_installed.txt file to skip this block the next time around
 	touch /home/vagrant/puppet_master_installed.txt
 else
-	echo Skipping Puppet master package installation...
+	echo "Skipping Puppet master package installation..."
 fi
 
-echo cating sample puppet.conf into puppet.conf file...
+echo "cating sample puppet.conf into puppet.conf file..."
 sudo cat <<EOF > /etc/puppet/puppet.conf
 [main]
     # The Puppet log directory.
