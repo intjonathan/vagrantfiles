@@ -1,15 +1,4 @@
 #! /bin/bash
-echo "Starting provisioning..."
-
-echo "Adding Puppet Labs apt repository..."
-sudo wget -N http://apt.puppetlabs.com/puppetlabs-release-quantal.deb
-sudo dpkg -i puppetlabs-release-quantal.deb
-sudo apt-get update
-sudo apt-get -y install puppetmaster
-
-
-
-#! /bin/bash
 echo "Checking to see if the Puppet Labs apt repo needs to be added..."
 
 if [ ! -f /home/vagrant/repos_added.txt ];
@@ -19,8 +8,6 @@ then
     sudo dpkg -i puppetlabs-release-quantal.deb
     echo "Updating apt..."
     sudo apt-get update
-    echo "Installing the puppetmaster package..."
-    sudo apt-get -y install puppetmaster
     #Touch the repos_added file to skip this block the next time around
 	touch /home/vagrant/repos_added.txt
 
@@ -42,14 +29,8 @@ then
 	sudo service ufw stop
 	echo "DONE stopping ufw!"
 
-    echo "Regenerating Puppet master certificate with the 'puppet' DNS altname..."
-    sudo puppet cert clean master
-    sudo puppet cert generate master --dns_alt_names=puppet,master,puppetmaster,puppet.local,master.local,puppetmaster.local
-    sudo /etc/init.d/puppetmaster restart
-    echo "DONE regenerating the master certificate!"
-
     echo "concatenating sample puppet.conf into puppet.conf file..."
-    sudo cat << EOF > /etc/puppet/puppet.conf
+    sudo cat > /etc/puppet/puppet.conf <<"EOF"
     [main]
     logdir=/var/log/puppet
     vardir=/var/lib/puppet
@@ -64,8 +45,14 @@ then
     ssl_client_header = SSL_CLIENT_S_DN 
     ssl_client_verify_header = SSL_CLIENT_VERIFY
     dns_alt_names = puppet,master,puppetmaster,puppet.local,master.local,puppetmaster.local
-
-    EOF
+EOF
+    
+    echo "Regenerating Puppet master certificate with the 'puppet' DNS altname..."
+    sudo /etc/init.d/puppetmaster stop
+    sudo puppet cert clean --all
+    sudo puppet cert generate master --dns_alt_names=puppet,master,puppetmaster,puppet.local,master.local,puppetmaster.local
+    sudo /etc/init.d/puppetmaster restart
+    echo "DONE regenerating the master certificate!"
     
     #Touch the puppet_installed.txt file to skip this block the next time around
 	touch /home/vagrant/puppet_master_installed.txt
