@@ -4,10 +4,10 @@ echo "Checking to see if the Puppet Labs apt repo needs to be added..."
 if [ ! -f /home/vagrant/repos_added.txt ];
 then    
 	echo "Adding Puppet Labs apt repository..."
-    sudo wget -N http://apt.puppetlabs.com/puppetlabs-release-quantal.deb
-    sudo dpkg -i puppetlabs-release-quantal.deb
+    sudo wget -N http://apt.puppetlabs.com/puppetlabs-release-quantal.deb >/dev/null
+    sudo dpkg -i puppetlabs-release-quantal.deb >/dev/null
     echo "Updating apt..."
-    sudo apt-get update
+    sudo apt-get update >/dev/null
     #Touch the repos_added file to skip this block the next time around
 	touch /home/vagrant/repos_added.txt
 
@@ -20,15 +20,15 @@ echo "Checking to see if the Puppet agent package needs to be installed..."
 if [ ! -f /home/vagrant/puppet_agent_installed.txt ];
 then
 	echo "Installing the Puppet agent..."
-	sudo apt-get -y install puppetmaster
+	sudo apt-get -y install puppetmaster >/dev/null
 	echo "DONE installing the Puppet agent packages!"
 		
-	echo "Starting the Puppet agent daemon..." 
-	sudo /etc/init.d/puppet start
+	echo "Starting the Puppet agent daemon..."
+	sudo /etc/init.d/puppet start >/dev/null
 	echo "DONE starting the daemon!"
 	
 	echo "Stopping the UFW firewall..."
-	sudo service ufw stop
+	sudo service ufw stop >/dev/null
 	echo "DONE stopping ufw!"
 
     echo "cating sample puppet.conf into puppet.conf file..."
