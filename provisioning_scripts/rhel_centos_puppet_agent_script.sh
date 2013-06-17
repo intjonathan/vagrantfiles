@@ -3,10 +3,10 @@ echo "Checking to see if the Puppet Labs RHEL/CentOS repo needs to be added..."
 
 if [ ! -f /home/vagrant/repos_added.txt ];
 then    
-    echo "Adding repo..."
+  echo "Adding repo..."
 	sudo rpm -ivh http://yum.puppetlabs.com/el/6/products/x86_64/puppetlabs-release-6-7.noarch.rpm >/dev/null
 	echo "DONE adding repo!"
-    echo "Updating package lists with new repo..."
+  echo "Updating package lists with new repo..."
 	sudo yum check-update >/dev/null
 	#Touch the repos_added file to skip this block the next time around
 	touch /home/vagrant/repos_added.txt >/dev/null
