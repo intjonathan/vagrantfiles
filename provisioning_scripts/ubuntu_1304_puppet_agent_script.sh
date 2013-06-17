@@ -20,7 +20,7 @@ echo "Checking to see if the Puppet agent package needs to be installed..."
 if [ ! -f /home/vagrant/puppet_agent_installed.txt ];
 then
 	echo "Installing the Puppet agent..."
-	sudo apt-get -y install puppetmaster >/dev/null
+	sudo apt-get -y install puppet >/dev/null
 	echo "DONE installing the Puppet agent packages!"
 		
 	echo "Starting the Puppet agent daemon..."
