@@ -29,8 +29,8 @@ config.vm.define "master".to_sym do |master_config|
         v.customize ["modifyvm", :id, "--memory", "1024"]
     end
     #NFS folder sharing for Puppet modules and manifests
-    config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/modules", :nfs => true
-    config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/manifests", "/etc/puppet/manifests", :nfs => true
+    config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/modules" #:nfs => true
+    config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/manifests", "/etc/puppet/manifests" #:nfs => true
     #Puppet master provisioning script
     master_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1304_puppet_master_script.sh"
 end  
@@ -53,7 +53,7 @@ end
 
 #an icinga client
 config.vm.define "client1".to_sym do |client1_config|
-	client1_config.vm.box = "centos-6.4-amd64"
+	client1_config.vm.box = "ubuntu-13.04-server-amd64"
 	client1_config.vm.hostname = "client1.local"
 	client1_config.hostmanager.enabled = true
 	client1_config.vm.network :private_network, ip: "10.0.1.81"
@@ -68,7 +68,7 @@ end
 
  #an icinga client
 config.vm.define "client2".to_sym do |client2_config|
-	client2_config.vm.box = "centos-6.4-amd64"
+	client2_config.vm.box = "ubuntu-13.04-server-amd64"
 	client2_config.vm.hostname = "client2.local"
 	client2_config.hostmanager.enabled = true
 	client2_config.vm.network :private_network, ip: "10.0.1.82"
@@ -83,7 +83,7 @@ end
   
 #a mail server for Icinga to send notifications to
 config.vm.define "mail".to_sym do |mail_config|
-	mail_config.vm.box = "centos-6.4-amd64"
+	mail_config.vm.box = "ubuntu-13.04-server-amd64"
 	mail_config.vm.hostname = "mail.local"
 	mail_config.hostmanager.enabled = true
 	mail_config.vm.network :private_network, ip: "10.0.1.84"
