@@ -72,13 +72,14 @@ config.vm.define "client2".to_sym do |client2_config|
 	client2_config.vm.hostname = "client2.local"
 	client2_config.hostmanager.enabled = true
 	client2_config.vm.network :private_network, ip: "10.0.1.82"
+    client2_config.vm.provider "virtualbox" do |v| 	
     	#change the amount of RAM 
     	v.customize ["modifyvm", :id, "--memory", "512"]
     end
     #Puppet agent provisioning script
 	#client2_config.vm.provision :shell, :path => "../provisioning_scripts/rhel_centos_puppet_agent_script.sh"
 end
-  
+
 #a mail server for Icinga to send notifications to
 config.vm.define "mail".to_sym do |mail_config|
 	mail_config.vm.box = "ubuntu-13.04-server-amd64"
@@ -93,4 +94,5 @@ config.vm.define "mail".to_sym do |mail_config|
     #Puppet agent provisioning script
 	#mail_config.vm.provision :shell, :path => "../provisioning_scripts/rhel_centos_puppet_agent_script.sh"
 end
+
 end
