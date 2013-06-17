@@ -53,7 +53,7 @@ end
 
 #an icinga client
 config.vm.define "client1".to_sym do |client1_config|
-	client1_config.vm.box = "ubuntu-13.04-server-amd64"
+	client1_config.vm.box = "centos-6.4-amd64"
 	client1_config.vm.hostname = "client1.local"
 	client1_config.hostmanager.enabled = true
 	client1_config.vm.network :private_network, ip: "10.0.1.81"
@@ -63,7 +63,7 @@ config.vm.define "client1".to_sym do |client1_config|
         v.customize ["modifyvm", :id, "--memory", "512"]
 	end
 	#Puppet agent provisioning script
-	#client1_config.vm.provision :shell, :path => "../provisioning_scripts/rhel_centos_puppet_agent_script.sh"
+	client1_config.vm.provision :shell, :path => "../provisioning_scripts/rhel_centos_puppet_agent_script.sh"
 end
 
  #an icinga client
@@ -77,7 +77,7 @@ config.vm.define "client2".to_sym do |client2_config|
     	v.customize ["modifyvm", :id, "--memory", "512"]
     end
     #Puppet agent provisioning script
-	#client2_config.vm.provision :shell, :path => "../provisioning_scripts/rhel_centos_puppet_agent_script.sh"
+	client2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1304_puppet_agent_script.sh"
 end
 
 #a mail server for Icinga to send notifications to
