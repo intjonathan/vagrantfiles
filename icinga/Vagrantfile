@@ -37,7 +37,7 @@ end
   
  #Icinga server
 config.vm.define "icinga".to_sym do |icinga_config|
-	icinga_config.vm.box = "centos-6.4-amd64"
+	icinga_config.vm.box = "ubuntu-13.04-server-amd64"
 	icinga_config.vm.hostname = "icinga.local"
 	icinga_config.hostmanager.enabled = true
 	icinga_config.hostmanager.aliases = %w(icinga)
@@ -48,7 +48,7 @@ config.vm.define "icinga".to_sym do |icinga_config|
         v.customize ["modifyvm", :id, "--memory", "1024"]
     end
     #Puppet agent provisioning script
-	icinga_config.vm.provision :shell, :path => "../provisioning_scripts/rhel_centos_puppet_agent_script.sh"
+	#icinga_config.vm.provision :shell, :path => "../provisioning_scripts/rhel_centos_puppet_agent_script.sh"
 end
 
 #an icinga client
@@ -63,7 +63,7 @@ config.vm.define "client1".to_sym do |client1_config|
         v.customize ["modifyvm", :id, "--memory", "512"]
 	end
 	#Puppet agent provisioning script
-	client1_config.vm.provision :shell, :path => "../provisioning_scripts/rhel_centos_puppet_agent_script.sh"
+	#client1_config.vm.provision :shell, :path => "../provisioning_scripts/rhel_centos_puppet_agent_script.sh"
 end
 
  #an icinga client
@@ -72,13 +72,11 @@ config.vm.define "client2".to_sym do |client2_config|
 	client2_config.vm.hostname = "client2.local"
 	client2_config.hostmanager.enabled = true
 	client2_config.vm.network :private_network, ip: "10.0.1.82"
-	#set some machine-specific options	
-	client2_config.vm.provider "virtualbox" do |v|
     	#change the amount of RAM 
     	v.customize ["modifyvm", :id, "--memory", "512"]
     end
     #Puppet agent provisioning script
-	client2_config.vm.provision :shell, :path => "../provisioning_scripts/rhel_centos_puppet_agent_script.sh"
+	#client2_config.vm.provision :shell, :path => "../provisioning_scripts/rhel_centos_puppet_agent_script.sh"
 end
   
 #a mail server for Icinga to send notifications to
@@ -93,6 +91,6 @@ config.vm.define "mail".to_sym do |mail_config|
         v.customize ["modifyvm", :id, "--memory", "512"]
     end
     #Puppet agent provisioning script
-	mail_config.vm.provision :shell, :path => "../provisioning_scripts/rhel_centos_puppet_agent_script.sh"
+	#mail_config.vm.provision :shell, :path => "../provisioning_scripts/rhel_centos_puppet_agent_script.sh"
 end
 end
