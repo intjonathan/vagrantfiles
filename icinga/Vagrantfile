@@ -48,7 +48,7 @@ config.vm.define "icinga".to_sym do |icinga_config|
         v.customize ["modifyvm", :id, "--memory", "1024"]
     end
     #Puppet agent provisioning script
-	#icinga_config.vm.provision :shell, :path => "../provisioning_scripts/rhel_centos_puppet_agent_script.sh"
+	icinga_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1304_puppet_agent_script.sh"
 end
 
 #an icinga client
@@ -92,7 +92,7 @@ config.vm.define "mail".to_sym do |mail_config|
         v.customize ["modifyvm", :id, "--memory", "512"]
     end
     #Puppet agent provisioning script
-	#mail_config.vm.provision :shell, :path => "../provisioning_scripts/rhel_centos_puppet_agent_script.sh"
+	mail_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1304_puppet_agent_script.sh"
 end
 
 end
