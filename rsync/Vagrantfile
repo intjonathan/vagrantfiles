@@ -1,0 +1,46 @@
+Vagrant.configure("2") do |config|
+	# All Vagrant configuration is done here. The most common configuration
+	# options are documented and commented below. For a complete reference,
+	# please see the online documentation at vagrantup.com.
+
+####################
+# Snippets to use
+####################
+
+#NFS folder sharing for Puppet modules and manifests
+#config.vm.synced_folder "modules", "/etc/puppet/modules", :nfs => true
+
+####################
+####################
+config.vm.box = "centos-6.4-amd64"
+config.hostmanager.enabled = true
+config.hostmanager.ignore_private_ip = false
+
+	#rsync server 1
+	config.vm.define "rsync1".to_sym do |rsync1_config|
+		rsync1_config.vm.box = "ubuntu-13.04-server-amd64"
+		rsync1_config.vm.hostname = "rsync1.local"
+		rsync1_config.hostmanager.enabled = true
+		rsync1_config.hostmanager.aliases = %w(rsync1)
+		rsync1_config.vm.network :private_network, ip: "10.0.1.85"
+		#set some machine-specific options	
+		rsync1_config.vm.provider "virtualbox" do |v|
+			#change the amount of RAM 
+			v.customize ["modifyvm", :id, "--memory", "512"]
+	  end
+	end
+
+	#rsync server 2
+	config.vm.define "rsync2".to_sym do |rsync2_config|
+		rsync2_config.vm.box = "ubuntu-13.04-server-amd64"
+		rsync2_config.vm.hostname = "rsync2.local"
+		rsync2_config.hostmanager.enabled = true
+		rsync2_config.hostmanager.aliases = %w(rsync2)
+		rsync2_config.vm.network :private_network, ip: "10.0.1.86"
+		#set some machine-specific options	
+		rsync2_config.vm.provider "virtualbox" do |v|
+			#change the amount of RAM 
+			v.customize ["modifyvm", :id, "--memory", "512"]
+		end
+	end
+end
