@@ -30,7 +30,7 @@ config.vm.define "icingamaster".to_sym do |icingamaster_config|
     end
     #NFS folder sharing for Puppet modules and manifests
     config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/modules" #:nfs => true
-    config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/manifests", "/etc/puppet/manifests" #:nfs => true
+    config.vm.synced_folder "manifests/", "/etc/puppet/manifests" #:nfs => true
     config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/hieradata", "/etc/puppet/hieradata" #:nfs => true
     #Puppet icingamaster provisioning script
     icingamaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1304_puppet_icingamaster_script.sh"
