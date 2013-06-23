@@ -12,7 +12,8 @@ Vagrant.configure("2") do |config|
   
   ####################
   ####################
-  config.vm.box = "centos-6.4-amd64"
+  
+  #vagrant-hostmanager plugin options
   config.hostmanager.enabled = true
   config.hostmanager.ignore_private_ip = false
   #update the /etc/hosts of the host OS
