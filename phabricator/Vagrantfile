@@ -32,7 +32,7 @@ Vagrant.configure("2") do |config|
     phabricator_config.vm.box = "ubuntu-13.04-server-amd64"
     phabricator_config.vm.hostname = "phabricator.local"
     phabricator_config.hostmanager.enabled = true
-    phabricator_config.hostmanager.aliases = %w(phabricator)
+    phabricator_config.hostmanager.aliases = %w(phabricator code.phabricator.local)
     phabricator_config.vm.network :private_network, ip: "10.0.1.75"
     #set some machine-specific options	
     phabricator_config.vm.provider "virtualbox" do |v|
