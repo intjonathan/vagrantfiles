@@ -46,7 +46,7 @@ Vagrant.configure("2") do |config|
     icingaserver_config.vm.box = "centos-6.4-amd64"
     icingaserver_config.vm.hostname = "icingaserver.local"
     icingaserver_config.hostmanager.enabled = true
-    icingaserver_config.hostmanager.aliases = %w(icingaserver)
+    icingaserver_config.hostmanager.aliases = %w(www.icingaserver.local monitor.icingaserver.local icingaserver)
     icingaserver_config.vm.network :private_network, ip: "10.0.1.80"
     #set some machine-specific options	
     icingaserver_config.vm.provider "virtualbox" do |v|
