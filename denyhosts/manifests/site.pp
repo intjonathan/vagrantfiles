@@ -15,11 +15,19 @@ node 'denymaster.local' {
 }
 
 node 'denyclient1' {
-  #$message = hiera_array(allowed_hosts)
+  #grab data from hiera
+  $message = hiera(allowed_hosts)
   
+  #take the values retrieved from hiera and put newlines between them
+  $print_message = inline_template('<%= message.join("\n") %>')
+  notify {"${print_message}":}
+}
+
+node 'denyclient2' {
+  #grab data from hiera
+  $message = hiera(allowed_hosts)
   
-  #$print_message = inline_template('<%= [ message.to_a.join("\n") , "\n" ].join %>')
-  #$print_message = inline_template('<%= message.join("\n") %>')
-  #notify {"your allowed hosts are: ${print_message}":}
-  #include denyhosts
+  #take the values retrieved from hiera and put newlines between them
+  $print_message = inline_template('<%= message.join("\n") %>')
+  notify {"${print_message}":}
 }
