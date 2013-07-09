@@ -19,7 +19,7 @@ config.hostmanager.ignore_private_ip = false
 #update the /etc/hosts of the host OS
 config.hostmanager.manage_host = true
 
-    #ganglia web server
+    #Jenkins master server
     config.vm.define "jenkins".to_sym do |jenkins_config|
         jenkins_config.vm.box = "ubuntu-13.04-server-amd64"
         jenkins_config.vm.hostname = "jenkins.local"
@@ -32,7 +32,7 @@ config.hostmanager.manage_host = true
         end
     end
   
-    #ganglia metadata server
+    #Jenkins worker
     config.vm.define "worker1".to_sym do |worker1_config|
         worker1_config.vm.box = "ubuntu-13.04-server-amd64"
         worker1_config.vm.hostname = "worker1.local"
@@ -45,7 +45,7 @@ config.hostmanager.manage_host = true
         end
     end
 
-    #a ganglia client
+    #Jenkins worker
     config.vm.define "worker2".to_sym do |worker2_config|
         worker2_config.vm.box = "ubuntu-13.04-server-amd64"
         worker2_config.vm.hostname = "worker2.local"
@@ -58,7 +58,7 @@ config.hostmanager.manage_host = true
         end
     end
 
-     #a ganglia client
+    #Jenkins worker
     config.vm.define "worker3".to_sym do |worker3_config|
         worker3_config.vm.box = "ubuntu-13.04-server-amd64"
         worker3_config.vm.hostname = "worker3.local"
@@ -71,7 +71,7 @@ config.hostmanager.manage_host = true
         end
     end
 
-     #a ganglia client
+    #Jenkins worker
     config.vm.define "worker4".to_sym do |worker4_config|
         worker4_config.vm.box = "ubuntu-13.04-server-amd64"
         worker4_config.vm.hostname = "worker4.local"
