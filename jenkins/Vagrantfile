@@ -58,29 +58,30 @@ Vagrant.configure("2") do |config|
     end
   end
 
-  #Jenkins worker
-  config.vm.define "worker3".to_sym do |worker3_config|
-    worker3_config.vm.box = "ubuntu-13.04-server-amd64"
-    worker3_config.vm.hostname = "worker3.local"
-    worker3_config.hostmanager.enabled = true
-    worker3_config.vm.network :private_network, ip: "10.0.1.42"
+  #Ubuntu Tomcat VM
+  config.vm.define "ubuntutomcat".to_sym do |ubuntutomcat_config|
+    ubuntutomcat_config.vm.box = "ubuntu-13.04-server-amd64"
+    ubuntutomcat_config.vm.hostname = "ubuntutomcat.local"
+    ubuntutomcat_config.hostmanager.enabled = true
+    ubuntutomcat_config.vm.network :private_network, ip: "10.0.1.42"
     #set some machine-specific options	
-    worker3_config.vm.provider "virtualbox" do |v|
+    ubuntutomcat_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
-      v.customize ["modifyvm", :id, "--memory", "512"]
+      v.customize ["modifyvm", :id, "--memory", "1024"]
     end
   end
 
-  #Jenkins worker
-  config.vm.define "worker4".to_sym do |worker4_config|
-    worker4_config.vm.box = "ubuntu-13.04-server-amd64"
-    worker4_config.vm.hostname = "worker4.local"
-    worker4_config.hostmanager.enabled = true
-    worker4_config.vm.network :private_network, ip: "10.0.1.43"
+  #CentOS Tomcat VM
+  config.vm.define "centostomcat".to_sym do |centostomcat_config|
+    centostomcat_config.vm.box = "centos-6.4-amd64"
+    centostomcat_config.vm.hostname = "centostomcat.local"
+    centostomcat_config.hostmanager.enabled = true
+    centostomcat_config.vm.network :private_network, ip: "10.0.1.43"
     #set some machine-specific options	
-    worker4_config.vm.provider "virtualbox" do |v|
+    centostomcat_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
-      v.customize ["modifyvm", :id, "--memory", "512"]
+      v.customize ["modifyvm", :id, "--memory", "1024"]
     end
   end
+
 end
