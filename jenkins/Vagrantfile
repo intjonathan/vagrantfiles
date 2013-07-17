@@ -54,7 +54,7 @@ Vagrant.configure("2") do |config|
     #set some machine-specific options	
     worker1_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
-      v.customize ["modifyvm", :id, "--memory", "1024"]
+      v.customize ["modifyvm", :id, "--memory", "512"]
     end
   end
 
