@@ -37,7 +37,7 @@ Vagrant.configure("2") do |config|
     centosjenkins_config.vm.box = "centos-6.4-amd64"
     centosjenkins_config.vm.hostname = "centosjenkins.local"
     centosjenkins_config.hostmanager.enabled = true
-    centosjenkins_config.hostmanager.aliases = %w(www.centosjenkins.local jenkins.centosjenkins.local)
+    centosjenkins_config.hostmanager.aliases = %w(www.centosjenkins.local build.centosjenkins.local jenkins.centosjenkins.local)
     centosjenkins_config.vm.network :private_network, ip: "10.0.1.48"
     #set some machine-specific options	
     centosjenkins_config.vm.provider "virtualbox" do |v|
