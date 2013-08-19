@@ -1,0 +1,105 @@
+Vagrant.configure("2") do |config|
+  # All Vagrant configuration is done here. The most common configuration
+  # options are documented and commented below. For a complete reference,
+  # please see the online documentation at vagrantup.com.
+
+  ####################
+  # Snippets to use
+  ####################
+  
+  #NFS folder sharing for Puppet modules and manifests
+    #config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/modules" #:nfs => true
+    #config.vm.synced_folder "manifests/", "/etc/puppet/manifests" #:nfs => true
+    #config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/hieradata", "/etc/puppet/hieradata" #:nfs => true
+    
+    #Puppet provisioning scripts
+    #vmname_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1304_puppet_master_script.sh"
+    #vmname_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1304_puppet_agent_script.sh"
+
+  ####################
+  ####################
+
+  #vagrant-hostmanager plugin options
+  config.hostmanager.enabled = true
+  config.hostmanager.ignore_private_ip = false
+  #update the /etc/hosts of the host OS
+  config.hostmanager.manage_host = true
+  #incorporate offline box's IPs into the /etc/hosts of boxes that are up/being brought up
+  config.hostmanager.include_offline = true
+
+  #A Puppet master
+  config.vm.define "antmaster".to_sym do |antmaster_config|
+    #the base box we're using
+    antmaster_config.vm.box = "ubuntu-13.04-server-amd64"
+    #the box's hostname
+    antmaster_config.vm.hostname = "antmaster.local"
+    #enable the hostmanager Vagrant plugin for this VM
+    antmaster_config.hostmanager.enabled = true
+    #some aliases the hostmanager plugin will add to the hosts files of other VMs
+    antmaster_config.hostmanager.aliases = %w(antmaster)
+    #set a static IP
+    antmaster_config.vm.network :private_network, ip: "10.0.1.100"
+    #set some machine-specific options	
+    antmaster_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+  end
+  
+  #An Ubuntu VM for Puppetizing
+  config.vm.define "antubuntu".to_sym do |antubuntu_config|
+    #the base box we're using
+    antubuntu_config.vm.box = "ubuntu-13.04-server-amd64"
+    #the box's hostname
+    antubuntu_config.vm.hostname = "antubuntu.local"
+    #enable the hostmanager Vagrant plugin for this VM
+    antubuntu_config.hostmanager.enabled = true
+    #some aliases the hostmanager plugin will add to the hosts files of other VMs
+    antubuntu_config.hostmanager.aliases = %w(antubuntu)
+    #set a static IP
+    antubuntu_config.vm.network :private_network, ip: "10.0.1.101"
+    #set some machine-specific options	
+    antubuntu_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+  end
+
+  #A Debian VM for Puppetizing
+  config.vm.define "antdebian".to_sym do |antdebian_config|
+    #the base box we're using
+    antdebian_config.vm.box = "debian-7.1-amd64"
+    #the box's hostname
+    antdebian_config.vm.hostname = "antdebian.local"
+    #enable the hostmanager Vagrant plugin for this VM
+    antdebian_config.hostmanager.enabled = true
+    #some aliases the hostmanager plugin will add to the hosts files of other VMs
+    antdebian_config.hostmanager.aliases = %w(antdebian)
+    #set a static IP
+    antdebian_config.vm.network :private_network, ip: "10.0.1.102"
+    #set some machine-specific options	
+    antdebian_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+  end
+  
+  #A Debian VM for Puppetizing
+  config.vm.define "antcentos".to_sym do |antcentos_config|
+    #the base box we're using
+    antcentos_config.vm.box = "centos-6.4-amd64"
+    #the box's hostname
+    antcentos_config.vm.hostname = "antcentos.local"
+    #enable the hostmanager Vagrant plugin for this VM
+    antcentos_config.hostmanager.enabled = true
+    #some aliases the hostmanager plugin will add to the hosts files of other VMs
+    antcentos_config.hostmanager.aliases = %w(antcentos)
+    #set a static IP
+    antcentos_config.vm.network :private_network, ip: "10.0.1.103"
+    #set some machine-specific options	
+    antcentos_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+  end
+end
