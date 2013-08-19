@@ -36,7 +36,7 @@ Vagrant.configure("2") do |config|
     #enable the hostmanager Vagrant plugin for this VM
     mavenmaster_config.hostmanager.enabled = true
     #some aliases the hostmanager plugin will add to the hosts files of other VMs
-    mavenmaster_config.hostmanager.aliases = %w(mavenmaster)
+    mavenmaster_config.hostmanager.aliases = %w(mavenmaster master puppet puppet.local)
     #set a static IP
     mavenmaster_config.vm.network :private_network, ip: "10.0.1.104"
     #set some machine-specific options	
