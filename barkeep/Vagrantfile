@@ -1,0 +1,67 @@
+Vagrant.configure("2") do |config|
+  # All Vagrant configuration is done here. The most common configuration
+  # options are documented and commented below. For a complete reference,
+  # please see the online documentation at vagrantup.com.
+
+  ####################
+  # Snippets to use
+  ####################
+  
+  #NFS folder sharing for Puppet modules and manifests
+    #config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/modules" #:nfs => true
+    #config.vm.synced_folder "manifests/", "/etc/puppet/manifests" #:nfs => true
+    #config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/hieradata", "/etc/puppet/hieradata" #:nfs => true
+    
+    #Puppet provisioning scripts
+    #vmname_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1304_puppet_master_script.sh"
+    #vmname_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1304_puppet_agent_script.sh"
+
+  ####################
+  ####################
+
+  #vagrant-hostmanager plugin options
+  config.hostmanager.enabled = true
+  config.hostmanager.ignore_private_ip = false
+  #update the /etc/hosts of the host OS
+  config.hostmanager.manage_host = true
+  #incorporate offline box's IPs into the /etc/hosts of boxes that are up/being brought up
+  config.hostmanager.include_offline = true
+
+  #Barkeep Ubuntu server
+  config.vm.define "barkeepubuntu".to_sym do |barkeepubuntu_config|
+    #the base box we're using
+    barkeepubuntu_config.vm.box = "ubuntu-13.04-server-amd64"
+    #the box's hostname
+    barkeepubuntu_config.vm.hostname = "barkeepubuntu.local"
+    #enable the hostmanager Vagrant plugin for this VM
+    barkeepubuntu_config.hostmanager.enabled = true
+    #some aliases the hostmanager plugin will add to the hosts files of other VMs
+    barkeepubuntu_config.hostmanager.aliases = %w(barkeepubuntu review.barkeepubuntu review.barkeepubuntu.local)
+    #set a static IP
+    barkeepubuntu_config.vm.network :private_network, ip: "10.0.1.108"
+    #set some machine-specific options	
+    barkeepubuntu_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+  end
+  
+  #A CentOS Barkeep server
+  config.vm.define "barkeepcentos".to_sym do |barkeepcentos_config|
+    #the base box we're using
+    barkeepcentos_config.vm.box = "centos-6.4-amd64"
+    #the box's hostname
+    barkeepcentos_config.vm.hostname = "barkeepcentos.local"
+    #enable the hostmanager Vagrant plugin for this VM
+    barkeepcentos_config.hostmanager.enabled = true
+    #some aliases the hostmanager plugin will add to the hosts files of other VMs
+    barkeepcentos_config.hostmanager.aliases = %w(barkeepcentos review.barkeepcentos review.barkeepcentos.local)
+    #set a static IP
+    barkeepcentos_config.vm.network :private_network, ip: "10.0.1.109"
+    #set some machine-specific options	
+    barkeepcentos_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+  end
+end
