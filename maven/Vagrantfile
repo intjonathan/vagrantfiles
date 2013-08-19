@@ -1,0 +1,105 @@
+Vagrant.configure("2") do |config|
+  # All Vagrant configuration is done here. The most common configuration
+  # options are documented and commented below. For a complete reference,
+  # please see the online documentation at vagrantup.com.
+
+  ####################
+  # Snippets to use
+  ####################
+  
+  #NFS folder sharing for Puppet modules and manifests
+    #config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/modules" #:nfs => true
+    #config.vm.synced_folder "manifests/", "/etc/puppet/manifests" #:nfs => true
+    #config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/hieradata", "/etc/puppet/hieradata" #:nfs => true
+    
+    #Puppet provisioning scripts
+    #vmname_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1304_puppet_master_script.sh"
+    #vmname_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1304_puppet_agent_script.sh"
+
+  ####################
+  ####################
+
+  #vagrant-hostmanager plugin options
+  config.hostmanager.enabled = true
+  config.hostmanager.ignore_private_ip = false
+  #update the /etc/hosts of the host OS
+  config.hostmanager.manage_host = true
+  #incorporate offline box's IPs into the /etc/hosts of boxes that are up/being brought up
+  config.hostmanager.include_offline = true
+
+  #A Puppet master
+  config.vm.define "mavenmaster".to_sym do |mavenmaster_config|
+    #the base box we're using
+    mavenmaster_config.vm.box = "ubuntu-13.04-server-amd64"
+    #the box's hostname
+    mavenmaster_config.vm.hostname = "mavenmaster.local"
+    #enable the hostmanager Vagrant plugin for this VM
+    mavenmaster_config.hostmanager.enabled = true
+    #some aliases the hostmanager plugin will add to the hosts files of other VMs
+    mavenmaster_config.hostmanager.aliases = %w(mavenmaster)
+    #set a static IP
+    mavenmaster_config.vm.network :private_network, ip: "10.0.1.104"
+    #set some machine-specific options	
+    mavenmaster_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+  end
+  
+  #An Ubuntu VM for Puppetizing
+  config.vm.define "mavenubuntu".to_sym do |mavenubuntu_config|
+    #the base box we're using
+    mavenubuntu_config.vm.box = "ubuntu-13.04-server-amd64"
+    #the box's hostname
+    mavenubuntu_config.vm.hostname = "mavenubuntu.local"
+    #enable the hostmanager Vagrant plugin for this VM
+    mavenubuntu_config.hostmanager.enabled = true
+    #some aliases the hostmanager plugin will add to the hosts files of other VMs
+    mavenubuntu_config.hostmanager.aliases = %w(mavenubuntu)
+    #set a static IP
+    mavenubuntu_config.vm.network :private_network, ip: "10.0.1.105"
+    #set some machine-specific options	
+    mavenubuntu_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+  end
+
+  #A Debian VM for Puppetizing
+  config.vm.define "mavendebian".to_sym do |mavendebian_config|
+    #the base box we're using
+    mavendebian_config.vm.box = "debian-7.1-amd64"
+    #the box's hostname
+    mavendebian_config.vm.hostname = "mavendebian.local"
+    #enable the hostmanager Vagrant plugin for this VM
+    mavendebian_config.hostmanager.enabled = true
+    #some aliases the hostmanager plugin will add to the hosts files of other VMs
+    mavendebian_config.hostmanager.aliases = %w(mavendebian)
+    #set a static IP
+    mavendebian_config.vm.network :private_network, ip: "10.0.1.106"
+    #set some machine-specific options	
+    mavendebian_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+  end
+  
+  #A CentOS VM for Puppetizing
+  config.vm.define "mavencentos".to_sym do |mavencentos_config|
+    #the base box we're using
+    mavencentos_config.vm.box = "centos-6.4-amd64"
+    #the box's hostname
+    mavencentos_config.vm.hostname = "mavencentos.local"
+    #enable the hostmanager Vagrant plugin for this VM
+    mavencentos_config.hostmanager.enabled = true
+    #some aliases the hostmanager plugin will add to the hosts files of other VMs
+    mavencentos_config.hostmanager.aliases = %w(mavencentos)
+    #set a static IP
+    mavencentos_config.vm.network :private_network, ip: "10.0.1.107"
+    #set some machine-specific options	
+    mavencentos_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+  end
+end
