@@ -1,0 +1,48 @@
+Vagrant.configure("2") do |config|
+  # All Vagrant configuration is done here. The most common configuration
+  # options are documented and commented below. For a complete reference,
+  # please see the online documentation at vagrantup.com.
+
+  ####################
+  # Snippets to use
+  ####################
+  
+  #NFS folder sharing for Puppet modules and manifests
+    #config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/modules" #:nfs => true
+    #config.vm.synced_folder "manifests/", "/etc/puppet/manifests" #:nfs => true
+    #config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/hieradata", "/etc/puppet/hieradata" #:nfs => true
+    
+    #Puppet provisioning scripts
+    #vmname_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1304_puppet_master_script.sh"
+    #vmname_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1304_puppet_agent_script.sh"
+
+  ####################
+  ####################
+
+  #vagrant-hostmanager plugin options
+  config.hostmanager.enabled = true
+  config.hostmanager.ignore_private_ip = false
+  #update the /etc/hosts of the host OS
+  config.hostmanager.manage_host = true
+  #incorporate offline box's IPs into the /etc/hosts of boxes that are up/being brought up
+  config.hostmanager.include_offline = true
+
+  #gitblit Ubuntu server
+  config.vm.define "gitblit".to_sym do |gitblit_config|
+    #the base box we're using
+    gitblit_config.vm.box = "ubuntu-13.04-server-amd64"
+    #the box's hostname
+    gitblit_config.vm.hostname = "gitblit.local"
+    #enable the hostmanager Vagrant plugin for this VM
+    gitblit_config.hostmanager.enabled = true
+    #some aliases the hostmanager plugin will add to the hosts files of other VMs
+    gitblit_config.hostmanager.aliases = %w(gitblit gitblit.local)
+    #set a static IP
+    gitblit_config.vm.network :private_network, ip: "10.0.1.121"
+    #set some machine-specific options	
+    gitblit_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "2048"]
+    end
+  end
+end
