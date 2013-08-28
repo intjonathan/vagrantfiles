@@ -12,8 +12,14 @@ Vagrant.configure("2") do |config|
 
   ####################
   ####################
+
+  #vagrant-hostmanager plugin options
   config.hostmanager.enabled = true
   config.hostmanager.ignore_private_ip = false
+  #update the /etc/hosts of the host OS
+  config.hostmanager.manage_host = true
+  #incorporate offline box's IPs into the /etc/hosts of boxes that are up/being brought up
+  config.hostmanager.include_offline = true
 
   #An Ubuntu rsyslog server
   config.vm.define "rsyslogserver".to_sym do |rsyslogserver_config|
