@@ -37,7 +37,7 @@ Vagrant.configure("2") do |config|
   end
 
   #An Elasticsearch node
-  config.vm.define "logelasticsearch1".to_sym do |elasticsearch1_config|
+  config.vm.define "elasticsearch1".to_sym do |elasticsearch1_config|
     elasticsearch1_config.vm.box = "ubuntu-13.04-server-amd64"
     elasticsearch1_config.vm.hostname = "elasticsearch1.local"
     elasticsearch1_config.hostmanager.enabled = true
@@ -50,7 +50,7 @@ Vagrant.configure("2") do |config|
   end
 
   #An Elasticsearch node
-  config.vm.define "logelasticsearch2".to_sym do |elasticsearch2_config|
+  config.vm.define "elasticsearch2".to_sym do |elasticsearch2_config|
     elasticsearch2_config.vm.box = "ubuntu-13.04-server-amd64"
     elasticsearch2_config.vm.hostname = "elasticsearch2.local"
     elasticsearch2_config.hostmanager.enabled = true
