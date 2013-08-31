@@ -88,6 +88,58 @@ Vagrant.configure("2") do |config|
     end
   end
   
+  #An Elasticsearch node
+  config.vm.define "elasticsearch5".to_sym do |elasticsearch5_config|
+    elasticsearch5_config.vm.box = "ubuntu-13.04-server-amd64"
+    elasticsearch5_config.vm.hostname = "elasticsearch5.local"
+    elasticsearch5_config.hostmanager.enabled = true
+    elasticsearch5_config.vm.network :private_network, ip: "10.0.1.96"
+    #set some machine-specific options	
+    elasticsearch5_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+  end
+  
+  #An Elasticsearch node
+  config.vm.define "elasticsearch6".to_sym do |elasticsearch6_config|
+    elasticsearch6_config.vm.box = "ubuntu-13.04-server-amd64"
+    elasticsearch6_config.vm.hostname = "elasticsearch6.local"
+    elasticsearch6_config.hostmanager.enabled = true
+    elasticsearch6_config.vm.network :private_network, ip: "10.0.1.97"
+    #set some machine-specific options	
+    elasticsearch6_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+  end
+  
+  #An Elasticsearch node
+  config.vm.define "elasticsearch7".to_sym do |elasticsearch7_config|
+    elasticsearch7_config.vm.box = "ubuntu-13.04-server-amd64"
+    elasticsearch7_config.vm.hostname = "elasticsearch7.local"
+    elasticsearch7_config.hostmanager.enabled = true
+    elasticsearch7_config.vm.network :private_network, ip: "10.0.1.98"
+    #set some machine-specific options	
+    elasticsearch7_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+  end
+  
+  #An Elasticsearch node
+  config.vm.define "elasticsearch8".to_sym do |elasticsearch8_config|
+    elasticsearch8_config.vm.box = "ubuntu-13.04-server-amd64"
+    elasticsearch8_config.vm.hostname = "elasticsearch8.local"
+    elasticsearch8_config.hostmanager.enabled = true
+    elasticsearch8_config.vm.network :private_network, ip: "10.0.1.99"
+    #set some machine-specific options	
+    elasticsearch8_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+  end
+  
   #A web server for Kibana 3
   config.vm.define "kibanathree".to_sym do |kibanathree_config|
     kibanathree_config.vm.box = "ubuntu-13.04-server-amd64"
