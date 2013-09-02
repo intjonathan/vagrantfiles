@@ -1,57 +1,57 @@
 Vagrant.configure("2") do |config|
-# All Vagrant configuration is done here. The most common configuration
-# options are documented and commented below. For a complete reference,
-# please see the online documentation at vagrantup.com.
+  # All Vagrant configuration is done here. The most common configuration
+  # options are documented and commented below. For a complete reference,
+  # please see the online documentation at vagrantup.com.
 
-####################
-# Snippets to use
-####################
+  ####################
+  # Snippets to use
+  ####################
 
-#NFS folder sharing
-#config.vm.synced_folder "modules", "/etc/puppet/modules", :nfs => true
+  #NFS folder sharing
+  #config.vm.synced_folder "modules", "/etc/puppet/modules", :nfs => true
 
-####################
-####################
-config.vm.box = "ubuntu-13.04-server-amd64"
-config.hostmanager.enabled = true
-config.hostmanager.ignore_private_ip = false
+  ####################
+  ####################
+  config.vm.box = "ubuntu-13.04-server-amd64"
+  config.hostmanager.enabled = true
+  config.hostmanager.ignore_private_ip = false
 
-    #LDAP server
-    config.vm.define "ldap".to_sym do |ldap_config|
-        ldap_config.vm.box = "ubuntu-13.04-server-amd64"
-        ldap_config.vm.hostname = "ldap.local"
-        ldap_config.hostmanager.enabled = true
-        ldap_config.vm.network :private_network, ip: "10.0.1.20"
-        #set some machine-specific options	
-        ldap_config.vm.provider "virtualbox" do |v|
-           #change the amount of RAM
-            v.customize ["modifyvm", :id, "--memory", "1024"]
-        end
+  #LDAP server
+  config.vm.define "ldap".to_sym do |ldap_config|
+    ldap_config.vm.box = "ubuntu-13.04-server-amd64"
+    ldap_config.vm.hostname = "ldap.local"
+    ldap_config.hostmanager.enabled = true
+    ldap_config.vm.network :private_network, ip: "10.0.1.20"
+    #set some machine-specific options	
+    ldap_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM
+      v.customize ["modifyvm", :id, "--memory", "1024"]
     end
+  end
 
-    #an Ubuntu PAM client
-    config.vm.define "ubuntupamclient".to_sym do |ubuntupamclient_config|
-        ubuntupamclient_config.vm.box = "ubuntu-13.04-server-amd64"
-        ubuntupamclient_config.vm.hostname = "ubuntupamclient.local"
-        ubuntupamclient_config.hostmanager.enabled = true
-        ubuntupamclient_config.vm.network :private_network, ip: "10.0.1.21"
-        #set some machine-specific options	
-        ubuntupamclient_config.vm.provider "virtualbox" do |v|
-           #change the amount of RAM
-            v.customize ["modifyvm", :id, "--memory", "512"]
-        end
+  #An Ubuntu LDAP client
+  config.vm.define "ubuntupamclient".to_sym do |ubuntuldapclient_config|
+    ubuntupamclient_config.vm.box = "ubuntu-13.04-server-amd64"
+    ubuntupamclient_config.vm.hostname = "ubuntuldapclient.local"
+    ubuntupamclient_config.hostmanager.enabled = true
+    ubuntupamclient_config.vm.network :private_network, ip: "10.0.1.21"
+    #set some machine-specific options	
+    ubuntupamclient_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM
+      v.customize ["modifyvm", :id, "--memory", "512"]
     end
-    
-    #a CentOS PAM client
-    config.vm.define "centospamclient".to_sym do |centospamclient_config|
-        centospamclient_config.vm.box = "centos-6.4-amd64"
-        centospamclient_config.vm.hostname = "centospamclient.local"
-        centospamclient_config.hostmanager.enabled = true
-        centospamclient_config.vm.network :private_network, ip: "10.0.1.22"
-        #set some machine-specific options	
-        centospamclient_config.vm.provider "virtualbox" do |v|
-           #change the amount of RAM
-            v.customize ["modifyvm", :id, "--memory", "512"]
-        end
+  end
+
+  #A CentOS LDAP client
+  config.vm.define "centospamclient".to_sym do |centosldapclient_config|
+    centospamclient_config.vm.box = "centos-6.4-amd64"
+    centospamclient_config.vm.hostname = "centosldapclient.local"
+    centospamclient_config.hostmanager.enabled = true
+    centospamclient_config.vm.network :private_network, ip: "10.0.1.22"
+    #set some machine-specific options	
+    centospamclient_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM
+      v.customize ["modifyvm", :id, "--memory", "512"]
     end
+  end
 end
