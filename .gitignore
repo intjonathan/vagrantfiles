@@ -17,4 +17,5 @@
 chef/packages
 ntp/README.md
 rabbitmq/README.md
-modules
+modules/
+manifests/
