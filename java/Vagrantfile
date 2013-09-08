@@ -1,0 +1,71 @@
+Vagrant.configure("2") do |config|
+  # All Vagrant configuration is done here. The most common configuration
+  # options are documented and commented below. For a complete reference,
+  # please see the online documentation at vagrantup.com.
+
+  ####################
+  # Snippets to use
+  ####################
+  
+  #NFS folder sharing for Puppet modules and manifests
+  #config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/modules" #:nfs => true
+  #config.vm.synced_folder "manifests/", "/etc/puppet/manifests" #:nfs => true
+  #config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/hieradata", "/etc/puppet/hieradata" #:nfs => true
+  
+  #Puppet provisioning scripts
+  #phabricator_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1304_puppet_master_script.sh"
+  #phabricator_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1304_puppet_agent_script.sh"
+
+  ####################
+  ####################
+
+  #vagrant-hostmanager plugin options
+  config.hostmanager.enabled = true
+  config.hostmanager.ignore_private_ip = false
+  #update the /etc/hosts of the host OS
+  config.hostmanager.manage_host = true
+  #incorporate offline box's IPs into the /etc/hosts of boxes that are up/being brought up
+  config.hostmanager.include_offline = true
+
+  #Puppet master server
+  config.vm.define "javamaster".to_sym do |javamaster_config|
+    javamaster_config.vm.box = "ubuntu-13.04-server-amd64"
+    javamaster_config.vm.hostname = "javamaster.local"
+    javamaster_config.hostmanager.enabled = true
+    javamaster_config.hostmanager.aliases = %w(javamaster puppet)
+    javamaster_config.vm.network :private_network, ip: "10.0.1.175"
+    #set some machine-specific options	
+    javamaster_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+  end
+  
+  #VM for OpenJDK
+  config.vm.define "openjava".to_sym do |openjava_config|
+    openjava_config.vm.box = "ubuntu-13.04-server-amd64"
+    openjava_config.vm.hostname = "openjava.local"
+    openjava_config.hostmanager.enabled = true
+    openjava_config.hostmanager.aliases = %w(openjava)
+    openjava_config.vm.network :private_network, ip: "10.0.1.176"
+    #set some machine-specific options	
+    openjava_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+  end
+
+  #VM for Oracle's JDK
+  config.vm.define "oraclejava".to_sym do |oraclejava_config|
+    oraclejava_config.vm.box = "ubuntu-13.04-server-amd64"
+    oraclejava_config.vm.hostname = "oraclejava.local"
+    oraclejava_config.hostmanager.enabled = true
+    oraclejava_config.hostmanager.aliases = %w(oraclejava)
+    oraclejava_config.vm.network :private_network, ip: "10.0.1.177"
+    #set some machine-specific options	
+    oraclejava_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+  end
+end
