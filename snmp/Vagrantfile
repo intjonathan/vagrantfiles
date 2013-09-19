@@ -1,0 +1,90 @@
+Vagrant.configure("2") do |config|
+  # All Vagrant configuration is done here. The most common configuration
+  # options are documented and commented below. For a complete reference,
+  # please see the online documentation at vagrantup.com.
+
+  ####################
+  # Snippets to use
+  ####################
+
+  #NFS folder sharing
+  #config.vm.synced_folder "modules", "/etc/puppet/modules", :nfs => true
+
+  ####################
+  ####################
+
+  #vagrant-hostmanager plugin options
+  config.hostmanager.enabled = true
+  config.hostmanager.ignore_private_ip = false
+  #update the /etc/hosts of the host OS
+  config.hostmanager.manage_host = true
+  #incorporate offline box's IPs into the /etc/hosts of boxes that are up/being brought up
+  config.hostmanager.include_offline = true
+
+  #An SNMP server (running net-snmp and Observium: http://www.observium.org/wiki/Main_Page)
+  config.vm.define "snmpserver".to_sym do |snmpserver_config|
+    snmpserver_config.vm.box = "ubuntu-13.04-server-amd64"
+    snmpserver_config.vm.hostname = "snmpserver.local"
+    snmpserver_config.hostmanager.enabled = true
+    #giving it 'puppet' as an alias so that the agents can connect to it with their default settings
+    snmpserver_config.hostmanager.aliases = %w(snmpserver)
+    snmpserver_config.vm.network :private_network, ip: "10.0.1.190"
+    #set some machine-specific options	
+    snmpserver_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+  end
+
+  #An SNMP client node
+  config.vm.define "snmpclient1".to_sym do |snmpclient1_config|
+    snmpclient1_config.vm.box = "ubuntu-13.04-server-amd64"
+    snmpclient1_config.vm.hostname = "snmpclient1.local"
+    snmpclient1_config.hostmanager.enabled = true
+    snmpclient1_config.vm.network :private_network, ip: "10.0.1.191"
+    #set some machine-specific options	
+    snmpclient1_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+  end
+
+  #An SNMP client node
+  config.vm.define "snmpclient2".to_sym do |snmpclient2_config|
+    snmpclient2_config.vm.box = "ubuntu-13.04-server-amd64"
+    snmpclient2_config.vm.hostname = "snmpclient2.local"
+    snmpclient2_config.hostmanager.enabled = true
+    snmpclient2_config.vm.network :private_network, ip: "10.0.1.192"
+    #set some machine-specific options	
+    snmpclient2_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+  end
+  
+  #An SNMP client node
+  config.vm.define "snmpclient3".to_sym do |snmpclient3_config|
+    snmpclient3_config.vm.box = "ubuntu-13.04-server-amd64"
+    snmpclient3_config.vm.hostname = "snmpclient3.local"
+    snmpclient3_config.hostmanager.enabled = true
+    snmpclient3_config.vm.network :private_network, ip: "10.0.1.194"
+    #set some machine-specific options	
+    snmpclient3_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+  end
+  
+  #An SNMP client node
+  config.vm.define "snmpclient4".to_sym do |snmpclient4_config|
+    snmpclient4_config.vm.box = "ubuntu-13.04-server-amd64"
+    snmpclient4_config.vm.hostname = "snmpclient4.local"
+    snmpclient4_config.hostmanager.enabled = true
+    snmpclient4_config.vm.network :private_network, ip: "10.0.1.195"
+    #set some machine-specific options	
+    snmpclient4_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+  end
+end
