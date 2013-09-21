@@ -87,4 +87,18 @@ Vagrant.configure("2") do |config|
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
   end
+  
+  #An SNMP client node
+  config.vm.define "snmpclient5".to_sym do |snmpclient5_config|
+    snmpclient5_config.vm.box = "centos-6.4-amd64"
+    snmpclient5_config.vm.hostname = "snmpclient5.local"
+    snmpclient5_config.hostmanager.enabled = true
+    snmpclient5_config.vm.network :private_network, ip: "10.0.1.195"
+    #set some machine-specific options	
+    snmpclient5_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+  end
+  
 end
