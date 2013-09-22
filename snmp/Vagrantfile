@@ -27,7 +27,7 @@ Vagrant.configure("2") do |config|
     snmpserver_config.vm.hostname = "snmpserver.local"
     snmpserver_config.hostmanager.enabled = true
     #giving it 'puppet' as an alias so that the agents can connect to it with their default settings
-    snmpserver_config.hostmanager.aliases = %w(snmpserver, puppet, puppet.local)
+    snmpserver_config.hostmanager.aliases = %w(snmpserver puppet puppet.local)
     snmpserver_config.vm.network :private_network, ip: "10.0.1.190"
     #set some machine-specific options	
     snmpserver_config.vm.provider "virtualbox" do |v|
