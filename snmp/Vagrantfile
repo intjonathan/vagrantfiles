@@ -34,6 +34,7 @@ Vagrant.configure("2") do |config|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "1024"]
     end
+    snmpserver_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1304_puppet_master_script.sh"
   end
 
   #An SNMP client node
@@ -47,11 +48,12 @@ Vagrant.configure("2") do |config|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
+    snmpclient1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1304_puppet_agent_script.sh"
   end
-
-  #An SNMP client node
+  
+      #An SNMP client node
   config.vm.define "snmpclient2".to_sym do |snmpclient2_config|
-    snmpclient2_config.vm.box = "ubuntu-13.04-server-amd64"
+    snmpclient2_config.vm.box = "centos-6.4-amd64"
     snmpclient2_config.vm.hostname = "snmpclient2.local"
     snmpclient2_config.hostmanager.enabled = true
     snmpclient2_config.vm.network :private_network, ip: "10.0.1.192"
@@ -60,45 +62,6 @@ Vagrant.configure("2") do |config|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
+    snmpclient2_config.vm.provision :shell, :path => "../provisioning_scripts/rhel_centos_puppet_agent_script.sh"
   end
-  
-  #An SNMP client node
-  config.vm.define "snmpclient3".to_sym do |snmpclient3_config|
-    snmpclient3_config.vm.box = "ubuntu-13.04-server-amd64"
-    snmpclient3_config.vm.hostname = "snmpclient3.local"
-    snmpclient3_config.hostmanager.enabled = true
-    snmpclient3_config.vm.network :private_network, ip: "10.0.1.194"
-    #set some machine-specific options	
-    snmpclient3_config.vm.provider "virtualbox" do |v|
-      #change the amount of RAM 
-      v.customize ["modifyvm", :id, "--memory", "512"]
-    end
-  end
-  
-  #An SNMP client node
-  config.vm.define "snmpclient4".to_sym do |snmpclient4_config|
-    snmpclient4_config.vm.box = "ubuntu-13.04-server-amd64"
-    snmpclient4_config.vm.hostname = "snmpclient4.local"
-    snmpclient4_config.hostmanager.enabled = true
-    snmpclient4_config.vm.network :private_network, ip: "10.0.1.195"
-    #set some machine-specific options	
-    snmpclient4_config.vm.provider "virtualbox" do |v|
-      #change the amount of RAM 
-      v.customize ["modifyvm", :id, "--memory", "512"]
-    end
-  end
-  
-  #An SNMP client node
-  config.vm.define "snmpclient5".to_sym do |snmpclient5_config|
-    snmpclient5_config.vm.box = "centos-6.4-amd64"
-    snmpclient5_config.vm.hostname = "snmpclient5.local"
-    snmpclient5_config.hostmanager.enabled = true
-    snmpclient5_config.vm.network :private_network, ip: "10.0.1.195"
-    #set some machine-specific options	
-    snmpclient5_config.vm.provider "virtualbox" do |v|
-      #change the amount of RAM 
-      v.customize ["modifyvm", :id, "--memory", "512"]
-    end
-  end
-  
 end
