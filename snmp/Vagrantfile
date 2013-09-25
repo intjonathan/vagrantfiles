@@ -55,7 +55,7 @@ Vagrant.configure("2") do |config|
     snmpclient1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1304_puppet_agent_script.sh"
   end
   
-      #An SNMP client node
+  #An SNMP client node
   config.vm.define "snmpclient2".to_sym do |snmpclient2_config|
     snmpclient2_config.vm.box = "centos-6.4-amd64"
     snmpclient2_config.vm.hostname = "snmpclient2.local"
@@ -68,4 +68,19 @@ Vagrant.configure("2") do |config|
     end
     snmpclient2_config.vm.provision :shell, :path => "../provisioning_scripts/rhel_centos_puppet_agent_script.sh"
   end
+  
+  #An SNMP client node
+  config.vm.define "snmpclient3".to_sym do |snmpclient3_config|
+    snmpclient3_config.vm.box = "debian-7.1-amd64"
+    snmpclient3_config.vm.hostname = "snmpclient3.local"
+    snmpclient3_config.hostmanager.enabled = true
+    snmpclient3_config.vm.network :private_network, ip: "10.0.1.193"
+    #set some machine-specific options	
+    snmpclient3_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    snmpclient3_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1304_puppet_agent_script.sh"
+  end
+  
 end
