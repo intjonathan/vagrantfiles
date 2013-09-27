@@ -10,12 +10,8 @@
 #Track only this repo's README.md
 !./README.md
 
-!*/manifests/site.pp
+!**/manifests/site.pp
 
 #some ignores to get around the derpiness of the .gitignore regex parsing bug in 1.8.3
 .vagrant
 chef/packages
-ntp/README.md
-rabbitmq/README.md
-modules/
-manifests/
