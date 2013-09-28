@@ -13,5 +13,5 @@
 !**/manifests/site.pp
 
 #some ignores to get around the derpiness of the .gitignore regex parsing bug in 1.8.3
-.vagrant/
+.vagrant
 chef/packages
