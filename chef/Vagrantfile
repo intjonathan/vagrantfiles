@@ -1,53 +1,82 @@
-# -*- mode: ruby -*-
-# vi: set ft=ruby :
-
-Vagrant::Config.run do |config|
+Vagrant.configure("2") do |config|
   # All Vagrant configuration is done here. The most common configuration
   # options are documented and commented below. For a complete reference,
   # please see the online documentation at vagrantup.com.
 
+  ####################
+  # Snippets to use
+  ####################
+
+  #NFS folder sharing
+  #config.vm.synced_folder "modules", "/etc/puppet/modules", :nfs => true
   
-  #chef server
-  config.vm.define :chef do |chef_config|
-	chef_config.vm.box = "ubuntu-11.04-server-amd64"
-	chef_config.vm.host_name = "chef"
-	chef_config.vm.network :hostonly, "10.0.1.90"
-	chef_config.vm.customize ["modifyvm", :id, "--memory", 1024]
-	#chef_config.ssh.port = 22
-	chef_config.vm.share_folder "chef-packages", "/packages", "packages", :nfs=> true
-	chef_config.vm.host_name = "chef"
-  end	
+  ####################
+  ####################
+
+  #vagrant-hostmanager plugin options
+  config.hostmanager.enabled = true
+  config.hostmanager.ignore_private_ip = false
+  #update the /etc/hosts of the host OS
+  config.hostmanager.manage_host = true
+  #incorporate offline box's IPs into the /etc/hosts of boxes that are up/being brought up
+  config.hostmanager.include_offline = true
+
+  #A chef server
+  config.vm.define "chefserver".to_sym do |chefserver_config|
+    chefserver_config.vm.box = "ubuntu-13.04-server-amd64"
+    chefserver_config.vm.hostname = "chefserver.local"
+    chefserver_config.hostmanager.enabled = true
+    #giving it 'puppet' as an alias so that the agents can connect to it with their default settings
+    chefserver_config.hostmanager.aliases = %w(chefserver chef chef.local)
+    chefserver_config.vm.network :private_network, ip: "10.0.1.190"
+    #set some machine-specific options	
+    chefserver_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+    chefserver_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1304_puppet_master_script.sh"
+  end
+
+  #A Chef client node
+  config.vm.define "chefclient1".to_sym do |chefclient1_config|
+    chefclient1_config.vm.box = "ubuntu-13.04-server-amd64"
+    chefclient1_config.vm.hostname = "chefclient1.local"
+    chefclient1_config.hostmanager.enabled = true
+    chefclient1_config.vm.network :private_network, ip: "10.0.1.191"
+    #set some machine-specific options	
+    chefclient1_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    chefclient1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1304_puppet_agent_script.sh"
+  end
   
-    #chef server
-  config.vm.define :node1 do |node1_config|
-	node1_config.vm.box = "ubuntu-11.04-server-amd64"
-	node1_config.vm.host_name = "node1"
-	node1_config.vm.network :hostonly, "10.0.1.91"
-	node1_config.vm.customize ["modifyvm", :id, "--memory", 512]
-	#node1_config.ssh.port = 22
-	#node1_config.vm.share_folder "chef-packages", "/packages", "packages", :nfs=> true
-	node1_config.vm.host_name = "node1"
-  end	
+  #A Chef client node
+  config.vm.define "chefclient2".to_sym do |chefclient2_config|
+    chefclient2_config.vm.box = "centos-6.4-amd64"
+    chefclient2_config.vm.hostname = "chefclient2.local"
+    chefclient2_config.hostmanager.enabled = true
+    chefclient2_config.vm.network :private_network, ip: "10.0.1.192"
+    #set some machine-specific options	
+    chefclient2_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    chefclient2_config.vm.provision :shell, :path => "../provisioning_scripts/rhel_centos_puppet_agent_script.sh"
+  end
   
-    #chef node 2
-  config.vm.define :node2 do |node2_config|
-	node2_config.vm.box = "ubuntu-11.04-server-amd64"
-	node2_config.vm.host_name = "node2"
-	node2_config.vm.network :hostonly, "10.0.1.92"
-	node2_config.vm.customize ["modifyvm", :id, "--memory", 512]
-	#node2_config.ssh.port = 22
-	#node2_config.vm.share_folder "chef-packages", "/packages", "packages", :nfs=> true
-	node2_config.vm.host_name = "node2"
-  end	
+  #A Chef client node
+  config.vm.define "chefclient3".to_sym do |chefclient3_config|
+    chefclient3_config.vm.box = "debian-7.1-amd64"
+    chefclient3_config.vm.hostname = "chefclient3.local"
+    chefclient3_config.hostmanager.enabled = true
+    chefclient3_config.vm.network :private_network, ip: "10.0.1.193"
+    #set some machine-specific options	
+    chefclient3_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    chefclient3_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1304_puppet_agent_script.sh"
+  end
   
-    #chef server
-  config.vm.define :node3 do |node3_config|
-	node3_config.vm.box = "ubuntu-11.04-server-amd64"
-	node3_config.vm.host_name = "node3"
-	node3_config.vm.network :hostonly, "10.0.1.93"
-	node3_config.vm.customize ["modifyvm", :id, "--memory", 512]
-	#node3_config.ssh.port = 22
-	#node3_config.vm.share_folder "chef-packages", "/packages", "packages", :nfs=> true
-	node3_config.vm.host_name = "node3"
-  end	
 end
