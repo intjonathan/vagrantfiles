@@ -1,56 +1,86 @@
-# -*- mode: ruby -*-
-# vi: set ft=ruby :
-
-Vagrant::Config.run do |config|
+Vagrant.configure("2") do |config|
   # All Vagrant configuration is done here. The most common configuration
   # options are documented and commented below. For a complete reference,
   # please see the online documentation at vagrantup.com.
 
-  # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "debian-6.0.7-amd64"
+  ####################
+  # Snippets to use
+  ####################
 
+  #NFS folder sharing
+  #config.vm.synced_folder "modules", "/etc/puppet/modules", :nfs => true
+  
+  config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/modules"
+  config.vm.synced_folder "manifests/", "/etc/puppet/manifests"
+  config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/hieradata", "/etc/puppet/hieradata"
 
-  #Nagios server
-  config.vm.define :graphite do |graphite_config|
-  graphite_config.vm.box = "debian-6.0.7-amd64"
-  graphite_config.vm.host_name = "graphite"
-  graphite_config.vm.network :hostonly, "10.0.1.80"
-  graphite_config.vm.customize ["modifyvm", :id, "--memory", 1024]
-  #graphite_config.ssh.port = 22
-  graphite_config.vm.share_folder "graphite-packages", "/packages", "packages", :nfs=> true
-  graphite_config.vm.host_name = "graphite"
-  end			       
+  ####################
+  ####################
+
+  #vagrant-hostmanager plugin options
+  config.hostmanager.enabled = true
+  config.hostmanager.ignore_private_ip = false
+  #update the /etc/hosts of the host OS
+  config.hostmanager.manage_host = true
+  #incorporate offline box's IPs into the /etc/hosts of boxes that are up/being brought up
+  config.hostmanager.include_offline = true
+
+  #A graphite server
+  config.vm.define "graphiteserver".to_sym do |graphiteserver_config|
+    graphiteserver_config.vm.box = "ubuntu-13.04-server-amd64"
+    graphiteserver_config.vm.hostname = "graphiteserver.local"
+    graphiteserver_config.hostmanager.enabled = true
+    #giving it 'puppet' as an alias so that the agents can connect to it with their default settings
+    graphiteserver_config.hostmanager.aliases = %w(graphiteserver puppet puppet.local observium.graphiteserver.local)
+    graphiteserver_config.vm.network :private_network, ip: "10.0.1.190"
+    #set some machine-specific options	
+    graphiteserver_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+    graphiteserver_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1304_puppet_master_script.sh"
+  end
+
+  #A graphite client node
+  config.vm.define "graphiteclient1".to_sym do |graphiteclient1_config|
+    graphiteclient1_config.vm.box = "ubuntu-13.04-server-amd64"
+    graphiteclient1_config.vm.hostname = "graphiteclient1.local"
+    graphiteclient1_config.hostmanager.enabled = true
+    graphiteclient1_config.vm.network :private_network, ip: "10.0.1.191"
+    #set some machine-specific options	
+    graphiteclient1_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    graphiteclient1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1304_puppet_agent_script.sh"
+  end
   
-  #nagios node 1
-  config.vm.define :client1 do |client1_config|
-  client1_config.vm.box = "debian-6.0.7-amd64"
-  client1_config.vm.host_name = "client1"
-  client1_config.vm.network :hostonly, "10.0.1.81"
-  client1_config.vm.customize ["modifyvm", :id, "--memory", 512]
-  #client1_config.ssh.port = 22
-  #client1_config.vm.share_folder "graphite-packages", "/packages", "packages", :nfs=> true
-  client1_config.vm.host_name = "client1"
-  end			      
+  #A graphite client node
+  config.vm.define "graphiteclient2".to_sym do |graphiteclient2_config|
+    graphiteclient2_config.vm.box = "centos-6.4-amd64"
+    graphiteclient2_config.vm.hostname = "graphiteclient2.local"
+    graphiteclient2_config.hostmanager.enabled = true
+    graphiteclient2_config.vm.network :private_network, ip: "10.0.1.192"
+    #set some machine-specific options	
+    graphiteclient2_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    graphiteclient2_config.vm.provision :shell, :path => "../provisioning_scripts/rhel_centos_puppet_agent_script.sh"
+  end
   
-    #nagios node 2
-  config.vm.define :client2 do |client2_config|
-  client2_config.vm.box = "debian-6.0.7-amd64"
-  client2_config.vm.host_name = "client2"
-  client2_config.vm.network :hostonly, "10.0.1.82"
-  client2_config.vm.customize ["modifyvm", :id, "--memory", 512]
-  #client2_config.ssh.port = 22
-  #client2_config.vm.share_folder "graphite-packages", "/packages", "packages", :nfs=> true
-  client2_config.vm.host_name = "client2"
-  end			      
+  #A graphite client node
+  config.vm.define "graphiteclient3".to_sym do |graphiteclient3_config|
+    graphiteclient3_config.vm.box = "debian-7.1-amd64"
+    graphiteclient3_config.vm.hostname = "graphiteclient3.local"
+    graphiteclient3_config.hostmanager.enabled = true
+    graphiteclient3_config.vm.network :private_network, ip: "10.0.1.193"
+    #set some machine-specific options	
+    graphiteclient3_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    graphiteclient3_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1304_puppet_agent_script.sh"
+  end
   
-    #nagios node 3
-  config.vm.define :client3 do |client3_config|
-  client3_config.vm.box = "debian-6.0.7-amd64"
-  client3_config.vm.host_name = "client3"
-  client3_config.vm.network :hostonly, "10.0.1.83"
-  client3_config.vm.customize ["modifyvm", :id, "--memory", 512]
-  #client3_config.ssh.port = 22
-  #client3_config.vm.share_folder "graphite-packages", "/packages", "packages", :nfs=> true
-  client3_config.vm.host_name = "client3"
-  end			      
 end
