@@ -31,7 +31,7 @@ Vagrant.configure("2") do |config|
     graphiteserver_config.vm.hostname = "graphiteserver.local"
     graphiteserver_config.hostmanager.enabled = true
     #giving it 'puppet' as an alias so that the agents can connect to it with their default settings
-    graphiteserver_config.hostmanager.aliases = %w(graphiteserver puppet puppet.local observium.graphiteserver.local)
+    graphiteserver_config.hostmanager.aliases = %w(graphiteserver puppet puppet.local graphite.graphiteserver.local)
     graphiteserver_config.vm.network :private_network, ip: "10.0.1.190"
     #set some machine-specific options	
     graphiteserver_config.vm.provider "virtualbox" do |v|
