@@ -38,7 +38,7 @@ Vagrant.configure("2") do |config|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "1024"]
     end
-    graphiteserver_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1304_puppet_master_script.sh"
+    #graphiteserver_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1304_puppet_master_script.sh"
   end
 
   #A graphite client node
@@ -47,6 +47,7 @@ Vagrant.configure("2") do |config|
     graphiteclient1_config.vm.hostname = "graphiteclient1.local"
     graphiteclient1_config.hostmanager.enabled = true
     graphiteclient1_config.vm.network :private_network, ip: "10.0.1.191"
+    graphiteclient1_config.hostmanager.aliases = %w(graphiteclient1)
     #set some machine-specific options	
     graphiteclient1_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
