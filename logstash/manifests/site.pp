@@ -10,10 +10,3 @@ node 'elasticsearch1', 'elasticsearch2'{
         cluster_name => 'mycluster01',
         bind_interface => 'eth1',
     }
-}
-
-
-node 'logstash' {
-    
-   class {'logstash': }
-}
