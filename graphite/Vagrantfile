@@ -72,7 +72,7 @@ Vagrant.configure("2") do |config|
   
   #A graphite client node
   config.vm.define "graphiteclient3".to_sym do |graphiteclient3_config|
-    graphiteclient3_config.vm.box = "debian-7.1-amd64"
+    graphiteclient3_config.vm.box = "debian-7.2-amd64"
     graphiteclient3_config.vm.hostname = "graphiteclient3.local"
     graphiteclient3_config.hostmanager.enabled = true
     graphiteclient3_config.vm.network :private_network, ip: "10.0.1.193"
