@@ -70,7 +70,7 @@ Vagrant.configure("2") do |config|
   #A Debian VM for Puppetizing
   config.vm.define "mavendebian".to_sym do |mavendebian_config|
     #the base box we're using
-    mavendebian_config.vm.box = "debian-7.1-amd64"
+    mavendebian_config.vm.box = "debian-7.2-amd64"
     #the box's hostname
     mavendebian_config.vm.hostname = "mavendebian.local"
     #enable the hostmanager Vagrant plugin for this VM

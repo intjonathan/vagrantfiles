@@ -38,7 +38,7 @@ Vagrant.configure("2") do |config|
 
   #A Debian rsyslog sender
   config.vm.define "loglogclient1".to_sym do |logclient1_config|
-    logclient1_config.vm.box = "debian-7.1-amd64"
+    logclient1_config.vm.box = "debian-7.2-amd64"
     logclient1_config.vm.hostname = "logclient1.local"
     logclient1_config.hostmanager.enabled = true
     logclient1_config.vm.network :private_network, ip: "10.0.1.51"

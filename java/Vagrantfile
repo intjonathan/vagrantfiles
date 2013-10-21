@@ -60,7 +60,7 @@ Vagrant.configure("2") do |config|
 
   #VM for OpenJDK on Debian
   config.vm.define "openjavadebian".to_sym do |openjavadebian_config|
-    openjavadebian_config.vm.box = "debian-7.1-amd64"
+    openjavadebian_config.vm.box = "debian-7.2-amd64"
     openjavadebian_config.vm.hostname = "openjavadebian.local"
     openjavadebian_config.hostmanager.enabled = true
     openjavadebian_config.hostmanager.aliases = %w(openjavadebian)

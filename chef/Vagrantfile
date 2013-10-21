@@ -67,7 +67,7 @@ Vagrant.configure("2") do |config|
   
   #A Chef client node
   config.vm.define "chefclient3".to_sym do |chefclient3_config|
-    chefclient3_config.vm.box = "debian-7.1-amd64"
+    chefclient3_config.vm.box = "debian-7.2-amd64"
     chefclient3_config.vm.hostname = "chefclient3.local"
     chefclient3_config.hostmanager.enabled = true
     chefclient3_config.vm.network :private_network, ip: "10.0.1.193"
