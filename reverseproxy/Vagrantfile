@@ -12,13 +12,13 @@ Vagrant.configure("2") do |config|
 
 ####################
 ####################
-config.vm.box = "ubuntu-13.04-server-amd64"
+config.vm.box = "ubuntu-13.10-server-amd64"
 config.hostmanager.enabled = true
 config.hostmanager.ignore_public_ip = false
 
     #public server
     config.vm.define "public".to_sym do |public_config|
-        public_config.vm.box = "ubuntu-13.04-server-amd64"
+        public_config.vm.box = "ubuntu-13.10-server-amd64"
         public_config.vm.hostname = "public.local"
         public_config.hostmanager.enabled = true
         public_config.vm.network :public_network, ip: "10.0.1.7"
@@ -31,7 +31,7 @@ config.hostmanager.ignore_public_ip = false
     
     #publicly accessible server
     config.vm.define "public".to_sym do |public_config|
-        public_config.vm.box = "ubuntu-13.04-server-amd64"
+        public_config.vm.box = "ubuntu-13.10-server-amd64"
         public_config.vm.hostname = "public.local"
         public_config.hostmanager.enabled = true
         public_config.vm.network :public_network, ip: "10.0.1.8"

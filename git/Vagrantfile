@@ -29,7 +29,7 @@ Vagrant.configure("2") do |config|
 
   #A git server
   config.vm.define "git".to_sym do |git_config|
-    git_config.vm.box = "ubuntu-13.04-server-amd64"
+    git_config.vm.box = "ubuntu-13.10-server-amd64"
     git_config.vm.hostname = "git.local"
     git_config.hostmanager.enabled = true
     git_config.hostmanager.aliases = %w(git code.git.local)
@@ -43,7 +43,7 @@ Vagrant.configure("2") do |config|
 
   #Another git server
   config.vm.define "git2".to_sym do |git2_config|
-    git2_config.vm.box = "ubuntu-13.04-server-amd64"
+    git2_config.vm.box = "ubuntu-13.10-server-amd64"
     git2_config.vm.hostname = "git2.local"
     git2_config.hostmanager.enabled = true
     git2_config.hostmanager.aliases = %w(git2)

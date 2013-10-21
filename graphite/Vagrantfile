@@ -27,7 +27,7 @@ Vagrant.configure("2") do |config|
 
   #A graphite server
   config.vm.define "graphiteserver".to_sym do |graphiteserver_config|
-    graphiteserver_config.vm.box = "ubuntu-13.04-server-amd64"
+    graphiteserver_config.vm.box = "ubuntu-13.10-server-amd64"
     graphiteserver_config.vm.hostname = "graphiteserver.local"
     graphiteserver_config.hostmanager.enabled = true
     #giving it 'puppet' as an alias so that the agents can connect to it with their default settings
@@ -43,7 +43,7 @@ Vagrant.configure("2") do |config|
 
   #A graphite client node
   config.vm.define "graphiteclient1".to_sym do |graphiteclient1_config|
-    graphiteclient1_config.vm.box = "ubuntu-13.04-server-amd64"
+    graphiteclient1_config.vm.box = "ubuntu-13.10-server-amd64"
     graphiteclient1_config.vm.hostname = "graphiteclient1.local"
     graphiteclient1_config.hostmanager.enabled = true
     graphiteclient1_config.vm.network :private_network, ip: "10.0.1.191"

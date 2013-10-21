@@ -18,7 +18,7 @@ config.hostmanager.ignore_private_ip = false
 
 	#rsync server 1
 	config.vm.define "rsync1".to_sym do |rsync1_config|
-		rsync1_config.vm.box = "ubuntu-13.04-server-amd64"
+		rsync1_config.vm.box = "ubuntu-13.10-server-amd64"
 		rsync1_config.vm.hostname = "rsync1.local"
 		rsync1_config.hostmanager.enabled = true
 		rsync1_config.hostmanager.aliases = %w(rsync1)
@@ -32,7 +32,7 @@ config.hostmanager.ignore_private_ip = false
 
 	#rsync server 2
 	config.vm.define "rsync2".to_sym do |rsync2_config|
-		rsync2_config.vm.box = "ubuntu-13.04-server-amd64"
+		rsync2_config.vm.box = "ubuntu-13.10-server-amd64"
 		rsync2_config.vm.hostname = "rsync2.local"
 		rsync2_config.hostmanager.enabled = true
 		rsync2_config.hostmanager.aliases = %w(rsync2)

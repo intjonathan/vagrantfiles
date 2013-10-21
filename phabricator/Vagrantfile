@@ -29,7 +29,7 @@ Vagrant.configure("2") do |config|
 
   #Phabricator server
   config.vm.define "phabricator".to_sym do |phabricator_config|
-    phabricator_config.vm.box = "ubuntu-13.04-server-amd64"
+    phabricator_config.vm.box = "ubuntu-13.10-server-amd64"
     phabricator_config.vm.hostname = "phabricator.local"
     phabricator_config.hostmanager.enabled = true
     phabricator_config.hostmanager.aliases = %w(phabricator code.phabricator.local www.code.phabricator.local)
@@ -43,7 +43,7 @@ Vagrant.configure("2") do |config|
   
   #Gitlab server
   config.vm.define "gitlab".to_sym do |gitlab_config|
-    gitlab_config.vm.box = "ubuntu-13.04-server-amd64"
+    gitlab_config.vm.box = "ubuntu-13.10-server-amd64"
     gitlab_config.vm.hostname = "gitlab.local"
     gitlab_config.hostmanager.enabled = true
     gitlab_config.hostmanager.aliases = %w(gitlab code.gitlab.local www.code.gitlab.local)
@@ -57,7 +57,7 @@ Vagrant.configure("2") do |config|
 
   #Phabricator mail server
   config.vm.define "phabricatormail".to_sym do |phabricatormail_config|
-    phabricatormail_config.vm.box = "ubuntu-13.04-server-amd64"
+    phabricatormail_config.vm.box = "ubuntu-13.10-server-amd64"
     phabricatormail_config.vm.hostname = "phabricatormail.local"
     phabricatormail_config.hostmanager.enabled = true
     phabricatormail_config.hostmanager.aliases = %w(phabricatormail)

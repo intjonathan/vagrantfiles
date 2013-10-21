@@ -23,7 +23,7 @@ Vagrant.configure("2") do |config|
 
   #An Ubuntu rsyslog server
   config.vm.define "rsyslogserver".to_sym do |rsyslogserver_config|
-    rsyslogserver_config.vm.box = "ubuntu-13.04-server-amd64"
+    rsyslogserver_config.vm.box = "ubuntu-13.10-server-amd64"
     rsyslogserver_config.vm.hostname = "rsyslogserver.local"
     rsyslogserver_config.hostmanager.enabled = true
     #giving it 'puppet' as an alias so that the agents can connect to it with their default settings
