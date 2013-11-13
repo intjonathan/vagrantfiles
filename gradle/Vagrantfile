@@ -26,7 +26,7 @@ Vagrant.configure("2") do |config|
     ubuntugradle_config.vm.box = "ubuntu-13.10-server-amd64"
     ubuntugradle_config.vm.hostname = "ubuntugradle.local"
     ubuntugradle_config.hostmanager.enabled = true
-    ubuntugradle_config.hostmanager.aliases = %w(ubuntugradle.local)
+    ubuntugradle_config.hostmanager.aliases = %w(ubuntugradle.local puppet puppet.local)
     ubuntugradle_config.vm.network :private_network, ip: "10.0.1.52"
     #set some machine-specific options	
     ubuntugradle_config.vm.provider "virtualbox" do |v|
