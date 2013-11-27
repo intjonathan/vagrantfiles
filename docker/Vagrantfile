@@ -17,7 +17,7 @@ Vagrant.configure("2") do |config|
   #incorporate offline box's IPs into the /etc/hosts of boxes that are up/being brought up
   config.hostmanager.include_offline = true
 
-  #CentOS MySQL VM
+  #Ubuntu Docker VM
   config.vm.define "docker".to_sym do |docker_config|
     docker_config.vm.box = "ubuntu-13.10-server-amd64"
     docker_config.vm.hostname = "docker.local"
