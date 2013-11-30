@@ -1,0 +1,52 @@
+Vagrant.configure("2") do |config|
+  # All Vagrant configuration is done here. The most common configuration
+  # options are documented and commented below. For a complete reference,
+  # please see the online documentation at vagrantup.com.
+
+  ####################
+  # Snippets to use
+  ####################
+
+  config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/modules"
+  config.vm.synced_folder "manifests/", "/etc/puppet/manifests"
+  config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/hieradata", "/etc/puppet/hieradata"
+
+  ####################
+  ####################
+  #vagrant-hostmanager plugin options
+  config.hostmanager.enabled = true
+  config.hostmanager.ignore_private_ip = false
+  #update the /etc/hosts of the host OS
+  config.hostmanager.manage_host = true
+  #incorporate offline box's IPs into the /etc/hosts of boxes that are up/being brought up
+  config.hostmanager.include_offline = true
+
+  #ganglia web server
+  config.vm.define "ubunturedis".to_sym do |ubunturedis_config|
+    ubunturedis_config.vm.box = "ubuntu-13.10-server-amd64"
+    ubunturedis_config.vm.hostname = "ubunturedis.local"
+    ubunturedis_config.hostmanager.enabled = true
+    ubunturedis_config.hostmanager.aliases = %w(ubunturedis.local puppet puppet.local)
+    ubunturedis_config.vm.network :private_network, ip: "10.0.1.91"
+    #set some machine-specific options	
+    ubunturedis_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+    ubunturedis_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1304_puppet_master_script.sh"
+  end
+
+  #CentOS Gradle VM
+  config.vm.define "centosredis".to_sym do |centosredis_config|
+    centosredis_config.vm.box = "centos-6.4-amd64"
+    centosredis_config.vm.hostname = "centosredis.local"
+    centosredis_config.hostmanager.enabled = true
+    centosredis_config.vm.network :private_network, ip: "10.0.1.92"
+    #set some machine-specific options	
+    centosredis_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+    centosredis_config.vm.provision :shell, :path => "../provisioning_scripts/rhel_centos_puppet_agent_script.sh"
+  end
+end
