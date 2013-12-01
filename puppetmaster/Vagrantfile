@@ -21,63 +21,78 @@ Vagrant.configure("2") do |config|
   #incorporate offline box's IPs into the /etc/hosts of boxes that are up/being brought up
   config.hostmanager.include_offline = true
 
-  #ganglia web server
-  config.vm.define "redis1".to_sym do |redis1_config|
-    redis1_config.vm.box = "ubuntu-13.10-server-amd64"
-    redis1_config.vm.hostname = "redis1.local"
-    redis1_config.hostmanager.enabled = true
-    redis1_config.hostmanager.aliases = %w(redis1.local puppet puppet.local)
-    redis1_config.vm.network :private_network, ip: "10.0.1.91"
+  #Ubuntu Puppet master
+  config.vm.define "master".to_sym do |master_config|
+    master_config.vm.box = "ubuntu-13.10-server-amd64"
+    master_config.vm.hostname = "master.local"
+    master_config.hostmanager.enabled = true
+    master_config.hostmanager.aliases = %w(master.local puppet puppet.local)
+    master_config.vm.network :private_network, ip: "10.0.1.90"
     #set some machine-specific options	
-    redis1_config.vm.provider "virtualbox" do |v|
+    master_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "1024"]
     end
-    redis1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1304_puppet_master_script.sh"
+    master_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1304_puppet_master_script.sh"
   end
 
-  #ganglia web server
-  config.vm.define "redis2".to_sym do |redis2_config|
-    redis2_config.vm.box = "ubuntu-13.10-server-amd64"
-    redis2_config.vm.hostname = "redis2.local"
-    redis2_config.hostmanager.enabled = true
-    redis2_config.hostmanager.aliases = %w(redis2.local puppet puppet.local)
-    redis2_config.vm.network :private_network, ip: "10.0.1.92"
+  #Puppet agent
+  config.vm.define "agent1".to_sym do |agent1_config|
+    agent1_config.vm.box = "ubuntu-13.10-server-amd64"
+    agent1_config.vm.hostname = "agent1.local"
+    agent1_config.hostmanager.enabled = true
+    agent1_config.hostmanager.aliases = %w(agent1.local)
+    agent1_config.vm.network :private_network, ip: "10.0.1.91"
     #set some machine-specific options	
-    redis2_config.vm.provider "virtualbox" do |v|
+    agent1_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
-      v.customize ["modifyvm", :id, "--memory", "1024"]
+      v.customize ["modifyvm", :id, "--memory", "512"]
     end
-    redis2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1304_puppet_master_script.sh"
+    agent1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1304_puppet_agent_script.sh"
   end
 
-  #ganglia web server
-  config.vm.define "redis3".to_sym do |redis3_config|
-    redis3_config.vm.box = "ubuntu-13.10-server-amd64"
-    redis3_config.vm.hostname = "redis3.local"
-    redis3_config.hostmanager.enabled = true
-    redis3_config.hostmanager.aliases = %w(redis3.local puppet puppet.local)
-    redis3_config.vm.network :private_network, ip: "10.0.1.93"
+  #Puppet agent
+  config.vm.define "agent2".to_sym do |agent2_config|
+    agent2_config.vm.box = "ubuntu-13.10-server-amd64"
+    agent2_config.vm.hostname = "agent2.local"
+    agent2_config.hostmanager.enabled = true
+    agent2_config.hostmanager.aliases = %w(agent2.local)
+    agent2_config.vm.network :private_network, ip: "10.0.1.92"
     #set some machine-specific options	
-    redis3_config.vm.provider "virtualbox" do |v|
+    agent2_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
-      v.customize ["modifyvm", :id, "--memory", "1024"]
+      v.customize ["modifyvm", :id, "--memory", "512"]
     end
-    redis3_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1304_puppet_master_script.sh"
+    agent2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1304_puppet_agent_script.sh"
   end
 
-  #ganglia web server
-  config.vm.define "redis4".to_sym do |redis4_config|
-    redis4_config.vm.box = "ubuntu-13.10-server-amd64"
-    redis4_config.vm.hostname = "redis4.local"
-    redis4_config.hostmanager.enabled = true
-    redis4_config.hostmanager.aliases = %w(redis4.local puppet puppet.local)
-    redis4_config.vm.network :private_network, ip: "10.0.1.94"
+  #Puppet agent
+  config.vm.define "agent3".to_sym do |agent3_config|
+    agent3_config.vm.box = "ubuntu-13.10-server-amd64"
+    agent3_config.vm.hostname = "agent3.local"
+    agent3_config.hostmanager.enabled = true
+    agent3_config.hostmanager.aliases = %w(agent3.local)
+    agent3_config.vm.network :private_network, ip: "10.0.1.93"
     #set some machine-specific options	
-    redis4_config.vm.provider "virtualbox" do |v|
+    agent3_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
-      v.customize ["modifyvm", :id, "--memory", "1024"]
+      v.customize ["modifyvm", :id, "--memory", "512"]
     end
-    redis4_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1304_puppet_master_script.sh"
+    agent3_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1304_puppet_agent_script.sh"
+  end
+
+  #Puppet agent
+  config.vm.define "agent4".to_sym do |agent4_config|
+    agent4_config.vm.box = "ubuntu-13.10-server-amd64"
+    agent4_config.vm.hostname = "agent4.local"
+    agent4_config.hostmanager.enabled = true
+    agent4_config.hostmanager.aliases = %w(agent4.local)
+    agent4_config.vm.network :private_network, ip: "10.0.1.94"
+    #set some machine-specific options	
+    agent4_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    agent4_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1304_puppet_agent_script.sh"
   end
 end
