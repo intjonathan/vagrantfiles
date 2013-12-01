@@ -27,7 +27,7 @@ Vagrant.configure("2") do |config|
     master_config.vm.hostname = "master.local"
     master_config.hostmanager.enabled = true
     master_config.hostmanager.aliases = %w(master.local puppet puppet.local)
-    master_config.vm.network :private_network, ip: "10.0.1.90"
+    master_config.vm.network :private_network, ip: "10.0.1.190"
     #set some machine-specific options	
     master_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
@@ -42,7 +42,7 @@ Vagrant.configure("2") do |config|
     agent1_config.vm.hostname = "agent1.local"
     agent1_config.hostmanager.enabled = true
     agent1_config.hostmanager.aliases = %w(agent1.local)
-    agent1_config.vm.network :private_network, ip: "10.0.1.91"
+    agent1_config.vm.network :private_network, ip: "10.0.1.191"
     #set some machine-specific options	
     agent1_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
@@ -57,7 +57,7 @@ Vagrant.configure("2") do |config|
     agent2_config.vm.hostname = "agent2.local"
     agent2_config.hostmanager.enabled = true
     agent2_config.hostmanager.aliases = %w(agent2.local)
-    agent2_config.vm.network :private_network, ip: "10.0.1.92"
+    agent2_config.vm.network :private_network, ip: "10.0.1.192"
     #set some machine-specific options	
     agent2_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
@@ -72,7 +72,7 @@ Vagrant.configure("2") do |config|
     agent3_config.vm.hostname = "agent3.local"
     agent3_config.hostmanager.enabled = true
     agent3_config.hostmanager.aliases = %w(agent3.local)
-    agent3_config.vm.network :private_network, ip: "10.0.1.93"
+    agent3_config.vm.network :private_network, ip: "10.0.1.193"
     #set some machine-specific options	
     agent3_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
@@ -87,7 +87,7 @@ Vagrant.configure("2") do |config|
     agent4_config.vm.hostname = "agent4.local"
     agent4_config.hostmanager.enabled = true
     agent4_config.hostmanager.aliases = %w(agent4.local)
-    agent4_config.vm.network :private_network, ip: "10.0.1.94"
+    agent4_config.vm.network :private_network, ip: "10.0.1.194"
     #set some machine-specific options	
     agent4_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
