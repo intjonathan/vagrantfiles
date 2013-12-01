@@ -4,8 +4,8 @@ echo "Checking to see if the Puppet Labs apt repo needs to be added..."
 if [ ! -f /home/vagrant/repos_added.txt ];
 then    
 	echo "Adding Puppet Labs apt repository..."
-    sudo wget -N http://apt.puppetlabs.com/puppetlabs-release-quantal.deb >/dev/null
-    sudo dpkg -i puppetlabs-release-quantal.deb >/dev/null
+    sudo wget -N http://apt.puppetlabs.com/puppetlabs-release-raring.deb >/dev/null
+    sudo dpkg -i puppetlabs-release-raring.deb >/dev/null
     echo "Updating apt..."
     sudo apt-get update >/dev/null
     #Touch the repos_added file to skip this block the next time around
