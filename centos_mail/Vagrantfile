@@ -43,6 +43,4 @@ config.vm.define "mail2".to_sym do |mail_config|
         v.customize ["modifyvm", :id, "--memory", "1024"]
     end
   end
-  
-  
 end
