@@ -24,3 +24,37 @@ node 'agent1.local', 'agent2.local', 'agent3.local', 'agent4.local'{
   }
 
 }
+
+node 'elasticsearch1.local', 'elasticsearch2.local', 'elasticsearch3.local', 'elasticsearch4.local' {
+
+  package {'openjdk-7-jre-headless':
+    ensure => installed,
+  }
+
+  class { 'elasticsearch':
+    package_url => 'https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-0.90.7.deb',
+    config => {
+      'node'    => {
+        'name' => $fqdn
+      },
+      'index' => {
+        'number_of_replicas' => '1',
+        'number_of_shards'   => '8'
+      },
+      'network' => {
+        'host' => $ipaddress_eth1
+      },
+      'cluster' => {
+        'name' => 'logdatabase',
+      }
+    }
+  }
+}
+
+node 'logstash.local' {
+
+  package {'openjdk-7-jre-headless':
+    ensure => installed,
+  }
+  
+}
