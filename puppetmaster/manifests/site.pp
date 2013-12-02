@@ -1,7 +1,7 @@
 node 'master.local' {
 
   class { 'puppetdb':
-    listen_address => $ipaddress_eth1
+    listen_address => '0.0.0.0'
   }
   
  include puppetdb::master::config  
