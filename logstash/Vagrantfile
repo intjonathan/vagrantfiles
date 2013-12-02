@@ -9,7 +9,6 @@ Vagrant.configure("2") do |config|
 
   #NFS folder sharing
   config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/modules", :nfs => true
-  config.vm.synced_folder "manifests", "/etc/puppet/manifests", :nfs => true
 
   ####################
   ####################
@@ -28,14 +27,14 @@ Vagrant.configure("2") do |config|
     logstash_config.vm.hostname = "logstash.local"
     logstash_config.hostmanager.enabled = true
     #giving it 'puppet' as an alias so that the agents can connect to it with their default settings
-    logstash_config.hostmanager.aliases = %w(logstash puppet)
+    logstash_config.hostmanager.aliases = %w(logstash)
     logstash_config.vm.network :private_network, ip: "10.0.1.140"
     #set some machine-specific options	
     logstash_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "1024"]
     end
-    logstash_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1310_puppet_master_script.sh"
+    logstash_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1310_puppet_agent_script.sh"
   end
 
   #An Elasticsearch node
