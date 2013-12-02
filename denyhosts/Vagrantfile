@@ -64,7 +64,7 @@ Vagrant.configure("2") do |config|
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
     #Puppet agent provisioning script
-	  client2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1304_puppet_agent_script.sh"
+	  client2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1310_puppet_agent_script.sh"
   end
 
 #   #a mail server

@@ -29,7 +29,7 @@ Vagrant.configure("2") do |config|
     logstash_config.hostmanager.enabled = true
     #giving it 'puppet' as an alias so that the agents can connect to it with their default settings
     logstash_config.hostmanager.aliases = %w(logstash puppet)
-    logstash_config.vm.network :private_network, ip: "10.0.1.90"
+    logstash_config.vm.network :private_network, ip: "10.0.1.140"
     #set some machine-specific options	
     logstash_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
@@ -43,13 +43,13 @@ Vagrant.configure("2") do |config|
     elasticsearch1_config.vm.box = "ubuntu-13.10-server-amd64"
     elasticsearch1_config.vm.hostname = "elasticsearch1.local"
     elasticsearch1_config.hostmanager.enabled = true
-    elasticsearch1_config.vm.network :private_network, ip: "10.0.1.91"
+    elasticsearch1_config.vm.network :private_network, ip: "10.0.1.141"
     #set some machine-specific options	
     elasticsearch1_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
-    elasticsearch1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1304_puppet_agent_script.sh"
+    elasticsearch1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1310_puppet_agent_script.sh"
   end
 
   #An Elasticsearch node
@@ -57,13 +57,13 @@ Vagrant.configure("2") do |config|
     elasticsearch2_config.vm.box = "ubuntu-13.10-server-amd64"
     elasticsearch2_config.vm.hostname = "elasticsearch2.local"
     elasticsearch2_config.hostmanager.enabled = true
-    elasticsearch2_config.vm.network :private_network, ip: "10.0.1.92"
+    elasticsearch2_config.vm.network :private_network, ip: "10.0.1.142"
     #set some machine-specific options	
     elasticsearch2_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
-    elasticsearch2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1304_puppet_agent_script.sh"
+    elasticsearch2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1310_puppet_agent_script.sh"
   end
   
   #An Elasticsearch node
@@ -71,13 +71,13 @@ Vagrant.configure("2") do |config|
     elasticsearch3_config.vm.box = "ubuntu-13.10-server-amd64"
     elasticsearch3_config.vm.hostname = "elasticsearch3.local"
     elasticsearch3_config.hostmanager.enabled = true
-    elasticsearch3_config.vm.network :private_network, ip: "10.0.1.94"
+    elasticsearch3_config.vm.network :private_network, ip: "10.0.1.144"
     #set some machine-specific options	
     elasticsearch3_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
-    elasticsearch3_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1304_puppet_agent_script.sh"
+    elasticsearch3_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1310_puppet_agent_script.sh"
   end
   
   #An Elasticsearch node
@@ -85,13 +85,13 @@ Vagrant.configure("2") do |config|
     elasticsearch4_config.vm.box = "ubuntu-13.10-server-amd64"
     elasticsearch4_config.vm.hostname = "elasticsearch4.local"
     elasticsearch4_config.hostmanager.enabled = true
-    elasticsearch4_config.vm.network :private_network, ip: "10.0.1.95"
+    elasticsearch4_config.vm.network :private_network, ip: "10.0.1.145"
     #set some machine-specific options	
     elasticsearch4_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
-    elasticsearch4_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1304_puppet_agent_script.sh"
+    elasticsearch4_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1310_puppet_agent_script.sh"
   end
   
   #A web server for Kibana 3
@@ -100,7 +100,7 @@ Vagrant.configure("2") do |config|
     kibanathree_config.vm.hostname = "kibanathree.local"
     kibanathree_config.hostmanager.aliases = %w(dashboard.kibanathree.local)
     kibanathree_config.hostmanager.enabled = true
-    kibanathree_config.vm.network :private_network, ip: "10.0.1.93"
+    kibanathree_config.vm.network :private_network, ip: "10.0.1.143"
     #set some machine-specific options	
     kibanathree_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 

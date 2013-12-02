@@ -14,7 +14,7 @@ Vagrant.configure("2") do |config|
     
     #Puppet provisioning scripts
     #vmname_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1310_puppet_master_script.sh"
-    #vmname_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1304_puppet_agent_script.sh"
+    #vmname_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1310_puppet_agent_script.sh"
 
   ####################
   ####################
@@ -64,7 +64,7 @@ Vagrant.configure("2") do |config|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "1024"]
     end
-    mavenubuntu_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1304_puppet_agent_script.sh"
+    mavenubuntu_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1310_puppet_agent_script.sh"
   end
 
   #A Debian VM for Puppetizing
@@ -84,7 +84,7 @@ Vagrant.configure("2") do |config|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "1024"]
     end
-    mavendebian_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1304_puppet_agent_script.sh"
+    mavendebian_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1310_puppet_agent_script.sh"
   end
   
   #A CentOS VM for Puppetizing

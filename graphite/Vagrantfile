@@ -53,7 +53,7 @@ Vagrant.configure("2") do |config|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
-    graphiteclient1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1304_puppet_agent_script.sh"
+    graphiteclient1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1310_puppet_agent_script.sh"
   end
   
   #A graphite client node
@@ -81,7 +81,7 @@ Vagrant.configure("2") do |config|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
-    graphiteclient3_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1304_puppet_agent_script.sh"
+    graphiteclient3_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1310_puppet_agent_script.sh"
   end
   
 end

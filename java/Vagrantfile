@@ -55,7 +55,7 @@ Vagrant.configure("2") do |config|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
-    openjava_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1304_puppet_agent_script.sh"
+    openjava_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1310_puppet_agent_script.sh"
   end
 
   #VM for OpenJDK on Debian
@@ -70,7 +70,7 @@ Vagrant.configure("2") do |config|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
-    openjavadebian_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1304_puppet_agent_script.sh"
+    openjavadebian_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1310_puppet_agent_script.sh"
   end
   
   #VM for OpenJDK on CentOS
