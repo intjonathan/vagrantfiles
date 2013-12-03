@@ -57,7 +57,7 @@ Vagrant.configure("2") do |config|
   
   #An SNMP client node
   config.vm.define "snmpclient2".to_sym do |snmpclient2_config|
-    snmpclient2_config.vm.box = "centos-6.4-amd64"
+    snmpclient2_config.vm.box = "centos-6.5-amd64"
     snmpclient2_config.vm.hostname = "snmpclient2.local"
     snmpclient2_config.hostmanager.enabled = true
     snmpclient2_config.vm.network :private_network, ip: "10.0.1.192"

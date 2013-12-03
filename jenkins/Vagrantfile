@@ -34,7 +34,7 @@ Vagrant.configure("2") do |config|
   
   #CentOS Jenkins master server
   config.vm.define "centosjenkins".to_sym do |centosjenkins_config|
-    centosjenkins_config.vm.box = "centos-6.4-amd64"
+    centosjenkins_config.vm.box = "centos-6.5-amd64"
     centosjenkins_config.vm.hostname = "centosjenkins.local"
     centosjenkins_config.hostmanager.enabled = true
     centosjenkins_config.hostmanager.aliases = %w(www.centosjenkins.local build.centosjenkins.local jenkins.centosjenkins.local)
@@ -87,7 +87,7 @@ Vagrant.configure("2") do |config|
 
   #CentOS Tomcat VM
   config.vm.define "centostomcat".to_sym do |centostomcat_config|
-    centostomcat_config.vm.box = "centos-6.4-amd64"
+    centostomcat_config.vm.box = "centos-6.5-amd64"
     centostomcat_config.vm.hostname = "centostomcat.local"
     centostomcat_config.hostmanager.aliases = %w(www.centostomcat.local jenkins.centostomcat.local)
     centostomcat_config.hostmanager.enabled = true

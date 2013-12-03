@@ -23,7 +23,7 @@ Vagrant.configure("2") do |config|
 
   #A CentOS Tomcat+Solr server
   config.vm.define "solr".to_sym do |solr_config|
-    solr_config.vm.box = "centos-6.4-amd64"
+    solr_config.vm.box = "centos-6.5-amd64"
     solr_config.vm.hostname = "solr.local"
     solr_config.hostmanager.enabled = true
     solr_config.hostmanager.aliases = %w(solr)

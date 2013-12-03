@@ -90,7 +90,7 @@ Vagrant.configure("2") do |config|
   #A CentOS VM for Puppetizing
   config.vm.define "mavencentos".to_sym do |mavencentos_config|
     #the base box we're using
-    mavencentos_config.vm.box = "centos-6.4-amd64"
+    mavencentos_config.vm.box = "centos-6.5-amd64"
     #the box's hostname
     mavencentos_config.vm.hostname = "mavencentos.local"
     #enable the hostmanager Vagrant plugin for this VM

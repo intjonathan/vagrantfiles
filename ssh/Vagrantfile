@@ -52,7 +52,7 @@ Vagrant.configure("2") do |config|
 
   #another ssh client
   config.vm.define "ssh2".to_sym do |ssh2_config|
-    ssh2_config.vm.box = "centos-6.4-amd64"
+    ssh2_config.vm.box = "centos-6.5-amd64"
     ssh2_config.vm.hostname = "ssh2.local"
     ssh2_config.hostmanager.enabled = true
     ssh2_config.vm.network :private_network, ip: "10.0.1.62"

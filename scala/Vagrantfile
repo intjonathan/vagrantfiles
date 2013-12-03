@@ -41,7 +41,7 @@ Vagrant.configure("2") do |config|
 
   #CentOS scala VM
   config.vm.define "centosscala".to_sym do |centosscala_config|
-    centosscala_config.vm.box = "centos-6.4-amd64"
+    centosscala_config.vm.box = "centos-6.5-amd64"
     centosscala_config.vm.hostname = "centosscala.local"
     centosscala_config.hostmanager.enabled = true
     centosscala_config.vm.network :private_network, ip: "10.0.1.57"

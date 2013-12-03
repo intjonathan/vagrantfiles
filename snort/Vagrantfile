@@ -12,13 +12,13 @@ Vagrant.configure("2") do |config|
   
   ####################
   ####################
-  config.vm.box = "centos-6.4-amd64"
+  config.vm.box = "centos-6.5-amd64"
   config.hostmanager.enabled = true
   config.hostmanager.ignore_private_ip = false
   
  #CentOS Snort server
 config.vm.define "centossnort".to_sym do |centossnort_config|
-	centossnort_config.vm.box = "centos-6.4-amd64"
+	centossnort_config.vm.box = "centos-6.5-amd64"
 	centossnort_config.vm.hostname = "centossnort.local"
 	centossnort_config.hostmanager.enabled = true
 	#giving it 'puppet' as an alias so that the agents can connect to it with their default settings
@@ -48,7 +48,7 @@ end
 
 # #an icinga client
 # config.vm.define "snortclient1".to_sym do |snortclient1_config|
-# 	snortclient1_config.vm.box = "centos-6.4-amd64"
+# 	snortclient1_config.vm.box = "centos-6.5-amd64"
 # 	snortclient1_config.vm.hostname = "snortclient1.local"
 # 	snortclient1_config.hostmanager.enabled = true
 # 	snortclient1_config.vm.network :private_network, ip: "10.0.1.64"
@@ -61,7 +61,7 @@ end
 
  #an icinga client
 # config.vm.define "snortclient2".to_sym do |snortclient2_config|
-# 	snortclient2_config.vm.box = "centos-6.4-amd64"
+# 	snortclient2_config.vm.box = "centos-6.5-amd64"
 # 	snortclient2_config.vm.hostname = "snortclient2.local"
 # 	snortclient2_config.hostmanager.enabled = true
 # 	snortclient2_config.vm.network :private_network, ip: "10.0.1.65"
@@ -75,7 +75,7 @@ end
 
 #a snortmail server for Icinga to send notifications to
 # config.vm.define "snortmail".to_sym do |snortmail_config|
-# 	snortmail_config.vm.box = "centos-6.4-amd64"
+# 	snortmail_config.vm.box = "centos-6.5-amd64"
 # 	snortmail_config.vm.hostname = "snortmail.local"
 # 	snortmail_config.hostmanager.enabled = true
 # 	snortmail_config.vm.network :private_network, ip: "10.0.1.66"
