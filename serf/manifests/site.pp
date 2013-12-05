@@ -5,6 +5,11 @@ node 'puppet.local' {
   }
 
   include puppetdb::master::config  
+
+  class {'serf':
+    version => '0.2.1',
+  }
+
 }
 
 node 'ubuntuserf.local' {
