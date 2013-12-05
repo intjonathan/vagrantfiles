@@ -48,7 +48,7 @@ then
         ssldir = /var/lib/puppet/ssl/
     
         server=puppet
-        reports=false
+        reports=true
         pluginsync=true
 
     [agent]
