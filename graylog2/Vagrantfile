@@ -79,8 +79,8 @@ Vagrant.configure("2") do |config|
     client2_config.vm.network :private_network, ip: "10.0.1.32"
     #set some machine-specific options	
     client2_config.vm.provider "virtualbox" do |v|
-    #change the amount of RAM 
-    v.customize ["modifyvm", :id, "--memory", "512"]
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
     end
     client2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1310_puppet_agent_script.sh"
   end
