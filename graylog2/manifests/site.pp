@@ -7,3 +7,19 @@ node 'puppet.local' {
 #  include puppetdb::master::config
 
 }
+
+node 'graylogdb.local' {
+
+}
+
+node 'client1.local' {
+
+}
+
+node 'client2.local' {
+
+}
+
+node 'client3.local' {
+
+}
