@@ -40,7 +40,7 @@ Vagrant.configure("2") do |config|
       v.customize ["modifyvm", :id, "--memory", "1024"]
     end
     #Configure this VM to be a Puppet master
-    puppet_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1310_puppet_master_script.sh"
+    graylog2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1310_puppet_master_script.sh"
   end
 
   #A MongoDB and ElasticSearch server for Graylog2
