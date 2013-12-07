@@ -1,83 +1,101 @@
 Vagrant.configure("2") do |config|
-# All Vagrant configuration is done here. The most common configuration
-# options are documented and commented below. For a complete reference,
-# please see the online documentation at vagrantup.com.
+  # All Vagrant configuration is done here. The most common configuration
+  # options are documented and commented below. For a complete reference,
+  # please see the online documentation at vagrantup.com.
 
-####################
-# Snippets to use
-####################
+  ####################
+  # Snippets to use
+  ####################
 
-#NFS folder sharing
-#config.vm.synced_folder "modules", "/etc/puppet/modules", :nfs => true
+  config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/modules"
+  config.vm.synced_folder "manifests/", "/etc/puppet/manifests"
+  config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/hieradata", "/etc/puppet/hieradata"
 
-####################
-####################
-config.vm.box = "ubuntu-13.10-server-amd64"
-config.hostmanager.enabled = true
-config.hostmanager.ignore_private_ip = false
+  ########################################
+  #vagrant-hostmanager plugin options
+  ########################################
+  #Enable the hostmanager plugin for this Vagrantfile
+  config.hostmanager.enabled = true
+  #Don't ignore private, host-only network IPs
+  config.hostmanager.ignore_private_ip = false
+  #update the /etc/hosts file of the host OS
+  config.hostmanager.manage_host = true
+  #incorporate offline box's IPs into the /etc/hosts of other VMs and the host machine:
+  config.hostmanager.include_offline = true
 
-    #ganglia web server
-    config.vm.define "graylog2".to_sym do |graylog2_config|
-        graylog2_config.vm.box = "ubuntu-13.10-server-amd64"
-        graylog2_config.vm.hostname = "graylog2.local"
-        graylog2_config.hostmanager.enabled = true
-        graylog2_config.vm.network :private_network, ip: "10.0.1.30"
-        #set some machine-specific options	
-        graylog2_config.vm.provider "virtualbox" do |v|
-           #change the amount of RAM 
-            v.customize ["modifyvm", :id, "--memory", "1024"]
-        end
+  #Graylog2 server; has graylog2-server and graylog2-web-interface on it
+  config.vm.define "graylog2".to_sym do |graylog2_config|
+    #The base box we're using
+    graylog2_config.vm.box = "ubuntu-13.10-server-amd64"
+    #The VM's hostname
+    graylog2_config.vm.hostname = "graylog2.local graylog2 puppet puppet.local"
+    #Enable the hostmanager plugin for this VM; this export's this VM's hostname to other VMs
+    #and writes other VM hostnames to this one
+    graylog2_config.hostmanager.enabled = true
+    #Set a static IP on the host-only network adapter
+    graylog2_config.vm.network :private_network, ip: "10.0.1.30"
+    #set some machine-specific options	
+    graylog2_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
     end
-    
-    #a MongoDB server for Graylog2
-    config.vm.define "graylogmongodb".to_sym do |graylogmongodb_config|
-        graylogmongodb_config.vm.box = "ubuntu-13.10-server-amd64"
-        graylogmongodb_config.vm.hostname = "graylogmongodb.local"
-        graylogmongodb_config.hostmanager.enabled = true
-        graylogmongodb_config.vm.network :private_network, ip: "10.0.1.29"
-        #set some machine-specific options	
-        graylogmongodb_config.vm.provider "virtualbox" do |v|
-            #change the amount of RAM 
-            v.customize ["modifyvm", :id, "--memory", "1024"]
-        end
-    end
+    #Configure this VM to be a Puppet master
+    puppet_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1310_puppet_master_script.sh"
+  end
 
-    #a ganglia client
-    config.vm.define "graylogclient1".to_sym do |graylogclient1_config|
-        graylogclient1_config.vm.box = "ubuntu-13.10-server-amd64"
-        graylogclient1_config.vm.hostname = "graylogclient1.local"
-        graylogclient1_config.hostmanager.enabled = true
-        graylogclient1_config.vm.network :private_network, ip: "10.0.1.31"
-        #set some machine-specific options	
-        graylogclient1_config.vm.provider "virtualbox" do |v|
-           #change the amount of RAM 
-            v.customize ["modifyvm", :id, "--memory", "512"]
-        end
+  #A MongoDB and ElasticSearch server for Graylog2
+  config.vm.define "graylogdb".to_sym do |graylogdb_config|
+    graylogdb_config.vm.box = "ubuntu-13.10-server-amd64"
+    graylogdb_config.vm.hostname = "graylogdb.local"
+    graylogdb_config.hostmanager.enabled = true
+    graylogdb_config.vm.network :private_network, ip: "10.0.1.29"
+    #set some machine-specific options	
+    graylogdb_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
     end
+    graylogdb_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1310_puppet_agent_script.sh"
+  end
 
-     #a ganglia client
-    config.vm.define "graylogclient2".to_sym do |graylogclient2_config|
-        graylogclient2_config.vm.box = "ubuntu-13.10-server-amd64"
-        graylogclient2_config.vm.hostname = "graylogclient2.local"
-        graylogclient2_config.hostmanager.enabled = true
-        graylogclient2_config.vm.network :private_network, ip: "10.0.1.32"
-        #set some machine-specific options	
-        graylogclient2_config.vm.provider "virtualbox" do |v|
-            #change the amount of RAM 
-            v.customize ["modifyvm", :id, "--memory", "512"]
-        end
+  #A graylog2 log client that sends rsyslog
+  config.vm.define "client1".to_sym do |client1_config|
+    client1_config.vm.box = "ubuntu-13.10-server-amd64"
+    client1_config.vm.hostname = "client1.local"
+    client1_config.hostmanager.enabled = true
+    client1_config.vm.network :private_network, ip: "10.0.1.31"
+    #set some machine-specific options	
+    client1_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
     end
+    client1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1310_puppet_agent_script.sh"
+  end
 
-     #a ganglia client
-    config.vm.define "graylogclient3".to_sym do |graylogclient3_config|
-        graylogclient3_config.vm.box = "ubuntu-13.10-server-amd64"
-        graylogclient3_config.vm.hostname = "graylogclient3.local"
-        graylogclient3_config.hostmanager.enabled = true
-        graylogclient3_config.vm.network :private_network, ip: "10.0.1.33"
-        #set some machine-specific options	
-        graylogclient3_config.vm.provider "virtualbox" do |v|
-            #change the amount of RAM 
-            v.customize ["modifyvm", :id, "--memory", "512"]
-        end
+  #A graylog2 log client that sends rsyslog
+  config.vm.define "client2".to_sym do |client2_config|
+    client2_config.vm.box = "ubuntu-13.10-server-amd64"
+    client2_config.vm.hostname = "client2.local"
+    client2_config.hostmanager.enabled = true
+    client2_config.vm.network :private_network, ip: "10.0.1.32"
+    #set some machine-specific options	
+    client2_config.vm.provider "virtualbox" do |v|
+    #change the amount of RAM 
+    v.customize ["modifyvm", :id, "--memory", "512"]
     end
+    client2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1310_puppet_agent_script.sh"
+  end
+
+  #A graylog2 log client that sends rsyslog
+  config.vm.define "client3".to_sym do |client3_config|
+    client3_config.vm.box = "ubuntu-13.10-server-amd64"
+    client3_config.vm.hostname = "client3.local"
+    client3_config.hostmanager.enabled = true
+    client3_config.vm.network :private_network, ip: "10.0.1.33"
+    #set some machine-specific options	
+    client3_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    client2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1310_puppet_agent_script.sh"
+  end
 end
