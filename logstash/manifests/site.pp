@@ -7,15 +7,25 @@ node 'logstash.local' {
   }
   
   include puppetdb::master::config 
- 
+
+  class { 'rsyslog::client':
+    log_remote     => true,
+    remote_type    => 'tcp',
+    log_local      => true,
+    log_auth_local => true,
+    custom_config  => undef,
+    server         => 'logstash.local',
+    port           => '5514',
+  }
+
 }
 
 node 'elasticsearch1.local', 'elasticsearch2.local' {
   
- package {'openjdk-7-jre-headless':
+ package {'openjdk-7-jdk':
     ensure => installed,
   }
-
+  
   class { 'elasticsearch':
     package_url => 'https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-0.90.7.deb',
     config => {
@@ -30,17 +40,48 @@ node 'elasticsearch1.local', 'elasticsearch2.local' {
         'host' => $ipaddress_eth1
       },
       'cluster' => {
-        'name' => 'logdatabase',
+        'name' => 'logstash',
       }
     }
   }
+  
+  class { 'rsyslog::client':
+    log_remote     => true,
+    remote_type    => 'tcp',
+    log_local      => true,
+    log_auth_local => true,
+    custom_config  => undef,
+    server         => 'logstash.local',
+    port           => '5514',
+  }
+
 }
 
 
 node 'kibanathree.local' {
+  
+    class { 'rsyslog::client':
+    log_remote     => true,
+    remote_type    => 'tcp',
+    log_local      => true,
+    log_auth_local => true,
+    custom_config  => undef,
+    server         => 'logstash.local',
+    port           => '5514',
+  }
 
 }
 
 node 'rsyslog1.local', 'rsyslog2.local' {
+
+  class { 'rsyslog::client':
+    log_remote     => true,
+    remote_type    => 'tcp',
+    log_local      => true,
+    log_auth_local => true,
+    custom_config  => undef,
+    server         => 'logstash.local',
+    port           => '5514',
+  }
 
 }
