@@ -1,13 +1,14 @@
 #Node definitions
 
-node default {
-   
+node 'logstash.local' {
+  
+  class { 'puppetdb':
+    listen_address => '0.0.0.0'
+  }
+
 }
+  include puppetdb::master::config 
 
-node 'elasticsearch1', 'elasticsearch2', 'elasticsearch3', 'elasticsearch4' {
+node 'elasticsearch1', 'elasticsearch2' {
 
-    class {'elasticsearch':
-        cluster_name => 'mycluster01',
-        bind_interface => 'eth1',
-    }
 }
