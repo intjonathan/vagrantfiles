@@ -10,7 +10,6 @@ node 'logstash.local' {
  
 }
 
-
 node 'elasticsearch1.local', 'elasticsearch2.local' {
   
  package {'openjdk-7-jre-headless':
