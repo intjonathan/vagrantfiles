@@ -106,4 +106,32 @@ Vagrant.configure("2") do |config|
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
   end
+
+  #An rsyslog client
+  config.vm.define "rsyslog1".to_sym do |rsyslog1_config|
+    rsyslog1_config.vm.box = "ubuntu-13.10-server-amd64"
+    rsyslog1_config.vm.hostname = "rsyslog1.local"
+    rsyslog1_config.hostmanager.aliases = %w(rsyslog1.local)
+    rsyslog1_config.hostmanager.enabled = true
+    rsyslog1_config.vm.network :private_network, ip: "10.0.1.151"
+    #set some machine-specific options	
+    rsyslog1_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+  end
+
+  #An rsyslog client
+  config.vm.define "rsyslog2".to_sym do |rsyslog2_config|
+    rsyslog2_config.vm.box = "ubuntu-13.10-server-amd64"
+    rsyslog2_config.vm.hostname = "rsyslog2.local"
+    rsyslog2_config.hostmanager.aliases = %w(rsyslog2.local)
+    rsyslog2_config.hostmanager.enabled = true
+    rsyslog2_config.vm.network :private_network, ip: "10.0.1.152"
+    #set some machine-specific options	
+    rsyslog2_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+  end
 end
