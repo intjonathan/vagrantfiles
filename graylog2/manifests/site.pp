@@ -14,12 +14,42 @@ node 'graylogdb.local' {
 
 node 'client1.local' {
 
+  class { 'rsyslog::client':
+    log_remote     => true,
+    remote_type    => 'tcp',
+    log_local      => true,
+    log_auth_local => true,
+    custom_config  => undef,
+    server         => 'graylog2.local',
+    port           => '10514',
+  }
+
 }
 
 node 'client2.local' {
 
+  class { 'rsyslog::client':
+    log_remote     => true,
+    remote_type    => 'tcp',
+    log_local      => true,
+    log_auth_local => true,
+    custom_config  => undef,
+    server         => 'graylog2.local',
+    port           => '10514',
+  }
+
 }
 
 node 'client3.local' {
+
+  class { 'rsyslog::client':
+    log_remote     => true,
+    remote_type    => 'tcp',
+    log_local      => true,
+    log_auth_local => true,
+    custom_config  => undef,
+    server         => 'graylog2.local',
+    port           => '10514',
+  }
 
 }
