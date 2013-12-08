@@ -2,13 +2,18 @@
 
 node 'logstash.local' {
   
-  class { 'puppetdb':
-    listen_address => '0.0.0.0'
-  }
+}
+
+
+node 'elasticsearch1.local', 'elasticsearch2.local' {
 
 }
-  include puppetdb::master::config 
 
-node 'elasticsearch1', 'elasticsearch2' {
+
+node 'kibanathree.local' {
+
+}
+
+node 'rsyslog1.local', 'rsyslog2.local' {
 
 }
