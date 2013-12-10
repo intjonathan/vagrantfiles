@@ -57,7 +57,6 @@ node 'elasticsearch1.local', 'elasticsearch2.local' {
 
 }
 
-
 node 'kibanathree.local' {
   
     class { 'rsyslog::client':

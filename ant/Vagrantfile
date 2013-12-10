@@ -7,14 +7,10 @@ Vagrant.configure("2") do |config|
   # Snippets to use
   ####################
   
-  #NFS folder sharing for Puppet modules and manifests
-    #config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/modules" #:nfs => true
-    #config.vm.synced_folder "manifests/", "/etc/puppet/manifests" #:nfs => true
-    #config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/hieradata", "/etc/puppet/hieradata" #:nfs => true
-    
-    #Puppet provisioning scripts
-    #vmname_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1310_puppet_master_script.sh"
-    #vmname_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1310_puppet_agent_script.sh"
+  #NFS folder sharing
+  config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/modules"
+  config.vm.synced_folder "manifests/", "/etc/puppet/manifests"
+  config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/hieradata", "/etc/puppet/hieradata"
 
   ####################
   ####################
@@ -36,7 +32,7 @@ Vagrant.configure("2") do |config|
     #enable the hostmanager Vagrant plugin for this VM
     antmaster_config.hostmanager.enabled = true
     #some aliases the hostmanager plugin will add to the hosts files of other VMs
-    antmaster_config.hostmanager.aliases = %w(antmaster)
+    antmaster_config.hostmanager.aliases = %w(antmaster puppet)
     #set a static IP
     antmaster_config.vm.network :private_network, ip: "10.0.1.100"
     #set some machine-specific options	
@@ -87,7 +83,7 @@ Vagrant.configure("2") do |config|
     antdebian_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1310_puppet_agent_script.sh"  
   end
   
-  #A Debian VM for Puppetizing
+  #A CentOS VM for Puppetizing
   config.vm.define "antcentos".to_sym do |antcentos_config|
     #the base box we're using
     antcentos_config.vm.box = "centos-6.5-amd64"
@@ -104,6 +100,6 @@ Vagrant.configure("2") do |config|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "1024"]
     end
-     antcentos_config.vm.provision :shell, :path => "../provisioning_scripts/rhel_centos_puppet_agent_script.sh
+    antcentos_config.vm.provision :shell, :path => "../provisioning_scripts/rhel_centos_puppet_agent_script.sh"
   end
 end
