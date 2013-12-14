@@ -39,5 +39,9 @@ node 'antdebian.local' {
 }
 
 node 'antcentos.local' {
-  
+
+  class{ 'ant':
+      version => '1.9.2',
+  }
+
 }
