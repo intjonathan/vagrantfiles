@@ -23,6 +23,14 @@ node 'antubuntu.local' {
  package {'openjdk-7-jdk':
     ensure => installed,
   }
+
+  class {'gradle':
+        version => '1.9',
+  }
+  
+  class {'groovy':
+    version => '2.2.1',
+  }
  
 }
 
@@ -36,12 +44,28 @@ node 'antdebian.local' {
     ensure => installed,
   }
 
+  class {'gradle':
+        version => '1.9',
+  }
+  
+  class {'groovy':
+    version => '2.2.1',
+  }
+
 }
 
 node 'antcentos.local' {
 
   class{ 'ant':
       version => '1.9.2',
+  }
+
+  class {'gradle':
+        version => '1.9',
+  }
+  
+  class {'groovy':
+    version => '2.2.1',
   }
 
 }
