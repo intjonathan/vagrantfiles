@@ -23,18 +23,18 @@ Vagrant.configure("2") do |config|
 
 
   #Ubuntu Puppet master
-  config.vm.define "puppet".to_sym do |puppet_config|
-    puppet_config.vm.box = "ubuntu-13.10-server-amd64"
-    puppet_config.vm.hostname = "puppet.local"
-    puppet_config.hostmanager.enabled = true
-    puppet_config.hostmanager.aliases = %w(puppet puppet.local serf.puppet.local serfpuppetboard.puppet.local serfpuppet.local)
-    puppet_config.vm.network :private_network, ip: "10.0.1.150"
+  config.vm.define "serfmaster".to_sym do |serfmaster_config|
+    serfmaster_config.vm.box = "ubuntu-13.10-server-amd64"
+    serfmaster_config.vm.hostname = "serfmaster.local"
+    serfmaster_config.hostmanager.enabled = true
+    serfmaster_config.hostmanager.aliases = %w(serfmaster serfmaster.local serf.serfmaster.local serfserfmasterboard.serfmaster.local serfserfmaster.local)
+    serfmaster_config.vm.network :private_network, ip: "10.0.1.150"
     #set some machine-specific options	
-    puppet_config.vm.provider "virtualbox" do |v|
+    serfmaster_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "1024"]
     end
-    puppet_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1310_puppet_master_script.sh"
+    serfmaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1310_serfmaster_master_script.sh"
   end
 
   #Ubuntu Serf agent VM
