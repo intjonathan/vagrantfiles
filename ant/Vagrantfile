@@ -32,7 +32,7 @@ Vagrant.configure("2") do |config|
     #enable the hostmanager Vagrant plugin for this VM
     antmaster_config.hostmanager.enabled = true
     #some aliases the hostmanager plugin will add to the hosts files of other VMs
-    antmaster_config.hostmanager.aliases = %w(antmaster puppet antmaster.puppet.local ant.puppet.local antpuppetboard.puppet.local puppetdb.puppet.local)
+    antmaster_config.hostmanager.aliases = %w(puppet puppet.local antmaster antmaster.local antpuppetboard.puppet.local antpuppetdb.puppet.local)
     #set a static IP
     antmaster_config.vm.network :private_network, ip: "10.0.1.100"
     #set some machine-specific options	
