@@ -24,19 +24,19 @@ Vagrant.configure("2") do |config|
   #incorporate offline box's IPs into the /etc/hosts of boxes that are up/being brought up
   config.hostmanager.include_offline = true
 
-  #ganglia web server
-  config.vm.define "ubuntugroovy".to_sym do |ubuntugroovy_config|
-    ubuntugroovy_config.vm.box = "ubuntu-13.10-server-amd64"
-    ubuntugroovy_config.vm.hostname = "ubuntugroovy.local"
-    ubuntugroovy_config.hostmanager.enabled = true
-    ubuntugroovy_config.hostmanager.aliases = %w(ubuntugroovy.local puppet puppet.local)
-    ubuntugroovy_config.vm.network :private_network, ip: "10.0.1.54"
+  #Groovy Puppet master
+  config.vm.define "groovymaster".to_sym do |groovymaster_config|
+    groovymaster_config.vm.box = "ubuntu-13.10-server-amd64"
+    groovymaster_config.vm.hostname = "groovymaster.local"
+    groovymaster_config.hostmanager.enabled = true
+    groovymaster_config.hostmanager.aliases = %w(groovymaster.local groovymaster puppet puppet.local groovypuppetboard.puppet.local groovypuppetdb.puppet.local)
+    groovymaster_config.vm.network :private_network, ip: "10.0.1.54"
     #set some machine-specific options	
-    ubuntugroovy_config.vm.provider "virtualbox" do |v|
+    groovymaster_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "1024"]
     end
-    ubuntugroovy_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1310_puppet_master_script.sh"
+    groovymaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1310_puppet_master_script.sh"
   end
 
   #CentOS groovy VM
