@@ -36,12 +36,26 @@ Vagrant.configure("2") do |config|
     gradlemaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1310_puppet_master_script.sh"
   end
 
+  #Ubuntu Gradle VM
+  config.vm.define "ubuntugradle".to_sym do |ubuntugradle_config|
+    ubuntugradle_config.vm.box = "ubuntu-6.5-amd64"
+    ubuntugradle_config.vm.hostname = "ubuntugradle.local"
+    ubuntugradle_config.hostmanager.enabled = true
+    ubuntugradle_config.vm.network :private_network, ip: "10.0.1.53"
+    #set some machine-specific options	
+    ubuntugradle_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+    ubuntugradle_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1310_puppet_agent_script.sh"
+  end
+
   #CentOS Gradle VM
   config.vm.define "centosgradle".to_sym do |centosgradle_config|
     centosgradle_config.vm.box = "centos-6.5-amd64"
     centosgradle_config.vm.hostname = "centosgradle.local"
     centosgradle_config.hostmanager.enabled = true
-    centosgradle_config.vm.network :private_network, ip: "10.0.1.53"
+    centosgradle_config.vm.network :private_network, ip: "10.0.1.54"
     #set some machine-specific options	
     centosgradle_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
