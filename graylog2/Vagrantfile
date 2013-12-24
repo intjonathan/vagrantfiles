@@ -55,7 +55,7 @@ Vagrant.configure("2") do |config|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "1024"]
     end
-    graylogdb_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1310_puppet_agent_script.sh"
+    graylogdb_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent_script.sh.sh"
   end
 
   #A graylog2 log client that sends rsyslog
@@ -69,7 +69,7 @@ Vagrant.configure("2") do |config|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
-    client1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1310_puppet_agent_script.sh"
+    client1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent_script.sh.sh"
   end
 
   #A graylog2 log client that sends rsyslog
@@ -83,7 +83,7 @@ Vagrant.configure("2") do |config|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
-    client2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1310_puppet_agent_script.sh"
+    client2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent_script.sh.sh"
   end
 
   #A graylog2 log client that sends rsyslog
@@ -97,6 +97,6 @@ Vagrant.configure("2") do |config|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
-    client3_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1310_puppet_agent_script.sh"
+    client3_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent_script.sh.sh"
   end
 end

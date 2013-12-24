@@ -54,7 +54,7 @@ Vagrant.configure("2") do |config|
       v.customize ["modifyvm", :id, "--memory", "1024"]
     end
     #Puppet agent provisioning script
-    #icingaserver_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1310_puppet_agent_script.sh"
+    #icingaserver_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent_script.sh.sh"
   end
 
   #an icingaserver client
@@ -83,7 +83,7 @@ Vagrant.configure("2") do |config|
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
     #Puppet agent provisioning script
-    #icingaclient2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1310_puppet_agent_script.sh"
+    #icingaclient2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent_script.sh.sh"
   end
 
   # #a mail server for icingaserver.local to send notifications to
@@ -98,6 +98,6 @@ Vagrant.configure("2") do |config|
   #         v.customize ["modifyvm", :id, "--memory", "512"]
   #     end
   #     #Puppet agent provisioning script
-  # 	mail_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1310_puppet_agent_script.sh"
+  # 	mail_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent_script.sh.sh"
   # end
 end

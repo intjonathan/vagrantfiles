@@ -60,7 +60,7 @@ Vagrant.configure("2") do |config|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "1024"]
     end
-    antubuntu_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1310_puppet_agent_script.sh"
+    antubuntu_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent_script.sh.sh"
   end
 
   #A Debian VM for Puppetizing Apache Ant
@@ -80,7 +80,7 @@ Vagrant.configure("2") do |config|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "1024"]
     end
-    antdebian_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1310_puppet_agent_script.sh"  
+    antdebian_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent_script.sh.sh"  
   end
   
   #A CentOS VM for Puppetizing Apache Ant

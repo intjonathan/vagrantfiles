@@ -48,7 +48,7 @@ Vagrant.configure("2") do |config|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
-    chefclient1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1310_puppet_agent_script.sh"
+    chefclient1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent_script.sh.sh"
   end
   
   #A Chef client node
@@ -76,7 +76,7 @@ Vagrant.configure("2") do |config|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
-    chefclient3_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1310_puppet_agent_script.sh"
+    chefclient3_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent_script.sh.sh"
   end
   
 end
