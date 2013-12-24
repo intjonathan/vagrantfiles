@@ -28,3 +28,16 @@ node 'centosscala.local' {
   }
 
 }
+
+
+node 'debianscala.local' {
+
+  class{ 'scala':
+    version => '2.10.2',
+  }
+
+  package {'openjdk-7-jdk':
+    ensure => installed,
+  }
+
+}
