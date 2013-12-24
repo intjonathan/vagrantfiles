@@ -47,7 +47,7 @@ Vagrant.configure("2") do |config|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
-    ssh1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent_script.sh.sh"
+    ssh1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
   end
 
   #another ssh client
@@ -61,7 +61,7 @@ Vagrant.configure("2") do |config|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
-    ssh2_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent_script.sh"
+    ssh2_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
   end
 
   #another ssh client
@@ -75,6 +75,6 @@ Vagrant.configure("2") do |config|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
-    ssh3_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent_script.sh.sh"
+    ssh3_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
   end
 end
