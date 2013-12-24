@@ -4,7 +4,7 @@ node 'scalamaster.local' {
   class { 'puppetdb':
     listen_address => '0.0.0.0'
   }
-  
+
   include puppetdb::master::config
 
 }
@@ -12,19 +12,19 @@ node 'scalamaster.local' {
 node 'ubuntuscala.local' {
 
   class{ 'scala':
-      version => '2.10.2',
+    version => '2.10.2',
   }
 
- package {'openjdk-7-jdk':
+  package {'openjdk-7-jdk':
     ensure => installed,
   }
- 
+
 }
 
 node 'centosscala.local' {
 
   class{ 'scala':
-      version => '2.10.2',
+    version => '2.10.2',
   }
 
 }
