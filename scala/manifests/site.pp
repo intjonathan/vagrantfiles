@@ -6,10 +6,6 @@ node 'scalamaster.local' {
   }
   
   include puppetdb::master::config
-  
-  class{ 'ant':
-      version => '1.9.2',
-  }
 
 }
 
