@@ -71,32 +71,4 @@ Vagrant.configure("2") do |config|
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
   end
-
-  #Ubuntu Tomcat VM
-  config.vm.define "ubuntutomcat".to_sym do |ubuntutomcat_config|
-    ubuntutomcat_config.vm.box = "ubuntu-13.10-server-amd64"
-    ubuntutomcat_config.vm.hostname = "ubuntutomcat.local"
-    ubuntutomcat_config.hostmanager.enabled = true
-    ubuntutomcat_config.vm.network :private_network, ip: "10.0.1.42"
-    #set some machine-specific options	
-    ubuntutomcat_config.vm.provider "virtualbox" do |v|
-      #change the amount of RAM 
-      v.customize ["modifyvm", :id, "--memory", "1024"]
-    end
-  end
-
-  #CentOS Tomcat VM
-  config.vm.define "centostomcat".to_sym do |centostomcat_config|
-    centostomcat_config.vm.box = "centos-6.5-amd64"
-    centostomcat_config.vm.hostname = "centostomcat.local"
-    centostomcat_config.hostmanager.aliases = %w(www.centostomcat.local jenkins.centostomcat.local)
-    centostomcat_config.hostmanager.enabled = true
-    centostomcat_config.vm.network :private_network, ip: "10.0.1.43"
-    #set some machine-specific options	
-    centostomcat_config.vm.provider "virtualbox" do |v|
-      #change the amount of RAM 
-      v.customize ["modifyvm", :id, "--memory", "1024"]
-    end
-  end
-
 end
