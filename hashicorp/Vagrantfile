@@ -1,0 +1,72 @@
+Vagrant.configure("2") do |config|
+  # All Vagrant configuration is done here. The most common configuration
+  # options are documented and commented below. For a complete reference,
+  # please see the online documentation at vagrantup.com.
+
+  ####################
+  # Snippets to use
+  ####################
+
+  #NFS folder sharing
+  config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/modules"
+  config.vm.synced_folder "manifests/", "/etc/puppet/manifests"
+  config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/hieradata", "/etc/puppet/hieradata"
+
+  ####################
+  ####################
+  #vagrant-hostmanager plugin options
+  config.hostmanager.enabled = true
+  config.hostmanager.ignore_private_ip = false
+  #update the /etc/hosts of the host OS
+  config.hostmanager.manage_host = true
+
+  #Ubuntu Jenkins master server
+  config.vm.define "hashmaster".to_sym do |hashmaster_config|
+    hashmaster_config.vm.box = "ubuntu-13.10-server-amd64"
+    hashmaster_config.vm.hostname = "hashmaster.local"
+    hashmaster_config.hostmanager.enabled = true
+    hashmaster_config.hostmanager.aliases = %w(puppet puppet.local)
+    hashmaster_config.vm.network :private_network, ip: "10.0.1.149"
+    #set some machine-specific options	
+    hashmaster_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+  end
+
+  config.vm.define "ubuntuhash".to_sym do |ubuntuhash_config|
+    ubuntuhash_config.vm.box = "ubuntu-13.10-server-amd64"
+    ubuntuhash_config.vm.hostname = "ubuntuhash.local"
+    ubuntuhash_config.hostmanager.enabled = true
+    ubuntuhash_config.vm.network :private_network, ip: "10.0.1.148"
+    #set some machine-specific options	
+    ubuntuhash_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+  end
+
+  config.vm.define "debianhash".to_sym do |debianhash_config|
+    debianhash_config.vm.box = "debian-7.3-amd64"
+    debianhash_config.vm.hostname = "debianhash.local"
+    debianhash_config.hostmanager.enabled = true
+    debianhash_config.vm.network :private_network, ip: "10.0.1.140"
+    #set some machine-specific options	
+    debianhash_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+  end
+
+  config.vm.define "centoshash".to_sym do |centoshash_config|
+    centoshash_config.vm.box = "ubuntu-13.10-server-amd64"
+    centoshash_config.vm.hostname = "centoshash.local"
+    centoshash_config.hostmanager.enabled = true
+    centoshash_config.vm.network :private_network, ip: "10.0.1.141"
+    #set some machine-specific options	
+    centoshash_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+  end
+end
