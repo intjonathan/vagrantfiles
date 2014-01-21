@@ -1,0 +1,69 @@
+Vagrant.configure("2") do |config|
+  # All Vagrant configuration is done here. The most common configuration
+  # options are documented and commented below. For a complete reference,
+  # please see the online documentation at vagrantup.com.
+
+  ####################
+  # Snippets to use
+  ####################
+
+  #NFS folder sharing
+  #config.vm.synced_folder "modules", "/etc/puppet/modules", :nfs => true
+
+  config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/modules"
+  config.vm.synced_folder "manifests/", "/etc/puppet/manifests"
+  config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/hieradata", "/etc/puppet/hieradata"
+
+  ####################
+  ####################
+  #vagrant-hostmanager plugin options
+  config.hostmanager.enabled = true
+  config.hostmanager.ignore_private_ip = false
+  #update the /etc/hosts of the host OS
+  config.hostmanager.manage_host = true
+  #incorporate offline box's IPs into the /etc/hosts of boxes that are up/being brought up
+  config.hostmanager.include_offline = true
+
+  #lxc Puppet master
+  config.vm.define "lxcmaster".to_sym do |lxcmaster_config|
+    lxcmaster_config.vm.box = "ubuntu-13.10-server-amd64"
+    lxcmaster_config.vm.hostname = "lxcmaster.local"
+    lxcmaster_config.hostmanager.enabled = true
+    lxcmaster_config.hostmanager.aliases = %w(lxcmaster puppet puppet.local lxcpuppetboard.puppet.local lxcpuppetdb.puppet.local)
+    lxcmaster_config.vm.network :private_network, ip: "10.0.1.154"
+    #set some machine-specific options	
+    lxcmaster_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+    lxcmaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_master.sh"
+  end
+
+  #Ubuntu lxc VM
+  config.vm.define "ubuntulxc".to_sym do |ubuntulxc_config|
+    ubuntulxc_config.vm.box = "ubuntu-13.10-server-amd64"
+    ubuntulxc_config.vm.hostname = "ubuntulxc.local"
+    ubuntulxc_config.hostmanager.enabled = true
+    ubuntulxc_config.vm.network :private_network, ip: "10.0.1.155"
+    #set some machine-specific options	
+    ubuntulxc_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+    ubuntulxc_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
+  end
+
+  #CentOS lxc VM
+  config.vm.define "centoslxc".to_sym do |centoslxc_config|
+    centoslxc_config.vm.box = "centos-6.5-amd64"
+    centoslxc_config.vm.hostname = "centoslxc.local"
+    centoslxc_config.hostmanager.enabled = true
+    centoslxc_config.vm.network :private_network, ip: "10.0.1.156"
+    #set some machine-specific options	
+    centoslxc_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+    centoslxc_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
+  end
+end
