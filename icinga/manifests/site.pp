@@ -7,7 +7,7 @@ node default {
 node 'icingamaster.local' {
 
   class { 'puppetdb':
-    listen_address => '10.0.1.79'
+    listen_address => '0.0.0.0'
   }
   
  include puppetdb::master::config
