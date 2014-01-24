@@ -26,7 +26,7 @@ Vagrant.configure("2") do |config|
     icingamaster_config.vm.box = "ubuntu-13.10-server-amd64"
     icingamaster_config.vm.hostname = "icingamaster.local"
     icingamaster_config.hostmanager.enabled = true
-    icingamaster_config.hostmanager.aliases = %w(icingamaster puppet master)
+    icingamaster_config.hostmanager.aliases = %w(puppetboard.icingamaster.local icingamaster puppet master)
     icingamaster_config.vm.network :private_network, ip: "10.0.1.78"
     #set some machine-specific options	
     icingamaster_config.vm.provider "virtualbox" do |v|
@@ -43,7 +43,7 @@ Vagrant.configure("2") do |config|
 
   #ubuntuicinga server
   config.vm.define "ubuntuicinga".to_sym do |ubuntuicinga_config|
-    ubuntuicinga_config.vm.box = "centos-6.5-amd64"
+    ubuntuicinga_config.vm.box = "ubuntu-13.10-server-amd64"
     ubuntuicinga_config.vm.hostname = "ubuntuicinga.local"
     ubuntuicinga_config.hostmanager.enabled = true
     ubuntuicinga_config.hostmanager.aliases = %w(ubuntuicinga)
@@ -70,7 +70,7 @@ Vagrant.configure("2") do |config|
       v.customize ["modifyvm", :id, "--memory", "1024"]
     end
     #Puppet agent provisioning script
-    centosicinga_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_master.sh"
+    centosicinga_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
   end
 
   #an icingaserver client
