@@ -13,3 +13,11 @@ node 'icingamaster.local' {
  include puppetdb::master::config
 
 }
+
+#Ubuntu Icinga server node
+
+node 'ubuntuicinga.local' {
+  
+  include icinga::server
+  
+}
