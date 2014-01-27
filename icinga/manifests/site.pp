@@ -1,6 +1,8 @@
 #default node defition
 node default {
 
+  include ssh
+
 }
 
 #puppet master node definition
