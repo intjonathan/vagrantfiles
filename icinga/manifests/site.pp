@@ -33,16 +33,56 @@ node 'ubuntuicinga.local' {
     server_db_password => 'password'
   }
 
+  class { 'rsyslog::client':
+      log_remote     => true,
+      remote_type    => 'tcp',
+      log_local      => true,
+      log_auth_local => true,
+      custom_config  => undef,
+      server         => 'icingamaster.local',
+      port           => '514',
+  }
+
 }
 
 node 'centosicinga.local' {
+
+  class { 'rsyslog::client':
+      log_remote     => true,
+      remote_type    => 'tcp',
+      log_local      => true,
+      log_auth_local => true,
+      custom_config  => undef,
+      server         => 'icingamaster.local',
+      port           => '514',
+  }
 
 }
 
 node 'icingaclient1.local' {
 
+  class { 'rsyslog::client':
+      log_remote     => true,
+      remote_type    => 'tcp',
+      log_local      => true,
+      log_auth_local => true,
+      custom_config  => undef,
+      server         => 'icingamaster.local',
+      port           => '514',
+  }
+
 }
 
 node 'icingaclient2.local' {
+
+  class { 'rsyslog::client':
+      log_remote     => true,
+      remote_type    => 'tcp',
+      log_local      => true,
+      log_auth_local => true,
+      custom_config  => undef,
+      server         => 'icingamaster.local',
+      port           => '514',
+  }
 
 }
