@@ -13,7 +13,7 @@ node 'icingamaster.local' {
   }
   
  include puppetdb::master::config
-
+ 
 }
 
 #Ubuntu Icinga server node
@@ -21,5 +21,10 @@ node 'icingamaster.local' {
 node 'ubuntuicinga.local' {
 
   class { 'postgresql::server': }
+
+  postgresql::server::db { 'icinga':
+    user     => 'icingaidoutils',
+    password => postgresql_password('icingaidoutils', 'password'),
+  }
 
 }
