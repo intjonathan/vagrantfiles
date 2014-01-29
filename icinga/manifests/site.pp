@@ -32,3 +32,15 @@ node 'ubuntuicinga.local' {
   }
 
 }
+
+node 'centosicinga.local' {
+
+}
+
+node 'icingaclient1.local' {
+
+}
+
+node 'icingaclient2.local' {
+
+}
