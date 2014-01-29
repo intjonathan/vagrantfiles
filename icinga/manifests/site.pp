@@ -26,5 +26,9 @@ node 'ubuntuicinga.local' {
     user     => 'icingaidoutils',
     password => postgresql_password('icingaidoutils', 'password'),
   }
+  
+  class { 'icinga::server':
+    server_db_password => 'password'
+  }
 
 }
