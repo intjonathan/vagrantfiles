@@ -19,7 +19,7 @@ node 'icingamaster.local' {
 #Ubuntu Icinga server node
 
 node 'ubuntuicinga.local' {
-  
-  include icinga::server
-  
+
+  class { 'postgresql::server': }
+
 }
