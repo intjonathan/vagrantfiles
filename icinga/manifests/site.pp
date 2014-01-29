@@ -12,7 +12,9 @@ node 'icingamaster.local' {
     listen_address => '0.0.0.0'
   }
   
- include puppetdb::master::config
+  include puppetdb::master::config
+ 
+  class { 'rsyslog::server': }
  
 }
 
