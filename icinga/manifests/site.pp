@@ -56,6 +56,8 @@ node 'centosicinga.local' {
       server         => 'icingamaster.local',
       port           => '514',
   }
+  
+  include icinga::client
 
 }
 
@@ -70,6 +72,8 @@ node 'icingaclient1.local' {
       server         => 'icingamaster.local',
       port           => '514',
   }
+  
+  include icinga::client
 
 }
 
@@ -84,5 +88,7 @@ node 'icingaclient2.local' {
       server         => 'icingamaster.local',
       port           => '514',
   }
+
+  include icinga::client
 
 }
