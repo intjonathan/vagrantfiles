@@ -58,7 +58,7 @@ node 'worker1.local' {
       log_local      => true,
       log_auth_local => true,
       custom_config  => undef,
-      server         => 'ubuntujenkins.local',
+      server         => 'jenkinsmaster.local',
       port           => '514',
   }
 
@@ -73,7 +73,7 @@ node 'worker2.local' {
       log_local      => true,
       log_auth_local => true,
       custom_config  => undef,
-      server         => 'ubuntujenkins.local',
+      server         => 'jenkinsmaster.local',
       port           => '514',
   }
 
@@ -88,7 +88,7 @@ node 'worker3.local' {
       log_local      => true,
       log_auth_local => true,
       custom_config  => undef,
-      server         => 'ubuntujenkins.local',
+      server         => 'jenkinsmaster.local',
       port           => '514',
   }
 
@@ -103,7 +103,7 @@ node 'worker4.local' {
       log_local      => true,
       log_auth_local => true,
       custom_config  => undef,
-      server         => 'ubuntujenkins.local',
+      server         => 'jenkinsmaster.local',
       port           => '514',
   }
 
