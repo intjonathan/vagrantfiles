@@ -7,7 +7,7 @@ Vagrant.configure("2") do |config|
   # Snippets to use
   ####################
 
-  #NFS folder sharing
+  #NFS folder sharing example
   #config.vm.synced_folder "modules", "/etc/puppet/modules", :nfs => true
 
   ####################
@@ -19,22 +19,36 @@ Vagrant.configure("2") do |config|
   config.hostmanager.manage_host = true
 
   #Ubuntu Jenkins master server and Puppet master
+  config.vm.define "jenkinsmaster".to_sym do |jenkinsmaster_config|
+    jenkinsmaster_config.vm.box = "ubuntu-13.10-server-amd64"
+    jenkinsmaster_config.vm.hostname = "jenkinsmaster.local"
+    jenkinsmaster_config.hostmanager.enabled = true
+    jenkinsmaster_config.hostmanager.aliases = %w(puppetboard.jenkinsmaster.local jenkinsmaster puppet master)
+    jenkinsmaster_config.vm.network :private_network, ip: "10.0.1.48"
+    #set some machine-specific options	
+    jenkinsmaster_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+    #Set up synced folders for Puppet code:
+    jenkinsmaster_config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/modules", :nfs => true
+    jenkinsmaster_config.vm.synced_folder "manifests/", "/etc/puppet/manifests", :nfs => true
+    jenkinsmaster_config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/hieradata", "/etc/puppet/hieradata", :nfs => true
+    jenkinsmaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_master.sh"
+  end
+  
+  #Ubuntu Jenkins master server
   config.vm.define "ubuntujenkins".to_sym do |ubuntujenkins_config|
     ubuntujenkins_config.vm.box = "ubuntu-13.10-server-amd64"
     ubuntujenkins_config.vm.hostname = "ubuntujenkins.local"
     ubuntujenkins_config.hostmanager.enabled = true
-    ubuntujenkins_config.hostmanager.aliases = %w(puppetboard.ubuntujenkins.local ubuntujenkins puppet master)
     ubuntujenkins_config.vm.network :private_network, ip: "10.0.1.49"
     #set some machine-specific options	
     ubuntujenkins_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "1024"]
     end
-    #Set up synced folders for Puppet code:
-    ubuntujenkins_config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/modules", :nfs => true
-    ubuntujenkins_config.vm.synced_folder "manifests/", "/etc/puppet/manifests", :nfs => true
-    ubuntujenkins_config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/hieradata", "/etc/puppet/hieradata", :nfs => true
-    ubuntujenkins_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_master.sh"
+    ubuntujenkins_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
   end
   
   #CentOS Jenkins master server
@@ -42,7 +56,7 @@ Vagrant.configure("2") do |config|
     centosjenkins_config.vm.box = "centos-6.5-amd64"
     centosjenkins_config.vm.hostname = "centosjenkins.local"
     centosjenkins_config.hostmanager.enabled = true
-    centosjenkins_config.vm.network :private_network, ip: "10.0.1.48"
+    centosjenkins_config.vm.network :private_network, ip: "10.0.1.50"
     #set some machine-specific options	
     centosjenkins_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
