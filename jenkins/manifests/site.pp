@@ -30,7 +30,8 @@ node 'ubuntujenkins.local' {
       server         => 'jenkinsmaster.local',
       port           => '514',
   }
-
+  
+  include apache
 }
 
 
@@ -46,6 +47,8 @@ node 'centosjenkins.local' {
       server         => 'jenkinsmaster.local',
       port           => '514',
   }
+  
+  include apache
 
 }
 
