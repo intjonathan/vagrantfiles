@@ -1,57 +1,123 @@
 Vagrant.configure("2") do |config|
-# All Vagrant configuration is done here. The most common configuration
-# options are documented and commented below. For a complete reference,
-# please see the online documentation at vagrantup.com.
+  # All Vagrant configuration is done here. The most common configuration
+  # options are documented and commented below. For a complete reference,
+  # please see the online documentation at vagrantup.com.
 
-####################
-# Snippets to use
-####################
+  ####################
+  # Snippets to use
+  ####################
 
-#NFS folder sharing
-#config.vm.synced_folder "modules", "/etc/puppet/modules", :nfs => true
+  #NFS folder sharing example
+  #config.vm.synced_folder "modules", "/etc/puppet/modules", :nfs => true
 
-####################
-####################
-config.vm.box = "ubuntu-12.10-server-amd64"
-config.hostmanager.enabled = true
-config.hostmanager.ignore_private_ip = false
+  ####################
+  ####################
+  #vagrant-hostmanager plugin options
+  config.hostmanager.enabled = true
+  config.hostmanager.ignore_private_ip = false
+  #update the /etc/hosts of the host OS
+  config.hostmanager.manage_host = true
 
-    #MySQL node 1
-    config.vm.define "mysqlnode3".to_sym do |mysqlnode3_config|
-        mysqlnode3_config.vm.box = "ubuntu-12.10-server-amd64"
-        mysqlnode3_config.vm.hostname = "mysqlnode3.local"
-        mysqlnode3_config.hostmanager.enabled = true
-        mysqlnode3_config.vm.network :private_network, ip: "10.0.1.36"
-        #set some machine-specific options	
-        mysqlnode3_config.vm.provider "virtualbox" do |v|
-           #change the amount of RAM 
-            v.customize ["modifyvm", :id, "--memory", "512"]
-        end
+  #Puppet master
+  config.vm.define "mysqlmaster".to_sym do |mysqlmaster_config|
+    mysqlmaster_config.vm.box = "ubuntu-13.10-server-amd64"
+    mysqlmaster_config.vm.hostname = "mysqlmaster.local"
+    mysqlmaster_config.hostmanager.enabled = true
+    mysqlmaster_config.hostmanager.aliases = %w(puppetboard.mysqlmaster.local mysqlmaster puppet master)
+    mysqlmaster_config.vm.network :private_network, ip: "10.0.1.48"
+    #set some machine-specific options	
+    mysqlmaster_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
     end
-    
-    #MySQL node 2
-    config.vm.define "mysqlnode3".to_sym do |mysqlnode3_config|
-        mysqlnode3_config.vm.box = "ubuntu-12.10-server-amd64"
-        mysqlnode3_config.vm.hostname = "mysqlnode3.local"
-        mysqlnode3_config.hostmanager.enabled = true
-        mysqlnode3_config.vm.network :private_network, ip: "10.0.1.35"
-        #set some machine-specific options	
-        mysqlnode3_config.vm.provider "virtualbox" do |v|
-           #change the amount of RAM 
-            v.customize ["modifyvm", :id, "--memory", "512"]
-        end
+    #Set up synced folders for Puppet code:
+    mysqlmaster_config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/modules", :nfs => true
+    mysqlmaster_config.vm.synced_folder "manifests/", "/etc/puppet/manifests", :nfs => true
+    mysqlmaster_config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/hieradata", "/etc/puppet/hieradata", :nfs => true
+    mysqlmaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_master.sh"
+  end
+  
+  #An HAProxy server
+  config.vm.define "haproxy1".to_sym do |haproxy1_config|
+    haproxy1_config.vm.box = "ubuntu-13.10-server-amd64"
+    haproxy1_config.vm.hostname = "haproxy1.local"
+    haproxy1_config.hostmanager.enabled = true
+    haproxy1_config.vm.network :private_network, ip: "10.0.1.49"
+    #set some machine-specific options	
+    haproxy1_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
     end
-    
-    #MySQL node 3
-    config.vm.define "mysqlnode3".to_sym do |mysqlnode3_config|
-        mysqlnode3_config.vm.box = "ubuntu-12.10-server-amd64"
-        mysqlnode3_config.vm.hostname = "mysqlnode3.local"
-        mysqlnode3_config.hostmanager.enabled = true
-        mysqlnode3_config.vm.network :private_network, ip: "10.0.1.34"
-        #set some machine-specific options	
-        mysqlnode3_config.vm.provider "virtualbox" do |v|
-           #change the amount of RAM 
-            v.customize ["modifyvm", :id, "--memory", "512"]
-        end
+    haproxy1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
+  end
+  
+  #Another HAProxy server
+  config.vm.define "haproxy2".to_sym do |haproxy2_config|
+    haproxy2_config.vm.box = "centos-6.5-amd64"
+    haproxy2_config.vm.hostname = "haproxy2.local"
+    haproxy2_config.hostmanager.enabled = true
+    haproxy2_config.vm.network :private_network, ip: "10.0.1.50"
+    #set some machine-specific options	
+    haproxy2_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
     end
+    haproxy2_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
+  end
+
+  #MySQL node
+  config.vm.define "mysql1".to_sym do |mysql1_config|
+    mysql1_config.vm.box = "ubuntu-13.10-server-amd64"
+    mysql1_config.vm.hostname = "mysql1.local"
+    mysql1_config.hostmanager.enabled = true
+    mysql1_config.vm.network :private_network, ip: "10.0.1.51"
+    #set some machine-specific options	
+    mysql1_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    mysql1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
+  end
+
+  #MySQL node
+  config.vm.define "mysql2".to_sym do |mysql2_config|
+    mysql2_config.vm.box = "ubuntu-13.10-server-amd64"
+    mysql2_config.vm.hostname = "mysql2.local"
+    mysql2_config.hostmanager.enabled = true
+    mysql2_config.vm.network :private_network, ip: "10.0.1.52"
+    #set some machine-specific options	
+    mysql2_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    mysql2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
+  end
+
+  #MySQL node
+  config.vm.define "mysql3".to_sym do |mysql3_config|
+    mysql3_config.vm.box = "centos-6.5-amd64"
+    mysql3_config.vm.hostname = "mysql3.local"
+    mysql3_config.hostmanager.enabled = true
+    mysql3_config.vm.network :private_network, ip: "10.0.1.53"
+    #set some machine-specific options	
+    mysql3_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    mysql3_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
+  end
+
+  #MySQL node
+  config.vm.define "mysql4".to_sym do |mysql4_config|
+    mysql4_config.vm.box = "centos-6.5-amd64"
+    mysql4_config.vm.hostname = "mysql4.local"
+    mysql4_config.hostmanager.enabled = true
+    mysql4_config.vm.network :private_network, ip: "10.0.1.54"
+    #set some machine-specific options	
+    mysql4_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    mysql4_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
+  end
 end
