@@ -25,18 +25,18 @@ node 'broker.local' {
   include ssh
 
   class { 'rsyslog::client':
-      log_remote     => true,
-      remote_type    => 'tcp',
-      log_local      => true,
-      log_auth_local => true,
-      custom_config  => undef,
-      server         => 'openshiftmaster.local',
-      port           => '514',
+    log_remote     => true,
+    remote_type    => 'tcp',
+    log_local      => true,
+    log_auth_local => true,
+    custom_config  => undef,
+    server         => 'openshiftmaster.local',
+    port           => '514',
   }
   
   class { '::ntp':
     servers => [ '0.pool.ntp.org', '1.pool.ntp.org', '2.pool.ntp.org', '3.pool.ntp.org' ],
-    restrict => ['127.0.0.1'],
+    restrict => ['default kod nomodify notrap nopeer noquery', '-6 default kod nomodify notrap nopeer noquery', '127.0.0.1', '-6 ::1'],
   }
 
 }
@@ -47,13 +47,13 @@ node 'activemq.local' {
   include ssh
 
   class { 'rsyslog::client':
-      log_remote     => true,
-      remote_type    => 'tcp',
-      log_local      => true,
-      log_auth_local => true,
-      custom_config  => undef,
-      server         => 'openshiftmaster.local',
-      port           => '514',
+    log_remote     => true,
+    remote_type    => 'tcp',
+    log_local      => true,
+    log_auth_local => true,
+    custom_config  => undef,
+    server         => 'openshiftmaster.local',
+    port           => '514',
   }
 
 }
@@ -64,13 +64,13 @@ node 'mongodb.local' {
   include ssh
 
   class { 'rsyslog::client':
-      log_remote     => true,
-      remote_type    => 'tcp',
-      log_local      => true,
-      log_auth_local => true,
-      custom_config  => undef,
-      server         => 'openshiftmaster.local',
-      port           => '514',
+    log_remote     => true,
+    remote_type    => 'tcp',
+    log_local      => true,
+    log_auth_local => true,
+    custom_config  => undef,
+    server         => 'openshiftmaster.local',
+    port           => '514',
   }
 
 }
@@ -81,13 +81,13 @@ node 'node1.local' {
   include ssh
 
   class { 'rsyslog::client':
-      log_remote     => true,
-      remote_type    => 'tcp',
-      log_local      => true,
-      log_auth_local => true,
-      custom_config  => undef,
-      server         => 'openshiftmaster.local',
-      port           => '514',
+    log_remote     => true,
+    remote_type    => 'tcp',
+    log_local      => true,
+    log_auth_local => true,
+    custom_config  => undef,
+    server         => 'openshiftmaster.local',
+    port           => '514',
   }
 
 }
@@ -98,13 +98,13 @@ node 'node2.local' {
   include ssh
 
   class { 'rsyslog::client':
-      log_remote     => true,
-      remote_type    => 'tcp',
-      log_local      => true,
-      log_auth_local => true,
-      custom_config  => undef,
-      server         => 'openshiftmaster.local',
-      port           => '514',
+    log_remote     => true,
+    remote_type    => 'tcp',
+    log_local      => true,
+    log_auth_local => true,
+    custom_config  => undef,
+    server         => 'openshiftmaster.local',
+    port           => '514',
   }
 
 }
@@ -116,13 +116,13 @@ node 'node3.local' {
   include ssh
 
   class { 'rsyslog::client':
-      log_remote     => true,
-      remote_type    => 'tcp',
-      log_local      => true,
-      log_auth_local => true,
-      custom_config  => undef,
-      server         => 'openshiftmaster.local',
-      port           => '514',
+    log_remote     => true,
+    remote_type    => 'tcp',
+    log_local      => true,
+    log_auth_local => true,
+    custom_config  => undef,
+    server         => 'openshiftmaster.local',
+    port           => '514',
   }
 
 }
@@ -133,13 +133,13 @@ node 'node4.local' {
   include ssh
 
   class { 'rsyslog::client':
-      log_remote     => true,
-      remote_type    => 'tcp',
-      log_local      => true,
-      log_auth_local => true,
-      custom_config  => undef,
-      server         => 'openshiftmaster.local',
-      port           => '514',
+    log_remote     => true,
+    remote_type    => 'tcp',
+    log_local      => true,
+    log_auth_local => true,
+    custom_config  => undef,
+    server         => 'openshiftmaster.local',
+    port           => '514',
   }
 
 }
