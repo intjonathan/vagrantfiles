@@ -41,6 +41,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "broker".to_sym do |broker_config|
     broker_config.vm.box = "centos-6.5-amd64"
     broker_config.vm.hostname = "broker.local"
+    broker_config.hostmanager.aliases = %w(console.broker.local)
     broker_config.hostmanager.enabled = true
     broker_config.vm.network :private_network, ip: "10.0.1.49"
     #set some machine-specific options	
