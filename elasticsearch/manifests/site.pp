@@ -33,12 +33,63 @@ node 'elasticsearch1.local' {
     port           => '514',
   }
 
+ package {'openjdk-7-jdk':
+    ensure => installed,
+ }
+
+  class { 'elasticsearch':
+    package_url => 'https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.0.0.deb',
+    config => {
+      'node'    => {
+        'name' => $fqdn
+      },
+      'index' => {
+        'number_of_replicas' => '1',
+        'number_of_shards'   => '8'
+      },
+      'network' => {
+        'host' => $ipaddress_eth1
+      },
+      'cluster' => {
+        'name' => 'logstash',
+      }
+    }
+  }
+  
+  elasticsearch::plugin{'mobz/elasticsearch-head':
+    module_dir => 'head'
+  }
+ 
+  elasticsearch::plugin{'karmi/elasticsearch-paramedic':
+    module_dir => 'paramedic'
+  }
+
+#  elasticsearch::plugin{'andrewvc/elastic-hammer':
+#    module_dir => 'hammer'
+#  }
+
+#  elasticsearch::plugin{'royrusso/elasticsearch-HQ':
+#    module_dir => 'hq'
+#  }
+ 
+  elasticsearch::plugin{'polyfractal/elasticsearch-segmentspy':
+    module_dir => 'segmentspy'
+  }
+
+  elasticsearch::plugin{'polyfractal/elasticsearch-inquisitor':
+    module_dir => 'inquisitor'
+  }
+
 }
 
 #Ubuntu ElasticSearch node
 node 'elasticsearch2.local' {
 
   include ssh
+
+ package {'openjdk-7-jdk':
+    ensure => installed,
+ }
 
   class { 'rsyslog::client':
     log_remote     => true,
@@ -48,6 +99,25 @@ node 'elasticsearch2.local' {
     custom_config  => undef,
     server         => 'elasticsearchmaster.local',
     port           => '514',
+  }
+
+  class { 'elasticsearch':
+    package_url => 'https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.0.0.deb',
+    config => {
+      'node'    => {
+        'name' => $fqdn
+      },
+      'index' => {
+        'number_of_replicas' => '1',
+        'number_of_shards'   => '8'
+      },
+      'network' => {
+        'host' => $ipaddress_eth1
+      },
+      'cluster' => {
+        'name' => 'logstash',
+      }
+    }
   }
 
 }
@@ -57,6 +127,10 @@ node 'elasticsearch3.local' {
 
   include ssh
 
+ package {'openjdk-7-jdk':
+    ensure => installed,
+ }
+
   class { 'rsyslog::client':
     log_remote     => true,
     remote_type    => 'tcp',
@@ -65,6 +139,25 @@ node 'elasticsearch3.local' {
     custom_config  => undef,
     server         => 'elasticsearchmaster.local',
     port           => '514',
+  }
+
+  class { 'elasticsearch':
+    package_url => 'https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.0.0.deb',
+    config => {
+      'node'    => {
+        'name' => $fqdn
+      },
+      'index' => {
+        'number_of_replicas' => '1',
+        'number_of_shards'   => '8'
+      },
+      'network' => {
+        'host' => $ipaddress_eth1
+      },
+      'cluster' => {
+        'name' => 'logstash',
+      }
+    }
   }
 
 }
@@ -74,6 +167,10 @@ node 'elasticsearch4.local' {
 
   include ssh
 
+ package {'openjdk-7-jdk':
+    ensure => installed,
+ }
+
   class { 'rsyslog::client':
     log_remote     => true,
     remote_type    => 'tcp',
@@ -82,6 +179,25 @@ node 'elasticsearch4.local' {
     custom_config  => undef,
     server         => 'elasticsearchmaster.local',
     port           => '514',
+  }
+
+  class { 'elasticsearch':
+    package_url => 'https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.0.0.deb',
+    config => {
+      'node'    => {
+        'name' => $fqdn
+      },
+      'index' => {
+        'number_of_replicas' => '1',
+        'number_of_shards'   => '8'
+      },
+      'network' => {
+        'host' => $ipaddress_eth1
+      },
+      'cluster' => {
+        'name' => 'logstash',
+      }
+    }
   }
 
 }
@@ -91,6 +207,10 @@ node 'elasticsearch5.local' {
 
   include ssh
 
+ package {'openjdk-7-jdk':
+    ensure => installed,
+ }
+
   class { 'rsyslog::client':
     log_remote     => true,
     remote_type    => 'tcp',
@@ -101,12 +221,35 @@ node 'elasticsearch5.local' {
     port           => '514',
   }
 
+  class { 'elasticsearch':
+    package_url => 'https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.0.0.deb',
+    config => {
+      'node'    => {
+        'name' => $fqdn
+      },
+      'index' => {
+        'number_of_replicas' => '1',
+        'number_of_shards'   => '8'
+      },
+      'network' => {
+        'host' => $ipaddress_eth1
+      },
+      'cluster' => {
+        'name' => 'logstash',
+      }
+    }
+  }
+
 }
 
 #Ubuntu ElasticSearch node
 node 'elasticsearch6.local' {
 
   include ssh
+
+ package {'openjdk-7-jdk':
+    ensure => installed,
+ }
 
   class { 'rsyslog::client':
     log_remote     => true,
@@ -116,6 +259,25 @@ node 'elasticsearch6.local' {
     custom_config  => undef,
     server         => 'elasticsearchmaster.local',
     port           => '514',
+  }
+
+  class { 'elasticsearch':
+    package_url => 'https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.0.0.deb',
+    config => {
+      'node'    => {
+        'name' => $fqdn
+      },
+      'index' => {
+        'number_of_replicas' => '1',
+        'number_of_shards'   => '8'
+      },
+      'network' => {
+        'host' => $ipaddress_eth1
+      },
+      'cluster' => {
+        'name' => 'logstash',
+      }
+    }
   }
 
 }

@@ -24,7 +24,7 @@ node 'elasticsearch1.local', 'elasticsearch2.local' {
   
  package {'openjdk-7-jdk':
     ensure => installed,
-  }
+ }
   
   class { 'elasticsearch':
     package_url => 'https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-0.90.7.deb',
