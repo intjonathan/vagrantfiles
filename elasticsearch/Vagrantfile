@@ -1,0 +1,123 @@
+Vagrant.configure("2") do |config|
+  # All Vagrant configuration is done here. The most common configuration
+  # options are documented and commented below. For a complete reference,
+  # please see the online documentation at vagrantup.com.
+
+  ####################
+  # Snippets to use
+  ####################
+
+  #NFS folder sharing example
+  #config.vm.synced_folder "modules", "/etc/puppet/modules", :nfs => true
+
+  ####################
+  ####################
+  #vagrant-hostmanager plugin options
+  config.hostmanager.enabled = true
+  config.hostmanager.ignore_private_ip = false
+  #update the /etc/hosts of the host OS
+  config.hostmanager.manage_host = true
+
+  #Ubuntu elasticsearch master server and Puppet master
+  config.vm.define "elasticsearchmaster".to_sym do |elasticsearchmaster_config|
+    elasticsearchmaster_config.vm.box = "ubuntu-13.10-server-amd64"
+    elasticsearchmaster_config.vm.hostname = "elasticsearchmaster.local"
+    elasticsearchmaster_config.hostmanager.enabled = true
+    elasticsearchmaster_config.hostmanager.aliases = %w(puppetboard.elasticsearchmaster.local elasticsearchmaster puppet master)
+    elasticsearchmaster_config.vm.network :private_network, ip: "10.0.1.48"
+    #set some machine-specific options	
+    elasticsearchmaster_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+    #Set up synced folders for Puppet code:
+    elasticsearchmaster_config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/modules", :nfs => true
+    elasticsearchmaster_config.vm.synced_folder "manifests/", "/etc/puppet/manifests", :nfs => true
+    elasticsearchmaster_config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/hieradata", "/etc/puppet/hieradata", :nfs => true
+    elasticsearchmaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_master.sh"
+  end
+  
+  #ElasticSearch node
+  config.vm.define "elasticsearch1".to_sym do |elasticsearch1_config|
+    elasticsearch1_config.vm.box = "ubuntu-13.10-server-amd64"
+    elasticsearch1_config.vm.hostname = "elasticsearch1.local"
+    elasticsearch1_config.hostmanager.enabled = true
+    elasticsearch1_config.vm.network :private_network, ip: "10.0.1.49"
+    #set some machine-specific options	
+    elasticsearch1_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+    elasticsearch1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
+  end
+  
+  #ElasticSearch node
+  config.vm.define "elasticsearch2".to_sym do |elasticsearch2_config|
+    elasticsearch2_config.vm.box = "ubuntu-13.10-server-amd64"
+    elasticsearch2_config.vm.hostname = "elasticsearch2.local"
+    elasticsearch2_config.hostmanager.enabled = true
+    elasticsearch2_config.vm.network :private_network, ip: "10.0.1.50"
+    #set some machine-specific options	
+    elasticsearch2_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+    elasticsearch2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
+  end
+
+  #ElasticSearch node
+  config.vm.define "elasticsearch3".to_sym do |elasticsearch3_config|
+    elasticsearch3_config.vm.box = "ubuntu-13.10-server-amd64"
+    elasticsearch3_config.vm.hostname = "elasticsearch3.local"
+    elasticsearch3_config.hostmanager.enabled = true
+    elasticsearch3_config.vm.network :private_network, ip: "10.0.1.47"
+    #set some machine-specific options	
+    elasticsearch3_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+    elasticsearch3_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
+  end
+
+  #ElasticSearch node
+  config.vm.define "elasticsearch4".to_sym do |elasticsearch4_config|
+    elasticsearch4_config.vm.box = "ubuntu-13.10-server-amd64"
+    elasticsearch4_config.vm.hostname = "elasticsearch4.local"
+    elasticsearch4_config.hostmanager.enabled = true
+    elasticsearch4_config.vm.network :private_network, ip: "10.0.1.51"
+    #set some machine-specific options	
+    elasticsearch4_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    elasticsearch4_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
+  end
+
+  #ElasticSearch node
+  config.vm.define "elasticsearch5".to_sym do |elasticsearch5_config|
+    elasticsearch5_config.vm.box = "ubuntu-13.10-server-amd64"
+    elasticsearch5_config.vm.hostname = "elasticsearch5.local"
+    elasticsearch5_config.hostmanager.enabled = true
+    elasticsearch5_config.vm.network :private_network, ip: "10.0.1.52"
+    #set some machine-specific options	
+    elasticsearch5_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    elasticsearch5_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
+  end
+
+  #ElasticSearch node
+  config.vm.define "elasticsearch6".to_sym do |elasticsearch6_config|
+    elasticsearch6_config.vm.box = "ubuntu-13.10-server-amd64"
+    elasticsearch6_config.vm.hostname = "elasticsearch6.local"
+    elasticsearch6_config.hostmanager.enabled = true
+    elasticsearch6_config.vm.network :private_network, ip: "10.0.1.53"
+    #set some machine-specific options	
+    elasticsearch6_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    elasticsearch6_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
+  end
+end
