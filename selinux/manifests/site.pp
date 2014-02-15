@@ -33,6 +33,10 @@ node 'selinux1.local' {
     port           => '514',
   }
 
+  class { 'selinux':
+    mode => 'permissive'
+  }
+
 }
 
 #Ubuntu ElasticSearch node
@@ -48,6 +52,10 @@ node 'selinux2.local' {
     custom_config  => undef,
     server         => 'selinuxmaster.local',
     port           => '514',
+  }
+
+  class { 'selinux':
+    mode => 'permissive'
   }
 
 }
@@ -67,6 +75,10 @@ node 'selinux3.local' {
     port           => '514',
   }
 
+  class { 'selinux':
+    mode => 'permissive'
+  }
+
 }
 
 #Ubuntu ElasticSearch node
@@ -82,6 +94,10 @@ node 'selinux4.local' {
     custom_config  => undef,
     server         => 'selinuxmaster.local',
     port           => '514',
+  }
+
+  class { 'selinux':
+    mode => 'permissive'
   }
 
 }
