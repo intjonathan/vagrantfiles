@@ -36,7 +36,10 @@ node 'selinux1.local' {
   class { 'selinux':
     mode => 'permissive'
   }
-
+  
+  package { 'smartmontools':
+    ensure => installed,
+  }
 }
 
 #Ubuntu ElasticSearch node
@@ -56,6 +59,10 @@ node 'selinux2.local' {
 
   class { 'selinux':
     mode => 'permissive'
+  }
+
+  package { 'smartmontools':
+    ensure => installed,
   }
 
 }
@@ -79,6 +86,10 @@ node 'selinux3.local' {
     mode => 'permissive'
   }
 
+  package { 'smartmontools':
+    ensure => installed,
+  }
+
 }
 
 #Ubuntu ElasticSearch node
@@ -98,6 +109,10 @@ node 'selinux4.local' {
 
   class { 'selinux':
     mode => 'permissive'
+  }
+
+  package { 'smartmontools':
+    ensure => installed,
   }
 
 }
