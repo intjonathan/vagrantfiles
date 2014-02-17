@@ -12,40 +12,76 @@ node 'mcomaster.local' {
   
   include puppetdb::master::config
 
-  #include ssh
+  include ssh
   
-  #class { 'rsyslog::server': }
+  class { 'rsyslog::server': }
  
 }
 
-#Ubuntu ElasticSearch node
+#Ubuntu Mcollective node
 node 'mco1.local' {
 
-#  include ssh
+  class { 'rsyslog::client':
+    log_remote     => true,
+    remote_type    => 'tcp',
+    log_local      => true,
+    log_auth_local => true,
+    custom_config  => undef,
+    server         => 'mcomaster.local',
+    port           => '514',
+  }
 
-#  class { 'rsyslog::client':
-#    log_remote     => true,
-#    remote_type    => 'tcp',
-#    log_local      => true,
-#    log_auth_local => true,
-#    custom_config  => undef,
-#    server         => 'elasticsearchmaster.local',
-#    port           => '514',
-#  }
+  include ssh  
 
 }
 
-#Ubuntu ElasticSearch node
+#Ubuntu Mcollective node
 node 'mco2.local' {
 
+  include ssh
+
+  class { 'rsyslog::client':
+    log_remote     => true,
+    remote_type    => 'tcp',
+    log_local      => true,
+    log_auth_local => true,
+    custom_config  => undef,
+    server         => 'mcomaster.local',
+    port           => '514',
+  }
+
 }
 
-#Ubuntu ElasticSearch node
+#Ubuntu Mcollective node
 node 'mco3.local' {
 
+  include ssh
+
+  class { 'rsyslog::client':
+    log_remote     => true,
+    remote_type    => 'tcp',
+    log_local      => true,
+    log_auth_local => true,
+    custom_config  => undef,
+    server         => 'mcomaster.local',
+    port           => '514',
+  }
+
 }
 
-#Ubuntu ElasticSearch node
+#Ubuntu Mcollective node
 node 'mco4.local' {
+
+  include ssh
+
+  class { 'rsyslog::client':
+    log_remote     => true,
+    remote_type    => 'tcp',
+    log_local      => true,
+    log_auth_local => true,
+    custom_config  => undef,
+    server         => 'mcomaster.local',
+    port           => '514',
+  }
 
 }
