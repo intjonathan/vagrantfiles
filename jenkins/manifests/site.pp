@@ -47,8 +47,17 @@ node 'centosjenkins.local' {
       server         => 'jenkinsmaster.local',
       port           => '514',
   }
-  
-  include apache
+
+  include ssh
+
+	include apache
+	
+	class { 'oracle_java':
+		type      => 'jdk',
+		arc       => 'x64',
+		version   => '7u51',
+		os        => 'linux',
+	}
 
 }
 
@@ -95,10 +104,21 @@ node 'worker3.local' {
       port           => '514',
   }
 
+  include ssh
+  
+	class { 'oracle_java':
+		type      => 'jdk',
+		arc       => 'x64',
+		version   => '7u51',
+		os        => 'linux',
+	}
+
 }
 
 #Jenkins worker
 node 'worker4.local' {
+
+  include ssh
 
   class { 'rsyslog::client':
       log_remote     => true,
@@ -109,5 +129,12 @@ node 'worker4.local' {
       server         => 'jenkinsmaster.local',
       port           => '514',
   }
+
+	class { 'oracle_java':
+		type      => 'jdk',
+		arc       => 'x64',
+		version   => '7u51',
+		os        => 'linux',
+	}
 
 }
