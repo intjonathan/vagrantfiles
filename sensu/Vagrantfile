@@ -1,0 +1,109 @@
+Vagrant.configure("2") do |config|
+  # All Vagrant configuration is done here. The most common configuration
+  # options are documented and commented below. For a complete reference,
+  # please see the online documentation at vagrantup.com.
+
+  ####################
+  # Snippets to use
+  ####################
+
+  #NFS folder sharing example
+  #config.vm.synced_folder "modules", "/etc/puppet/modules", :nfs => true
+
+  ####################
+  ####################
+  #vagrant-hostmanager plugin options
+  config.hostmanager.enabled = true
+  config.hostmanager.ignore_private_ip = false
+  #update the /etc/hosts of the host OS
+  config.hostmanager.manage_host = true
+
+  #Ubuntu sensu Puppet master
+  config.vm.define "sensumaster".to_sym do |sensumaster_config|
+    sensumaster_config.vm.box = "ubuntu-13.10-server-amd64"
+    sensumaster_config.vm.hostname = "sensumaster.local"
+    sensumaster_config.hostmanager.enabled = true
+    sensumaster_config.hostmanager.aliases = %w(puppetboard.sensumaster.local sensumaster puppet master)
+    sensumaster_config.vm.network :private_network, ip: "10.0.1.48"
+    #set some machine-specific options	
+    sensumaster_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+    #Set up synced folders for Puppet code:
+    sensumaster_config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/modules", :nfs => true
+    sensumaster_config.vm.synced_folder "manifests/", "/etc/puppet/manifests", :nfs => true
+    sensumaster_config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/hieradata", "/etc/puppet/hieradata", :nfs => true
+    sensumaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_master.sh"
+  end
+
+  #Ubuntu sensu server
+  config.vm.define "monitor".to_sym do |monitor_config|
+    monitor_config.vm.box = "ubuntu-13.10-server-amd64"
+    monitor_config.vm.hostname = "monitor.local"
+    monitor_config.hostmanager.enabled = true
+    monitor_config.vm.network :private_network, ip: "10.0.1.51"
+    #set some machine-specific options	
+    monitor_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    monitor_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
+  end
+
+  #Ubuntu sensu machine
+  config.vm.define "monitor".to_sym do |monitor_config|
+    monitor_config.vm.box = "ubuntu-13.10-server-amd64"
+    monitor_config.vm.hostname = "monitor.local"
+    monitor_config.hostmanager.enabled = true
+    monitor_config.vm.network :private_network, ip: "10.0.1.51"
+    #set some machine-specific options	
+    monitor_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    monitor_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
+  end
+
+  #CentOS sensu machine
+  config.vm.define "sensu2".to_sym do |sensu2_config|
+    sensu2_config.vm.box = "ubuntu-13.10-server-amd64"
+    sensu2_config.vm.hostname = "sensu2.local"
+    sensu2_config.hostmanager.enabled = true
+    sensu2_config.vm.network :private_network, ip: "10.0.1.52"
+    #set some machine-specific options	
+    sensu2_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    sensu2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
+  end
+
+  #CentOS sensu machine
+  config.vm.define "sensu3".to_sym do |sensu3_config|
+    sensu3_config.vm.box = "centos-6.5-amd64"
+    sensu3_config.vm.hostname = "sensu3.local"
+    sensu3_config.hostmanager.enabled = true
+    sensu3_config.vm.network :private_network, ip: "10.0.1.53"
+    #set some machine-specific options	
+    sensu3_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    sensu3_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
+  end
+
+  #CentOS sensu machine
+  config.vm.define "sensu4".to_sym do |sensu4_config|
+    sensu4_config.vm.box = "centos-6.5-amd64"
+    sensu4_config.vm.hostname = "sensu4.local"
+    sensu4_config.hostmanager.enabled = true
+    sensu4_config.vm.network :private_network, ip: "10.0.1.54"
+    #set some machine-specific options	
+    sensu4_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    sensu4_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
+  end
+end
