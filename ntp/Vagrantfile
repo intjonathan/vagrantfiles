@@ -19,6 +19,11 @@ Vagrant.configure("2") do |config|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "1024"]
     end
+    #Set up synced folders for Puppet code:
+    ntpmaster_config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/modules", :nfs => true
+    ntpmaster_config.vm.synced_folder "manifests/", "/etc/puppet/manifests", :nfs => true
+    ntpmaster_config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/hieradata", "/etc/puppet/hieradata", :nfs => true
+    ntpmaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_master.sh"
   end
 
   #main NTP server
@@ -32,6 +37,7 @@ Vagrant.configure("2") do |config|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
+    ntp1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh" 
   end
 
   #another NTP server
@@ -45,6 +51,7 @@ Vagrant.configure("2") do |config|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
+    ntp2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh" 
   end
 
   #a client machine
@@ -58,5 +65,20 @@ Vagrant.configure("2") do |config|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
+    ntp3_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
+  end
+  
+  #a client machine
+  config.vm.define "ntp4".to_sym do |ntp4_config|
+    ntp4_config.vm.box = "centos-6.5-amd64"
+    ntp4_config.vm.hostname = "ntp4.local"
+    ntp4_config.hostmanager.enabled = true
+    ntp4_config.vm.network :private_network, ip: "10.0.1.84"
+    #set some machine-specific options	
+    ntp4_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    ntp4_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
   end
 end
