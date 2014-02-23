@@ -4,84 +4,114 @@ Vagrant.configure("2") do |config|
   # please see the online documentation at vagrantup.com.
 
   ####################
-  # Snippets to use
   ####################
-
-  #NFS folder sharing
-  #config.vm.synced_folder "modules", "/etc/puppet/modules", :nfs => true
-  
-  config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/modules"
-  config.vm.synced_folder "manifests/", "/etc/puppet/manifests"
-  config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/hieradata", "/etc/puppet/hieradata"
-
-  ####################
-  ####################
-
   #vagrant-hostmanager plugin options
   config.hostmanager.enabled = true
   config.hostmanager.ignore_private_ip = false
   #update the /etc/hosts of the host OS
   config.hostmanager.manage_host = true
-  #incorporate offline box's IPs into the /etc/hosts of boxes that are up/being brought up
-  config.hostmanager.include_offline = true
+  
+  #puppet master
+  config.vm.define "graphitemaster".to_sym do |graphitemaster_config|
+    graphitemaster_config.vm.box = "ubuntu-13.10-server-amd64"
+    graphitemaster_config.vm.hostname = "graphitemaster.local"
+    graphitemaster_config.hostmanager.aliases = %w(puppetboard.graphitemaster.local graphitemaster puppet master)
+    graphitemaster_config.hostmanager.enabled = true
+    graphitemaster_config.vm.network :private_network, ip: "10.0.1.80"
+    #set some machine-specific options	
+    graphitemaster_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "2048"]
+    end
+    #Set up synced folders for Puppet code:
+    graphitemaster_config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/modules", :nfs => true
+    graphitemaster_config.vm.synced_folder "manifests/", "/etc/puppet/manifests", :nfs => true
+    graphitemaster_config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/hieradata", "/etc/puppet/hieradata", :nfs => true
+    graphitemaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_master.sh"
+  end
 
-  #A graphite server
-  config.vm.define "graphiteserver".to_sym do |graphiteserver_config|
-    graphiteserver_config.vm.box = "ubuntu-13.10-server-amd64"
-    graphiteserver_config.vm.hostname = "graphiteserver.local"
-    graphiteserver_config.hostmanager.enabled = true
-    #giving it 'puppet' as an alias so that the agents can connect to it with their default settings
-    graphiteserver_config.hostmanager.aliases = %w(graphiteserver puppet puppet.local graphite.graphiteserver.local)
-    graphiteserver_config.vm.network :private_network, ip: "10.0.1.190"
+  #main node server
+  config.vm.define "node1".to_sym do |node1_config|
+    node1_config.vm.box = "ubuntu-13.10-server-amd64"
+    node1_config.vm.hostname = "node1.local"
+    node1_config.hostmanager.enabled = true
+    node1_config.vm.network :private_network, ip: "10.0.1.81"
     #set some machine-specific options	
-    graphiteserver_config.vm.provider "virtualbox" do |v|
+    node1_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
-      v.customize ["modifyvm", :id, "--memory", "1024"]
+      v.customize ["modifyvm", :id, "--memory", "512"]
     end
-    graphiteserver_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_master.sh"
+    node1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh" 
   end
 
-  #A graphite client node
-  config.vm.define "graphiteclient1".to_sym do |graphiteclient1_config|
-    graphiteclient1_config.vm.box = "ubuntu-13.10-server-amd64"
-    graphiteclient1_config.vm.hostname = "graphiteclient1.local"
-    graphiteclient1_config.hostmanager.enabled = true
-    graphiteclient1_config.vm.network :private_network, ip: "10.0.1.191"
-    graphiteclient1_config.hostmanager.aliases = %w(graphiteclient1)
+  #another node server
+  config.vm.define "node2".to_sym do |node2_config|
+    node2_config.vm.box = "ubuntu-13.10-server-amd64"
+    node2_config.vm.hostname = "node2.local"
+    node2_config.hostmanager.enabled = true
+    node2_config.vm.network :private_network, ip: "10.0.1.82"
     #set some machine-specific options	
-    graphiteclient1_config.vm.provider "virtualbox" do |v|
+    node2_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
-    graphiteclient1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
+    node2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh" 
   end
-  
-  #A graphite client node
-  config.vm.define "graphiteclient2".to_sym do |graphiteclient2_config|
-    graphiteclient2_config.vm.box = "centos-6.5-amd64"
-    graphiteclient2_config.vm.hostname = "graphiteclient2.local"
-    graphiteclient2_config.hostmanager.enabled = true
-    graphiteclient2_config.vm.network :private_network, ip: "10.0.1.192"
+
+  #a client machine
+  config.vm.define "node3".to_sym do |node3_config|
+    node3_config.vm.box = "centos-6.5-amd64"
+    node3_config.vm.hostname = "node3.local"
+    node3_config.hostmanager.enabled = true
+    node3_config.vm.network :private_network, ip: "10.0.1.83"
     #set some machine-specific options	
-    graphiteclient2_config.vm.provider "virtualbox" do |v|
+    node3_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
-    graphiteclient2_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
+    node3_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
   end
   
-  #A graphite client node
-  config.vm.define "graphiteclient3".to_sym do |graphiteclient3_config|
-    graphiteclient3_config.vm.box = "debian-7.2-amd64"
-    graphiteclient3_config.vm.hostname = "graphiteclient3.local"
-    graphiteclient3_config.hostmanager.enabled = true
-    graphiteclient3_config.vm.network :private_network, ip: "10.0.1.193"
+  #a client machine
+  config.vm.define "node4".to_sym do |node4_config|
+    node4_config.vm.box = "centos-6.5-amd64"
+    node4_config.vm.hostname = "node4.local"
+    node4_config.hostmanager.enabled = true
+    node4_config.vm.network :private_network, ip: "10.0.1.84"
     #set some machine-specific options	
-    graphiteclient3_config.vm.provider "virtualbox" do |v|
+    node4_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
-    graphiteclient3_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
+    node4_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
   end
-  
+
+  #another node server
+  config.vm.define "node5".to_sym do |node5_config|
+    node5_config.vm.box = "ubuntu-13.10-server-amd64"
+    node5_config.vm.hostname = "node5.local"
+    node5_config.hostmanager.enabled = true
+    node5_config.vm.network :private_network, ip: "10.0.1.85"
+    #set some machine-specific options	
+    node5_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    node5_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh" 
+  end
+
+  #another node server
+  config.vm.define "node6".to_sym do |node6_config|
+    node6_config.vm.box = "centos-6.5-amd64"
+    node6_config.vm.hostname = "node6.local"
+    node6_config.hostmanager.enabled = true
+    node6_config.vm.network :private_network, ip: "10.0.1.86"
+    #set some machine-specific options	
+    node6_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    node6_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
+  end
+
 end
