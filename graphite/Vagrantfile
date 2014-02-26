@@ -15,7 +15,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "graphitemaster".to_sym do |graphitemaster_config|
     graphitemaster_config.vm.box = "ubuntu-13.10-server-amd64"
     graphitemaster_config.vm.hostname = "graphitemaster.local"
-    graphitemaster_config.hostmanager.aliases = %w(puppetboard.graphitemaster.local graphitemaster puppet master)
+    graphitemaster_config.hostmanager.aliases = %w(puppetboard.graphitemaster.local graphitemaster puppet master graphite.graphitemaster.local)
     graphitemaster_config.hostmanager.enabled = true
     graphitemaster_config.vm.network :private_network, ip: "10.0.1.80"
     #set some machine-specific options	
