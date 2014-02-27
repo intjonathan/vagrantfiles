@@ -44,6 +44,22 @@ node 'node1.local' {
     restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
     disable_monitor => true,
   }
+  
+  include collectd
+  
+  collectd::plugin { 'df': }
+  collectd::plugin { 'disk': }
+  collectd::plugin { 'entropy': }
+  collectd::plugin { 'memory': }
+  collectd::plugin { 'swap': }
+  collectd::plugin { 'cpu': }
+  collectd::plugin { 'cpufreq': }
+  collectd::plugin { 'contextswitch': }
+  
+  class { 'collectd::plugin::write_graphite':
+    graphitehost => 'graphitemaster.local',
+  }
+  
 
 }
 
@@ -66,6 +82,21 @@ node 'node2.local' {
     servers  => [ '0.ubuntu.pool.node.org', '1.ubuntu.pool.node.org', '2.ubuntu.pool.node.org', '3.ubuntu.pool.node.org' ],
     restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
     disable_monitor => true,
+  }
+
+  include collectd
+  
+  collectd::plugin { 'df': }
+  collectd::plugin { 'disk': }
+  collectd::plugin { 'entropy': }
+  collectd::plugin { 'memory': }
+  collectd::plugin { 'swap': }
+  collectd::plugin { 'cpu': }
+  collectd::plugin { 'cpufreq': }
+  collectd::plugin { 'contextswitch': }
+  
+  class { 'collectd::plugin::write_graphite':
+    graphitehost => 'graphitemaster.local',
   }
 
 }
@@ -135,6 +166,22 @@ node 'node5.local' {
     restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
     disable_monitor => true,
   }
+
+  include collectd
+  
+  collectd::plugin { 'df': }
+  collectd::plugin { 'disk': }
+  collectd::plugin { 'entropy': }
+  collectd::plugin { 'memory': }
+  collectd::plugin { 'swap': }
+  collectd::plugin { 'cpu': }
+  collectd::plugin { 'cpufreq': }
+  collectd::plugin { 'contextswitch': }
+  
+  class { 'collectd::plugin::write_graphite':
+    graphitehost => 'graphitemaster.local',
+  }
+
 }
 
 #CentOS Graphite node
