@@ -51,15 +51,16 @@ node 'centosjenkins.local' {
   include ssh
   
   class{ 'apache':
-    purge_configs => false,
+    purge_configs => false, #Leave existing manually created Apache configurations in place
   }
   
-  apache::mod { 'ssl': }
-
-  apache::vhost { 'jenkins.${fqdn}':
+  apache::mod { 'ssl': } #Install/enable the SSL module
+  
+  #VirtualHost for proxying to a Jenkins install that's running locally
+  apache::vhost { 'jenkins.centosjenkins.local':
     port            => 80,
     docroot         => '/var/www',
-    servername      => 'jenkins.${fqdn}',
+    servername      => "jenkins.${fqdn}",
     custom_fragment => '
     #blah comments for my apache virtualhost
     <Proxy *>
@@ -81,14 +82,18 @@ node 'centosjenkins.local' {
 		version   => '7u51',
 		os        => 'linux',
 	}
+
+
+  include jenkins::master	
 	
 	class { 'jenkins':
 	  install_java => false,
 	  configure_firewall => false,
+	  config_hash => {  
+      'JENKINS_LISTEN_ADDRESS' => {'value' => '127.0.0.1',} 
+    },
 	}
-  
-  include jenkins::master
-  	
+
 	jenkins::plugin {
     "git" : ;
   }
