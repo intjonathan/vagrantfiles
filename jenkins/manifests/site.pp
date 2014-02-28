@@ -49,15 +49,25 @@ node 'centosjenkins.local' {
   }
 
   include ssh
+  include apache
 
-	include apache
-	
 	class { 'oracle_java':
 		type      => 'jdk',
 		arc       => 'x64',
 		version   => '7u51',
 		os        => 'linux',
 	}
+	
+	class { 'jenkins':
+	  install_java => false,
+	  configure_firewall => false,
+	}
+  
+  include jenkins::master
+  	
+	jenkins::plugin {
+    "git" : ;
+  }
 
 }
 
