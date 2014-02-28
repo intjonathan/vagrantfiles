@@ -56,9 +56,9 @@ node 'centosjenkins.local' {
   
   apache::mod { 'ssl': }
 
-  apache::vhost { 'jenkins.centosjenkins.local':
+  apache::vhost { 'jenkins.${fqdn}':
     docroot    => '/var/www',
-    servername => 'jenkins.centosjenkins.local',
+    servername => 'jenkins.${fqdn}',
     custom_fragment => '
     #blah comments for my apache virtualhost
     <Proxy *>
