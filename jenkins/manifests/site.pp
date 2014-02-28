@@ -181,7 +181,7 @@ node 'worker4.local' {
 
 
   class { 'jenkins::slave':
-    masterurl => 'http://centosjenkins.local:8080',
+    masterurl => 'http://jenkins.centosjenkins.local',
     executors => 5,
     install_java => false,
   }
