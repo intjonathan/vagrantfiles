@@ -155,6 +155,12 @@ node 'worker3.local' {
 		os        => 'linux',
 	}
 
+  class { 'jenkins::slave':
+    masterurl => 'http://jenkins.centosjenkins.local',
+    executors => 5,
+    install_java => false,
+  }
+
 }
 
 #Jenkins worker
