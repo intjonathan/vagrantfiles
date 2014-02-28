@@ -57,15 +57,16 @@ node 'centosjenkins.local' {
   apache::mod { 'ssl': }
 
   apache::vhost { 'jenkins.${fqdn}':
-    docroot    => '/var/www',
-    servername => 'jenkins.${fqdn}',
+    port            => 80,
+    docroot         => '/var/www',
+    servername      => 'jenkins.${fqdn}',
     custom_fragment => '
     #blah comments for my apache virtualhost
     <Proxy *>
       Order deny,allow
       Allow from all
     </Proxy>
-  
+ 
     ProxyRequests Off
     ProxyPreserveHost On
     #Make the default location (with no /whatever) go to Jenkins:
