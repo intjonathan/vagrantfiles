@@ -49,7 +49,30 @@ node 'centosjenkins.local' {
   }
 
   include ssh
-  include apache
+  
+  class{ 'apache':
+    purge_configs => false,
+  }
+  
+  apache::mod { 'ssl': }
+
+  apache::vhost { 'jenkins.centosjenkins.local':
+    docroot    => '/var/www',
+    servername => 'jenkins.centosjenkins.local',
+    custom_fragment => '
+    #blah comments for my apache virtualhost
+    <Proxy *>
+      Order deny,allow
+      Allow from all
+    </Proxy>
+  
+    ProxyRequests Off
+    ProxyPreserveHost On
+    #Make the default location (with no /whatever) go to Jenkins:
+    ProxyPass / http://127.0.0.1:8080/
+    ProxyPassReverse / http://127.0.0.1:8080/
+    ',
+  }
 
 	class { 'oracle_java':
 		type      => 'jdk',
@@ -67,6 +90,14 @@ node 'centosjenkins.local' {
   	
 	jenkins::plugin {
     "git" : ;
+  }
+  
+  jenkins::plugin {
+    "ant" : ;
+  }
+
+  jenkins::plugin {
+    "gradle" : ;
   }
 
 }
@@ -146,5 +177,12 @@ node 'worker4.local' {
 		version   => '7u51',
 		os        => 'linux',
 	}
+
+
+  class { 'jenkins::slave':
+    masterurl => 'http://centosjenkins.local:8080',
+    executors => 5,
+    install_java => false,
+  }
 
 }
