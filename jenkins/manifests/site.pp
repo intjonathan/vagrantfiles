@@ -84,7 +84,7 @@ node 'centosjenkins.local' {
 	}
 
 
-  include jenkins::master	
+  include jenkins::master
 	
 	class { 'jenkins':
 	  install_java => false,
@@ -120,6 +120,12 @@ node 'worker1.local' {
       server         => 'jenkinsmaster.local',
       port           => '514',
   }
+  
+  class { 'jenkins::slave':
+    masterurl => 'http://jenkins.centosjenkins.local',
+    executors => 5,
+    install_java => false,
+  }
 
 }
 
@@ -134,6 +140,12 @@ node 'worker2.local' {
       custom_config  => undef,
       server         => 'jenkinsmaster.local',
       port           => '514',
+  }
+  
+  class { 'jenkins::slave':
+    masterurl => 'http://jenkins.centosjenkins.local',
+    executors => 5,
+    install_java => false,
   }
 
 }
