@@ -45,6 +45,7 @@ then
     ssl_client_header = SSL_CLIENT_S_DN 
     ssl_client_verify_header = SSL_CLIENT_VERIFY
     dns_alt_names = puppet,master,puppetmaster,puppet.local,master.local,puppetmaster.local
+    reports = store,puppetdb
 EOF
     
     echo "Regenerating Puppet master certificate with the 'puppet' DNS altname..."
