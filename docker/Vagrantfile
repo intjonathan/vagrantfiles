@@ -17,16 +17,64 @@ Vagrant.configure("2") do |config|
   #incorporate offline box's IPs into the /etc/hosts of boxes that are up/being brought up
   config.hostmanager.include_offline = true
 
-  #Ubuntu Docker VM
-  config.vm.define "docker".to_sym do |docker_config|
-    docker_config.vm.box = "ubuntu-13.10-server-amd64"
-    docker_config.vm.hostname = "docker.local"
-    docker_config.hostmanager.enabled = true
-    docker_config.vm.network :private_network, ip: "10.0.1.60"
-    #set some machine-specific options  
-    docker_config.vm.provider "virtualbox" do |v|
+  #Ubuntu Docker master server and Puppet master
+  config.vm.define "dockermaster".to_sym do |dockermaster_config|
+    dockermaster_config.vm.box = "ubuntu-13.10-server-amd64"
+    dockermaster_config.vm.hostname = "dockermaster.local"
+    dockermaster_config.hostmanager.enabled = true
+    dockermaster_config.hostmanager.aliases = %w(puppetboard.dockermaster.local dockermaster puppet master)
+    dockermaster_config.vm.network :private_network, ip: "10.0.1.50"
+    #set some machine-specific options	
+    dockermaster_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+    #Set up synced folders for Puppet code:
+    dockermaster_config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/modules", :nfs => true
+    dockermaster_config.vm.synced_folder "manifests/", "/etc/puppet/manifests", :nfs => true
+    dockermaster_config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/hieradata", "/etc/puppet/hieradata", :nfs => true
+    dockermaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_master.sh"
+  end
+
+  #Ubuntu Docker container server
+  config.vm.define "docker1".to_sym do |docker1_config|
+    docker1_config.vm.box = "ubuntu-13.10-server-amd64"
+    docker1_config.vm.hostname = "docker1.local"
+    docker1_config.hostmanager.enabled = true
+    docker1_config.vm.network :private_network, ip: "10.0.1.51"
+    #set some machine-specific options	
+    docker1_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "2048"]
     end
+    docker1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
+  end
+
+  #Ubuntu Docker container server
+  config.vm.define "docker2".to_sym do |docker2_config|
+    docker2_config.vm.box = "ubuntu-13.10-server-amd64"
+    docker2_config.vm.hostname = "docker2.local"
+    docker2_config.hostmanager.enabled = true
+    docker2_config.vm.network :private_network, ip: "10.0.1.52"
+    #set some machine-specific options	
+    docker2_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "2048"]
+    end
+    docker2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
+  end
+
+  #Ubuntu Docker container server
+  config.vm.define "docker3".to_sym do |docker3_config|
+    docker3_config.vm.box = "ubuntu-13.10-server-amd64"
+    docker3_config.vm.hostname = "docker3.local"
+    docker3_config.hostmanager.enabled = true
+    docker3_config.vm.network :private_network, ip: "10.0.1.53"
+    #set some machine-specific options	
+    docker3_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "2048"]
+    end
+    docker3_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
   end
 end
