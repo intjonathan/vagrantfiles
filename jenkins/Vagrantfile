@@ -68,7 +68,7 @@ Vagrant.configure("2") do |config|
 
   #Jenkins worker
   config.vm.define "worker1".to_sym do |worker1_config|
-    worker1_config.vm.box = "ubuntu-13.10-server-amd64"
+    worker1_config.vm.box = "centos-6.5-amd64"
     worker1_config.vm.hostname = "worker1.local"
     worker1_config.hostmanager.enabled = true
     worker1_config.vm.network :private_network, ip: "10.0.1.51"
@@ -77,12 +77,12 @@ Vagrant.configure("2") do |config|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
-    worker1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
+    worker1_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
   end
 
   #Jenkins worker
   config.vm.define "worker2".to_sym do |worker2_config|
-    worker2_config.vm.box = "ubuntu-13.10-server-amd64"
+    worker2_config.vm.box = "centos-6.5-amd64"
     worker2_config.vm.hostname = "worker2.local"
     worker2_config.hostmanager.enabled = true
     worker2_config.vm.network :private_network, ip: "10.0.1.52"
@@ -91,7 +91,7 @@ Vagrant.configure("2") do |config|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
-    worker2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
+    worker2_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
   end
 
   #Jenkins worker

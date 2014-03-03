@@ -111,6 +111,8 @@ node 'centosjenkins.local' {
 #Jenkins worker
 node 'worker1.local' {
 
+  include ssh
+
   class { 'rsyslog::client':
       log_remote     => true,
       remote_type    => 'tcp',
@@ -120,7 +122,14 @@ node 'worker1.local' {
       server         => 'jenkinsmaster.local',
       port           => '514',
   }
-  
+
+	class { 'oracle_java':
+		type      => 'jdk',
+		arc       => 'x64',
+		version   => '7u51',
+		os        => 'linux',
+	}
+
   class { 'jenkins::slave':
     masterurl => 'http://jenkins.centosjenkins.local',
     executors => 5,
@@ -132,6 +141,8 @@ node 'worker1.local' {
 #Jenkins worker
 node 'worker2.local' {
 
+  include ssh
+
   class { 'rsyslog::client':
       log_remote     => true,
       remote_type    => 'tcp',
@@ -141,7 +152,14 @@ node 'worker2.local' {
       server         => 'jenkinsmaster.local',
       port           => '514',
   }
-  
+
+	class { 'oracle_java':
+		type      => 'jdk',
+		arc       => 'x64',
+		version   => '7u51',
+		os        => 'linux',
+	}
+
   class { 'jenkins::slave':
     masterurl => 'http://jenkins.centosjenkins.local',
     executors => 5,
@@ -201,7 +219,6 @@ node 'worker4.local' {
 		version   => '7u51',
 		os        => 'linux',
 	}
-
 
   class { 'jenkins::slave':
     masterurl => 'http://jenkins.centosjenkins.local',
