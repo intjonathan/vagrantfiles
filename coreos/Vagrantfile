@@ -1,0 +1,140 @@
+Vagrant.configure("2") do |config|
+  # All Vagrant configuration is done here. The most common configuration
+  # options are documented and commented below. For a complete reference,
+  # please see the online documentation at vagrantup.com.
+
+  ####################
+  # Snippets to use
+  ####################
+
+  ####################
+  ####################
+  #vagrant-hostmanager plugin options
+  config.hostmanager.enabled = false
+  config.hostmanager.ignore_private_ip = false
+  #update the /etc/hosts of the host OS
+  config.hostmanager.manage_host = true
+  #incorporate offline box's IPs into the /etc/hosts of boxes that are up/being brought up
+  config.hostmanager.include_offline = true
+
+  #Ubuntu Puppet master server
+  config.vm.define "coreosmaster".to_sym do |coreosmaster_config|
+    coreosmaster_config.vm.box = "ubuntu-13.10-server-amd64"
+    coreosmaster_config.vm.hostname = "coreosmaster.local"
+    coreosmaster_config.hostmanager.enabled = true
+    coreosmaster_config.hostmanager.aliases = %w(puppetboard.coreosmaster.local coreosmaster puppet master)
+    coreosmaster_config.vm.network :private_network, ip: "10.0.1.40"
+    #set some machine-specific options	
+    coreosmaster_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+    #Set up synced folders for Puppet code:
+    coreosmaster_config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/modules", :nfs => true
+    coreosmaster_config.vm.synced_folder "manifests/", "/etc/puppet/manifests", :nfs => true
+    coreosmaster_config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/hieradata", "/etc/puppet/hieradata", :nfs => true
+    coreosmaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_master.sh"
+  end
+
+  #etcd cluster member
+  config.vm.define "etcd1".to_sym do |etcd1_config|
+    etcd1_config.vm.box = "coreos"
+    etcd1_config.vm.box_url = "http://storage.core-os.net/coreos/amd64-generic/dev-channel/coreos_production_vagrant.box"
+    etcd1_config.vm.hostname = "etcd1.local"
+    etcd1_config.vm.network :private_network, ip: "10.0.1.41"
+    #set some machine-specific options	
+    etcd1_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    etcd1_config.vm.provider :virtualbox do |v, override|
+      v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+      v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+    end
+  end
+
+  #etcd cluster member
+  config.vm.define "etcd2".to_sym do |etcd2_config|
+    etcd2_config.vm.box = "coreos"
+    etcd2_config.vm.box_url = "http://storage.core-os.net/coreos/amd64-generic/dev-channel/coreos_production_vagrant.box"
+    etcd2_config.vm.hostname = "etcd2.local"
+    etcd2_config.vm.network :private_network, ip: "10.0.1.42"
+    #set some machine-specific options	
+    etcd2_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    etcd2_config.vm.provider :virtualbox do |v, override|
+      v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+      v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+    end
+  end
+
+  #etcd cluster member
+  config.vm.define "etcd3".to_sym do |etcd3_config|
+    etcd3_config.vm.box = "coreos"
+    etcd3_config.vm.box_url = "http://storage.core-os.net/coreos/amd64-generic/dev-channel/coreos_production_vagrant.box"
+    etcd3_config.vm.hostname = "etcd3.local"
+    etcd3_config.vm.network :private_network, ip: "10.0.1.43"
+    #set some machine-specific options	
+    etcd3_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    etcd3_config.vm.provider :virtualbox do |v, override|
+      v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+      v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+    end
+  end
+
+  #CoreOS server
+  config.vm.define "coreos1".to_sym do |coreos1_config|
+    coreos1_config.vm.box = "coreos"
+    coreos1_config.vm.box_url = "http://storage.core-os.net/coreos/amd64-generic/dev-channel/coreos_production_vagrant.box"
+    coreos1_config.vm.hostname = "coreos1.local"
+    coreos1_config.vm.network :private_network, ip: "10.0.1.51"
+    #set some machine-specific options	
+    coreos1_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "2048"]
+    end
+    coreos1_config.vm.provider :virtualbox do |v, override|
+      v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+      v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+    end
+  end
+
+  #CoreOS server
+  config.vm.define "coreos2".to_sym do |coreos2_config|
+    coreos2_config.vm.box = "coreos"
+    coreos2_config.vm.box_url = "http://storage.core-os.net/coreos/amd64-generic/dev-channel/coreos_production_vagrant.box"
+    coreos2_config.vm.hostname = "coreos2.local"
+    coreos2_config.vm.network :private_network, ip: "10.0.1.52"
+    #set some machine-specific options	
+    coreos2_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "2048"]
+    end
+    coreos2_config.vm.provider :virtualbox do |v, override|
+      v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+      v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+    end
+  end
+
+  #CoreOS server
+  config.vm.define "coreos3".to_sym do |coreos3_config|
+    coreos3_config.vm.box = "coreos"
+    coreos3_config.vm.box_url = "http://storage.core-os.net/coreos/amd64-generic/dev-channel/coreos_production_vagrant.box"
+    coreos3_config.vm.hostname = "coreos3.local"
+    coreos3_config.vm.network :private_network, ip: "10.0.1.53"
+    #set some machine-specific options	
+    coreos3_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "2048"]
+    end
+    coreos3_config.vm.provider :virtualbox do |v, override|
+      v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+      v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+    end
+  end
+end
