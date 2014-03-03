@@ -20,7 +20,7 @@ node 'dockermaster.local' {
 #Ubuntu Docker machine
 node 'docker1.local' {
 
-  include ssh
+  include ::ssh
 
   class { '::ntp':
     servers  => [ '0.ubuntu.pool.ntp.org', '1.ubuntu.pool.ntp.org', '2.ubuntu.pool.ntp.org', '3.ubuntu.pool.ntp.org' ],
@@ -35,7 +35,7 @@ node 'docker1.local' {
 #Ubuntu Docker machine
 node 'docker2.local' {
 
-  include ssh
+  include ::ssh
 
   class { '::ntp':
     servers  => [ '0.ubuntu.pool.ntp.org', '1.ubuntu.pool.ntp.org', '2.ubuntu.pool.ntp.org', '3.ubuntu.pool.ntp.org' ],
@@ -51,7 +51,7 @@ node 'docker2.local' {
 #Ubuntu Docker machine
 node 'docker3.local' {
 
-  include ssh
+  include ::ssh
 
   class { '::ntp':
     servers  => [ '0.ubuntu.pool.ntp.org', '1.ubuntu.pool.ntp.org', '2.ubuntu.pool.ntp.org', '3.ubuntu.pool.ntp.org' ],
