@@ -33,13 +33,13 @@ node 'ubuntuicinga.local' {
   include ssh
 
   class { 'rsyslog::client':
-      log_remote     => true,
-      remote_type    => 'tcp',
-      log_local      => true,
-      log_auth_local => true,
-      custom_config  => undef,
-      server         => 'icingamaster.local',
-      port           => '514',
+    log_remote     => true,
+    remote_type    => 'tcp',
+    log_local      => true,
+    log_auth_local => true,
+    custom_config  => undef,
+    server         => 'icingamaster.local',
+    port           => '514',
   }
 
   class { '::ntp':
@@ -192,13 +192,13 @@ node 'centosicinga.local' {
   include ssh
 
   class { 'rsyslog::client':
-      log_remote     => true,
-      remote_type    => 'tcp',
-      log_local      => true,
-      log_auth_local => true,
-      custom_config  => undef,
-      server         => 'icingamaster.local',
-      port           => '514',
+    log_remote     => true,
+    remote_type    => 'tcp',
+    log_local      => true,
+    log_auth_local => true,
+    custom_config  => undef,
+    server         => 'icingamaster.local',
+    port           => '514',
   }
 
   class { '::ntp':
@@ -239,13 +239,13 @@ node 'icingaclient1.local' {
   include ssh
 
   class { 'rsyslog::client':
-      log_remote     => true,
-      remote_type    => 'tcp',
-      log_local      => true,
-      log_auth_local => true,
-      custom_config  => undef,
-      server         => 'icingamaster.local',
-      port           => '514',
+    log_remote     => true,
+    remote_type    => 'tcp',
+    log_local      => true,
+    log_auth_local => true,
+    custom_config  => undef,
+    server         => 'icingamaster.local',
+    port           => '514',
   }
 
   class { '::ntp':
@@ -286,13 +286,13 @@ node 'icingaclient2.local' {
   include ssh
 
   class { 'rsyslog::client':
-      log_remote     => true,
-      remote_type    => 'tcp',
-      log_local      => true,
-      log_auth_local => true,
-      custom_config  => undef,
-      server         => 'icingamaster.local',
-      port           => '514',
+    log_remote     => true,
+    remote_type    => 'tcp',
+    log_local      => true,
+    log_auth_local => true,
+    custom_config  => undef,
+    server         => 'icingamaster.local',
+    port           => '514',
   }
 
   class { '::ntp':
@@ -333,13 +333,13 @@ node 'icingaclient3.local' {
   include ssh
 
   class { 'rsyslog::client':
-      log_remote     => true,
-      remote_type    => 'tcp',
-      log_local      => true,
-      log_auth_local => true,
-      custom_config  => undef,
-      server         => 'icingamaster.local',
-      port           => '514',
+    log_remote     => true,
+    remote_type    => 'tcp',
+    log_local      => true,
+    log_auth_local => true,
+    custom_config  => undef,
+    server         => 'icingamaster.local',
+    port           => '514',
   }
 
   class { '::ntp':
@@ -380,13 +380,13 @@ node 'icingaclient4.local' {
   include ssh
 
   class { 'rsyslog::client':
-      log_remote     => true,
-      remote_type    => 'tcp',
-      log_local      => true,
-      log_auth_local => true,
-      custom_config  => undef,
-      server         => 'icingamaster.local',
-      port           => '514',
+    log_remote     => true,
+    remote_type    => 'tcp',
+    log_local      => true,
+    log_auth_local => true,
+    custom_config  => undef,
+    server         => 'icingamaster.local',
+    port           => '514',
   }
 
   class { '::ntp':
