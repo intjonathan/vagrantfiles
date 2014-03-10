@@ -75,13 +75,13 @@ node 'ubuntuicinga.local' {
     password => 'password2', 
   }
 
-#nagios_command { 'check_ping':
-#  command_name => 'check_ping',# (namevar) The name of this nagios_command...
-#  ensure       => present,# The basic property that the resource should be...
-#  command_line => '$USER1$/check_ping -H $HOSTADDRESS$ -w $ARG1$ -c $ARG2$ -p 5',# Nagios configuration file...
-#  target       => '/etc/icinga/objects/commands/check_ping.cfg'
-#  # ...plus any applicable metaparameters.
-#}
+  #nagios_command { 'check_ping':
+  #  command_name => 'check_ping',# (namevar) The name of this nagios_command...
+  #  ensure       => present,# The basic property that the resource should be...
+  #  command_line => '$USER1$/check_ping -H $HOSTADDRESS$ -w $ARG1$ -c $ARG2$ -p 5',# Nagios configuration file...
+  #  target       => '/etc/icinga/objects/commands/check_ping.cfg'
+  #  # ...plus any applicable metaparameters.
+  #}
 
   nagios_command { 'check_nrpe':
     command_name => 'check_nrpe',
