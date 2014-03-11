@@ -83,11 +83,21 @@ node 'ubuntuicinga.local' {
   #  # ...plus any applicable metaparameters.
   #}
 
+  #Define this command first so that any other services can use it as part of their check commands:
   nagios_command { 'check_nrpe':
     command_name => 'check_nrpe',
     ensure       => present,
     command_line => '$USER1$/check_nrpe -H $HOSTADDRESS$ -c $ARG1$ -t 20',
     target       => "/etc/icinga/objects/commands/check_nrpe.cfg",
+    require      => Class['icinga::server'],
+  }
+  
+  #Check to see if NRPE itself is running
+  nagios_command { 'check_nrpe_service':
+    command_name => 'check_nrpe_service',
+    ensure       => present,
+    command_line => '$USER1$/check_nrpe -H $HOSTADDRESS$',
+    target       => "/etc/icinga/objects/commands/check_nrpe_service.cfg",
     require      => Class['icinga::server'],
   }
 
@@ -155,7 +165,6 @@ node 'ubuntuicinga.local' {
     target         => '/etc/icinga/objects/hostgroups/ssh_servers.cfg',
     hostgroup_name => 'ssh_servers',
     alias          => 'SSH servers',
-    members        => '*',
   }
 
   nagios_contact { 'root':
@@ -181,7 +190,6 @@ node 'ubuntuicinga.local' {
 
   #Collect all @@nagios_host resources from PuppetDB
   Nagios_host <<||>> {
-    #notify  => File['/etc/icinga/objects/'],
     require => Class['icinga::server'],
   }
   
@@ -192,14 +200,14 @@ node 'ubuntuicinga.local' {
   #  check_command check_nrpe!check_ntp_time
   #}
 
-  #Service definition for checking that NRPE is running on a remote machine
-  nagios_service { 'check_nrpe':
+  #Service definition for checking that NRPE itself is running on a remote machine
+  nagios_service { 'check_nrpe_service':
     ensure => present,
-    target => '/etc/icinga/objects/services/check_nrpe.cfg',
+    target => '/etc/icinga/objects/services/check_nrpe_service.cfg',
     use => 'generic-service',
     hostgroup_name => 'ssh_servers',
     service_description => 'NRPE',
-    check_command => 'check_nrpe!check_nrpe',
+    check_command => 'check_nrpe_service',
   }
 
   #Service definition for checking NTP on machines via NRPE
@@ -211,7 +219,6 @@ node 'ubuntuicinga.local' {
     service_description => 'NTP offset',
     check_command => 'check_nrpe!check_ntp_time',
   }
-
 
 }
 
@@ -238,20 +245,17 @@ node 'centosicinga.local' {
   class { 'icinga::client':
     nrpe_allowed_hosts => ['10.0.1.79', '127.0.0.1'],
   }
-  
-  icinga::client::command { 'blah':}
 
   icinga::client::command { 'check_users':
     nrpe_plugin_name => 'check_users',
     nrpe_plugin_args => '-w 5 -c 10',
   }
   
-#  icinga::client::plugin { 'check_omreport_raid':
-#    source_file => 'puppet:///modules/icinga/check_omreport_raid.pl',
-#  }
+  icinga::client::command { 'check_ntp_time':
+    nrpe_plugin_name => 'check_ntp_time',
+    nrpe_plugin_args => '-H 127.0.0.1',
+  }
 
-  icinga::client::command { 'blah2':}
-  
   @@nagios_host { $::fqdn:
     address => $::ipaddress_eth1,
     check_command => 'check_ping!100.0,20%!500.0,60%',
@@ -285,20 +289,17 @@ node 'icingaclient1.local' {
   class { 'icinga::client':
     nrpe_allowed_hosts => ['10.0.1.79', '127.0.0.1'],
   }
-  
-  icinga::client::command { 'blah':}
 
   icinga::client::command { 'check_users':
     nrpe_plugin_name => 'check_users',
     nrpe_plugin_args => '-w 5 -c 10',
   }
   
-#  icinga::client::plugin { 'check_omreport_raid':
-#    source_file => 'puppet:///modules/icinga/check_omreport_raid.pl',
-#  }
+  icinga::client::command { 'check_ntp_time':
+    nrpe_plugin_name => 'check_ntp_time',
+    nrpe_plugin_args => '-H 127.0.0.1',
+  }
 
-  icinga::client::command { 'blah2':}
-  
   @@nagios_host { $::fqdn:
     address => $::ipaddress_eth1,
     check_command => 'check_ping!100.0,20%!500.0,60%',
@@ -333,18 +334,15 @@ node 'icingaclient2.local' {
     nrpe_allowed_hosts => ['10.0.1.79', '127.0.0.1'],
   }
 
-  icinga::client::command { 'blah':}
-
   icinga::client::command { 'check_users':
     nrpe_plugin_name => 'check_users',
     nrpe_plugin_args => '-w 5 -c 10',
   }
   
-#  icinga::client::plugin { 'check_omreport_raid':
-#    source_file => 'puppet:///modules/icinga/check_omreport_raid.pl',
-#  }
-
-  icinga::client::command { 'blah2':}
+  icinga::client::command { 'check_ntp_time':
+    nrpe_plugin_name => 'check_ntp_time',
+    nrpe_plugin_args => '-H 127.0.0.1',
+  }
 
   @@nagios_host { $::fqdn:
     address => $::ipaddress_eth1,
@@ -379,19 +377,16 @@ node 'icingaclient3.local' {
   class { 'icinga::client':
     nrpe_allowed_hosts => ['10.0.1.79', '127.0.0.1'],
   }
-  
-  icinga::client::command { 'blah':}
 
   icinga::client::command { 'check_users':
     nrpe_plugin_name => 'check_users',
     nrpe_plugin_args => '-w 5 -c 10',
   }
   
-#  icinga::client::plugin { 'check_omreport_raid':
-#    source_file => 'puppet:///modules/icinga/check_omreport_raid.pl',
-#  }
-
-  icinga::client::command { 'blah2':}
+  icinga::client::command { 'check_ntp_time':
+    nrpe_plugin_name => 'check_ntp_time',
+    nrpe_plugin_args => '-H 127.0.0.1',
+  }
 
   @@nagios_host { $::fqdn:
     address => $::ipaddress_eth1,
@@ -427,18 +422,15 @@ node 'icingaclient4.local' {
     nrpe_allowed_hosts => ['10.0.1.79', '127.0.0.1'],
   }
 
-  icinga::client::command { 'blah':}
-
   icinga::client::command { 'check_users':
     nrpe_plugin_name => 'check_users',
     nrpe_plugin_args => '-w 5 -c 10',
   }
   
-#  icinga::client::plugin { 'check_omreport_raid':
-#    source_file => 'puppet:///modules/icinga/check_omreport_raid.pl',
-#  }
-
-  icinga::client::command { 'blah2':}
+  icinga::client::command { 'check_ntp_time':
+    nrpe_plugin_name => 'check_ntp_time',
+    nrpe_plugin_args => '-H 127.0.0.1',
+  }
 
   @@nagios_host { $::fqdn:
     address => $::ipaddress_eth1,
