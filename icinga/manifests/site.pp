@@ -213,6 +213,66 @@ node 'ubuntuicinga.local' {
     check_command => 'check_nrpe!check_ntp_time',
   }
 
+  #Service definition for checking MySQL on machines via NRPE
+  nagios_service { 'check_mysql_service':
+    ensure => present,
+    target => '/etc/icinga/objects/services/check_mysql_service.cfg',
+    use => 'generic-service',
+    hostgroup_name => 'ssh_servers',
+    service_description => 'MySQL',
+    check_command => 'check_nrpe!check_mysql_service',
+  }
+  
+  #check_users
+  nagios_service { 'check_users':
+    ensure => present,
+    target => '/etc/icinga/objects/services/check_users_service.cfg',
+    use => 'generic-service',
+    hostgroup_name => 'ssh_servers',
+    service_description => 'Users',
+    check_command => 'check_nrpe!check_users',
+  }
+
+  #check_users
+  nagios_service { 'check_load':
+    ensure => present,
+    target => '/etc/icinga/objects/services/check_load_service.cfg',
+    use => 'generic-service',
+    hostgroup_name => 'ssh_servers',
+    service_description => 'Load',
+    check_command => 'check_nrpe!check_load',
+  }
+
+  #check_users
+  nagios_service { 'check_disk':
+    ensure => present,
+    target => '/etc/icinga/objects/services/check_disk_service.cfg',
+    use => 'generic-service',
+    hostgroup_name => 'ssh_servers',
+    service_description => 'Disk',
+    check_command => 'check_nrpe!check_disk',
+  }
+
+  #check_users
+  nagios_service { 'check_total_procs':
+    ensure => present,
+    target => '/etc/icinga/objects/services/check_total_procs_service.cfg',
+    use => 'generic-service',
+    hostgroup_name => 'ssh_servers',
+    service_description => 'Total procs',
+    check_command => 'check_nrpe!check_total_procs',
+  }
+
+  #check_users
+  nagios_service { 'check_zombie_procs':
+    ensure => present,
+    target => '/etc/icinga/objects/services/check_zombie_procs_service.cfg',
+    use => 'generic-service',
+    hostgroup_name => 'ssh_servers',
+    service_description => 'Zombie procs',
+    check_command => 'check_nrpe!check_zombie_procs',
+  }
+
 }
 
 node 'centosicinga.local' {
@@ -239,9 +299,34 @@ node 'centosicinga.local' {
     nrpe_allowed_hosts => ['10.0.1.79', '127.0.0.1'],
   }
 
+#Some basic box health stuff
   icinga::client::command { 'check_users':
     nrpe_plugin_name => 'check_users',
     nrpe_plugin_args => '-w 5 -c 10',
+  }
+  
+  #check_load
+  icinga::client::command { 'check_load':
+    nrpe_plugin_name => 'check_load',
+    nrpe_plugin_args => '-w 50,40,30 -c 60,50,40',
+  }
+  
+  #check_disk
+  icinga::client::command { 'check_disk':
+    nrpe_plugin_name => 'check_disk',
+    nrpe_plugin_args => '-w 20% -c 10% -p /',
+  }
+
+  #check_total_procs  
+  icinga::client::command { 'check_total_procs':
+    nrpe_plugin_name => 'check_procs',
+    nrpe_plugin_args => '-w 1000 -c 1500',
+  }
+ 
+  #check_zombie_procs
+  icinga::client::command { 'check_zombie_procs':
+    nrpe_plugin_name => 'check_procs',
+    nrpe_plugin_args => '-w 5 -c 10 -s Z',
   }
   
   icinga::client::command { 'check_ntp_time':
@@ -255,6 +340,24 @@ node 'centosicinga.local' {
     use => 'generic-host',
     hostgroups => ['ssh_servers'],
     target => "/etc/icinga/objects/hosts/host_${::fqdn}.cfg",
+  }
+
+  #Install some stuff to monitor like...
+  
+  #...Apache:
+  class{ 'apache': } 
+  apache::mod { 'ssl': } #Install/enable the SSL module
+  
+  #...and MySQL:
+  class { '::mysql::server':
+    root_password    => 'horsebatterystaple',
+    override_options => { 'mysqld' => { 'max_connections' => '1024' } }
+  }
+
+  #Create an NRPE command to monitor MySQL:
+  icinga::client::command { 'check_mysql_service':
+    nrpe_plugin_name => 'check_mysql',
+    nrpe_plugin_args => '-H 127.0.0.1 -u root -p horsebatterystaple',
   }
 
 }
@@ -283,9 +386,34 @@ node 'icingaclient1.local' {
     nrpe_allowed_hosts => ['10.0.1.79', '127.0.0.1'],
   }
 
+#Some basic box health stuff
   icinga::client::command { 'check_users':
     nrpe_plugin_name => 'check_users',
     nrpe_plugin_args => '-w 5 -c 10',
+  }
+  
+  #check_load
+  icinga::client::command { 'check_load':
+    nrpe_plugin_name => 'check_load',
+    nrpe_plugin_args => '-w 50,40,30 -c 60,50,40',
+  }
+  
+  #check_disk
+  icinga::client::command { 'check_disk':
+    nrpe_plugin_name => 'check_disk',
+    nrpe_plugin_args => '-w 20% -c 10% -p /',
+  }
+
+  #check_total_procs  
+  icinga::client::command { 'check_total_procs':
+    nrpe_plugin_name => 'check_procs',
+    nrpe_plugin_args => '-w 1000 -c 1500',
+  }
+ 
+  #check_zombie_procs
+  icinga::client::command { 'check_zombie_procs':
+    nrpe_plugin_name => 'check_procs',
+    nrpe_plugin_args => '-w 5 -c 10 -s Z',
   }
   
   icinga::client::command { 'check_ntp_time':
@@ -299,6 +427,24 @@ node 'icingaclient1.local' {
     use => 'generic-host',
     hostgroups => ['ssh_servers'],
     target => "/etc/icinga/objects/hosts/host_${::fqdn}.cfg",
+  }
+
+  #Install some stuff to monitor like...
+  
+  #...Apache:
+  class{ 'apache': } 
+  apache::mod { 'ssl': } #Install/enable the SSL module
+  
+  #...and MySQL:
+  class { '::mysql::server':
+    root_password    => 'horsebatterystaple',
+    override_options => { 'mysqld' => { 'max_connections' => '1024' } }
+  }
+  
+  #Create an NRPE command to monitor MySQL:
+  icinga::client::command { 'check_mysql_service':
+    nrpe_plugin_name => 'check_mysql',
+    nrpe_plugin_args => '-H 127.0.0.1 -u root -p horsebatterystaple',
   }
 
 }
@@ -327,9 +473,34 @@ node 'icingaclient2.local' {
     nrpe_allowed_hosts => ['10.0.1.79', '127.0.0.1'],
   }
 
+#Some basic box health stuff
   icinga::client::command { 'check_users':
     nrpe_plugin_name => 'check_users',
     nrpe_plugin_args => '-w 5 -c 10',
+  }
+  
+  #check_load
+  icinga::client::command { 'check_load':
+    nrpe_plugin_name => 'check_load',
+    nrpe_plugin_args => '-w 50,40,30 -c 60,50,40',
+  }
+  
+  #check_disk
+  icinga::client::command { 'check_disk':
+    nrpe_plugin_name => 'check_disk',
+    nrpe_plugin_args => '-w 20% -c 10% -p /',
+  }
+
+  #check_total_procs  
+  icinga::client::command { 'check_total_procs':
+    nrpe_plugin_name => 'check_procs',
+    nrpe_plugin_args => '-w 1000 -c 1500',
+  }
+ 
+  #check_zombie_procs
+  icinga::client::command { 'check_zombie_procs':
+    nrpe_plugin_name => 'check_procs',
+    nrpe_plugin_args => '-w 5 -c 10 -s Z',
   }
   
   icinga::client::command { 'check_ntp_time':
@@ -343,6 +514,23 @@ node 'icingaclient2.local' {
     use => 'generic-host',
     hostgroups => ['ssh_servers'],
     target => "/etc/icinga/objects/hosts/host_${::fqdn}.cfg",
+  }
+  
+  #Install some stuff to monitor like...
+  
+  #...Apache:
+  class{ 'apache': } 
+  apache::mod { 'ssl': } #Install/enable the SSL module
+  
+  #...and MySQL:
+  class { '::mysql::server':
+    root_password    => 'horsebatterystaple',
+    override_options => { 'mysqld' => { 'max_connections' => '1024' } }
+  }
+  
+  icinga::client::command { 'check_mysql_service':
+    nrpe_plugin_name => 'check_mysql',
+    nrpe_plugin_args => '-H 127.0.0.1 -u root -p horsebatterystaple',
   }
 
 }
@@ -371,9 +559,34 @@ node 'icingaclient3.local' {
     nrpe_allowed_hosts => ['10.0.1.79', '127.0.0.1'],
   }
 
+  #Some basic box health stuff
   icinga::client::command { 'check_users':
     nrpe_plugin_name => 'check_users',
     nrpe_plugin_args => '-w 5 -c 10',
+  }
+  
+  #check_load
+  icinga::client::command { 'check_load':
+    nrpe_plugin_name => 'check_load',
+    nrpe_plugin_args => '-w 50,40,30 -c 60,50,40',
+  }
+  
+  #check_disk
+  icinga::client::command { 'check_disk':
+    nrpe_plugin_name => 'check_disk',
+    nrpe_plugin_args => '-w 20% -c 10% -p /',
+  }
+
+  #check_total_procs  
+  icinga::client::command { 'check_total_procs':
+    nrpe_plugin_name => 'check_procs',
+    nrpe_plugin_args => '-w 1000 -c 1500',
+  }
+ 
+  #check_zombie_procs
+  icinga::client::command { 'check_zombie_procs':
+    nrpe_plugin_name => 'check_procs',
+    nrpe_plugin_args => '-w 5 -c 10 -s Z',
   }
   
   icinga::client::command { 'check_ntp_time':
@@ -387,6 +600,23 @@ node 'icingaclient3.local' {
     use => 'generic-host',
     hostgroups => ['ssh_servers'],
     target => "/etc/icinga/objects/hosts/host_${::fqdn}.cfg",
+  }
+  
+  #Install some stuff to monitor like...
+  
+  #...Apache:
+  class{ 'apache': } 
+  apache::mod { 'ssl': } #Install/enable the SSL module
+  
+  #...and MySQL:
+  class { '::mysql::server':
+    root_password    => 'horsebatterystaple',
+    override_options => { 'mysqld' => { 'max_connections' => '1024' } }
+  }
+
+  icinga::client::command { 'check_mysql_service':
+    nrpe_plugin_name => 'check_mysql',
+    nrpe_plugin_args => '-H 127.0.0.1 -u root -p horsebatterystaple',
   }
 
 }
@@ -415,9 +645,34 @@ node 'icingaclient4.local' {
     nrpe_allowed_hosts => ['10.0.1.79', '127.0.0.1'],
   }
 
+#Some basic box health stuff
   icinga::client::command { 'check_users':
     nrpe_plugin_name => 'check_users',
     nrpe_plugin_args => '-w 5 -c 10',
+  }
+  
+  #check_load
+  icinga::client::command { 'check_load':
+    nrpe_plugin_name => 'check_load',
+    nrpe_plugin_args => '-w 50,40,30 -c 60,50,40',
+  }
+  
+  #check_disk
+  icinga::client::command { 'check_disk':
+    nrpe_plugin_name => 'check_disk',
+    nrpe_plugin_args => '-w 20% -c 10% -p /',
+  }
+
+  #check_total_procs  
+  icinga::client::command { 'check_total_procs':
+    nrpe_plugin_name => 'check_procs',
+    nrpe_plugin_args => '-w 1000 -c 1500',
+  }
+ 
+  #check_zombie_procs
+  icinga::client::command { 'check_zombie_procs':
+    nrpe_plugin_name => 'check_procs',
+    nrpe_plugin_args => '-w 5 -c 10 -s Z',
   }
   
   icinga::client::command { 'check_ntp_time':
@@ -431,6 +686,23 @@ node 'icingaclient4.local' {
     use => 'generic-host',
     hostgroups => ['ssh_servers'],
     target => "/etc/icinga/objects/hosts/host_${::fqdn}.cfg",
+  }
+  
+  #Install some stuff to monitor like...
+  
+  #...Apache:
+  class{ 'apache': } 
+  apache::mod { 'ssl': } #Install/enable the SSL module
+  
+  #...and MySQL:
+  class { '::mysql::server':
+    root_password    => 'horsebatterystaple',
+    override_options => { 'mysqld' => { 'max_connections' => '1024' } }
+  }
+  
+  icinga::client::command { 'check_mysql_service':
+    nrpe_plugin_name => 'check_mysql',
+    nrpe_plugin_args => '-H 127.0.0.1 -u root -p horsebatterystaple',
   }
 
 }
