@@ -236,7 +236,7 @@ node 'centosicinga.local' {
   }
 
   class { 'icinga::client':
-    nrpe_allowed_hosts => ['10.0.1.78', '127.0.0.1'],
+    nrpe_allowed_hosts => ['10.0.1.79', '127.0.0.1'],
   }
   
   icinga::client::command { 'blah':}
@@ -283,7 +283,7 @@ node 'icingaclient1.local' {
   }
 
   class { 'icinga::client':
-    nrpe_allowed_hosts => ['10.0.1.78', '127.0.0.1'],
+    nrpe_allowed_hosts => ['10.0.1.79', '127.0.0.1'],
   }
   
   icinga::client::command { 'blah':}
@@ -330,7 +330,7 @@ node 'icingaclient2.local' {
   }
   
   class { 'icinga::client':
-    nrpe_allowed_hosts => ['10.0.1.78', '127.0.0.1'],
+    nrpe_allowed_hosts => ['10.0.1.79', '127.0.0.1'],
   }
 
   icinga::client::command { 'blah':}
@@ -377,7 +377,7 @@ node 'icingaclient3.local' {
   }
 
   class { 'icinga::client':
-    nrpe_allowed_hosts => ['10.0.1.78', '127.0.0.1'],
+    nrpe_allowed_hosts => ['10.0.1.79', '127.0.0.1'],
   }
   
   icinga::client::command { 'blah':}
@@ -424,7 +424,7 @@ node 'icingaclient4.local' {
   }
   
   class { 'icinga::client':
-    nrpe_allowed_hosts => ['10.0.1.78', '127.0.0.1'],
+    nrpe_allowed_hosts => ['10.0.1.79', '127.0.0.1'],
   }
 
   icinga::client::command { 'blah':}
