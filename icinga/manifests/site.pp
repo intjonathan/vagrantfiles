@@ -192,13 +192,6 @@ node 'ubuntuicinga.local' {
   Nagios_host <<||>> {
     require => Class['icinga::server'],
   }
-  
-  #define service {
-  #  use generic-service
-  #  hostgroup_name linux-servers
-  #  service_description NTP offset
-  #  check_command check_nrpe!check_ntp_time
-  #}
 
   #Service definition for checking that NRPE itself is running on a remote machine
   nagios_service { 'check_nrpe_service':
