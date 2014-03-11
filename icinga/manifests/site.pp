@@ -184,6 +184,34 @@ node 'ubuntuicinga.local' {
     #notify  => File['/etc/icinga/objects/'],
     require => Class['icinga::server'],
   }
+  
+  #define service {
+  #  use generic-service
+  #  hostgroup_name linux-servers
+  #  service_description NTP offset
+  #  check_command check_nrpe!check_ntp_time
+  #}
+
+  #Service definition for checking that NRPE is running on a remote machine
+  nagios_service { 'check_nrpe':
+    ensure => present,
+    target => '/etc/icinga/objects/services/check_nrpe.cfg',
+    use => 'generic-service',
+    hostgroup_name => 'ssh_servers',
+    service_description => 'NRPE',
+    check_command => 'check_nrpe!check_nrpe',
+  }
+
+  #Service definition for checking NTP on machines via NRPE
+  nagios_service { 'check_ntp_time':
+    ensure => present,
+    target => '/etc/icinga/objects/services/check_ntp_time.cfg',
+    use => 'generic-service',
+    hostgroup_name => 'ssh_servers',
+    service_description => 'NTP offset',
+    check_command => 'check_nrpe!check_ntp_time',
+  }
+
 
 }
 
