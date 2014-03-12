@@ -75,32 +75,6 @@ node 'ubuntuicinga.local' {
     password => 'password2', 
   }
 
-  #nagios_command { 'check_ping':
-  #  command_name => 'check_ping',# (namevar) The name of this nagios_command...
-  #  ensure       => present,# The basic property that the resource should be...
-  #  command_line => '$USER1$/check_ping -H $HOSTADDRESS$ -w $ARG1$ -c $ARG2$ -p 5',# Nagios configuration file...
-  #  target       => '/etc/icinga/objects/commands/check_ping.cfg'
-  #  # ...plus any applicable metaparameters.
-  #}
-
-  #Define this command first so that any other services can use it as part of their check commands:
-  nagios_command { 'check_nrpe':
-    command_name => 'check_nrpe',
-    ensure       => present,
-    command_line => '$USER1$/check_nrpe -H $HOSTADDRESS$ -c $ARG1$ -t 20',
-    target       => "/etc/icinga/objects/commands/check_nrpe.cfg",
-    require      => Class['icinga::server'],
-  }
-  
-  #Check to see if NRPE itself is running
-  nagios_command { 'check_nrpe_service':
-    command_name => 'check_nrpe_service',
-    ensure       => present,
-    command_line => '$USER1$/check_nrpe -H $HOSTADDRESS$',
-    target       => "/etc/icinga/objects/commands/check_nrpe_service.cfg",
-    require      => Class['icinga::server'],
-  }
-
   nagios_host { 'generic-host':
     ensure                       => present,
     target                       => '/etc/icinga/objects/templates/generic-host.cfg',
@@ -193,6 +167,30 @@ node 'ubuntuicinga.local' {
     require => Class['icinga::server'],
   }
 
+  #Define this command first so that any other services can use it as part of their check commands:
+  nagios_command { 'check_nrpe':
+    command_name => 'check_nrpe',
+    ensure       => present,
+    command_line => '$USER1$/check_nrpe -H $HOSTADDRESS$ -c $ARG1$ -t 20',
+    target       => "/etc/icinga/objects/commands/check_nrpe.cfg",
+  }
+  
+  #Check to see if NRPE itself is running
+  nagios_command { 'check_nrpe_service':
+    command_name => 'check_nrpe_service',
+    ensure       => present,
+    command_line => '$USER1$/check_nrpe -H $HOSTADDRESS$',
+    target       => "/etc/icinga/objects/commands/check_nrpe_service.cfg",
+  }
+
+  #Check to see if SSH is running on a remote machine:
+  nagios_command { 'check_ssh':
+    command_name => 'check_ssh',
+    ensure       => present,
+    command_line => '$USER1$/check_ssh $HOSTADDRESS$',
+    target       => "/etc/icinga/objects/commands/check_ssh.cfg",
+  }
+
   #Service definition for checking that NRPE itself is running on a remote machine
   nagios_service { 'check_nrpe_service':
     ensure => present,
@@ -201,6 +199,16 @@ node 'ubuntuicinga.local' {
     hostgroup_name => 'ssh_servers',
     service_description => 'NRPE',
     check_command => 'check_nrpe_service',
+  }
+
+  #Service definition for checking SSH
+  nagios_service { 'check_ssh_service':
+    ensure => present,
+    target => '/etc/icinga/objects/services/check_ssh_service.cfg',
+    use => 'generic-service',
+    hostgroup_name => 'ssh_servers',
+    service_description => 'SSH',
+    check_command => 'check_ssh',
   }
 
   #Service definition for checking NTP on machines via NRPE
