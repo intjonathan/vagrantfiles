@@ -75,63 +75,39 @@ node 'ubuntuicinga.local' {
     password => 'password2', 
   }
 
-  nagios_host { 'generic-host':
-    ensure                       => present,
-    target                       => '/etc/icinga/objects/templates/generic-host.cfg',
-    notifications_enabled        => '1',
-    event_handler_enabled        => '1',
-    flap_detection_enabled       => '1',
-    failure_prediction_enabled   => '1',
-    process_perf_data            => '1',
-    retain_status_information    => '1',
-    retain_nonstatus_information => '1',
-    check_command                => 'check-host-alive',
-    max_check_attempts           => '10',
-    notification_interval        => '0',
-    notification_period          => '24x7',
-    notification_options         => 'd,u,r',
-    contact_groups               => 'admins',
-    register                     => '0', #Don't actually register this template
+  #Collect all @@nagios_host resources from PuppetDB that were exported by other machines:
+  Nagios_host <<||>> { }
+
+  nagios_host { 'linux_host':
+    ensure   => present,
+    target   => '/etc/icinga/objects/templates/linux_host.cfg',
+    name     => 'linux_host',
+    use      => 'generic-host',
+    register => '0', #Don't actually register this template    
+  }
+  
+  nagios_host { 'ubuntu_host':
+    ensure => present,
+    target => '/etc/icinga/objects/templates/ubuntu_host.cfg',
+    name   => 'ubuntu_host',
+    use    => 'linux_host',
+    register => '0', #Don't actually register this template    
   }
 
-  nagios_service { 'generic-service':
-    ensure                       => present,
-    target                       => '/etc/icinga/objects/templates/generic-service.cfg',
-    active_checks_enabled        => '1', # Active service checks are enabled
-    passive_checks_enabled       => '1', # Passive service checks are enabled/accepted
-    parallelize_check            => '1', # Active service checks should be parallelized (disabling this can lead to major performance problems)
-    obsess_over_service          => '1', # We should obsess over this service (if necessary)
-    check_freshness              => '0', # Default is to NOT check service 'freshness'
-    notifications_enabled        => '1', # Service notifications are enabled
-    event_handler_enabled        => '1', # Service event handler is enabled
-    flap_detection_enabled       => '1', # Flap detection is enabled
-    failure_prediction_enabled   => '1', # Failure prediction is enabled
-    process_perf_data            => '1', # Process performance data
-    retain_status_information    => '1', # Retain status information across program restarts
-    retain_nonstatus_information => '1', # Retain non-status information across program restarts
-    notification_interval        => '0', # Only send notifications on status change by default.
-    is_volatile                  => '0',  
-    check_period                 => '24x7',
-    normal_check_interval        => '5',  
-    retry_check_interval         => '1', 
-    max_check_attempts           => '4',  
-    notification_period          => '24x7',  
-    notification_options         => 'w,u,c,r',
-    contact_groups               => 'admins',
-    register                     => '0', # DONT REGISTER THIS DEFINITION - ITS NOT A REAL SERVICE, JUST A TEMPLATE!
+  nagios_host { 'centos_host':
+    ensure => present,
+    target => '/etc/icinga/objects/templates/centos_host.cfg',
+    name   => 'centos_host',
+    use    => 'linux_host',
+    register => '0', #Don't actually register this template    
   }
 
-  nagios_timeperiod { '24x7':
-    timeperiod_name => '24x7',
-    alias           => '24 Hours A Day, 7 Days A Week',
-    target          => '/etc/icinga/objects/timeperiods/24x7.cfg', #The file this timeperiod definition will get created in
-    sunday          => '00:00-24:00',
-    monday          => '00:00-24:00',
-    tuesday         => '00:00-24:00',
-    wednesday       => '00:00-24:00',
-    thursday        => '00:00-24:00',
-    friday          => '00:00-24:00',
-    saturday        => '00:00-24:00',
+  nagios_host { 'windows_host':
+    ensure   => present,
+    target   => '/etc/icinga/objects/templates/windows_host.cfg',
+    name     => 'windows_host',
+    use      => 'generic-host',
+    register => '0', #Don't actually register this template    
   }
 
   nagios_hostgroup { 'ssh_servers':
@@ -141,33 +117,7 @@ node 'ubuntuicinga.local' {
     alias          => 'SSH servers',
   }
 
-  nagios_contact { 'root':
-    ensure                        => present,
-    target                        => '/etc/icinga/objects/contacts/root.cfg',
-    contact_name                  => 'root',
-    service_notification_period   => '24x7',
-    host_notification_period      => '24x7',
-    service_notification_options  => 'w,u,c,r,f',
-    host_notification_options     => 'd,u,r,f',
-    service_notification_commands => 'notify-service-by-email',
-    host_notification_commands    => 'notify-host-by-email',
-    email                         => 'root@localhost',
-  }
-
-  nagios_contactgroup { 'admins':
-    ensure               => present,
-    target               => '/etc/icinga/objects/contactgroups/admins.cfg',
-    contactgroup_name    => 'admins',
-    alias                => 'Admins',
-    members              => 'root',
-  }
-
-  #Collect all @@nagios_host resources from PuppetDB
-  Nagios_host <<||>> {
-    require => Class['icinga::server'],
-  }
-
-  #Define this command first so that any other services can use it as part of their check commands:
+#Define this command first so that any other services can use it as part of their check commands:
   nagios_command { 'check_nrpe':
     command_name => 'check_nrpe',
     ensure       => present,
@@ -175,7 +125,7 @@ node 'ubuntuicinga.local' {
     target       => "/etc/icinga/objects/commands/check_nrpe.cfg",
   }
   
-  #Check to see if NRPE itself is running
+  #Check to see if NRPE itself is running on a remote machine:
   nagios_command { 'check_nrpe_service':
     command_name => 'check_nrpe_service',
     ensure       => present,
@@ -191,7 +141,8 @@ node 'ubuntuicinga.local' {
     target       => "/etc/icinga/objects/commands/check_ssh.cfg",
   }
 
-  #Service definition for checking that NRPE itself is running on a remote machine
+  #Service definition for checking that NRPE itself is running on a remote machine; this uses
+  #the check_nrpe_service nagios_command defined above:
   nagios_service { 'check_nrpe_service':
     ensure => present,
     target => '/etc/icinga/objects/services/check_nrpe_service.cfg',
@@ -303,6 +254,26 @@ node 'centosicinga.local' {
     disable_monitor => true,
   }
 
+  #Install some stuff to monitor like...
+  
+  #...Apache:
+  class{ 'apache': } 
+  apache::mod { 'ssl': } #Install/enable the SSL module
+  
+  #...and MySQL:
+  class { '::mysql::server':
+    root_password    => 'horsebatterystaple',
+    override_options => { 'mysqld' => { 'max_connections' => '1024' } }
+  }
+
+ @@nagios_host { $::fqdn:
+    address => $::ipaddress_eth1,
+    check_command => 'check_ping!100.0,20%!500.0,60%',
+    use => 'generic-host',
+    hostgroups => ['ssh_servers'],
+    target => "/etc/icinga/objects/hosts/host_${::fqdn}.cfg",
+  }
+
   class { 'icinga::client':
     nrpe_allowed_hosts => ['10.0.1.79', '127.0.0.1'],
   }
@@ -341,27 +312,7 @@ node 'centosicinga.local' {
     nrpe_plugin_name => 'check_ntp_time',
     nrpe_plugin_args => '-H 127.0.0.1',
   }
-
-  @@nagios_host { $::fqdn:
-    address => $::ipaddress_eth1,
-    check_command => 'check_ping!100.0,20%!500.0,60%',
-    use => 'generic-host',
-    hostgroups => ['ssh_servers'],
-    target => "/etc/icinga/objects/hosts/host_${::fqdn}.cfg",
-  }
-
-  #Install some stuff to monitor like...
   
-  #...Apache:
-  class{ 'apache': } 
-  apache::mod { 'ssl': } #Install/enable the SSL module
-  
-  #...and MySQL:
-  class { '::mysql::server':
-    root_password    => 'horsebatterystaple',
-    override_options => { 'mysqld' => { 'max_connections' => '1024' } }
-  }
-
   #Create an NRPE command to monitor MySQL:
   icinga::client::command { 'check_mysql_service':
     nrpe_plugin_name => 'check_mysql',
@@ -390,6 +341,26 @@ node 'icingaclient1.local' {
     disable_monitor => true,
   }
 
+  #Install some stuff to monitor like...
+  
+  #...Apache:
+  class{ 'apache': } 
+  apache::mod { 'ssl': } #Install/enable the SSL module
+  
+  #...and MySQL:
+  class { '::mysql::server':
+    root_password    => 'horsebatterystaple',
+    override_options => { 'mysqld' => { 'max_connections' => '1024' } }
+  }
+
+ @@nagios_host { $::fqdn:
+    address => $::ipaddress_eth1,
+    check_command => 'check_ping!100.0,20%!500.0,60%',
+    use => 'generic-host',
+    hostgroups => ['ssh_servers'],
+    target => "/etc/icinga/objects/hosts/host_${::fqdn}.cfg",
+  }
+
   class { 'icinga::client':
     nrpe_allowed_hosts => ['10.0.1.79', '127.0.0.1'],
   }
@@ -427,26 +398,6 @@ node 'icingaclient1.local' {
   icinga::client::command { 'check_ntp_time':
     nrpe_plugin_name => 'check_ntp_time',
     nrpe_plugin_args => '-H 127.0.0.1',
-  }
-
-  @@nagios_host { $::fqdn:
-    address => $::ipaddress_eth1,
-    check_command => 'check_ping!100.0,20%!500.0,60%',
-    use => 'generic-host',
-    hostgroups => ['ssh_servers'],
-    target => "/etc/icinga/objects/hosts/host_${::fqdn}.cfg",
-  }
-
-  #Install some stuff to monitor like...
-  
-  #...Apache:
-  class{ 'apache': } 
-  apache::mod { 'ssl': } #Install/enable the SSL module
-  
-  #...and MySQL:
-  class { '::mysql::server':
-    root_password    => 'horsebatterystaple',
-    override_options => { 'mysqld' => { 'max_connections' => '1024' } }
   }
   
   #Create an NRPE command to monitor MySQL:
@@ -477,6 +428,26 @@ node 'icingaclient2.local' {
     disable_monitor => true,
   }
   
+  #Install some stuff to monitor like...
+  
+  #...Apache:
+  class{ 'apache': } 
+  apache::mod { 'ssl': } #Install/enable the SSL module
+  
+  #...and MySQL:
+  class { '::mysql::server':
+    root_password    => 'horsebatterystaple',
+    override_options => { 'mysqld' => { 'max_connections' => '1024' } }
+  }
+
+ @@nagios_host { $::fqdn:
+    address => $::ipaddress_eth1,
+    check_command => 'check_ping!100.0,20%!500.0,60%',
+    use => 'generic-host',
+    hostgroups => ['ssh_servers'],
+    target => "/etc/icinga/objects/hosts/host_${::fqdn}.cfg",
+  }
+
   class { 'icinga::client':
     nrpe_allowed_hosts => ['10.0.1.79', '127.0.0.1'],
   }
@@ -515,27 +486,8 @@ node 'icingaclient2.local' {
     nrpe_plugin_name => 'check_ntp_time',
     nrpe_plugin_args => '-H 127.0.0.1',
   }
-
-  @@nagios_host { $::fqdn:
-    address => $::ipaddress_eth1,
-    check_command => 'check_ping!100.0,20%!500.0,60%',
-    use => 'generic-host',
-    hostgroups => ['ssh_servers'],
-    target => "/etc/icinga/objects/hosts/host_${::fqdn}.cfg",
-  }
   
-  #Install some stuff to monitor like...
-  
-  #...Apache:
-  class{ 'apache': } 
-  apache::mod { 'ssl': } #Install/enable the SSL module
-  
-  #...and MySQL:
-  class { '::mysql::server':
-    root_password    => 'horsebatterystaple',
-    override_options => { 'mysqld' => { 'max_connections' => '1024' } }
-  }
-  
+  #Create an NRPE command to monitor MySQL:
   icinga::client::command { 'check_mysql_service':
     nrpe_plugin_name => 'check_mysql',
     nrpe_plugin_args => '-H 127.0.0.1 -u root -p horsebatterystaple',
@@ -561,6 +513,24 @@ node 'icingaclient3.local' {
     servers  => [ '0.ubuntu.pool.ntp.org', '1.ubuntu.pool.ntp.org', '2.ubuntu.pool.ntp.org', '3.ubuntu.pool.ntp.org' ],
     restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
     disable_monitor => true,
+  }
+
+  #...Apache:
+  class{ 'apache': } 
+  apache::mod { 'ssl': } #Install/enable the SSL module
+  
+  #...and MySQL:
+  class { '::mysql::server':
+    root_password    => 'horsebatterystaple',
+    override_options => { 'mysqld' => { 'max_connections' => '1024' } }
+  }
+
+   @@nagios_host { $::fqdn:
+    address => $::ipaddress_eth1,
+    check_command => 'check_ping!100.0,20%!500.0,60%',
+    use => 'generic-host',
+    hostgroups => ['ssh_servers'],
+    target => "/etc/icinga/objects/hosts/host_${::fqdn}.cfg",
   }
 
   class { 'icinga::client':
@@ -601,27 +571,8 @@ node 'icingaclient3.local' {
     nrpe_plugin_name => 'check_ntp_time',
     nrpe_plugin_args => '-H 127.0.0.1',
   }
-
-  @@nagios_host { $::fqdn:
-    address => $::ipaddress_eth1,
-    check_command => 'check_ping!100.0,20%!500.0,60%',
-    use => 'generic-host',
-    hostgroups => ['ssh_servers'],
-    target => "/etc/icinga/objects/hosts/host_${::fqdn}.cfg",
-  }
   
-  #Install some stuff to monitor like...
-  
-  #...Apache:
-  class{ 'apache': } 
-  apache::mod { 'ssl': } #Install/enable the SSL module
-  
-  #...and MySQL:
-  class { '::mysql::server':
-    root_password    => 'horsebatterystaple',
-    override_options => { 'mysqld' => { 'max_connections' => '1024' } }
-  }
-
+  #Create an NRPE command to monitor MySQL:
   icinga::client::command { 'check_mysql_service':
     nrpe_plugin_name => 'check_mysql',
     nrpe_plugin_args => '-H 127.0.0.1 -u root -p horsebatterystaple',
@@ -649,6 +600,24 @@ node 'icingaclient4.local' {
     disable_monitor => true,
   }
   
+  #...Apache:
+  class{ 'apache': } 
+  apache::mod { 'ssl': } #Install/enable the SSL module
+  
+  #...and MySQL:
+  class { '::mysql::server':
+    root_password    => 'horsebatterystaple',
+    override_options => { 'mysqld' => { 'max_connections' => '1024' } }
+  }
+
+ @@nagios_host { $::fqdn:
+    address => $::ipaddress_eth1,
+    check_command => 'check_ping!100.0,20%!500.0,60%',
+    use => 'generic-host',
+    hostgroups => ['ssh_servers'],
+    target => "/etc/icinga/objects/hosts/host_${::fqdn}.cfg",
+  }
+
   class { 'icinga::client':
     nrpe_allowed_hosts => ['10.0.1.79', '127.0.0.1'],
   }
@@ -687,27 +656,8 @@ node 'icingaclient4.local' {
     nrpe_plugin_name => 'check_ntp_time',
     nrpe_plugin_args => '-H 127.0.0.1',
   }
-
-  @@nagios_host { $::fqdn:
-    address => $::ipaddress_eth1,
-    check_command => 'check_ping!100.0,20%!500.0,60%',
-    use => 'generic-host',
-    hostgroups => ['ssh_servers'],
-    target => "/etc/icinga/objects/hosts/host_${::fqdn}.cfg",
-  }
   
-  #Install some stuff to monitor like...
-  
-  #...Apache:
-  class{ 'apache': } 
-  apache::mod { 'ssl': } #Install/enable the SSL module
-  
-  #...and MySQL:
-  class { '::mysql::server':
-    root_password    => 'horsebatterystaple',
-    override_options => { 'mysqld' => { 'max_connections' => '1024' } }
-  }
-  
+  #Create an NRPE command to monitor MySQL:
   icinga::client::command { 'check_mysql_service':
     nrpe_plugin_name => 'check_mysql',
     nrpe_plugin_args => '-H 127.0.0.1 -u root -p horsebatterystaple',
