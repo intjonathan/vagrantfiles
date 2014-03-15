@@ -321,7 +321,7 @@ node 'centossuricata.local' {
 
 }
 
-node 'suricataclient1.local' {
+node 'sensor1.local' {
 
   include ssh
 
@@ -408,7 +408,7 @@ node 'suricataclient1.local' {
 
 }
 
-node 'suricataclient2.local' {
+node 'sensor2.local' {
 
   include ssh
 
@@ -495,7 +495,7 @@ node 'suricataclient2.local' {
 
 }
 
-node 'suricataclient3.local' {
+node 'sensor3.local' {
 
   include ssh
 
@@ -580,7 +580,7 @@ node 'suricataclient3.local' {
 
 }
 
-node 'suricataclient4.local' {
+node 'sensor4.local' {
 
   include ssh
 
