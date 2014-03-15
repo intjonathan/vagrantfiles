@@ -406,6 +406,8 @@ node 'sensor1.local' {
     nrpe_plugin_args => '-H 127.0.0.1 -u root -p horsebatterystaple',
   }
 
+  include suricata::sensor
+
 }
 
 node 'sensor2.local' {
