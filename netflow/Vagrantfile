@@ -1,0 +1,145 @@
+Vagrant.configure("2") do |config|
+  # All Vagrant configuration is done here. The most common configuration
+  # options are documented and commented below. For a complete reference,
+  # please see the online documentation at vagrantup.com.
+
+  ####################
+  ####################
+  #vagrant-hostmanager plugin options
+  config.hostmanager.enabled = true
+  config.hostmanager.ignore_private_ip = false
+  #update the /etc/hosts of the host OS
+  config.hostmanager.manage_host = true
+  
+  #puppet master
+  config.vm.define "netflowmaster".to_sym do |netflowmaster_config|
+    netflowmaster_config.vm.box = "ubuntu-13.10-server-amd64"
+    netflowmaster_config.vm.hostname = "netflowmaster.local"
+    netflowmaster_config.hostmanager.aliases = %w(puppetboard.netflowmaster.local netflowmaster puppet master netflow.netflowmaster.local)
+    netflowmaster_config.hostmanager.enabled = true
+    netflowmaster_config.vm.network :private_network, ip: "10.0.1.80"
+    #set some machine-specific options	
+    netflowmaster_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "2048"]
+    end
+    #Set up synced folders for Puppet code:
+    netflowmaster_config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/modules", :nfs => true
+    netflowmaster_config.vm.synced_folder "manifests/", "/etc/puppet/manifests", :nfs => true
+    netflowmaster_config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/hieradata", "/etc/puppet/hieradata", :nfs => true
+    netflowmaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_master.sh"
+  end
+
+  #An Ubuntu NetFlow collector
+  config.vm.define "netflow1".to_sym do |netflow1_config|
+    netflow1_config.vm.box = "ubuntu-13.10-server-amd64"
+    netflow1_config.vm.hostname = "netflow1.local"
+    netflow1_config.hostmanager.enabled = true
+    netflow1_config.vm.network :private_network, ip: "10.0.1.78"
+    #set some machine-specific options	
+    netflow1_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+    netflow1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh" 
+  end
+
+  #A CentOS NetFlow collector
+  config.vm.define "netflow2".to_sym do |netflow2_config|
+    netflow2_config.vm.box = "centos-6.5-amd64"
+    netflow2_config.vm.hostname = "netflow2.local"
+    netflow2_config.hostmanager.enabled = true
+    netflow2_config.vm.network :private_network, ip: "10.0.1.79"
+    #set some machine-specific options	
+    netflow2_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+    netflow2_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
+  end
+
+  #A NetFlow sender; this machine sends data to one of the NetFlow collector machines:
+  config.vm.define "flow1".to_sym do |flow1_config|
+    flow1_config.vm.box = "ubuntu-13.10-server-amd64"
+    flow1_config.vm.hostname = "flow1.local"
+    flow1_config.hostmanager.enabled = true
+    flow1_config.vm.network :private_network, ip: "10.0.1.81"
+    #set some machine-specific options	
+    flow1_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    flow1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh" 
+  end
+
+  #another flow sender
+  config.vm.define "flow2".to_sym do |flow2_config|
+    flow2_config.vm.box = "ubuntu-13.10-server-amd64"
+    flow2_config.vm.hostname = "flow2.local"
+    flow2_config.hostmanager.enabled = true
+    flow2_config.vm.network :private_network, ip: "10.0.1.82"
+    #set some machine-specific options	
+    flow2_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    flow2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh" 
+  end
+
+  #another flow sender
+  config.vm.define "flow3".to_sym do |flow3_config|
+    flow3_config.vm.box = "centos-6.5-amd64"
+    flow3_config.vm.hostname = "flow3.local"
+    flow3_config.hostmanager.enabled = true
+    flow3_config.vm.network :private_network, ip: "10.0.1.83"
+    #set some machine-specific options	
+    flow3_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    flow3_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
+  end
+  
+  #another flow sender
+  config.vm.define "flow4".to_sym do |flow4_config|
+    flow4_config.vm.box = "centos-6.5-amd64"
+    flow4_config.vm.hostname = "flow4.local"
+    flow4_config.hostmanager.enabled = true
+    flow4_config.vm.network :private_network, ip: "10.0.1.84"
+    #set some machine-specific options	
+    flow4_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    flow4_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
+  end
+
+  #another flow sender
+  config.vm.define "flow5".to_sym do |flow5_config|
+    flow5_config.vm.box = "ubuntu-13.10-server-amd64"
+    flow5_config.vm.hostname = "flow5.local"
+    flow5_config.hostmanager.enabled = true
+    flow5_config.vm.network :private_network, ip: "10.0.1.85"
+    #set some machine-specific options	
+    flow5_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    flow5_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh" 
+  end
+
+  #another flow server
+  config.vm.define "flow6".to_sym do |flow6_config|
+    flow6_config.vm.box = "centos-6.5-amd64"
+    flow6_config.vm.hostname = "flow6.local"
+    flow6_config.hostmanager.enabled = true
+    flow6_config.vm.network :private_network, ip: "10.0.1.86"
+    #set some machine-specific options	
+    flow6_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    flow6_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
+  end
+
+end
