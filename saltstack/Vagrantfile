@@ -1,0 +1,117 @@
+Vagrant.configure("2") do |config|
+  # All Vagrant configuration is done here. The most common configuration
+  # options are documented and commented below. For a complete reference,
+  # please see the online documentation at vagrantup.com.
+
+  ####################
+  ####################
+  #vagrant-hostmanager plugin options
+  config.hostmanager.enabled = true
+  config.hostmanager.ignore_private_ip = false
+  #update the /etc/hosts of the host OS
+  config.hostmanager.manage_host = true
+  
+  #Puppet and Salt master
+  config.vm.define "saltmaster".to_sym do |saltmaster_config|
+    saltmaster_config.vm.box = "ubuntu-13.10-server-amd64"
+    saltmaster_config.vm.hostname = "saltmaster.local"
+    saltmaster_config.hostmanager.aliases = %w(puppetboard.saltmaster.local saltmaster puppet master salt.saltmaster.local)
+    saltmaster_config.hostmanager.enabled = true
+    saltmaster_config.vm.network :private_network, ip: "10.0.1.80"
+    #set some machine-specific options	
+    saltmaster_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "2048"]
+    end
+    #Set up synced folders for Puppet code:
+    saltmaster_config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/modules", :nfs => true
+    saltmaster_config.vm.synced_folder "manifests/", "/etc/puppet/manifests", :nfs => true
+    saltmaster_config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/hieradata", "/etc/puppet/hieradata", :nfs => true
+    saltmaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_master.sh"
+  end
+
+  #Another Salt minion
+  config.vm.define "minion1".to_sym do |minion1_config|
+    minion1_config.vm.box = "ubuntu-13.10-server-amd64"
+    minion1_config.vm.hostname = "minion1.local"
+    minion1_config.hostmanager.enabled = true
+    minion1_config.vm.network :private_network, ip: "10.0.1.81"
+    #set some machine-specific options	
+    minion1_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    minion1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh" 
+  end
+
+  #Another Salt minion
+  config.vm.define "minion2".to_sym do |minion2_config|
+    minion2_config.vm.box = "ubuntu-13.10-server-amd64"
+    minion2_config.vm.hostname = "minion2.local"
+    minion2_config.hostmanager.enabled = true
+    minion2_config.vm.network :private_network, ip: "10.0.1.82"
+    #set some machine-specific options	
+    minion2_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    minion2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh" 
+  end
+
+  #Another Salt minion
+  config.vm.define "minion3".to_sym do |minion3_config|
+    minion3_config.vm.box = "centos-6.5-amd64"
+    minion3_config.vm.hostname = "minion3.local"
+    minion3_config.hostmanager.enabled = true
+    minion3_config.vm.network :private_network, ip: "10.0.1.83"
+    #set some machine-specific options	
+    minion3_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    minion3_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
+  end
+  
+  #Another Salt minion
+  config.vm.define "minion4".to_sym do |minion4_config|
+    minion4_config.vm.box = "centos-6.5-amd64"
+    minion4_config.vm.hostname = "minion4.local"
+    minion4_config.hostmanager.enabled = true
+    minion4_config.vm.network :private_network, ip: "10.0.1.84"
+    #set some machine-specific options	
+    minion4_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    minion4_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
+  end
+
+  #Another Salt minion
+  config.vm.define "minion5".to_sym do |minion5_config|
+    minion5_config.vm.box = "ubuntu-13.10-server-amd64"
+    minion5_config.vm.hostname = "minion5.local"
+    minion5_config.hostmanager.enabled = true
+    minion5_config.vm.network :private_network, ip: "10.0.1.85"
+    #set some machine-specific options	
+    minion5_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    minion5_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh" 
+  end
+
+  #another minion server
+  config.vm.define "minion6".to_sym do |minion6_config|
+    minion6_config.vm.box = "centos-6.5-amd64"
+    minion6_config.vm.hostname = "minion6.local"
+    minion6_config.hostmanager.enabled = true
+    minion6_config.vm.network :private_network, ip: "10.0.1.86"
+    #set some machine-specific options	
+    minion6_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    minion6_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
+  end
+
+end
