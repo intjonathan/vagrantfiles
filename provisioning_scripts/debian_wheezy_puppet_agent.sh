@@ -65,7 +65,8 @@ then
         localconfig = $vardir/localconfig
 EOF
   #Set the daemon to start automatically:
-  sed -i 's/START=no/START=yes/g' /etc/default/puppet 	
+  sed -i 's/START=no/START=yes/g' /etc/default/puppet
+  	
 	#Touch the puppet_installed.txt file to skip this block the next time around
 	touch /home/vagrant/puppet_agent_installed.txt
 	
