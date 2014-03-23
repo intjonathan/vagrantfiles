@@ -178,6 +178,26 @@ node 'elasticsearch2.local', 'elasticsearch3.local', 'elasticsearch4.local' {
     custom_config  => undef,
     preserve_fqdn  => true,
   }
+
+  class { 'elasticsearch':
+    java_install => true,
+    package_url => 'https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.0.1.deb',
+    config => {
+      'node'    => {
+        'name' => $fqdn
+      },
+      'index' => {
+        'number_of_replicas' => '1',
+        'number_of_shards'   => '4'
+      },
+      'network' => {
+        'host' => $ipaddress_eth1
+      },
+      'cluster' => {
+        'name' => 'logstash',
+      }
+    }
+  }
   
 }
 
