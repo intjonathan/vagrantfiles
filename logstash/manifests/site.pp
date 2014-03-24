@@ -44,21 +44,21 @@ node 'logstash.local' {
     disable_monitor => true,
   }
   
-  file {'/etc/logstash.conf':
-    ensure => file,
-    mode => '0644',
-    owner => 'root',
-    group => 'root',
-    source => 'puppet:///logstash/configs/logstash.conf',  
-  }
+#  file {'/etc/logstash.conf':
+#    ensure => file,
+#    mode => '0644',
+#    owner => 'root',
+#    group => 'root',
+#    source => 'puppet:///logstash/configs/logstash.conf',  
+#  }
 
-  file {'/etc/blah.conf':
-    ensure => file,
-    mode => '0644',
-    owner => 'root',
-    group => 'root',
-    source => 'puppet:///logstash/blah.conf',  
-  }
+#  file {'/etc/blah.conf':
+#    ensure => file,
+#    mode => '0644',
+#    owner => 'root',
+#    group => 'root',
+#    source => 'puppet:///logstash/blah.conf',  
+#  }
   
   class { 'logstash':
     manage_repo => true,
