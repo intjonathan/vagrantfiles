@@ -30,6 +30,8 @@ Vagrant.configure("2") do |config|
     logstashmaster_config.hostmanager.enabled = true
     logstashmaster_config.hostmanager.aliases = %w(logstashmaster.local logstashmaster puppet puppet.local puppetboard.logstashmaster.local)
     logstashmaster_config.vm.network :private_network, ip: "10.0.1.140"
+    logstashmaster_config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/modules"
+    logstashmaster_config.vm.synced_folder "manifests/", "/etc/puppet/manifests"
     #set some machine-specific options	
     logstashmaster_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
