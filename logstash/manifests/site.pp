@@ -33,7 +33,9 @@ node 'logstashmaster.local' {
 }
 
 node 'logstash.local' {
-  
+
+  include denyhosts
+ 
   include ssh
 
   class { '::ntp':
@@ -73,6 +75,8 @@ node 'logstash.local' {
 
 node 'kibanathree.local' {
 
+  include denyhosts
+
   include ssh
 
   class { '::ntp':
@@ -98,6 +102,8 @@ node 'kibanathree.local' {
 }
 
 node 'elasticsearch1.local' {
+
+  include denyhosts
   
   class { 'elasticsearch':
     java_install => true,
@@ -159,6 +165,8 @@ node 'elasticsearch2.local', 'elasticsearch3.local', 'elasticsearch4.local' {
   
   include ssh
 
+  include denyhosts
+
   class { '::ntp':
     servers  => [ '0.ubuntu.pool.ntp.org', '1.ubuntu.pool.ntp.org', '2.ubuntu.pool.ntp.org', '3.ubuntu.pool.ntp.org' ],
     restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
@@ -204,6 +212,8 @@ node 'elasticsearch2.local', 'elasticsearch3.local', 'elasticsearch4.local' {
 node 'rsyslog1.local', 'rsyslog2.local' {
 
   include ssh
+
+  include denyhosts
 
   class { '::ntp':
     servers  => [ '0.ubuntu.pool.ntp.org', '1.ubuntu.pool.ntp.org', '2.ubuntu.pool.ntp.org', '3.ubuntu.pool.ntp.org' ],
