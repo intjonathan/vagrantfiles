@@ -66,10 +66,10 @@ node 'logstash.local' {
   }
   
   
-  logstash::configfile { 'input_redis':
-    content => template('logstash/input_redis.erb'),
-    order   => 10
-  }
+  #logstash::configfile { 'input_redis':
+  #  content => template('logstash/input_redis.erb'),
+  #  order   => 10
+  #}
 
 }
 
