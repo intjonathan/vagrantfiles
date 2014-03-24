@@ -83,6 +83,7 @@ node 'kibanathree.local' {
   ::apache::mod { 'ssl': } #Install/enable the SSL module
   ::apache::mod { 'proxy': } #Install/enable the proxy module
   ::apache::mod { 'proxy_http': } #Install/enable the HTTP proxy module
+  ::apache::mod { 'rewrite': } #Install/enable the rewrite module
 
   class { '::ntp':
     servers  => [ '0.ubuntu.pool.ntp.org', '1.ubuntu.pool.ntp.org', '2.ubuntu.pool.ntp.org', '3.ubuntu.pool.ntp.org' ],
@@ -103,7 +104,6 @@ node 'kibanathree.local' {
     custom_config  => undef,
     preserve_fqdn  => true,
   }
-
 }
 
 node 'elasticsearch1.local' {
