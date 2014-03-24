@@ -64,12 +64,11 @@ node 'logstash.local' {
     manage_repo => true,
     repo_version => '1.4',
   }
-  
-  
-  #logstash::configfile { 'input_redis':
-  #  content => template('logstash/input_redis.erb'),
-  #  order   => 10
-  #}
+
+  logstash::configfile { 'logstash_monolithic':
+    source => 'puppet:///logstash/configs/logstash.conf',
+    order   => 10
+  }
 
 }
 
@@ -103,7 +102,8 @@ node 'kibanathree.local' {
     log_auth_local => true,
     custom_config  => undef,
     preserve_fqdn  => true,
-  }  
+  }
+
 }
 
 node 'elasticsearch1.local' {
