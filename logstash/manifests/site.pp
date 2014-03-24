@@ -23,7 +23,7 @@ node 'logstashmaster.local' {
     log_remote     => true,
     server         => 'logstash.local',
     port           => '5514',
-    remote_type    => 'tcp',
+    remote_type    => 'udp',
     log_local      => true,
     log_auth_local => true,
     custom_config  => undef,
@@ -98,13 +98,14 @@ node 'kibanathree.local' {
     log_remote     => true,
     server         => 'logstash.local',
     port           => '5514',
-    remote_type    => 'tcp',
+    remote_type    => 'udp',
     log_local      => true,
     log_auth_local => true,
     custom_config  => undef,
     preserve_fqdn  => true,
   }
 
+  #A non-SSL virtual host that just redirects to the SSL one below:
   ::apache::vhost { 'dashboard.kibanathree.local_non-ssl':
     port            => 80,
     docroot         => '/sites/apps/kibana3',
@@ -116,6 +117,7 @@ node 'kibanathree.local' {
       RewriteRule ^/(.*) https://%{HTTP_HOST}/$1 [NC,R,L]',
   }
 
+  #An SSL virtual host for Kibana 3
   ::apache::vhost { 'dashboard.kibanathree.local_ssl':
     port                 => 443,
     docroot              => '/sites/apps/kibana3',
@@ -189,7 +191,7 @@ node 'elasticsearch1.local' {
     log_remote     => true,
     server         => 'logstash.local',
     port           => '5514',
-    remote_type    => 'tcp',
+    remote_type    => 'udp',
     log_local      => true,
     log_auth_local => true,
     custom_config  => undef,
@@ -217,7 +219,7 @@ node 'elasticsearch2.local', 'elasticsearch3.local', 'elasticsearch4.local' {
     log_remote     => true,
     server         => 'logstash.local',
     port           => '5514',
-    remote_type    => 'tcp',
+    remote_type    => 'udp',
     log_local      => true,
     log_auth_local => true,
     custom_config  => undef,
@@ -265,7 +267,7 @@ node 'rsyslog1.local', 'rsyslog2.local' {
     log_remote     => true,
     server         => 'logstash.local',
     port           => '5514',
-    remote_type    => 'tcp',
+    remote_type    => 'udp',
     log_local      => true,
     log_auth_local => true,
     custom_config  => undef,
