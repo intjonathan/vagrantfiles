@@ -107,7 +107,7 @@ node 'kibanathree.local' {
 
   ::apache::vhost { 'dashboard.kibanathree.local_non-ssl':
     port            => 80,
-    docroot         => '/var/www/kibana3',
+    docroot         => '/sites/apps/kibana3',
     servername      => "dashboard.${fqdn}",
     custom_fragment => '
       #Redirect to the HTTPS virtualhost
@@ -118,7 +118,7 @@ node 'kibanathree.local' {
 
   ::apache::vhost { 'dashboard.kibanathree.local_ssl':
     port                 => 443,
-    docroot              => '/var/www/kibana3',
+    docroot              => '/sites/apps/kibana3',
     servername           => "dashboard.${fqdn}",
     ssl                  => true,
     ssl_cert             => '/etc/apache2/ssl/kibanathree.local.pem',
@@ -128,7 +128,7 @@ node 'kibanathree.local' {
     ssl_honorcipherorder => 'On',
     custom_fragment => '
       #Disable multiviews since they can have unpredictable results
-      <Directory "/var/www/kibana3/src">
+      <Directory "/sites/apps/kibana3">
         AllowOverride All
         Require all granted
         Options -Multiviews
