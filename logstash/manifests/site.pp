@@ -116,6 +116,26 @@ node 'kibanathree.local' {
       RewriteRule ^/(.*) https://%{HTTP_HOST}/$1 [NC,R,L]',
   }
 
+  ::apache::vhost { 'dashboard.kibanathree.local_ssl':
+    port                 => 443,
+    docroot              => '/var/www/kibana3',
+    servername           => "dashboard.${fqdn}",
+    ssl                  => true,
+    ssl_cert             => '/etc/apache2/ssl/kibanathree.local.pem',
+    ssl_key              => '/etc/apache2/ssl/kibanathree.local.key',
+    ssl_protocol         => '+TLSv1 +TLSv1.1 +TLSv1.2 -SSLv2 -SSLv3',
+    ssl_cipher           => 'ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA:DHE-RSA-AES256-SHA:!aNULL:!eNULL:!EXPORT:!DES:!3DES:!MD5:!PSK',
+    ssl_honorcipherorder => 'On',
+    custom_fragment => '
+      #Disable multiviews since they can have unpredictable results
+      <Directory "/var/www/kibana3/src">
+        AllowOverride All
+        Require all granted
+        Options -Multiviews
+      </Directory>
+    ',
+  }
+
 }
 
 node 'elasticsearch1.local' {
