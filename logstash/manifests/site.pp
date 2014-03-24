@@ -80,7 +80,7 @@ node 'kibanathree.local' {
 
   class{ '::apache':}
   
-  ::apache::mod { 'ssl': } #Install/enable the SSL module
+  #::apache::mod { 'ssl': } #Install/enable the SSL module
   ::apache::mod { 'proxy': } #Install/enable the proxy module
   ::apache::mod { 'proxy_http': } #Install/enable the HTTP proxy module
   ::apache::mod { 'rewrite': } #Install/enable the rewrite module
@@ -104,6 +104,7 @@ node 'kibanathree.local' {
     custom_config  => undef,
     preserve_fqdn  => true,
   }
+
 }
 
 node 'elasticsearch1.local' {
