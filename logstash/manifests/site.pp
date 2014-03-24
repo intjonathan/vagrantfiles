@@ -8,6 +8,7 @@ node 'logstashmaster.local' {
   
   include puppetdb::master::config
   
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
     #This module is: https://github.com/puppetlabs/puppetlabs-ntp
@@ -41,6 +42,7 @@ node 'logstash.local' {
   #This module is: https://github.com/nickchappell/puppetlabs-denyhosts
   include denyhosts
  
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   #This module is: https://github.com/puppetlabs/puppetlabs-ntp
@@ -83,6 +85,7 @@ node 'kibanathree.local' {
   #This module is: https://github.com/nickchappell/puppetlabs-denyhosts
   include denyhosts
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class{ '::apache':}
@@ -188,6 +191,7 @@ node 'elasticsearch1.local' {
     module_dir => 'kopf'
   }
   
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
     #This module is: https://github.com/puppetlabs/puppetlabs-ntp
@@ -218,6 +222,7 @@ node 'elasticsearch1.local' {
 
 node 'elasticsearch2.local', 'elasticsearch3.local', 'elasticsearch4.local' {
   
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   #This module is: https://github.com/nickchappell/puppetlabs-denyhosts
@@ -271,6 +276,7 @@ node 'elasticsearch2.local', 'elasticsearch3.local', 'elasticsearch4.local' {
 
 node 'rsyslog1.local', 'rsyslog2.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   #This module is: https://github.com/nickchappell/puppetlabs-denyhosts
