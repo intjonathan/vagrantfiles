@@ -17,6 +17,8 @@ node 'logstashmaster.local' {
   }
 
   class { 'rsyslog::client':
+    #Write out logs in RFC3146 format so that they're more consistent when we send them to
+    #Logstash. Logstash is set up to understand this format of logs in its config:
     log_templates => [
       { name => 'RFC3164fmt', template => '<%PRI%>%TIMESTAMP% %HOSTNAME% %syslogtag%%msg%',},
     ],
@@ -92,6 +94,8 @@ node 'kibanathree.local' {
   }
 
   class { 'rsyslog::client':
+    #Write out logs in RFC3146 format so that they're more consistent when we send them to
+    #Logstash. Logstash is set up to understand this format of logs in its config:
     log_templates => [
       { name => 'RFC3164fmt', template => '<%PRI%>%TIMESTAMP% %HOSTNAME% %syslogtag%%msg%',},
     ],
@@ -185,6 +189,8 @@ node 'elasticsearch1.local' {
   }
 
   class { 'rsyslog::client':
+    #Write out logs in RFC3146 format so that they're more consistent when we send them to
+    #Logstash. Logstash is set up to understand this format of logs in its config:
     log_templates => [
       { name => 'RFC3164fmt', template => '<%PRI%>%TIMESTAMP% %HOSTNAME% %syslogtag%%msg%',},
     ],
@@ -213,6 +219,8 @@ node 'elasticsearch2.local', 'elasticsearch3.local', 'elasticsearch4.local' {
   }
 
   class { 'rsyslog::client':
+    #Write out logs in RFC3146 format so that they're more consistent when we send them to
+    #Logstash. Logstash is set up to understand this format of logs in its config:
     log_templates => [
       { name => 'RFC3164fmt', template => '<%PRI%>%TIMESTAMP% %HOSTNAME% %syslogtag%%msg%',},
     ],
@@ -261,6 +269,8 @@ node 'rsyslog1.local', 'rsyslog2.local' {
   }
 
   class { 'rsyslog::client':
+    #Write out logs in RFC3146 format so that they're more consistent when we send them to
+    #Logstash. Logstash is set up to understand this format of logs in its config:
     log_templates => [
       { name => 'RFC3164fmt', template => '<%PRI%>%TIMESTAMP% %HOSTNAME% %syslogtag%%msg%',},
     ],
