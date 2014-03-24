@@ -74,10 +74,16 @@ node 'logstash.local' {
 }
 
 node 'kibanathree.local' {
-
+  
   include denyhosts
 
   include ssh
+
+  class{ '::apache':}
+  
+  ::apache::mod { 'ssl': } #Install/enable the SSL module
+  ::apache::mod { 'proxy': } #Install/enable the proxy module
+  ::apache::mod { 'proxy_http': } #Install/enable the HTTP proxy module
 
   class { '::ntp':
     servers  => [ '0.ubuntu.pool.ntp.org', '1.ubuntu.pool.ntp.org', '2.ubuntu.pool.ntp.org', '3.ubuntu.pool.ntp.org' ],
@@ -97,8 +103,7 @@ node 'kibanathree.local' {
     log_auth_local => true,
     custom_config  => undef,
     preserve_fqdn  => true,
-  }
-  
+  }  
 }
 
 node 'elasticsearch1.local' {
