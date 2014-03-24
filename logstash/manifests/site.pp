@@ -105,6 +105,17 @@ node 'kibanathree.local' {
     preserve_fqdn  => true,
   }
 
+  ::apache::vhost { 'dashboard.kibanathree.local_non-ssl':
+    port            => 80,
+    docroot         => '/var/www/kibana3',
+    servername      => "dashboard.${fqdn}",
+    custom_fragment => '
+      #Redirect to the HTTPS virtualhost
+      RewriteEngine on
+      ReWriteCond %{SERVER_PORT} !^443$
+      RewriteRule ^/(.*) https://%{HTTP_HOST}/$1 [NC,R,L]',
+  }
+
 }
 
 node 'elasticsearch1.local' {
