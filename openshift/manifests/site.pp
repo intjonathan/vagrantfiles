@@ -33,7 +33,12 @@ node 'openshiftmaster.local' {
   }
  
   #This module is from: https://github.com/saz/puppet-rsyslog
-  class { 'rsyslog::server': }
+  class { 'rsyslog::server':
+    enable_tcp => true,
+    enable_udp => true,
+    port       => '514',
+    server_dir => '/var/log/remote/',
+  }
  
 }
 

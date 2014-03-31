@@ -34,7 +34,12 @@ node 'denymaster.local' {
   include ssh
  
   #This module is from: https://github.com/saz/puppet-rsyslog
-  class { 'rsyslog::server': }
+  class { 'rsyslog::server':
+    enable_tcp => true,
+    enable_udp => true,
+    port       => '514',
+    server_dir => '/var/log/remote/',
+  }
 
   #This module is: https://github.com/puppetlabs/puppetlabs-ntp
   class { '::ntp':
