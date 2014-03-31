@@ -1,6 +1,7 @@
 #default node defition
 node default {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
 }
@@ -27,6 +28,7 @@ node 'netflowmaster.local' {
 #Ubuntu NetFlow node
 node 'flow1.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':
@@ -50,6 +52,7 @@ node 'flow1.local' {
 #Ubuntu NetFlow node
 node 'flow2.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':
@@ -73,6 +76,7 @@ node 'flow2.local' {
 #CentOS NetFlow node
 node 'flow3.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':
@@ -96,6 +100,7 @@ node 'flow3.local' {
 #CentOS NetFlow node
 node 'flow4.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':
@@ -118,6 +123,7 @@ node 'flow4.local' {
 #Ubuntu NetFlow node
 node 'flow5.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':
@@ -141,6 +147,7 @@ node 'flow5.local' {
 #CentOS NetFlow node
 node 'flow6.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':

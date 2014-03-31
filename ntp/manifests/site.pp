@@ -1,6 +1,7 @@
 #default ntp defition
 node default {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
 }
@@ -27,6 +28,7 @@ node 'ntpmaster.local' {
 #Ubuntu ntp node
 node 'ntp1.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':
@@ -50,6 +52,7 @@ node 'ntp1.local' {
 #Ubuntu ntp node
 node 'ntp2.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':
@@ -73,6 +76,7 @@ node 'ntp2.local' {
 #CentOS ntp node
 node 'ntp3.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':
@@ -96,6 +100,7 @@ node 'ntp3.local' {
 #CentOS ntp node
 node 'ntp4.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':

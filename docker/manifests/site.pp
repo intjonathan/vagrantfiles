@@ -7,6 +7,7 @@ node 'dockermaster.local' {
   
   include puppetdb::master::config
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { '::ntp':

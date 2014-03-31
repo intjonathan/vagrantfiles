@@ -1,6 +1,7 @@
 #default node defition
 node default {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
 }
@@ -16,6 +17,7 @@ node 'suricatamaster.local' {
  
   class { 'rsyslog::server': }
  
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { '::ntp':
@@ -29,6 +31,7 @@ node 'suricatamaster.local' {
 #Ubuntu suricata server node
 node 'ubuntusuricata.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':
@@ -236,6 +239,7 @@ node 'ubuntusuricata.local' {
 #CentOS Suricata node
 node 'centossuricata.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':
@@ -323,6 +327,7 @@ node 'centossuricata.local' {
 
 node 'sensor1.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':
@@ -412,6 +417,7 @@ node 'sensor1.local' {
 
 node 'sensor2.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':
@@ -499,6 +505,7 @@ node 'sensor2.local' {
 
 node 'sensor3.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':
@@ -584,6 +591,7 @@ node 'sensor3.local' {
 
 node 'sensor4.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':

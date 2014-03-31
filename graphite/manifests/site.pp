@@ -1,6 +1,7 @@
 #default node defition
 node default {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
 }
@@ -77,6 +78,7 @@ node 'graphite2.local' {
 #Ubuntu Graphite node
 node 'node1.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':
@@ -116,6 +118,7 @@ node 'node1.local' {
 #Ubuntu Graphite node
 node 'node2.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':
@@ -154,6 +157,7 @@ node 'node2.local' {
 #CentOS Graphite node
 node 'node3.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':
@@ -177,6 +181,7 @@ node 'node3.local' {
 #CentOS Graphite node
 node 'node4.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':
@@ -199,6 +204,7 @@ node 'node4.local' {
 #Ubuntu Graphite node
 node 'node5.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':
@@ -237,6 +243,7 @@ node 'node5.local' {
 #CentOS Graphite node
 node 'node6.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':

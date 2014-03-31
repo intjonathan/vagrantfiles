@@ -1,6 +1,7 @@
 #default node defition
 node default {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
 }
@@ -16,6 +17,7 @@ node 'jenkinsmaster.local' {
  
   class { 'rsyslog::server': }
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { '::ntp':
@@ -29,6 +31,7 @@ node 'jenkinsmaster.local' {
 #Ubuntu Jenkins server
 node 'ubuntujenkins.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { '::ntp':
@@ -101,6 +104,7 @@ node 'centosjenkins.local' {
       port           => '514',
   }
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
   
   class{ 'apache':
@@ -164,6 +168,7 @@ node 'centosjenkins.local' {
 #Jenkins worker
 node 'worker1.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { '::ntp':
@@ -201,6 +206,7 @@ node 'worker1.local' {
 #Jenkins worker
 node 'worker2.local' {
   
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { '::ntp':
@@ -238,6 +244,7 @@ node 'worker2.local' {
 #Jenkins worker
 node 'worker3.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { '::ntp':
@@ -275,6 +282,7 @@ node 'worker3.local' {
 #Jenkins worker
 node 'worker4.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { '::ntp':

@@ -12,6 +12,7 @@ node 'selinuxmaster.local' {
   
   include puppetdb::master::config
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
   
   class { 'rsyslog::server': }
@@ -21,6 +22,7 @@ node 'selinuxmaster.local' {
 #Ubuntu ElasticSearch node
 node 'selinux1.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':
@@ -45,6 +47,7 @@ node 'selinux1.local' {
 #Ubuntu ElasticSearch node
 node 'selinux2.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':
@@ -70,6 +73,7 @@ node 'selinux2.local' {
 #Ubuntu ElasticSearch node
 node 'selinux3.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':
@@ -95,6 +99,7 @@ node 'selinux3.local' {
 #Ubuntu ElasticSearch node
 node 'selinux4.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':

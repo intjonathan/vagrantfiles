@@ -1,6 +1,7 @@
 #default node defition
 node default {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
 }
@@ -16,6 +17,7 @@ node 'icinga2master.local' {
  
   class { 'rsyslog::server': }
  
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { '::ntp':
@@ -30,6 +32,7 @@ node 'icinga2master.local' {
 
 node 'ubuntuicinga2.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':
@@ -236,6 +239,7 @@ node 'ubuntuicinga2.local' {
 
 node 'centosicinga2.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':
@@ -323,6 +327,7 @@ node 'centosicinga2.local' {
 
 node 'icinga2client1.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':
@@ -410,6 +415,7 @@ node 'icinga2client1.local' {
 
 node 'icinga2client2.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':
@@ -497,6 +503,7 @@ node 'icinga2client2.local' {
 
 node 'icinga2client3.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':
@@ -582,6 +589,7 @@ node 'icinga2client3.local' {
 
 node 'icinga2client4.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':

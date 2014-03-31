@@ -1,6 +1,7 @@
 #default node defition
 node default {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
 }
@@ -27,6 +28,7 @@ node 'saltmaster.local' {
 #Ubuntu salt node
 node 'minion1.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':
@@ -50,6 +52,7 @@ node 'minion1.local' {
 #Ubuntu salt node
 node 'minion2.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':
@@ -73,6 +76,7 @@ node 'minion2.local' {
 #CentOS salt node
 node 'minion3.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':
@@ -96,6 +100,7 @@ node 'minion3.local' {
 #CentOS salt node
 node 'minion4.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':
@@ -118,6 +123,7 @@ node 'minion4.local' {
 #Ubuntu salt node
 node 'minion5.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':
@@ -141,6 +147,7 @@ node 'minion5.local' {
 #CentOS salt node
 node 'minion6.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':

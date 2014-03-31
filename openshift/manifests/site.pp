@@ -1,6 +1,7 @@
 #default node defition
 node default {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
 }
@@ -22,6 +23,7 @@ node 'openshiftmaster.local' {
 #CentOS OpenShift broker node
 node 'broker.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':
@@ -44,6 +46,7 @@ node 'broker.local' {
 #CentOS OpenShift ActiveMQ server
 node 'activemq.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':
@@ -61,6 +64,7 @@ node 'activemq.local' {
 #CentOS OpenShift MongoDB server
 node 'mongodb.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':
@@ -78,6 +82,7 @@ node 'mongodb.local' {
 #CentOS OpenShift node
 node 'node1.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':
@@ -95,6 +100,7 @@ node 'node1.local' {
 #CentOS OpenShift node
 node 'node2.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':
@@ -113,6 +119,7 @@ node 'node2.local' {
 node 'node3.local' {
 
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':
@@ -130,6 +137,7 @@ node 'node3.local' {
 #CentOS OpenShift node
 node 'node4.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':

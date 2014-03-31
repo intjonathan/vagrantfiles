@@ -29,6 +29,7 @@ node 'denymaster.local' {
     port => 80,
   }
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
  
   class { 'rsyslog::server': }
@@ -45,6 +46,7 @@ node 'denyclient1.local' {
   
   include denyhosts
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':
@@ -70,6 +72,7 @@ node 'denyclient2.local' {
 
   include denyhosts
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':

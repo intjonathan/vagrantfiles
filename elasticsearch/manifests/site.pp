@@ -12,6 +12,7 @@ node 'elasticsearchmaster.local' {
   
   include puppetdb::master::config
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
   
   class { 'rsyslog::server': }
@@ -21,6 +22,7 @@ node 'elasticsearchmaster.local' {
 #Ubuntu ElasticSearch node
 node 'elasticsearch1.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':
@@ -85,6 +87,7 @@ node 'elasticsearch1.local' {
 #Ubuntu ElasticSearch node
 node 'elasticsearch2.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
  package {'openjdk-7-jdk':
@@ -125,6 +128,7 @@ node 'elasticsearch2.local' {
 #Ubuntu ElasticSearch node
 node 'elasticsearch3.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
  package {'openjdk-7-jdk':
@@ -165,6 +169,7 @@ node 'elasticsearch3.local' {
 #Ubuntu ElasticSearch node
 node 'elasticsearch4.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
  package {'openjdk-7-jdk':
@@ -205,6 +210,7 @@ node 'elasticsearch4.local' {
 #Ubuntu ElasticSearch node
 node 'elasticsearch5.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
  package {'openjdk-7-jdk':
@@ -245,6 +251,7 @@ node 'elasticsearch5.local' {
 #Ubuntu ElasticSearch node
 node 'elasticsearch6.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
  package {'openjdk-7-jdk':

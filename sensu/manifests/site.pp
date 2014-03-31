@@ -12,6 +12,7 @@ node 'sensumaster.local' {
   
   include puppetdb::master::config
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
   
   class { 'rsyslog::server': }
@@ -31,6 +32,7 @@ node 'monitor.local' {
     port           => '514',
   }
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh  
 
 }
@@ -48,6 +50,7 @@ node 'sensu1.local' {
     port           => '514',
   }
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh  
 
 }
@@ -55,6 +58,7 @@ node 'sensu1.local' {
 #Ubuntu sensu node
 node 'sensu2.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':
@@ -72,6 +76,7 @@ node 'sensu2.local' {
 #Ubuntu sensu node
 node 'sensu3.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':
@@ -89,6 +94,7 @@ node 'sensu3.local' {
 #Ubuntu sensu node
 node 'sensu4.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':

@@ -12,6 +12,7 @@ node 'mcomaster.local' {
   
   include puppetdb::master::config
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
   
   class { 'rsyslog::server': }
@@ -31,6 +32,7 @@ node 'mco1.local' {
     port           => '514',
   }
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh  
 
 }
@@ -38,6 +40,7 @@ node 'mco1.local' {
 #Ubuntu Mcollective node
 node 'mco2.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':
@@ -55,6 +58,7 @@ node 'mco2.local' {
 #Ubuntu Mcollective node
 node 'mco3.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':
@@ -72,6 +76,7 @@ node 'mco3.local' {
 #Ubuntu Mcollective node
 node 'mco4.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
   class { 'rsyslog::client':
