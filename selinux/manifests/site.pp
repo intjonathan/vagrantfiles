@@ -13,6 +13,15 @@ node 'selinuxmaster.local' {
   
   include puppetdb::master::config
 
+  #Apache modules for PuppetBoard:
+  class { 'apache': }
+  class { 'apache::mod::wsgi': }
+
+  #Configure Puppetboard with this module: https://github.com/nibalizer/puppet-module-puppetboard
+  class { 'puppetboard':
+    manage_virtualenv => true,
+  }
+
   #This module is from: https://github.com/saz/puppet-ssh
   include ssh
   
