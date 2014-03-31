@@ -7,7 +7,7 @@ node default {
 }
 
 #Puppet master definition
-node 'saltmaster.local' {
+node 'ansiblemaster.local' {
 
   #This module is from: https://github.com/puppetlabs/puppetlabs-puppetdb/
   class { 'puppetdb':
