@@ -15,11 +15,11 @@ node 'denymaster.local' {
 
   include puppetdb::master::config
 
-  #Apache for PuppetBoard:
+  #Apache modules for PuppetBoard:
   class { 'apache': }
   class { 'apache::mod::wsgi': }
 
-  #Configure Puppetboard
+  #Configure Puppetboard with this module: https://github.com/nibalizer/puppet-module-puppetboard
   class { 'puppetboard':
     manage_virtualenv => true,
   }
