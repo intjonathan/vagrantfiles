@@ -103,31 +103,31 @@ Vagrant.configure("2") do |config|
   end
 
   #an icingaserver client
-  config.vm.define "icingaclient3".to_sym do |icingaclient1_config|
-    icingaclient1_config.vm.box = "ubuntu-13.10-server-amd64"
-    icingaclient1_config.vm.hostname = "icingaclient3.local"
-    icingaclient1_config.hostmanager.enabled = true
-    icingaclient1_config.vm.network :private_network, ip: "10.0.1.83"
+  config.vm.define "icingaclient3".to_sym do |icingaclient3_config|
+    icingaclient3_config.vm.box = "ubuntu-13.10-server-amd64"
+    icingaclient3_config.vm.hostname = "icingaclient3.local"
+    icingaclient3_config.hostmanager.enabled = true
+    icingaclient3_config.vm.network :private_network, ip: "10.0.1.83"
     #set some machine-specific options	
-    icingaclient1_config.vm.provider "virtualbox" do |v|
+    icingaclient3_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
     #Puppet agent provisioning script
-    icingaclient1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
+    icingaclient3_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
   end
 
   #an icingaserver client
-  config.vm.define "icingaclient4".to_sym do |icingaclient2_config|
-    icingaclient2_config.vm.box = "centos-6.5-amd64"
-    icingaclient2_config.vm.hostname = "icingaclient4.local"
-    icingaclient2_config.hostmanager.enabled = true
-    icingaclient2_config.vm.network :private_network, ip: "10.0.1.84"
-    icingaclient2_config.vm.provider "virtualbox" do |v| 	
+  config.vm.define "icingaclient4".to_sym do |icingaclient4_config|
+    icingaclient4_config.vm.box = "centos-6.5-amd64"
+    icingaclient4_config.vm.hostname = "icingaclient4.local"
+    icingaclient4_config.hostmanager.enabled = true
+    icingaclient4_config.vm.network :private_network, ip: "10.0.1.84"
+    icingaclient4_config.vm.provider "virtualbox" do |v| 	
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
     #Puppet agent provisioning script
-    icingaclient2_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
+    icingaclient4_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
   end
 end
