@@ -15,6 +15,7 @@ node 'elasticsearchmaster.local' {
   #This module is from: https://github.com/saz/puppet-ssh
   include ssh
   
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::server': }
  
 }
@@ -25,6 +26,7 @@ node 'elasticsearch1.local' {
   #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
     log_remote     => true,
     remote_type    => 'tcp',
@@ -94,6 +96,7 @@ node 'elasticsearch2.local' {
     ensure => installed,
  }
 
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
     log_remote     => true,
     remote_type    => 'tcp',
@@ -135,6 +138,7 @@ node 'elasticsearch3.local' {
     ensure => installed,
  }
 
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
     log_remote     => true,
     remote_type    => 'tcp',
@@ -176,6 +180,7 @@ node 'elasticsearch4.local' {
     ensure => installed,
  }
 
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
     log_remote     => true,
     remote_type    => 'tcp',
@@ -217,6 +222,7 @@ node 'elasticsearch5.local' {
     ensure => installed,
  }
 
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
     log_remote     => true,
     remote_type    => 'tcp',
@@ -258,6 +264,7 @@ node 'elasticsearch6.local' {
     ensure => installed,
  }
 
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
     log_remote     => true,
     remote_type    => 'tcp',

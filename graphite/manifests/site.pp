@@ -30,6 +30,7 @@ node 'graphitemaster.local' {
     port => 80,
   }
   
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::server': }
 
   #This module is: https://github.com/puppetlabs/puppetlabs-ntp
@@ -82,6 +83,7 @@ node 'node1.local' {
   #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
     log_remote     => true,
     remote_type    => 'tcp',
@@ -123,6 +125,7 @@ node 'node2.local' {
   #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
     log_remote     => true,
     remote_type    => 'tcp',
@@ -163,6 +166,7 @@ node 'node3.local' {
   #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
     log_remote     => true,
     remote_type    => 'tcp',
@@ -188,6 +192,7 @@ node 'node4.local' {
   #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
     log_remote     => true,
     remote_type    => 'tcp',
@@ -212,6 +217,7 @@ node 'node5.local' {
   #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
     log_remote     => true,
     remote_type    => 'tcp',
@@ -252,6 +258,7 @@ node 'node6.local' {
   #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
     log_remote     => true,
     remote_type    => 'tcp',

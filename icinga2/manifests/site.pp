@@ -15,6 +15,7 @@ node 'icinga2master.local' {
   
   include puppetdb::master::config
  
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::server': }
  
   #This module is from: https://github.com/saz/puppet-ssh
@@ -36,6 +37,7 @@ node 'ubuntuicinga2.local' {
   #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
     log_remote     => true,
     remote_type    => 'tcp',
@@ -244,6 +246,7 @@ node 'centosicinga2.local' {
   #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
     log_remote     => true,
     remote_type    => 'tcp',
@@ -333,6 +336,7 @@ node 'icinga2client1.local' {
   #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
     log_remote     => true,
     remote_type    => 'tcp',
@@ -422,6 +426,7 @@ node 'icinga2client2.local' {
   #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
     log_remote     => true,
     remote_type    => 'tcp',
@@ -511,6 +516,7 @@ node 'icinga2client3.local' {
   #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
     log_remote     => true,
     remote_type    => 'tcp',
@@ -598,6 +604,7 @@ node 'icinga2client4.local' {
   #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
     log_remote     => true,
     remote_type    => 'tcp',

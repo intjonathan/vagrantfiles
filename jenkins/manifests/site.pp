@@ -15,6 +15,7 @@ node 'jenkinsmaster.local' {
   
   include puppetdb::master::config
  
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::server': }
 
   #This module is from: https://github.com/saz/puppet-ssh
@@ -42,6 +43,7 @@ node 'ubuntujenkins.local' {
     disable_monitor => true,
   }
 
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
       log_remote     => true,
       remote_type    => 'tcp',
@@ -96,6 +98,7 @@ node 'ubuntujenkins.local' {
 #CentOS Jenkins server
 node 'centosjenkins.local' {
 
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
       log_remote     => true,
       remote_type    => 'tcp',
@@ -180,6 +183,7 @@ node 'worker1.local' {
     disable_monitor => true,
   }
 
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
     log_remote     => true,
     remote_type    => 'tcp',
@@ -219,6 +223,7 @@ node 'worker2.local' {
     disable_monitor => true,
   }
 
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
     log_remote     => true,
     remote_type    => 'tcp',
@@ -258,6 +263,7 @@ node 'worker3.local' {
     disable_monitor => true,
   }
 
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
     log_remote     => true,
     remote_type    => 'tcp',
@@ -297,6 +303,7 @@ node 'worker4.local' {
     disable_monitor => true,
   }
 
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
     log_remote     => true,
     remote_type    => 'tcp',

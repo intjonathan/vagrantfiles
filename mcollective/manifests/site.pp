@@ -15,6 +15,7 @@ node 'mcomaster.local' {
   #This module is from: https://github.com/saz/puppet-ssh
   include ssh
   
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::server': }
  
 }
@@ -22,6 +23,7 @@ node 'mcomaster.local' {
 #Ubuntu Mcollective node
 node 'mco1.local' {
 
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
     log_remote     => true,
     remote_type    => 'tcp',
@@ -43,6 +45,7 @@ node 'mco2.local' {
   #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
     log_remote     => true,
     remote_type    => 'tcp',
@@ -61,6 +64,7 @@ node 'mco3.local' {
   #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
     log_remote     => true,
     remote_type    => 'tcp',
@@ -79,6 +83,7 @@ node 'mco4.local' {
   #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
     log_remote     => true,
     remote_type    => 'tcp',

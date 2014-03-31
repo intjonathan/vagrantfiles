@@ -34,6 +34,7 @@ node 'logstashmaster.local' {
   }
 
   #This module is: https://github.com/saz/puppet-rsyslog
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
     #Write out logs in RFC3146 format so that they're more consistent when we send them to
     #Logstash. Logstash is set up to understand this format of logs in its config:
@@ -118,6 +119,7 @@ node 'kibanathree.local' {
   }
 
   #This module is: https://github.com/saz/puppet-rsyslog
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
     #Write out logs in RFC3146 format so that they're more consistent when we send them to
     #Logstash. Logstash is set up to understand this format of logs in its config:
@@ -217,6 +219,7 @@ node 'elasticsearch1.local' {
   }
 
   #This module is: https://github.com/saz/puppet-rsyslog
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
     #Write out logs in RFC3146 format so that they're more consistent when we send them to
     #Logstash. Logstash is set up to understand this format of logs in its config:
@@ -251,6 +254,7 @@ node 'elasticsearch2.local', 'elasticsearch3.local', 'elasticsearch4.local' {
   }
 
   #This module is: https://github.com/saz/puppet-rsyslog
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
     #Write out logs in RFC3146 format so that they're more consistent when we send them to
     #Logstash. Logstash is set up to understand this format of logs in its config:
@@ -305,6 +309,7 @@ node 'rsyslog1.local', 'rsyslog2.local' {
   }
 
   #This module is: https://github.com/saz/puppet-rsyslog
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
     #Write out logs in RFC3146 format so that they're more consistent when we send them to
     #Logstash. Logstash is set up to understand this format of logs in its config:

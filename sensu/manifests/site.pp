@@ -15,6 +15,7 @@ node 'sensumaster.local' {
   #This module is from: https://github.com/saz/puppet-ssh
   include ssh
   
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::server': }
  
 }
@@ -22,6 +23,7 @@ node 'sensumaster.local' {
 #Ubuntu sensu server
 node 'monitor.local' {
 
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
     log_remote     => true,
     remote_type    => 'tcp',
@@ -40,6 +42,7 @@ node 'monitor.local' {
 #Ubuntu sensu node
 node 'sensu1.local' {
 
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
     log_remote     => true,
     remote_type    => 'tcp',
@@ -61,6 +64,7 @@ node 'sensu2.local' {
   #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
     log_remote     => true,
     remote_type    => 'tcp',
@@ -79,6 +83,7 @@ node 'sensu3.local' {
   #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
     log_remote     => true,
     remote_type    => 'tcp',
@@ -97,6 +102,7 @@ node 'sensu4.local' {
   #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
     log_remote     => true,
     remote_type    => 'tcp',

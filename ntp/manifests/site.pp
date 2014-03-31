@@ -15,6 +15,7 @@ node 'ntpmaster.local' {
   
   include puppetdb::master::config
  
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::server': }
 
   #This module is: https://github.com/puppetlabs/puppetlabs-ntp
@@ -32,6 +33,7 @@ node 'ntp1.local' {
   #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
     log_remote     => true,
     remote_type    => 'tcp',
@@ -57,6 +59,7 @@ node 'ntp2.local' {
   #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
     log_remote     => true,
     remote_type    => 'tcp',
@@ -82,6 +85,7 @@ node 'ntp3.local' {
   #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
     log_remote     => true,
     remote_type    => 'tcp',
@@ -107,6 +111,7 @@ node 'ntp4.local' {
   #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
     log_remote     => true,
     remote_type    => 'tcp',

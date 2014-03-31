@@ -32,6 +32,7 @@ node 'denymaster.local' {
   #This module is from: https://github.com/saz/puppet-ssh
   include ssh
  
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::server': }
 
   #This module is: https://github.com/puppetlabs/puppetlabs-ntp
@@ -50,6 +51,7 @@ node 'denyclient1.local' {
   #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
     log_remote     => true,
     remote_type    => 'tcp',
@@ -77,6 +79,7 @@ node 'denyclient2.local' {
   #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
     log_remote     => true,
     remote_type    => 'tcp',

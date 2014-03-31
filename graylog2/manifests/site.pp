@@ -14,6 +14,7 @@ node 'graylogdb.local' {
 
 node 'client1.local' {
 
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
     log_remote     => true,
     remote_type    => 'tcp',
@@ -28,6 +29,7 @@ node 'client1.local' {
 
 node 'client2.local' {
 
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
     log_remote     => true,
     remote_type    => 'tcp',
@@ -42,6 +44,7 @@ node 'client2.local' {
 
 node 'client3.local' {
 
+  #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
     log_remote     => true,
     remote_type    => 'tcp',
