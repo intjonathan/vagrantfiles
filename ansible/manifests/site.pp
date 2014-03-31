@@ -26,8 +26,8 @@ node 'saltmaster.local' {
 
 }
 
-#Ubuntu salt node
-node 'minion1.local' {
+#Ubuntu Ansible node
+node 'ansible1.local' {
 
   #This module is from: https://github.com/saz/puppet-ssh
   include ssh
@@ -51,8 +51,8 @@ node 'minion1.local' {
 
 }
 
-#Ubuntu salt node
-node 'minion2.local' {
+#Ubuntu Ansible node
+node 'ansible2.local' {
 
   #This module is from: https://github.com/saz/puppet-ssh
   include ssh
@@ -76,8 +76,8 @@ node 'minion2.local' {
 
 }
 
-#CentOS salt node
-node 'minion3.local' {
+#CentOS Ansible node
+node 'ansible3.local' {
 
   #This module is from: https://github.com/saz/puppet-ssh
   include ssh
@@ -101,8 +101,8 @@ node 'minion3.local' {
 
 }
 
-#CentOS salt node
-node 'minion4.local' {
+#CentOS Ansible node
+node 'ansible4.local' {
 
   #This module is from: https://github.com/saz/puppet-ssh
   include ssh
@@ -117,7 +117,7 @@ node 'minion4.local' {
     port           => '514',
   }
   
-    #This module is: https://github.com/puppetlabs/puppetlabs-ntp
+  #This module is: https://github.com/puppetlabs/puppetlabs-ntp
   class { '::ntp':
     servers  => [ '0.centos.pool.node.org', '1.centos.pool.node.org', '2.centos.pool.node.org', '3.centos.pool.node.org' ],
     restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
@@ -125,8 +125,8 @@ node 'minion4.local' {
   }
 }
 
-#Ubuntu salt node
-node 'minion5.local' {
+#Ubuntu Ansible node
+node 'ansible5.local' {
 
   #This module is from: https://github.com/saz/puppet-ssh
   include ssh
@@ -141,7 +141,7 @@ node 'minion5.local' {
     port           => '514',
   }
   
-    #This module is: https://github.com/puppetlabs/puppetlabs-ntp
+  #This module is: https://github.com/puppetlabs/puppetlabs-ntp
   class { '::ntp':
     servers  => [ '0.ubuntu.pool.node.org', '1.ubuntu.pool.node.org', '2.ubuntu.pool.node.org', '3.ubuntu.pool.node.org' ],
     restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
@@ -150,8 +150,8 @@ node 'minion5.local' {
 
 }
 
-#CentOS salt node
-node 'minion6.local' {
+#CentOS Ansible node
+node 'ansible6.local' {
 
   #This module is from: https://github.com/saz/puppet-ssh
   include ssh
@@ -166,7 +166,7 @@ node 'minion6.local' {
     port           => '514',
   }
   
-    #This module is: https://github.com/puppetlabs/puppetlabs-ntp
+  #This module is: https://github.com/puppetlabs/puppetlabs-ntp
   class { '::ntp':
     servers  => [ '0.centos.pool.node.org', '1.centos.pool.node.org', '2.centos.pool.node.org', '3.centos.pool.node.org' ],
     restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
