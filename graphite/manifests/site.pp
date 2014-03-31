@@ -13,7 +13,22 @@ node 'graphitemaster.local' {
   }
   
   include puppetdb::master::config
- 
+
+  #Apache for PuppetBoard:
+  class { 'apache': }
+  class { 'apache::mod::wsgi': }
+
+  #Configure Puppetboard
+  class { 'puppetboard':
+    manage_virtualenv => true,
+  }
+
+  #A virtualhost for PuppetBoard
+  class { 'puppetboard::apache::vhost':
+    vhost_name => "puppetboard.${fqdn}",
+    port => 80,
+  }
+  
   class { 'rsyslog::server': }
 
   class { '::ntp':
