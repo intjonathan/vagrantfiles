@@ -32,6 +32,7 @@ node 'graphitemaster.local' {
   
   class { 'rsyslog::server': }
 
+  #This module is: https://github.com/puppetlabs/puppetlabs-ntp
   class { '::ntp':
     servers  => [ '0.ubuntu.pool.node.org', '1.ubuntu.pool.node.org', '2.ubuntu.pool.node.org', '3.ubuntu.pool.node.org' ],
     restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
@@ -91,6 +92,7 @@ node 'node1.local' {
     port           => '514',
   }
 
+  #This module is: https://github.com/puppetlabs/puppetlabs-ntp
   class { '::ntp':
     servers  => [ '0.ubuntu.pool.node.org', '1.ubuntu.pool.node.org', '2.ubuntu.pool.node.org', '3.ubuntu.pool.node.org' ],
     restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
@@ -131,6 +133,7 @@ node 'node2.local' {
     port           => '514',
   }
 
+  #This module is: https://github.com/puppetlabs/puppetlabs-ntp
   class { '::ntp':
     servers  => [ '0.ubuntu.pool.node.org', '1.ubuntu.pool.node.org', '2.ubuntu.pool.node.org', '3.ubuntu.pool.node.org' ],
     restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
@@ -170,6 +173,7 @@ node 'node3.local' {
     port           => '514',
   }
 
+  #This module is: https://github.com/puppetlabs/puppetlabs-ntp
   class { '::ntp':
     servers  => [ '0.centos.pool.node.org', '1.centos.pool.node.org', '2.centos.pool.node.org', '3.centos.pool.node.org' ],
     restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
@@ -194,7 +198,8 @@ node 'node4.local' {
     port           => '514',
   }
   
-    class { '::ntp':
+    #This module is: https://github.com/puppetlabs/puppetlabs-ntp
+  class { '::ntp':
     servers  => [ '0.centos.pool.node.org', '1.centos.pool.node.org', '2.centos.pool.node.org', '3.centos.pool.node.org' ],
     restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
     disable_monitor => true,
@@ -217,7 +222,8 @@ node 'node5.local' {
     port           => '514',
   }
   
-    class { '::ntp':
+    #This module is: https://github.com/puppetlabs/puppetlabs-ntp
+  class { '::ntp':
     servers  => [ '0.ubuntu.pool.node.org', '1.ubuntu.pool.node.org', '2.ubuntu.pool.node.org', '3.ubuntu.pool.node.org' ],
     restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
     disable_monitor => true,
@@ -256,7 +262,8 @@ node 'node6.local' {
     port           => '514',
   }
   
-    class { '::ntp':
+    #This module is: https://github.com/puppetlabs/puppetlabs-ntp
+  class { '::ntp':
     servers  => [ '0.centos.pool.node.org', '1.centos.pool.node.org', '2.centos.pool.node.org', '3.centos.pool.node.org' ],
     restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
     disable_monitor => true,
