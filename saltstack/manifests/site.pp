@@ -72,6 +72,8 @@ node 'minion1.local' {
     disable_monitor => true,
   }
 
+  include saltstack::master
+
 }
 
 #Ubuntu salt node
@@ -97,6 +99,8 @@ node 'minion2.local' {
     restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
     disable_monitor => true,
   }
+
+  include saltstack::minion
 
 }
 
