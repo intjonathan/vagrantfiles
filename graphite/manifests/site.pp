@@ -81,6 +81,29 @@ node 'graphite1.local' {
 #CentOS Graphite server
 node 'graphite2.local' {
 
+  #Install Postgres:
+  class { 'postgresql::server': }
+
+  #Create a Postgres DB for Graphite
+  postgresql::server::db { 'graphite_data':
+    user     => 'graphite',
+    password => postgresql_password('graphite', 'password'),
+  }
+  
+  #Install MySQL:
+  class { '::mysql::server':
+    root_password    => 'password',
+    override_options => { 'mysqld' => { 'max_connections' => '1024' } }
+  }
+  
+  #Create a MySQL DB for Graphite  
+  mysql::db { 'graphite_data':
+    user     => 'graphite',
+    password => 'password',
+    host     => 'localhost',
+    grant    => ['ALL'],
+  }
+
 }
 
 #Ubuntu Graphite node
@@ -121,7 +144,6 @@ node 'node1.local' {
   class { 'collectd::plugin::write_graphite':
     graphitehost => 'graphitemaster.local',
   }
-  
 
 }
 
