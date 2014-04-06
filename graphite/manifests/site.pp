@@ -75,6 +75,12 @@ node 'graphite1.local' {
     host     => 'localhost',
     grant    => ['ALL'],
   }
+
+  #Graphite stuff:
+  class{'graphite::server':
+    #This is a salted hash for 'password' with '54321' as the salt; PBKDF2 with SHA256 is the algorithm:
+    django_admin_password => 'pbkdf2_sha256$12000$54321$RAkQjc8YAPaOl8OL21l7R2K/cgLeBcJTPNQss1oJpVk=',
+  }
   
 }
 
@@ -102,6 +108,12 @@ node 'graphite2.local' {
     password => 'password',
     host     => 'localhost',
     grant    => ['ALL'],
+  }
+
+  #Graphite stuff:
+  class{'graphite::server':
+    #This is a salted hash for 'password' with '54321' as the salt; PBKDF2 with SHA256 is the algorithm:
+    django_admin_password => 'pbkdf2_sha256$12000$54321$RAkQjc8YAPaOl8OL21l7R2K/cgLeBcJTPNQss1oJpVk=',
   }
 
 }
