@@ -106,6 +106,10 @@ node 'dnsmaster2.local' {
     disable_monitor => true,
   }
 
+  #BIND module is from: https://github.com/thias/puppet-bind
+  #Just install the BIND package:
+  include bind::package
+
 }
 
 node 'dnsslave1.local' {
