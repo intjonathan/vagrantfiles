@@ -50,13 +50,6 @@ node 'dnspuppetmaster.local' {
 
 }
 
-  #This module is: https://github.com/puppetlabs/puppetlabs-ntp
-  class { '::ntp':
-    servers  => [ '0.ubuntu.pool.node.org', '1.ubuntu.pool.node.org', '2.ubuntu.pool.node.org', '3.ubuntu.pool.node.org' ],
-    restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
-    disable_monitor => true,
-  }
-
 node 'dnsmaster1.local' {
 
   include denyhosts
