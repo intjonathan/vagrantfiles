@@ -74,6 +74,10 @@ node 'dnsmaster1.local' {
     restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
     disable_monitor => true,
   }
+  
+  #BIND module is from: https://github.com/thias/puppet-bind
+  #Just install the BIND package:
+  include bind::package
 
 }
 
