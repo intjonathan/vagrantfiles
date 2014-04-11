@@ -78,6 +78,9 @@ node 'dnsmaster1.local' {
   #BIND module is from: https://github.com/thias/puppet-bind
   include bind
   bind::server::conf { '/etc/named.conf':
+    acls => {
+      'rfc1918' => [ '10/8', '172.16/12', '192.168/16' ],
+    },
     directory => '/etc/bind',
     listen_on_addr    => [ '127.0.0.1' ],
     listen_on_v6_addr => [ '::1' ],
