@@ -78,10 +78,13 @@ node 'dnsmaster1.local' {
   #BIND module is from: https://github.com/thias/puppet-bind
   include bind
   bind::server::conf { '/etc/named.conf':
-    listen_on_addr    => [ 'any' ],
-    listen_on_v6_addr => [ 'any' ],
+    directory => '/etc/bind',
+    listen_on_addr    => [ '127.0.0.1' ],
+    listen_on_v6_addr => [ '::1' ],
     forwarders        => [ '8.8.8.8', '8.8.4.4' ],
-    allow_query       => [ 'localnets' ],
+    allow_query       => [ 'localhost' ],
+    recursion         => 'no',
+    allow_recursion   => [''],
   }
 
 }
