@@ -120,10 +120,16 @@ node 'dnsmaster2.local' {
   #BIND module is from: https://github.com/thias/puppet-bind
   include bind
   bind::server::conf { '/etc/named.conf':
-    listen_on_addr    => [ 'any' ],
-    listen_on_v6_addr => [ 'any' ],
+    acls => {
+      'rfc1918' => [ '10/8', '172.16/12', '192.168/16' ],
+    },
+    directory => '/var/named',
+    listen_on_addr    => [ '127.0.0.1' ],
+    listen_on_v6_addr => [ '::1' ],
     forwarders        => [ '8.8.8.8', '8.8.4.4' ],
-    allow_query       => [ 'localnets' ],
+    allow_query       => [ 'localhost' ],
+    recursion         => 'no',
+    allow_recursion   => [''],
   }
 
 }
@@ -154,19 +160,8 @@ node 'dnsslave1.local' {
   }
 
   #BIND module is from: https://github.com/thias/puppet-bind
-  include bind
-  bind::server::conf { '/etc/named.conf':
-    acls => {
-      'rfc1918' => [ '10/8', '172.16/12', '192.168/16' ],
-    },
-    directory => '/var/named',
-    listen_on_addr    => [ '127.0.0.1' ],
-    listen_on_v6_addr => [ '::1' ],
-    forwarders        => [ '8.8.8.8', '8.8.4.4' ],
-    allow_query       => [ 'localhost' ],
-    recursion         => 'no',
-    allow_recursion   => [''],
-  }
+  #Just install the BIND package:
+  include bind::package
 
 }
 
