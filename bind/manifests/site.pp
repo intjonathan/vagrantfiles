@@ -112,8 +112,13 @@ node 'dnsmaster2.local' {
   }
 
   #BIND module is from: https://github.com/thias/puppet-bind
-  #Just install the BIND package:
-  include bind::package
+  include bind
+  bind::server::conf { '/etc/named.conf':
+    listen_on_addr    => [ 'any' ],
+    listen_on_v6_addr => [ 'any' ],
+    forwarders        => [ '8.8.8.8', '8.8.4.4' ],
+    allow_query       => [ 'localnets' ],
+  }
 
 }
 
