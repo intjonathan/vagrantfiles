@@ -96,6 +96,15 @@ node 'mysqlserver1.local' {
     override_options => { 'mysqld' => { 'max_connections' => '1024' } }
   }
 
+  mysql_user { 'nick@localhost':
+    ensure                   => 'present',
+    max_connections_per_hour => '10',
+    max_queries_per_hour     => '10',
+    max_updates_per_hour     => '10',
+    max_user_connections     => '10',
+    password_hash => mysql_password('password'),
+  }
+
 }
 
 node 'mysqlserver2.local' {
