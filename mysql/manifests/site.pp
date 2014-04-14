@@ -96,6 +96,12 @@ node 'mysqlserver1.local' {
     override_options => { 'mysqld' => { 'max_connections' => '1024' } }
   }
 
+  mysql_database { 'library_books':
+    ensure  => 'present',
+    charset => 'utf8',
+  }
+
+
   mysql_user { 'nick@localhost':
     ensure                   => 'present',
     max_connections_per_hour => '10',
