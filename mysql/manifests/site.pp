@@ -116,6 +116,15 @@ node 'mysqlserver1.local' {
     password_hash => mysql_password('password'),
   }
 
+  #Grant the nick user all privileges on the library_books database:
+  mysql_grant { 'nick@localhost/library_books.*':
+    ensure     => 'present',
+    options    => ['GRANT'],
+    privileges => ['ALL'],
+    table      => '*.*',
+    user       => 'nick@localhost',
+  }
+
 }
 
 node 'mysqlserver2.local' {
