@@ -161,10 +161,39 @@ node 'mysqlserver2.local' {
     allow_query       => [ 'localnets' ],
   }
 
-  #Install MySQL:
+  #Install MySQL...
   class { '::mysql::server':
+    #...set the root password...
     root_password    => 'horsebatterystaple',
+    #...and set a global connection limit:
     override_options => { 'mysqld' => { 'max_connections' => '1024' } }
+  }
+  
+  #Create a database:
+  mysql_database { 'library_books':
+    ensure  => 'present',
+    charset => 'utf8',
+  }
+
+  #Create a database user:
+  mysql_user { 'nick@localhost':
+    ensure                   => 'present',
+    max_connections_per_hour => '10',
+    max_queries_per_hour     => '10',
+    max_updates_per_hour     => '10',
+    max_user_connections     => '10',
+    #Set a password and use the mysql_password function to generate a password hash,
+    #so we don't have to go somewhere else to generate the hash:
+    password_hash => mysql_password('password'),
+  }
+
+  #Grant the nick user all privileges on the library_books database:
+  mysql_grant { 'nick@localhost/library_books.*':
+    ensure     => 'present',
+    options    => ['GRANT'],
+    privileges => ['ALL'],
+    table      => '*.*',
+    user       => 'nick@localhost',
   }
 
 }
