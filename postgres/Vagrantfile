@@ -24,7 +24,7 @@ Vagrant.configure("2") do |config|
     master_config.vm.box = "ubuntu-13.10-server-amd64"
     master_config.vm.hostname = "postgresmaster.local"
     master_config.hostmanager.aliases = %w(master puppet master.local puppetboard.postgresmaster.local)
-    master_config.vm.network :private_network, ip: "10.0.1.170"
+    master_config.vm.network :private_network, ip: "10.0.1.180"
     #set some machine-specific options	
     master_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
@@ -43,7 +43,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "postgresserver1".to_sym do |postgresserver1_config|
     postgresserver1_config.vm.box = "ubuntu-13.10-server-amd64"
     postgresserver1_config.vm.hostname = "postgresserver1.local"
-    postgresserver1_config.vm.network :private_network, ip: "10.0.1.171"
+    postgresserver1_config.vm.network :private_network, ip: "10.0.1.181"
     #set some machine-specific options	
     postgresserver1_config.vm.provider "virtualbox" do |v|
          #change the amount of RAM 
@@ -57,7 +57,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "postgresserver2".to_sym do |postgresserver2_config|
     postgresserver2_config.vm.box = "centos-6.5-amd64"
     postgresserver2_config.vm.hostname = "postgresserver2.local"
-    postgresserver2_config.vm.network :private_network, ip: "10.0.1.172"
+    postgresserver2_config.vm.network :private_network, ip: "10.0.1.182"
     #set some machine-specific options	
     postgresserver2_config.vm.provider "virtualbox" do |v|
          #change the amount of RAM 
@@ -71,7 +71,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "postgresslave1".to_sym do |postgresslave1_config|
     postgresslave1_config.vm.box = "ubuntu-13.10-server-amd64"
     postgresslave1_config.vm.hostname = "postgresslave1.local"
-    postgresslave1_config.vm.network :private_network, ip: "10.0.1.173"
+    postgresslave1_config.vm.network :private_network, ip: "10.0.1.183"
     #set some machine-specific options	
     postgresslave1_config.vm.provider "virtualbox" do |v|
          #change the amount of RAM 
@@ -85,7 +85,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "postgresslave2".to_sym do |postgresslave2_config|
     postgresslave2_config.vm.box = "centos-6.5-amd64"
     postgresslave2_config.vm.hostname = "postgresslave2.local"
-    postgresslave2_config.vm.network :private_network, ip: "10.0.1.174"
+    postgresslave2_config.vm.network :private_network, ip: "10.0.1.184"
     #set some machine-specific options	
     postgresslave2_config.vm.provider "virtualbox" do |v|
          #change the amount of RAM 
@@ -99,7 +99,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "postgresclient1".to_sym do |postgresclient1_config|
     postgresclient1_config.vm.box = "ubuntu-13.10-server-amd64"
     postgresclient1_config.vm.hostname = "postgresclient1.local"
-    postgresclient1_config.vm.network :private_network, ip: "10.0.1.175"
+    postgresclient1_config.vm.network :private_network, ip: "10.0.1.185"
     #set some machine-specific options	
     postgresclient1_config.vm.provider "virtualbox" do |v|
          #change the amount of RAM 
