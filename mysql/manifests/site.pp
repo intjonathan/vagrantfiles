@@ -90,6 +90,12 @@ node 'mysqlserver1.local' {
     allow_recursion   => [''],
   }
 
+  #Install MySQL:
+  class { '::mysql::server':
+    root_password    => 'horsebatterystaple',
+    override_options => { 'mysqld' => { 'max_connections' => '1024' } }
+  }
+
 }
 
 node 'mysqlserver2.local' {
@@ -126,6 +132,12 @@ node 'mysqlserver2.local' {
     allow_query       => [ 'localnets' ],
   }
 
+  #Install MySQL:
+  class { '::mysql::server':
+    root_password    => 'horsebatterystaple',
+    override_options => { 'mysqld' => { 'max_connections' => '1024' } }
+  }
+
 }
 
 node 'mysqlslave1.local' {
@@ -157,6 +169,12 @@ node 'mysqlslave1.local' {
   #Just install the BIND package:
   include bind::package
 
+  #Install MySQL:
+  class { '::mysql::server':
+    root_password    => 'horsebatterystaple',
+    override_options => { 'mysqld' => { 'max_connections' => '1024' } }
+  }
+
 }
 
 node 'mysqlslave2.local' {
@@ -187,6 +205,12 @@ node 'mysqlslave2.local' {
   #BIND module is from: https://github.com/thias/puppet-bind
   #Just install the BIND package:
   include bind::package
+
+  #Install MySQL:
+  class { '::mysql::server':
+    root_password    => 'horsebatterystaple',
+    override_options => { 'mysqld' => { 'max_connections' => '1024' } }
+  }
 
 }
 
