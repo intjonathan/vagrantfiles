@@ -89,7 +89,7 @@ node 'dnsmaster1.local' {
     forwarders        => [ '8.8.8.8', '8.8.4.4' ],
     allow_query       => [ 'localhost', 'local' ],
     recursion         => 'no',
-    allow_recursion   => [ 'localhost', 'local'],
+    allow_recursion   => [ 'localhost', 'local', '10net'],
   }
 
 }
@@ -131,9 +131,9 @@ node 'dnsmaster2.local' {
     listen_on_addr    => [ '127.0.0.1' ],
     listen_on_v6_addr => [ '::1' ],
     forwarders        => [ '8.8.8.8', '8.8.4.4' ],
-    allow_query       => [ 'localhost', 'local' ],
+    allow_query       => [ 'localhost', 'local', '10net'],
     recursion         => 'no',
-    allow_recursion   => [ 'localhost', 'local'],
+    allow_recursion   => [ 'localhost', 'local', '10net'],
   }
 
 }
