@@ -81,6 +81,7 @@ node 'dnsmaster1.local' {
     acls => {
       'rfc1918' => [ '10/8', '172.16/12', '192.168/16' ],
       'local'   => [ '127.0.0.1' ],
+      '10net'   => [ '10.0.0.0/24', '10.0.1.0/24', '10.1.1.0/24', '10.1.0.0/24'],
     },
     directory => '/var/named',
     listen_on_addr    => [ '127.0.0.1' ],
@@ -88,7 +89,7 @@ node 'dnsmaster1.local' {
     forwarders        => [ '8.8.8.8', '8.8.4.4' ],
     allow_query       => [ 'localhost', 'local' ],
     recursion         => 'no',
-    allow_recursion   => ['local'],
+    allow_recursion   => [ 'localhost', 'local'],
   }
 
 }
@@ -124,6 +125,7 @@ node 'dnsmaster2.local' {
     acls => {
       'rfc1918' => [ '10/8', '172.16/12', '192.168/16' ],
       'local'   => [ '127.0.0.1' ],
+      '10net'   => [ '10.0.0.0/24', '10.0.1.0/24', '10.1.1.0/24', '10.1.0.0/24'],
     },
     directory => '/var/named',
     listen_on_addr    => [ '127.0.0.1' ],
@@ -131,7 +133,7 @@ node 'dnsmaster2.local' {
     forwarders        => [ '8.8.8.8', '8.8.4.4' ],
     allow_query       => [ 'localhost', 'local' ],
     recursion         => 'no',
-    allow_recursion   => ['local'],
+    allow_recursion   => [ 'localhost', 'local'],
   }
 
 }
