@@ -80,14 +80,15 @@ node 'dnsmaster1.local' {
   bind::server::conf { '/etc/named.conf':
     acls => {
       'rfc1918' => [ '10/8', '172.16/12', '192.168/16' ],
+      'local'   => [ '127.0.0.1' ],
     },
-    directory => '/etc/bind',
+    directory => '/var/named',
     listen_on_addr    => [ '127.0.0.1' ],
     listen_on_v6_addr => [ '::1' ],
     forwarders        => [ '8.8.8.8', '8.8.4.4' ],
     allow_query       => [ 'localhost' ],
     recursion         => 'no',
-    allow_recursion   => [''],
+    allow_recursion   => ['local'],
   }
 
 }
@@ -122,6 +123,7 @@ node 'dnsmaster2.local' {
   bind::server::conf { '/etc/named.conf':
     acls => {
       'rfc1918' => [ '10/8', '172.16/12', '192.168/16' ],
+      'local'   => [ '127.0.0.1' ],
     },
     directory => '/var/named',
     listen_on_addr    => [ '127.0.0.1' ],
@@ -129,7 +131,7 @@ node 'dnsmaster2.local' {
     forwarders        => [ '8.8.8.8', '8.8.4.4' ],
     allow_query       => [ 'localhost' ],
     recursion         => 'no',
-    allow_recursion   => [''],
+    allow_recursion   => ['local'],
   }
 
 }
