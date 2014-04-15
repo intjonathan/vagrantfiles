@@ -1,0 +1,96 @@
+Vagrant.configure("2") do |config|
+  # All Vagrant configuration is done here. The most common configuration
+  # options are documented and commented below. For a complete reference,
+  # please see the online documentation at vagrantup.com.
+  
+  ####################
+  # Snippets to use
+  ####################
+  
+  #NFS folder sharing
+  #config.vm.synced_folder "modules", "/etc/puppet/modules", :nfs => true
+  
+  ####################
+  ####################
+  
+  #vagrant-hostmanager plugin options
+  config.hostmanager.enabled = true
+  config.hostmanager.ignore_private_ip = false
+  #update the /etc/hosts of the host OS
+  config.hostmanager.manage_host = true
+  
+  #Puppet master and cobbler2ban machine
+  config.vm.define "cobblermaster".to_sym do |cobblermaster_config|
+    cobblermaster_config.vm.box = "ubuntu-13.10-server-amd64"
+    cobblermaster_config.vm.hostname = "cobblermaster.local"
+    cobblermaster_config.hostmanager.aliases = %w(master puppet master.local puppetboard.cobblermaster.local)
+    cobblermaster_config.vm.network :private_network, ip: "10.0.1.190"
+    #set some machine-specific options	
+    cobblermaster_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+    #NFS folder sharing for Puppet modules and manifests
+    cobblermaster_config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/modules", :nfs => true
+    cobblermaster_config.vm.synced_folder "manifests/", "/etc/puppet/manifests", :nfs => true
+    cobblermaster_config.vm.synced_folder "hieradata", "/etc/puppet/hieradata", :nfs => true
+    #Puppet master provisioning script
+    cobblermaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_master.sh"
+  end
+
+  #A cobbler server
+  config.vm.define "cobblerserver".to_sym do |cobblerserver_config|
+    cobblerserver_config.vm.box = "centos-6.5-amd64"
+    cobblerserver_config.vm.hostname = "cobblerserver.local"
+    cobblerserver_config.vm.network :private_network, ip: "10.0.1.191"
+    #set some machine-specific options	
+    cobblerserver_config.vm.provider "virtualbox" do |v|
+         #change the amount of RAM 
+          v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    #Puppet agent provisioning script
+	  cobblerserver_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
+  end
+
+  #A Cobbler client
+  config.vm.define "server1".to_sym do |server1_config|
+    server1_config.vm.box = "centos-6.5-amd64"
+    server1_config.vm.hostname = "server1.local"
+    server1_config.vm.network :private_network, ip: "10.0.1.192"
+    #set some machine-specific options	
+    server1_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    #Puppet agent provisioning script
+	  server1_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
+  end
+
+  #A Cobbler client
+  config.vm.define "server2".to_sym do |server2_config|
+    server2_config.vm.box = "centos-6.5-amd64"
+    server2_config.vm.hostname = "server2.local"
+    server2_config.vm.network :private_network, ip: "10.0.1.193"
+    #set some machine-specific options	
+    server2_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    #Puppet agent provisioning script
+    server2_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
+  end
+
+  #A Cobbler client
+  config.vm.define "server3".to_sym do |server3_config|
+    server3_config.vm.box = "ubuntu-13.10-server-amd64"
+    server3_config.vm.hostname = "server3.local"
+    server3_config.vm.network :private_network, ip: "10.0.1.194"
+    #set some machine-specific options	
+    server3_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    #Puppet agent provisioning script
+	  server3_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
+  end
+end
