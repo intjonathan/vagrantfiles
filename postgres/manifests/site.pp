@@ -90,6 +90,15 @@ node 'postgresserver1.local' {
     allow_recursion   => [''],
   }
 
+  #Install Postgres:
+  class { 'postgresql::server': }
+
+  #Create a Postgres DB, DB user and set the password:
+  postgresql::server::db { 'nick':
+    user     => 'nick',
+    password => postgresql_password('nick', 'password'),
+  }
+
 }
 
 node 'postgresserver2.local' {
@@ -124,6 +133,15 @@ node 'postgresserver2.local' {
     listen_on_v6_addr => [ 'any' ],
     forwarders        => [ '8.8.8.8', '8.8.4.4' ],
     allow_query       => [ 'localnets' ],
+  }
+
+  #Install Postgres:
+  class { 'postgresql::server': }
+
+  #Create a Postgres DB, DB user and set the password:
+  postgresql::server::db { 'nick':
+    user     => 'nick',
+    password => postgresql_password('nick', 'password'),
   }
 
 }
