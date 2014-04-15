@@ -1,0 +1,13 @@
+---
+#Our hierarcy
+:hierarchy:
+  - node/%{fqdn}
+  - operatingsystem/%{operatingsystem}
+  - osfamily/%{osfamily}
+  - common
+#List the backends we want to use
+:backends:
+ - yaml
+#For the YAML backend, specify the location of YAML data
+:yaml:
+  :datadir: '/etc/puppet/hieradata/yaml'
