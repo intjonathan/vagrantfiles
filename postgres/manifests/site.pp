@@ -175,6 +175,9 @@ node 'postgresslave1.local' {
   #Just install the BIND package:
   include bind::package
 
+  #Install Postgres:
+  class { 'postgresql::server': }
+
 }
 
 node 'postgresslave2.local' {
@@ -205,6 +208,9 @@ node 'postgresslave2.local' {
   #BIND module is from: https://github.com/thias/puppet-bind
   #Just install the BIND package:
   include bind::package
+
+  #Install Postgres:
+  class { 'postgresql::server': }
 
 }
 
