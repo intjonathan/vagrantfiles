@@ -90,7 +90,14 @@ node 'dnsmaster1.local' {
     allow_query       => [ 'localhost', 'local' ],
     recursion         => 'no',
     allow_recursion   => [ 'localhost', 'local', '10net'],
+    #Include some other zone files for localhost and loopback zones:
+    includes => ['/etc/bind/named.conf.local', '/etc/bind/named.conf.default-zones'],
     zones => {
+      #root hints zone
+      '.' => [
+        'type hint',
+        'file "/etc/bind/db.root"',
+      ], 
       'zone1.local' => [
         'type master',
         'file "zone1.local"',
@@ -171,8 +178,15 @@ node 'dnsmaster2.local' {
     allow_query       => [ 'localhost', 'local', '10net'],
     recursion         => 'no',
     allow_recursion   => [ 'localhost', 'local', '10net'],
+    #Include some other zone files for localhost and loopback zones:
+    includes => ['/etc/named.rfc1912.zones', '/etc/named.root.key'],
     zones => {
-            'zone1.local' => [
+      #root hints zone
+      '.' => [
+        'type hint',
+        'file "/etc/bind/db.root"',
+      ],
+    'zone1.local' => [
         'type master',
         'file "zone1.local"',
         'allow-query { any; }',
