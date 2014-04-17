@@ -169,6 +169,14 @@ node 'kibanathree.local' {
       </Directory>
     ',
   }
+  
+  #Create a folder where the SSL certificate and key will live:
+  file {'/etc/apache2/ssl': 
+    ensure => directory,
+    owner => 'root',
+    group => 'root',
+    mode => '600',
+  }
 
 }
 
