@@ -1,0 +1,68 @@
+Vagrant.configure("2") do |config|
+  # All Vagrant configuration is done here. The most common configuration
+  # options are documented and commented below. For a complete reference,
+  # please see the online documentation at vagrantup.com.
+  
+  ####################
+  # Snippets to use
+  ####################
+  
+  #NFS folder sharing
+  #config.vm.synced_folder "modules", "/etc/puppet/modules", :nfs => true
+  
+  ####################
+  ####################
+  
+  #vagrant-hostmanager plugin options
+  config.hostmanager.enabled = true
+  config.hostmanager.ignore_private_ip = false
+  #update the /etc/hosts of the host OS
+  config.hostmanager.manage_host = true
+  
+  #Puppet master
+  config.vm.define "openmanagemaster".to_sym do |openmanagemaster_config|
+    openmanagemaster_config.vm.box = "ubuntu-13.10-server-amd64"
+    openmanagemaster_config.vm.hostname = "openmanagemaster.local"
+    openmanagemaster_config.hostmanager.aliases = %w(puppet master.local puppetboard.openmanagemaster.local)
+    openmanagemaster_config.vm.network :private_network, ip: "10.0.1.70"
+    #set some machine-specific options	
+    openmanagemaster_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+    #NFS folder sharing for Puppet modules and manifests
+    config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/modules", :nfs => true
+    config.vm.synced_folder "manifests/", "/etc/puppet/manifests", :nfs => true
+    config.vm.synced_folder "hieradata", "/etc/puppet/hieradata", :nfs => true
+    #Puppet master provisioning script
+    openmanagemaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_master.sh"
+  end
+
+  #An Ubuntu VM to test OpenManage installations via Puppet
+  config.vm.define "openmanage1".to_sym do |openmanage1_config|
+    openmanage1_config.vm.box = "ubuntu-13.10-server-amd64"
+    openmanage1_config.vm.hostname = "openmanage1.local"
+    openmanage1_config.vm.network :private_network, ip: "10.0.1.71"
+    #set some machine-specific options	
+    openmanage1_config.vm.provider "virtualbox" do |v|
+         #change the amount of RAM 
+          v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    #Puppet agent provisioning script
+	  openmanage1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
+  end
+
+  #A CentOS VM to test OpenManage installations via Puppet
+  config.vm.define "openmanage2".to_sym do |openmanage2_config|
+    openmanage2_config.vm.box = "centos-6.5-amd64"
+    openmanage2_config.vm.hostname = "openmanage2.local"
+    openmanage2_config.vm.network :private_network, ip: "10.0.1.72"
+    #set some machine-specific options	
+    openmanage2_config.vm.provider "virtualbox" do |v|
+         #change the amount of RAM 
+          v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    #Puppet agent provisioning script
+	  openmanage2_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
+  end
+end
