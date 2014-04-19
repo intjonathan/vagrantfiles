@@ -11,8 +11,6 @@ node 'trustypuppetmaster.local' {
     listen_address => '0.0.0.0'
   }
 
-  include denyhosts
-
   include puppetdb::master::config
 
   #Apache modules for PuppetBoard:
@@ -51,8 +49,6 @@ node 'trustypuppetmaster.local' {
 }
 
 node 'trustypuppetagent.local' {
-
-  include denyhosts
 
   #This module is from: https://github.com/saz/puppet-ssh
   include ssh
