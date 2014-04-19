@@ -1,0 +1,54 @@
+Vagrant.configure("2") do |config|
+  # All Vagrant configuration is done here. The most common configuration
+  # options are documented and commented below. For a complete reference,
+  # please see the online documentation at vagrantup.com.
+  
+  ####################
+  # Snippets to use
+  ####################
+  
+  #NFS folder sharing
+  #config.vm.synced_folder "modules", "/etc/puppet/modules", :nfs => true
+  
+  ####################
+  ####################
+  
+  #vagrant-hostmanager plugin options
+  config.hostmanager.enabled = true
+  config.hostmanager.ignore_private_ip = false
+  #update the /etc/hosts of the host OS
+  config.hostmanager.manage_host = true
+  
+  #An Ubuntu 14.04 Trusty Puppet master machine
+  config.vm.define "trustypuppetmaster".to_sym do |trustypuppetmaster_config|
+    trustypuppetmaster_config.vm.box = "ubuntu-14.04-server-amd64"
+    trustypuppetmaster_config.vm.hostname = "trustypuppetmaster.local"
+    trustypuppetmaster_config.hostmanager.aliases = %w(master puppet master.local trustypuppetmaster.local puppetboard.trustypuppetmaster.local)
+    trustypuppetmaster_config.vm.network :private_network, ip: "10.0.1.70"
+    #set some machine-specific options	
+    trustypuppetmaster_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+    #NFS folder sharing for Puppet modules and manifests
+    config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/modules", :nfs => true
+    config.vm.synced_folder "manifests/", "/etc/puppet/manifests", :nfs => true
+    config.vm.synced_folder "hieradata", "/etc/puppet/hieradata", :nfs => true
+    #Puppet master provisioning script
+    trustypuppetmaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_trusty_puppet_master.sh"
+  end
+
+  #An Ubuntu 14.04 Trusty Puppet agent machine
+  config.vm.define "trustypuppetagent".to_sym do |trustypuppetagent_config|
+    trustypuppetagent_config.vm.box = "ubuntu-14.04-server-amd64"
+    trustypuppetagent_config.vm.hostname = "trustypuppetagent.local"
+    trustypuppetagent_config.vm.network :private_network, ip: "10.0.1.71"
+    #set some machine-specific options	
+    trustypuppetagent_config.vm.provider "virtualbox" do |v|
+         #change the amount of RAM 
+          v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    #Puppet agent provisioning script
+	  trustypuppetagent_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_trusty_puppet_agent.sh"
+  end
+end
