@@ -50,9 +50,13 @@ node 'failmaster.local' {
 
 node 'failclient1.local' {
 
+  class { 'fail2ban':
+    log_level => '3',
+  }
+
   #This module is from: https://github.com/saz/puppet-ssh
   include ssh
-
+  
   #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
     log_remote     => true,
