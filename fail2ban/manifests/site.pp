@@ -46,6 +46,20 @@ node 'failmaster.local' {
     disable_monitor => true,
   }
 
+  class { 'fail2ban':
+    log_level => '3',
+  }
+
+  fail2ban::jail { 'ssh':
+    enabled  => 'true',
+    port     => 'ssh',
+    filter   => 'sshd',
+    ignoreip => ['1270.0.0.1', '10.0.1.0/24'],
+    logpath  => '/var/log/audit/audit.log',
+    maxretry => '10',
+    bantime => '3600',
+  }
+
 }
 
 node 'failclient1.local' {
@@ -89,6 +103,20 @@ node 'failclient1.local' {
 
 node 'failclient2.local' {
 
+  class { 'fail2ban':
+    log_level => '3',
+  }
+
+  fail2ban::jail { 'ssh':
+    enabled  => 'true',
+    port     => 'ssh',
+    filter   => 'sshd',
+    ignoreip => ['1270.0.0.1', '10.0.1.0/24'],
+    logpath  => '/var/log/auth.log',
+    maxretry => '10',
+    bantime => '3600',
+  }
+
   #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
@@ -113,6 +141,20 @@ node 'failclient2.local' {
 
 node 'failclient3.local' {
 
+  class { 'fail2ban':
+    log_level => '3',
+  }
+
+  fail2ban::jail { 'ssh':
+    enabled  => 'true',
+    port     => 'ssh',
+    filter   => 'sshd',
+    ignoreip => ['1270.0.0.1', '10.0.1.0/24'],
+    logpath  => '/var/log/audit/audit.log',
+    maxretry => '10',
+    bantime => '3600',
+  }
+
   #This module is from: https://github.com/saz/puppet-ssh
   include ssh
 
@@ -136,6 +178,20 @@ node 'failclient3.local' {
 }
 
 node 'failclient4.local' {
+
+  class { 'fail2ban':
+    log_level => '3',
+  }
+
+  fail2ban::jail { 'ssh':
+    enabled  => 'true',
+    port     => 'ssh',
+    filter   => 'sshd',
+    ignoreip => ['1270.0.0.1', '10.0.1.0/24'],
+    logpath  => '/var/log/auth.log',
+    maxretry => '10',
+    bantime => '3600',
+  }
 
   #This module is from: https://github.com/saz/puppet-ssh
   include ssh
