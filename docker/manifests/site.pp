@@ -55,7 +55,12 @@ node 'docker1.local' {
     disable_monitor => true,
   }
 
+  #Install Docker:
   include '::docker'
+  
+  #Grab the base Ubuntu and CentOS Docker images:
+  docker::image { 'ubuntu': }
+  docker::image { 'centos': }
   
   #Install Apache and some Apache modules so that we can use it as a proxy front-end for sites
   #hosted in Docker containers:
@@ -78,9 +83,7 @@ node 'docker2.local' {
     restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
     disable_monitor => true,
   }
-
-  include '::docker'
-
+  
   #Install Apache and some Apache modules so that we can use it as a proxy front-end for sites
   #hosted in Docker containers:
   class{ '::apache':}
