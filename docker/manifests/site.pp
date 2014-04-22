@@ -113,9 +113,12 @@ node 'docker3.local' {
     disable_monitor => true,
   }
 
+  #Install Docker:
   include '::docker'
-
-  include '::docker'
+  
+  #Grab the base Ubuntu and CentOS Docker images:
+  docker::image { 'ubuntu': }
+  docker::image { 'centos': }
 
   #Install Apache and some Apache modules so that we can use it as a proxy front-end for sites
   #hosted in Docker containers:
