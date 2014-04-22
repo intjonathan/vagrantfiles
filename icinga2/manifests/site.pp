@@ -76,7 +76,14 @@ node 'ubuntuicinga2.local' {
     disable_monitor => true,
   }
 
+  #Install Postgres for use as a database with Icinga 2...
   class { 'postgresql::server': }
+
+  #...and install MySQL as well:
+  class { '::mysql::server':
+    root_password    => 'horsebatterystaple',
+    override_options => { 'mysqld' => { 'max_connections' => '1024' } }
+  }
 
 #  postgresql::server::db { 'icinga2':
 #    user     => 'icinga2idoutils',
