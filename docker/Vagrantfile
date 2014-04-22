@@ -77,6 +77,7 @@ Vagrant.configure("2") do |config|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "2048"]
     end
+    docker3_config.vm.synced_folder "/Users/nick/virtual_machines/dockerfiles", "/dockerfiles", :nfs => true
     docker3_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
   end
 end
