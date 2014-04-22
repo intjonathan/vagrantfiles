@@ -60,6 +60,10 @@
     alias          => 'SSH servers',
   }
 
+#######################################
+# Server monitoring snippets
+#######################################
+
 #Define this command first so that any other services can use it as part of their check commands:
   nagios_command { 'check_nrpe':
     command_name => 'check_nrpe',
@@ -174,3 +178,16 @@
     service_description => 'Zombie procs',
     check_command => 'check_nrpe!check_zombie_procs',
   }
+
+
+
+
+
+#######################################
+# Client monitoring snippets
+#######################################
+
+
+
+
+
