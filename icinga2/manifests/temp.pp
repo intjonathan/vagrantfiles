@@ -183,7 +183,67 @@
 # Icinga client monitoring snippets
 #######################################
 
+ #Install some stuff to monitor like...
+  
+  #...Apache:
+  class{ 'apache': } 
+  apache::mod { 'ssl': } #Install/enable the SSL module
+  
+  #...and MySQL:
+  class { '::mysql::server':
+    root_password    => 'horsebatterystaple',
+    override_options => { 'mysqld' => { 'max_connections' => '1024' } }
+  }
 
+ @@nagios_host { $::fqdn:
+    address => $::ipaddress_eth1,
+    check_command => 'check_ping!100.0,20%!500.0,60%',
+    use => 'generic-host',
+    hostgroups => ['ssh_servers'],
+    target => "/etc/icinga/objects/hosts/host_${::fqdn}.cfg",
+  }
 
+  class { 'icinga::client':
+    nrpe_allowed_hosts => ['10.0.1.79', '127.0.0.1'],
+  }
 
+#Some basic box health stuff
+  icinga::client::command { 'check_users':
+    nrpe_plugin_name => 'check_users',
+    nrpe_plugin_args => '-w 5 -c 10',
+  }
+  
+  #check_load
+  icinga::client::command { 'check_load':
+    nrpe_plugin_name => 'check_load',
+    nrpe_plugin_args => '-w 50,40,30 -c 60,50,40',
+  }
+  
+  #check_disk
+  icinga::client::command { 'check_disk':
+    nrpe_plugin_name => 'check_disk',
+    nrpe_plugin_args => '-w 20% -c 10% -p /',
+  }
 
+  #check_total_procs  
+  icinga::client::command { 'check_total_procs':
+    nrpe_plugin_name => 'check_procs',
+    nrpe_plugin_args => '-w 1000 -c 1500',
+  }
+ 
+  #check_zombie_procs
+  icinga::client::command { 'check_zombie_procs':
+    nrpe_plugin_name => 'check_procs',
+    nrpe_plugin_args => '-w 5 -c 10 -s Z',
+  }
+  
+  icinga::client::command { 'check_ntp_time':
+    nrpe_plugin_name => 'check_ntp_time',
+    nrpe_plugin_args => '-H 127.0.0.1',
+  }
+  
+  #Create an NRPE command to monitor MySQL:
+  icinga::client::command { 'check_mysql_service':
+    nrpe_plugin_name => 'check_mysql',
+    nrpe_plugin_args => '-H 127.0.0.1 -u root -p horsebatterystaple',
+  }
