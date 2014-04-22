@@ -81,6 +81,14 @@ node 'docker2.local' {
 
   include '::docker'
 
+  #Install Apache and some Apache modules so that we can use it as a proxy front-end for sites
+  #hosted in Docker containers:
+  class{ '::apache':}
+  ::apache::mod { 'ssl': } #Install/enable the SSL module
+  ::apache::mod { 'proxy': } #Install/enable the proxy module
+  ::apache::mod { 'proxy_http': } #Install/enable the HTTP proxy module
+  ::apache::mod { 'rewrite': } #Install/enable the rewrite module
+
 }
 
 #Ubuntu Docker machine
