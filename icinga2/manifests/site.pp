@@ -78,10 +78,10 @@ node 'ubuntuicinga2.local' {
 
   class { 'postgresql::server': }
 
-  postgresql::server::db { 'icinga2':
-    user     => 'icinga2idoutils',
-    password => postgresql_password('icinga2idoutils', 'password'),
-  }
+#  postgresql::server::db { 'icinga2':
+#    user     => 'icinga2idoutils',
+#    password => postgresql_password('icinga2idoutils', 'password'),
+#  }
 
 }
 
