@@ -115,6 +115,15 @@ node 'centosicinga2.local' {
     disable_monitor => true,
   }
 
+  #Install Postgres for use as a database with Icinga 2...
+  class { 'postgresql::server': }
+
+  #...and install MySQL as well:
+  class { '::mysql::server':
+    root_password    => 'horsebatterystaple',
+    override_options => { 'mysqld' => { 'max_connections' => '1024' } }
+  }
+
 }
 
 node 'icinga2client1.local' {
