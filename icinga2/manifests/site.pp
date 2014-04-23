@@ -85,10 +85,10 @@ node 'ubuntuicinga2.local' {
     override_options => { 'mysqld' => { 'max_connections' => '1024' } }
   }
 
-  #Add the Icinga 2 apt repo for Ubuntu Saucy Salamander:
-  apt::source { 'icinga2_ubuntu_saucy_apt':
+  #Add the Icinga 2 snapshots apt repo for Ubuntu Saucy Salamander:
+  apt::source { 'icinga2_ubuntu_saucy_snapshots_apt':
     location          => 'http://packages.icinga.org/ubuntu',
-    release           => 'icinga-saucy',
+    release           => 'icinga-saucy-snapshots',
     repos             => 'main',
     required_packages => 'debian-keyring debian-archive-keyring',
     key               => '34410682',
