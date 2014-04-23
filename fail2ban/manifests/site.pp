@@ -60,6 +60,23 @@ node 'failmaster.local' {
     bantime => '3600',
   }
 
+  fail2ban::filter {'sshdtesting':
+    daemon => 'sshd',
+    failregex => '
+      ^%(__prefix_line)s(?:error: PAM: )?[aA]uthentication (?:failure|error) for .* from <HOST>( via \S+)?\s*$
+      ^%(__prefix_line)s(?:error: PAM: )?User not known to the underlying authentication module for .* from <HOST>\s*$
+      ^%(__prefix_line)sFailed \S+ for .*? from <HOST>(?: port \d*)?(?: ssh\d*)?(: (ruser .*|(\S+ ID \S+ \(serial \d+\) CA )?\S+ %(__md5hex)s(, client user ".*", client host >
+      ^%(__prefix_line)sROOT LOGIN REFUSED.* FROM <HOST>\s*$
+      ^%(__prefix_line)s[iI](?:llegal|nvalid) user .* from <HOST>\s*$
+      ^%(__prefix_line)sUser .+ from <HOST> not allowed because not listed in AllowUsers\s*$
+      ^%(__prefix_line)sUser .+ from <HOST> not allowed because listed in DenyUsers\s*$
+      ^%(__prefix_line)sUser .+ from <HOST> not allowed because not in any group\s*$
+      ^%(__prefix_line)srefused connect from \S+ \(<HOST>\)\s*$
+      ^%(__prefix_line)sUser .+ from <HOST> not allowed because a group is listed in DenyGroups\s*$
+      ^%(__prefix_line)sUser .+ from <HOST> not allowed because none of user\'s groups are listed in AllowGroups\s*$    
+    ',
+  }
+
   #Install Postfix locally so that Fail2Ban can send out emails
   class { '::postfix::server':
     inet_interfaces => 'localhost', #Only listen on localhost
