@@ -113,10 +113,6 @@ node 'failclient1.local' {
     mydomain       => 'local',
   }
 
-  class { 'fail2ban':
-    log_level => '3',
-  }
-
 }
 
 node 'failclient2.local' {
@@ -161,10 +157,6 @@ node 'failclient2.local' {
     inet_interfaces => 'localhost', #Only listen on localhost
     inet_protocols => 'all', #Use both IPv4 and IPv6
     mydomain       => 'local',
-  }
-
-  class { 'fail2ban':
-    log_level => '3',
   }
 
 }
