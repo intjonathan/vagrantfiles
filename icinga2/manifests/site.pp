@@ -85,6 +85,17 @@ node 'ubuntuicinga2.local' {
     override_options => { 'mysqld' => { 'max_connections' => '1024' } }
   }
 
+  #Add the apt repo:
+  apt::source { 'icinga2_ubuntu_saucy_apt':
+    location          => 'http://packages.icinga.org/ubuntu',
+    release           => 'icinga-saucy',
+    repos             => 'main',
+    required_packages => 'debian-keyring debian-archive-keyring',
+    key_source        => 'http://packages.icinga.org/icinga.key',
+    pin               => '-10',
+    include_src       => true
+  }
+
 #  postgresql::server::db { 'icinga2':
 #    user     => 'icinga2idoutils',
 #    password => postgresql_password('icinga2idoutils', 'password'),
