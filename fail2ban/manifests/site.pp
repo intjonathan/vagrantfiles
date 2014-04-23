@@ -163,6 +163,10 @@ node 'failclient2.local' {
     mydomain       => 'local',
   }
 
+  class { 'fail2ban':
+    log_level => '3',
+  }
+
 }
 
 node 'failclient3.local' {
