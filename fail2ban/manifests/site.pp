@@ -106,6 +106,13 @@ node 'failclient1.local' {
     disable_monitor => true,
   }
 
+  #Install Postfix locally so that Fail2Ban can send out emails
+  class { '::postfix::server':
+    inet_interfaces => 'localhost', #Only listen on localhost
+    inet_protocols => 'all', #Use both IPv4 and IPv6
+    mydomain       => 'local',
+  }
+
 }
 
 node 'failclient2.local' {
