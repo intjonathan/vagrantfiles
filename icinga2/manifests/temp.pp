@@ -186,8 +186,11 @@
  #Install some stuff to monitor like...
   
   #...Apache:
-  class{ 'apache': } 
-  apache::mod { 'ssl': } #Install/enable the SSL module
+  class{ '::apache':}
+  ::apache::mod { 'ssl': } #Install/enable the SSL module
+  ::apache::mod { 'proxy': } #Install/enable the proxy module
+  ::apache::mod { 'proxy_http': } #Install/enable the HTTP proxy module
+  ::apache::mod { 'rewrite': } #Install/enable the rewrite module
   
   #...and MySQL:
   class { '::mysql::server':
