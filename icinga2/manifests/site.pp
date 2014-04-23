@@ -85,12 +85,13 @@ node 'ubuntuicinga2.local' {
     override_options => { 'mysqld' => { 'max_connections' => '1024' } }
   }
 
-  #Add the apt repo:
+  #Add the Icinga 2 apt repo for Ubuntu Saucy Salamander:
   apt::source { 'icinga2_ubuntu_saucy_apt':
     location          => 'http://packages.icinga.org/ubuntu',
     release           => 'icinga-saucy',
     repos             => 'main',
     required_packages => 'debian-keyring debian-archive-keyring',
+    key               => '34410682',
     key_source        => 'http://packages.icinga.org/icinga.key',
     pin               => '-10',
     include_src       => true
@@ -163,8 +164,11 @@ node 'icinga2client1.local' {
   #Install some stuff to monitor like...
   
   #...Apache:
-  class{ 'apache': } 
-  apache::mod { 'ssl': } #Install/enable the SSL module
+  class{ '::apache':}
+  ::apache::mod { 'ssl': } #Install/enable the SSL module
+  ::apache::mod { 'proxy': } #Install/enable the proxy module
+  ::apache::mod { 'proxy_http': } #Install/enable the HTTP proxy module
+  ::apache::mod { 'rewrite': } #Install/enable the rewrite module
   
   #...and MySQL:
   class { '::mysql::server':
@@ -253,8 +257,11 @@ node 'icinga2client2.local' {
   #Install some stuff to monitor like...
   
   #...Apache:
-  class{ 'apache': } 
-  apache::mod { 'ssl': } #Install/enable the SSL module
+  class{ '::apache':}
+  ::apache::mod { 'ssl': } #Install/enable the SSL module
+  ::apache::mod { 'proxy': } #Install/enable the proxy module
+  ::apache::mod { 'proxy_http': } #Install/enable the HTTP proxy module
+  ::apache::mod { 'rewrite': } #Install/enable the rewrite module
   
   #...and MySQL:
   class { '::mysql::server':
@@ -341,8 +348,11 @@ node 'icinga2client3.local' {
   }
 
   #...Apache:
-  class{ 'apache': } 
-  apache::mod { 'ssl': } #Install/enable the SSL module
+  class{ '::apache':}
+  ::apache::mod { 'ssl': } #Install/enable the SSL module
+  ::apache::mod { 'proxy': } #Install/enable the proxy module
+  ::apache::mod { 'proxy_http': } #Install/enable the HTTP proxy module
+  ::apache::mod { 'rewrite': } #Install/enable the rewrite module
   
   #...and MySQL:
   class { '::mysql::server':
@@ -429,8 +439,11 @@ node 'icinga2client4.local' {
   }
   
   #...Apache:
-  class{ 'apache': } 
-  apache::mod { 'ssl': } #Install/enable the SSL module
+  class{ '::apache':}
+  ::apache::mod { 'ssl': } #Install/enable the SSL module
+  ::apache::mod { 'proxy': } #Install/enable the proxy module
+  ::apache::mod { 'proxy_http': } #Install/enable the HTTP proxy module
+  ::apache::mod { 'rewrite': } #Install/enable the rewrite module
   
   #...and MySQL:
   class { '::mysql::server':
