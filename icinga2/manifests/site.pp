@@ -93,14 +93,13 @@ node 'ubuntuicinga2.local' {
     required_packages => 'debian-keyring debian-archive-keyring',
     key               => '34410682',
     key_source        => 'http://packages.icinga.org/icinga.key',
-    pin               => '-10',
     include_src       => true
   }
 
-#  postgresql::server::db { 'icinga2':
-#    user     => 'icinga2idoutils',
-#    password => postgresql_password('icinga2idoutils', 'password'),
-#  }
+  postgresql::server::db { 'icinga2_data':
+    user     => 'icinga2',
+    password => postgresql_password('icinga2', 'password'),
+  }
 
 }
 
