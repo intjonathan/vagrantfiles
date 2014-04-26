@@ -91,7 +91,7 @@ node 'consul2.local' {
 }
 
 
-node 'ubuntuconsul2.local' {
+node 'consul3.local' {
 
   #This module is from: https://github.com/saz/puppet-ssh
   include ssh
