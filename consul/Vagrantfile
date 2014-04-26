@@ -1,0 +1,128 @@
+Vagrant.configure("2") do |config|
+  # All Vagrant configuration is done here. The most common configuration
+  # options are documented and commented below. For a complete reference,
+  # please see the online documentation at vagrantup.com.
+
+  ####################
+  # Snippets to use
+  ####################
+
+  config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/modules"
+  config.vm.synced_folder "manifests/", "/etc/puppet/manifests"
+  config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/hieradata", "/etc/puppet/hieradata"
+
+  ####################
+  ####################
+  #vagrant-hostmanager plugin options
+  config.hostmanager.enabled = true
+  config.hostmanager.ignore_private_ip = false
+  #update the /etc/hosts of the host OS
+  config.hostmanager.manage_host = true
+  #incorporate offline box's IPs into the /etc/hosts of boxes that are up/being brought up
+  config.hostmanager.include_offline = true
+
+  #Ubuntu Puppet master
+  config.vm.define "consulmaster".to_sym do |consulmaster_config|
+    consulmaster_config.vm.box = "ubuntu-13.10-server-amd64"
+    consulmaster_config.vm.hostname = "consulmaster.local"
+    consulmaster_config.hostmanager.enabled = true
+    consulmaster_config.hostmanager.aliases = %w(consulmaster consulmaster.local puppet puppet.local consulpuppetboard.puppet.local consulpuppetdb.puppet.local)
+    consulmaster_config.vm.network :private_network, ip: "10.0.1.150"
+    #set some machine-specific options	
+    consulmaster_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+    consulmaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_1310_puppetfmaster_master_script.sh"
+  end
+
+  #Ubuntu Consul agent VM
+  config.vm.define "ubuntuconsul1".to_sym do |ubuntuconsul1_config|
+    ubuntuconsul1_config.vm.box = "ubuntu-13.10-server-amd64"
+    ubuntuconsul1_config.vm.hostname = "ubuntuconsul1.local"
+    ubuntuconsul1_config.hostmanager.enabled = true
+    ubuntuconsul1_config.hostmanager.aliases = %w(ubuntuconsul1 ubuntuconsul1.local)
+    ubuntuconsul1_config.vm.network :private_network, ip: "10.0.1.151"
+    #set some machine-specific options	
+    ubuntuconsul1_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+    ubuntuconsul1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
+  end
+
+  #CentOS Consul agent VM
+  config.vm.define "centosconsul1".to_sym do |centosconsul1_config|
+    centosconsul1_config.vm.box = "centos-6.5-amd64"
+    centosconsul1_config.vm.hostname = "centosconsul1.local"
+    centosconsul1_config.hostmanager.enabled = true
+    centosconsul1_config.hostmanager.aliases = %w(centosconsul1 centosconsul1.local)
+    centosconsul1_config.vm.network :private_network, ip: "10.0.1.152"
+    #set some machine-specific options	
+    centosconsul1_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+    centosconsul1_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
+  end
+
+  #Ubuntu Consul agent VM
+  config.vm.define "ubuntuconsul2".to_sym do |ubuntuconsul2_config|
+    ubuntuconsul2_config.vm.box = "ubuntu-13.10-server-amd64"
+    ubuntuconsul2_config.vm.hostname = "ubuntuconsul2.local"
+    ubuntuconsul2_config.hostmanager.enabled = true
+    ubuntuconsul2_config.hostmanager.aliases = %w(ubuntuconsul2 ubuntuconsul2.local)
+    ubuntuconsul2_config.vm.network :private_network, ip: "10.0.1.153"
+    #set some machine-specific options	
+    ubuntuconsul2_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+    ubuntuconsul2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
+  end
+
+  #CentOS Consul agent VM
+  config.vm.define "centosconsul2".to_sym do |centosconsul2_config|
+    centosconsul2_config.vm.box = "centos-6.5-amd64"
+    centosconsul2_config.vm.hostname = "centosconsul2.local"
+    centosconsul2_config.hostmanager.enabled = true
+    centosconsul2_config.hostmanager.aliases = %w(centosconsul2 centosconsul2.local)
+    centosconsul2_config.vm.network :private_network, ip: "10.0.1.154"
+    #set some machine-specific options	
+    centosconsul2_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+    centosconsul2_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
+  end
+
+  #Ubuntu Consul agent VM
+  config.vm.define "ubuntuconsul3".to_sym do |ubuntuconsul3_config|
+    ubuntuconsul3_config.vm.box = "ubuntu-13.10-server-amd64"
+    ubuntuconsul3_config.vm.hostname = "ubuntuconsul3.local"
+    ubuntuconsul3_config.hostmanager.enabled = true
+    ubuntuconsul3_config.hostmanager.aliases = %w(ubuntuconsul3 ubuntuconsul3.local)
+    ubuntuconsul3_config.vm.network :private_network, ip: "10.0.1.155"
+    #set some machine-specific options	
+    ubuntuconsul3_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+    ubuntuconsul3_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
+  end
+
+  #CentOS Consul agent VM
+  config.vm.define "centosconsul3".to_sym do |centosconsul3_config|
+    centosconsul3_config.vm.box = "centos-6.5-amd64"
+    centosconsul3_config.vm.hostname = "centosconsul3.local"
+    centosconsul3_config.hostmanager.enabled = true
+    centosconsul3_config.hostmanager.aliases = %w(centosconsul3 centosconsul3.local)
+    centosconsul3_config.vm.network :private_network, ip: "10.0.1.156"
+    #set some machine-specific options	
+    centosconsul3_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+    centosconsul3_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
+  end
+end
