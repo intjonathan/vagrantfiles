@@ -90,6 +90,9 @@ node 'graphite1.local' {
 #CentOS Graphite server
 node 'graphite2.local' {
 
+  #This module is from: https://github.com/saz/puppet-ssh
+  include ssh
+
   #Install Postgres:
   class { 'postgresql::server': }
 
