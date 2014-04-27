@@ -1,7 +1,7 @@
 #vagrantfiles
 ------------ 
 
-A repository for tracking just the `Vagrantfile`s in Vagrant projects.
+A repository for tracking just the `Vagrantfile`s in Vagrant projects. Vagrant projects are organized into topic directories.
 
 ###Special `.gitignore` file
 
