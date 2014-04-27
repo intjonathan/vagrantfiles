@@ -30,7 +30,10 @@ node 'graphitemaster.local' {
     vhost_name => "puppetboard.${fqdn}",
     port => 80,
   }
-  
+
+  #This module is from: https://github.com/saz/puppet-ssh
+  include ssh
+
   #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::server':
     enable_tcp => true,
