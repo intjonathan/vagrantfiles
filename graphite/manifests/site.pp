@@ -122,6 +122,13 @@ node 'graphite2.local' {
     port           => '514',
   }
 
+  #This module is: https://github.com/puppetlabs/puppetlabs-ntp
+  class { '::ntp':
+    servers  => [ '0.centos.pool.node.org', '1.centos.pool.node.org', '2.centos.pool.node.org', '3.centos.pool.node.org' ],
+    restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
+    disable_monitor => true,
+  }
+
   #Install Postgres:
   class { 'postgresql::server': }
 
