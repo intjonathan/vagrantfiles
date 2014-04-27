@@ -53,6 +53,9 @@ node 'graphite1.local' {
 
   #include apache
 
+  #This module is from: https://github.com/saz/puppet-ssh
+  include ssh
+
   #Install Postgres:
   class { 'postgresql::server': }
 
@@ -81,7 +84,7 @@ node 'graphite1.local' {
     #This is a salted hash for 'password' with '54321' as the salt; PBKDF2 with SHA256 is the algorithm:
     django_admin_password => 'pbkdf2_sha256$12000$54321$RAkQjc8YAPaOl8OL21l7R2K/cgLeBcJTPNQss1oJpVk=',
   }
-  
+
 }
 
 #CentOS Graphite server
