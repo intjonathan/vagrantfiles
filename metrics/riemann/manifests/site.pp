@@ -209,5 +209,3 @@ node 'riemann2.local' {
   }
 
 }
-
-}
