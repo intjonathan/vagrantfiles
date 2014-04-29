@@ -38,7 +38,7 @@ Vagrant.configure("2") do |config|
     influxdbmaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_master.sh"
   end
 
-  #A machine running Grafana
+  #A machine running InfluxDB
   config.vm.define "influxdb1".to_sym do |influxdb1_config|
     influxdb1_config.vm.box = "ubuntu-13.10-server-amd64"
     influxdb1_config.vm.hostname = "influxdb1.local"
@@ -52,7 +52,7 @@ Vagrant.configure("2") do |config|
 	  influxdb1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
   end
 
-  #A machine running Grafana
+  #A machine running InfluxDB
   config.vm.define "influxdb2".to_sym do |influxdb2_config|
     influxdb2_config.vm.box = "ubuntu-13.10-server-amd64"
     influxdb2_config.vm.hostname = "influxdb2.local"
@@ -66,7 +66,7 @@ Vagrant.configure("2") do |config|
     influxdb2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
   end
 
-  #A machine running Grafana
+  #A machine running InfluxDB
   config.vm.define "influxdb3".to_sym do |influxdb3_config|
     influxdb3_config.vm.box = "centos-6.5-amd64"
     influxdb3_config.vm.hostname = "influxdb3.local"
@@ -80,7 +80,7 @@ Vagrant.configure("2") do |config|
 	  influxdb3_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
   end
 
-  #A machine running Grafana
+  #A machine running InfluxDB
   config.vm.define "influxdb4".to_sym do |influxdb4_config|
     influxdb4_config.vm.box = "centos-6.5-amd64"
     influxdb4_config.vm.hostname = "influxdb4.local"
