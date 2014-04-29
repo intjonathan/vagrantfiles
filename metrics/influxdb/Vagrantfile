@@ -19,7 +19,7 @@ Vagrant.configure("2") do |config|
   #update the /etc/hosts of the host OS
   config.hostmanager.manage_host = true
   
-  #Puppet master and fail2ban machine
+  #Puppet master
   config.vm.define "influxdbmaster".to_sym do |influxdbmaster_config|
     influxdbmaster_config.vm.box = "ubuntu-13.10-server-amd64"
     influxdbmaster_config.vm.hostname = "influxdbmaster.local"
