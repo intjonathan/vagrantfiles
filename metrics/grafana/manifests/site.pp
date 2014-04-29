@@ -147,6 +147,14 @@ node 'grafana1.local' {
     mydomain       => 'local',
   }
 
+  #Install Apache:
+  class{ '::apache':}
+  
+  #::apache::mod { 'ssl': } #Install/enable the SSL module
+  ::apache::mod { 'proxy': } #Install/enable the proxy module
+  ::apache::mod { 'proxy_http': } #Install/enable the HTTP proxy module
+  ::apache::mod { 'rewrite': } #Install/enable the rewrite module
+
 }
 
 node 'grafana2.local' {
@@ -209,5 +217,12 @@ node 'grafana2.local' {
     inet_protocols => 'all', #Use both IPv4 and IPv6
     mydomain       => 'local',
   }
+
+  #Install Apache:
+  class{ '::apache':}
+  
+  #::apache::mod { 'ssl': } #Install/enable the SSL module
+  ::apache::mod { 'proxy': } #Install/enable the proxy module
+  ::apache::mod { 'proxy_http': } #Install/enable the HTTP proxy module
 
 }
