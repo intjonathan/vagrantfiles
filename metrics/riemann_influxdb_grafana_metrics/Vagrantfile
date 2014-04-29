@@ -24,7 +24,7 @@ Vagrant.configure("2") do |config|
     newmetricmaster_config.vm.box = "ubuntu-13.10-server-amd64"
     newmetricmaster_config.vm.hostname = "newmetricmaster.local"
     newmetricmaster_config.hostmanager.aliases = %w(master puppet master.local puppetboard.newmetricmaster.local)
-    newmetricmaster_config.vm.network :private_network, ip: "10.0.1.70"
+    newmetricmaster_config.vm.network :private_network, ip: "10.0.1.200"
     #set some machine-specific options	
     newmetricmaster_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
@@ -37,12 +37,12 @@ Vagrant.configure("2") do |config|
     #Puppet master provisioning script
     newmetricmaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_master.sh"
   end
-  
+
   #A machine running Riemann
   config.vm.define "riemann".to_sym do |riemann_config|
     riemann_config.vm.box = "ubuntu-13.10-server-amd64"
     riemann_config.vm.hostname = "riemann.local"
-    riemann_config.vm.network :private_network, ip: "10.0.1.71"
+    riemann_config.vm.network :private_network, ip: "10.0.1.201"
     #set some machine-specific options	
     riemann_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
@@ -52,11 +52,25 @@ Vagrant.configure("2") do |config|
 	  riemann_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
   end
 
+  #A machine running InfluxDB
+  config.vm.define "influxdb".to_sym do |influxdb_config|
+    influxdb_config.vm.box = "ubuntu-13.10-server-amd64"
+    influxdb_config.vm.hostname = "influxdb.local"
+    influxdb_config.vm.network :private_network, ip: "10.0.1.202"
+    #set some machine-specific options	
+    influxdb_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    #Puppet agent provisioning script
+	  influxdb_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
+  end
+
   #A machine running Grafana
   config.vm.define "grafana".to_sym do |grafana_config|
     grafana_config.vm.box = "ubuntu-13.10-server-amd64"
     grafana_config.vm.hostname = "grafana.local"
-    grafana_config.vm.network :private_network, ip: "10.0.1.71"
+    grafana_config.vm.network :private_network, ip: "10.0.1.203"
     #set some machine-specific options	
     grafana_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
