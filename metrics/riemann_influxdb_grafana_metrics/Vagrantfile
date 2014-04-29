@@ -52,4 +52,18 @@ Vagrant.configure("2") do |config|
 	  riemann_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
   end
 
+  #A machine running Grafana
+  config.vm.define "grafana".to_sym do |grafana_config|
+    grafana_config.vm.box = "ubuntu-13.10-server-amd64"
+    grafana_config.vm.hostname = "grafana.local"
+    grafana_config.vm.network :private_network, ip: "10.0.1.71"
+    #set some machine-specific options	
+    grafana_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    #Puppet agent provisioning script
+	  grafana_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
+  end
+
 end
