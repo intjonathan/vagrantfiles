@@ -52,4 +52,18 @@ Vagrant.configure("2") do |config|
 	  influxdb1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
   end
 
+  #A machine running Grafana
+  config.vm.define "influxdb2".to_sym do |influxdb2_config|
+    influxdb2_config.vm.box = "ubuntu-13.10-server-amd64"
+    influxdb2_config.vm.hostname = "influxdb2.local"
+    influxdb2_config.vm.network :private_network, ip: "10.0.1.71"
+    #set some machine-specific options	
+    influxdb2_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    #Puppet agent provisioning script
+    influxdb2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
+  end
+
 end
