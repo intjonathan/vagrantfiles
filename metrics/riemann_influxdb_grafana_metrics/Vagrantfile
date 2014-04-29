@@ -19,7 +19,7 @@ Vagrant.configure("2") do |config|
   #update the /etc/hosts of the host OS
   config.hostmanager.manage_host = true
   
-  #Puppet master and fail2ban machine
+  #Puppet master
   config.vm.define "newmetricmaster".to_sym do |newmetricmaster_config|
     newmetricmaster_config.vm.box = "ubuntu-13.10-server-amd64"
     newmetricmaster_config.vm.hostname = "newmetricmaster.local"
