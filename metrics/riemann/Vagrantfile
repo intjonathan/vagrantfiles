@@ -37,4 +37,19 @@ Vagrant.configure("2") do |config|
     #Puppet master provisioning script
     riemannmaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_master.sh"
   end
+
+  #A machine running Riemann
+  config.vm.define "riemann1".to_sym do |riemann1_config|
+    riemann1_config.vm.box = "ubuntu-13.10-server-amd64"
+    riemann1_config.vm.hostname = "riemann1.local"
+    riemann1_config.vm.network :private_network, ip: "10.0.1.71"
+    #set some machine-specific options	
+    riemann1_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    #Puppet agent provisioning script
+	  riemann1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
+  end
+
 end
