@@ -1,0 +1,4 @@
+---
+blahmessage : 'ubuntu'
+allowed_hosts:
+  - 10.0.1.70
