@@ -24,7 +24,7 @@ Vagrant.configure("2") do |config|
     riemannmaster_config.vm.box = "ubuntu-13.10-server-amd64"
     riemannmaster_config.vm.hostname = "riemannmaster.local"
     riemannmaster_config.hostmanager.aliases = %w(master puppet master.local puppetboard.riemannmaster.local)
-    riemannmaster_config.vm.network :private_network, ip: "10.0.1.70"
+    riemannmaster_config.vm.network :private_network, ip: "10.0.1.190"
     #set some machine-specific options	
     riemannmaster_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
@@ -42,7 +42,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "riemann1".to_sym do |riemann1_config|
     riemann1_config.vm.box = "ubuntu-13.10-server-amd64"
     riemann1_config.vm.hostname = "riemann1.local"
-    riemann1_config.vm.network :private_network, ip: "10.0.1.71"
+    riemann1_config.vm.network :private_network, ip: "10.0.1.191"
     #set some machine-specific options	
     riemann1_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
@@ -56,7 +56,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "riemann2".to_sym do |riemann2_config|
     riemann2_config.vm.box = "centos-6.5-amd64"
     riemann2_config.vm.hostname = "riemann2.local"
-    riemann2_config.vm.network :private_network, ip: "10.0.1.71"
+    riemann2_config.vm.network :private_network, ip: "10.0.1.192"
     #set some machine-specific options	
     riemann2_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
