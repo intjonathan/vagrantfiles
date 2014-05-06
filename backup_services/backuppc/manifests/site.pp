@@ -91,6 +91,12 @@ node 'backupserver.local' {
   #Install Postgres so we can test dumping and backing up databases:
   class { 'postgresql::server': }
 
+  #Do the same for MySQL:
+  class { '::mysql::server':
+    root_password    => 'horsebatterystaple',
+    override_options => { 'mysqld' => { 'max_connections' => '1024' } }
+  }
+
   class { 'fail2ban':
     log_level => '3',
   }
@@ -156,6 +162,12 @@ node 'backupclient1.local' {
   #Install Postgres so we can test dumping and backing up databases:
   class { 'postgresql::server': }
 
+  #Do the same for MySQL:
+  class { '::mysql::server':
+    root_password    => 'horsebatterystaple',
+    override_options => { 'mysqld' => { 'max_connections' => '1024' } }
+  }
+
   class { 'fail2ban':
     log_level => '3',
   }
@@ -220,6 +232,12 @@ node 'backupclient2.local' {
 
   #Install Postgres so we can test dumping and backing up databases:
   class { 'postgresql::server': }
+
+  #Do the same for MySQL:
+  class { '::mysql::server':
+    root_password    => 'horsebatterystaple',
+    override_options => { 'mysqld' => { 'max_connections' => '1024' } }
+  }
 
   class { 'fail2ban':
     log_level => '3',
