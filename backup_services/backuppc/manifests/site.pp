@@ -97,6 +97,13 @@ node 'backupserver.local' {
     override_options => { 'mysqld' => { 'max_connections' => '1024' } }
   }
 
+  #... and Apache:
+  class{ '::apache':}
+  ::apache::mod { 'ssl': } #Install/enable the SSL module
+  ::apache::mod { 'proxy': } #Install/enable the proxy module
+  ::apache::mod { 'proxy_http': } #Install/enable the HTTP proxy module
+  ::apache::mod { 'rewrite': } #Install/enable the rewrite module
+
   class { 'fail2ban':
     log_level => '3',
   }
@@ -168,6 +175,13 @@ node 'backupclient1.local' {
     override_options => { 'mysqld' => { 'max_connections' => '1024' } }
   }
 
+  #... and Apache:
+  class{ '::apache':}
+  ::apache::mod { 'ssl': } #Install/enable the SSL module
+  ::apache::mod { 'proxy': } #Install/enable the proxy module
+  ::apache::mod { 'proxy_http': } #Install/enable the HTTP proxy module
+  ::apache::mod { 'rewrite': } #Install/enable the rewrite module
+
   class { 'fail2ban':
     log_level => '3',
   }
@@ -238,6 +252,13 @@ node 'backupclient2.local' {
     root_password    => 'horsebatterystaple',
     override_options => { 'mysqld' => { 'max_connections' => '1024' } }
   }
+
+  #... and Apache:
+  class{ '::apache':}
+  ::apache::mod { 'ssl': } #Install/enable the SSL module
+  ::apache::mod { 'proxy': } #Install/enable the proxy module
+  ::apache::mod { 'proxy_http': } #Install/enable the HTTP proxy module
+  ::apache::mod { 'rewrite': } #Install/enable the rewrite module
 
   class { 'fail2ban':
     log_level => '3',
