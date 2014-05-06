@@ -88,6 +88,9 @@ node 'backuppcmaster.local' {
 
 node 'backupserver.local' {
 
+  #Install Postgres so we can test dumping and backing up databases:
+  class { 'postgresql::server': }
+
   class { 'fail2ban':
     log_level => '3',
   }
@@ -150,6 +153,9 @@ node 'backupserver.local' {
 
 node 'backupclient1.local' {
 
+  #Install Postgres so we can test dumping and backing up databases:
+  class { 'postgresql::server': }
+
   class { 'fail2ban':
     log_level => '3',
   }
@@ -211,6 +217,9 @@ node 'backupclient1.local' {
 }
 
 node 'backupclient2.local' {
+
+  #Install Postgres so we can test dumping and backing up databases:
+  class { 'postgresql::server': }
 
   class { 'fail2ban':
     log_level => '3',
