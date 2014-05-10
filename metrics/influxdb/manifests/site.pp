@@ -140,13 +140,6 @@ node 'influxdb1.local' {
     disable_monitor => true,
   }
 
-  #Install Postfix locally so that Fail2Ban can send out emails
-  class { '::postfix::server':
-    inet_interfaces => 'localhost', #Only listen on localhost
-    inet_protocols => 'all', #Use both IPv4 and IPv6
-    mydomain       => 'local',
-  }
-
 }
 
 node 'influxdb2.local' {
@@ -201,13 +194,6 @@ node 'influxdb2.local' {
     servers  => [ '0.ubuntu.pool.ntp.org', '1.ubuntu.pool.ntp.org', '2.ubuntu.pool.ntp.org', '3.ubuntu.pool.ntp.org' ],
     restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
     disable_monitor => true,
-  }
-
-  #Install Postfix locally so that Fail2Ban can send out emails
-  class { '::postfix::server':
-    inet_interfaces => 'localhost', #Only listen on localhost
-    inet_protocols => 'all', #Use both IPv4 and IPv6
-    mydomain       => 'local',
   }
 
 }
@@ -266,13 +252,6 @@ node 'influxdb3.local' {
     disable_monitor => true,
   }
 
-  #Install Postfix locally so that Fail2Ban can send out emails
-  class { '::postfix::server':
-    inet_interfaces => 'localhost', #Only listen on localhost
-    inet_protocols => 'all', #Use both IPv4 and IPv6
-    mydomain       => 'local',
-  }
-
 }
 
 node 'influxdb4.local' {
@@ -327,13 +306,6 @@ node 'influxdb4.local' {
     servers  => [ '0.centos.pool.ntp.org', '1.centos.pool.ntp.org', '2.centos.pool.ntp.org', '3.centos.pool.ntp.org' ],
     restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
     disable_monitor => true,
-  }
-
-  #Install Postfix locally so that Fail2Ban can send out emails
-  class { '::postfix::server':
-    inet_interfaces => 'localhost', #Only listen on localhost
-    inet_protocols => 'all', #Use both IPv4 and IPv6
-    mydomain       => 'local',
   }
 
 }
