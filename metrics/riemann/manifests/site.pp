@@ -147,7 +147,9 @@ node 'riemann1.local' {
     mydomain       => 'local',
   }
 
-node 'riemann2.local' {
+}
+
+node 'riemann2.local' { 
 
   class { 'fail2ban':
     log_level => '3',
