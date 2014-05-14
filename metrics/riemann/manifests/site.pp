@@ -88,6 +88,10 @@ node 'riemannmaster.local' {
 
 node 'riemann1.local' {
 
+  class { 'riemann': 
+    version => '0.2.5',
+  }
+
   class { 'fail2ban':
     log_level => '3',
   }
