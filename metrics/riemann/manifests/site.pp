@@ -88,9 +88,11 @@ node 'riemannmaster.local' {
 
 node 'riemann1.local' {
 
-  class { 'riemann': 
-    version => '0.2.5',
-  }
+  class { 'riemann': }
+  
+  #class { 'riemann': 
+  #  version => '0.2.5',
+  #}
 
   class { 'fail2ban':
     log_level => '3',
@@ -153,7 +155,9 @@ node 'riemann1.local' {
 
 }
 
-node 'riemann2.local' { 
+node 'riemann2.local' {
+
+  class { 'riemann': }
 
   class { 'fail2ban':
     log_level => '3',
