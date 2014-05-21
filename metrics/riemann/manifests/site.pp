@@ -88,11 +88,11 @@ node 'riemannmaster.local' {
 
 node 'riemann1.local' {
 
-  class { 'riemann': }
+  #class {'riemann':}
   
-  #class { 'riemann': 
-  #  version => '0.2.5',
-  #}
+  class { 'riemann': 
+    version => '0.2.5',
+  }
 
   class { 'fail2ban':
     log_level => '3',
@@ -157,7 +157,9 @@ node 'riemann1.local' {
 
 node 'riemann2.local' {
 
-  class { 'riemann': }
+  class { 'riemann': 
+    version => '0.2.5',
+  }
 
   class { 'fail2ban':
     log_level => '3',
@@ -292,8 +294,13 @@ node 'collectd1.local' {
   collectd::plugin { 'cpufreq': }
   collectd::plugin { 'contextswitch': }
   
-  class { 'collectd::plugin::write_graphite':
-    graphitehost => 'riemann1.local',
+ # class { 'collectd::plugin::write_graphite':
+ #   graphitehost => 'riemann1.local',
+  #}
+  
+  class { 'collectd::plugin::write_riemann':
+    riemann_host => 'riemann1.local',
+    riemann_port => 5555,
   }
 
 }
@@ -370,8 +377,13 @@ node 'collectd2.local' {
   collectd::plugin { 'cpufreq': }
   collectd::plugin { 'contextswitch': }
   
-  class { 'collectd::plugin::write_graphite':
-    graphitehost => 'riemann1.local',
+ # class { 'collectd::plugin::write_graphite':
+ #   graphitehost => 'riemann1.local',
+  #}
+  
+  class { 'collectd::plugin::write_riemann':
+    riemann_host => 'riemann1.local',
+    riemann_port => 5555,
   }
 
 }
