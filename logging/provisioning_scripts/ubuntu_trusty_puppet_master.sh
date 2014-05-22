@@ -41,7 +41,6 @@ then
     ssldir=/var/lib/puppet/ssl
     rundir=/var/run/puppet
     factpath=$vardir/lib/facter
-    templatedir=$confdir/templates
 
     [master]
     # These are needed when the puppetmaster is run by passenger
