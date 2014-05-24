@@ -26,25 +26,23 @@ node 'logstashmaster.local' {
 
   #This module is from: https://github.com/saz/puppet-ssh
   class { 'ssh':
+    #Export host keys to PuppetDB:
+    storeconfigs_enabled => true,
     server_options => {
-      #Export host keys to PuppetDB:
-      storeconfigs_enabled => true,
-      options => {
-        #Whether to allow password auth; if set to 'no', only SSH keys can be used:
-        #'PasswordAuthentication' => 'no',
-        #How many authentication attempts to allow before disconnecting:
-        'MaxAuthTries'         => '10',
-        'PermitEmptyPasswords' => 'no', 
-        'PermitRootLogin'      => 'no',
-        'Port'                 => [22],
-        'PubkeyAuthentication' => 'yes',
-        #Whether to be strict about the permissions on a user's .ssh/ folder and public keys:
-        'StrictModes'          => 'yes',
-        'TCPKeepAlive'         => 'yes',
-        #Whether to do reverse DNS lookups of client IP addresses when they connect:
-        'UseDNS'               => 'no',
-      },
-    }
+      #Whether to allow password auth; if set to 'no', only SSH keys can be used:
+      #'PasswordAuthentication' => 'no',
+      #How many authentication attempts to allow before disconnecting:
+      'MaxAuthTries'         => '10',
+      'PermitEmptyPasswords' => 'no', 
+      'PermitRootLogin'      => 'no',
+      'Port'                 => [22],
+      'PubkeyAuthentication' => 'yes',
+      #Whether to be strict about the permissions on a user's .ssh/ folder and public keys:
+      'StrictModes'          => 'yes',
+      'TCPKeepAlive'         => 'yes',
+      #Whether to do reverse DNS lookups of client IP addresses when they connect:
+      'UseDNS'               => 'no',
+    },
   }
 
   #This module is: https://github.com/puppetlabs/puppetlabs-ntp
@@ -81,25 +79,23 @@ node 'logstash.local' {
  
   #This module is from: https://github.com/saz/puppet-ssh
   class { 'ssh':
+    #Export host keys to PuppetDB:
+    storeconfigs_enabled => true,
     server_options => {
-      #Export host keys to PuppetDB:
-      storeconfigs_enabled => true,
-      options => {
-        #Whether to allow password auth; if set to 'no', only SSH keys can be used:
-        #'PasswordAuthentication' => 'no',
-        #How many authentication attempts to allow before disconnecting:
-        'MaxAuthTries'         => '10',
-        'PermitEmptyPasswords' => 'no', 
-        'PermitRootLogin'      => 'no',
-        'Port'                 => [22],
-        'PubkeyAuthentication' => 'yes',
-        #Whether to be strict about the permissions on a user's .ssh/ folder and public keys:
-        'StrictModes'          => 'yes',
-        'TCPKeepAlive'         => 'yes',
-        #Whether to do reverse DNS lookups of client IP addresses when they connect:
-        'UseDNS'               => 'no',
-      },
-    }
+      #Whether to allow password auth; if set to 'no', only SSH keys can be used:
+      #'PasswordAuthentication' => 'no',
+      #How many authentication attempts to allow before disconnecting:
+      'MaxAuthTries'         => '10',
+      'PermitEmptyPasswords' => 'no', 
+      'PermitRootLogin'      => 'no',
+      'Port'                 => [22],
+      'PubkeyAuthentication' => 'yes',
+      #Whether to be strict about the permissions on a user's .ssh/ folder and public keys:
+      'StrictModes'          => 'yes',
+      'TCPKeepAlive'         => 'yes',
+      #Whether to do reverse DNS lookups of client IP addresses when they connect:
+      'UseDNS'               => 'no',
+    },
   }
 
   #This module is: https://github.com/puppetlabs/puppetlabs-ntp
@@ -144,25 +140,23 @@ node 'kibanathree.local' {
 
   #This module is from: https://github.com/saz/puppet-ssh
   class { 'ssh':
+    #Export host keys to PuppetDB:
+    storeconfigs_enabled => true,
     server_options => {
-      #Export host keys to PuppetDB:
-      storeconfigs_enabled => true,
-      options => {
-        #Whether to allow password auth; if set to 'no', only SSH keys can be used:
-        #'PasswordAuthentication' => 'no',
-        #How many authentication attempts to allow before disconnecting:
-        'MaxAuthTries'         => '10',
-        'PermitEmptyPasswords' => 'no', 
-        'PermitRootLogin'      => 'no',
-        'Port'                 => [22],
-        'PubkeyAuthentication' => 'yes',
-        #Whether to be strict about the permissions on a user's .ssh/ folder and public keys:
-        'StrictModes'          => 'yes',
-        'TCPKeepAlive'         => 'yes',
-        #Whether to do reverse DNS lookups of client IP addresses when they connect:
-        'UseDNS'               => 'no',
-      },
-    }
+      #Whether to allow password auth; if set to 'no', only SSH keys can be used:
+      #'PasswordAuthentication' => 'no',
+      #How many authentication attempts to allow before disconnecting:
+      'MaxAuthTries'         => '10',
+      'PermitEmptyPasswords' => 'no', 
+      'PermitRootLogin'      => 'no',
+      'Port'                 => [22],
+      'PubkeyAuthentication' => 'yes',
+      #Whether to be strict about the permissions on a user's .ssh/ folder and public keys:
+      'StrictModes'          => 'yes',
+      'TCPKeepAlive'         => 'yes',
+      #Whether to do reverse DNS lookups of client IP addresses when they connect:
+      'UseDNS'               => 'no',
+    },
   }
 
   class{ '::apache':}
@@ -279,25 +273,23 @@ node 'elasticsearch1.local' {
   
   #This module is from: https://github.com/saz/puppet-ssh
   class { 'ssh':
+    #Export host keys to PuppetDB:
+    storeconfigs_enabled => true,
     server_options => {
-      #Export host keys to PuppetDB:
-      storeconfigs_enabled => true,
-      options => {
-        #Whether to allow password auth; if set to 'no', only SSH keys can be used:
-        #'PasswordAuthentication' => 'no',
-        #How many authentication attempts to allow before disconnecting:
-        'MaxAuthTries'         => '10',
-        'PermitEmptyPasswords' => 'no', 
-        'PermitRootLogin'      => 'no',
-        'Port'                 => [22],
-        'PubkeyAuthentication' => 'yes',
-        #Whether to be strict about the permissions on a user's .ssh/ folder and public keys:
-        'StrictModes'          => 'yes',
-        'TCPKeepAlive'         => 'yes',
-        #Whether to do reverse DNS lookups of client IP addresses when they connect:
-        'UseDNS'               => 'no',
-      },
-    }
+      #Whether to allow password auth; if set to 'no', only SSH keys can be used:
+      #'PasswordAuthentication' => 'no',
+      #How many authentication attempts to allow before disconnecting:
+      'MaxAuthTries'         => '10',
+      'PermitEmptyPasswords' => 'no', 
+      'PermitRootLogin'      => 'no',
+      'Port'                 => [22],
+      'PubkeyAuthentication' => 'yes',
+      #Whether to be strict about the permissions on a user's .ssh/ folder and public keys:
+      'StrictModes'          => 'yes',
+      'TCPKeepAlive'         => 'yes',
+      #Whether to do reverse DNS lookups of client IP addresses when they connect:
+      'UseDNS'               => 'no',
+    },
   }
 
     #This module is: https://github.com/puppetlabs/puppetlabs-ntp
@@ -331,25 +323,23 @@ node 'elasticsearch2.local', 'elasticsearch3.local', 'elasticsearch4.local' {
   
   #This module is from: https://github.com/saz/puppet-ssh
   class { 'ssh':
+    #Export host keys to PuppetDB:
+    storeconfigs_enabled => true,
     server_options => {
-      #Export host keys to PuppetDB:
-      storeconfigs_enabled => true,
-      options => {
-        #Whether to allow password auth; if set to 'no', only SSH keys can be used:
-        #'PasswordAuthentication' => 'no',
-        #How many authentication attempts to allow before disconnecting:
-        'MaxAuthTries'         => '10',
-        'PermitEmptyPasswords' => 'no', 
-        'PermitRootLogin'      => 'no',
-        'Port'                 => [22],
-        'PubkeyAuthentication' => 'yes',
-        #Whether to be strict about the permissions on a user's .ssh/ folder and public keys:
-        'StrictModes'          => 'yes',
-        'TCPKeepAlive'         => 'yes',
-        #Whether to do reverse DNS lookups of client IP addresses when they connect:
-        'UseDNS'               => 'no',
-      },
-    }
+      #Whether to allow password auth; if set to 'no', only SSH keys can be used:
+      #'PasswordAuthentication' => 'no',
+      #How many authentication attempts to allow before disconnecting:
+      'MaxAuthTries'         => '10',
+      'PermitEmptyPasswords' => 'no', 
+      'PermitRootLogin'      => 'no',
+      'Port'                 => [22],
+      'PubkeyAuthentication' => 'yes',
+      #Whether to be strict about the permissions on a user's .ssh/ folder and public keys:
+      'StrictModes'          => 'yes',
+      'TCPKeepAlive'         => 'yes',
+      #Whether to do reverse DNS lookups of client IP addresses when they connect:
+      'UseDNS'               => 'no',
+    },
   }
 
   #This module is: https://github.com/nickchappell/puppetlabs-denyhosts
@@ -406,25 +396,23 @@ node 'rsyslog1.local', 'rsyslog2.local' {
 
   #This module is from: https://github.com/saz/puppet-ssh
   class { 'ssh':
+    #Export host keys to PuppetDB:
+    storeconfigs_enabled => true,
     server_options => {
-      #Export host keys to PuppetDB:
-      storeconfigs_enabled => true,
-      options => {
-        #Whether to allow password auth; if set to 'no', only SSH keys can be used:
-        #'PasswordAuthentication' => 'no',
-        #How many authentication attempts to allow before disconnecting:
-        'MaxAuthTries'         => '10',
-        'PermitEmptyPasswords' => 'no', 
-        'PermitRootLogin'      => 'no',
-        'Port'                 => [22],
-        'PubkeyAuthentication' => 'yes',
-        #Whether to be strict about the permissions on a user's .ssh/ folder and public keys:
-        'StrictModes'          => 'yes',
-        'TCPKeepAlive'         => 'yes',
-        #Whether to do reverse DNS lookups of client IP addresses when they connect:
-        'UseDNS'               => 'no',
-      },
-    }
+      #Whether to allow password auth; if set to 'no', only SSH keys can be used:
+      #'PasswordAuthentication' => 'no',
+      #How many authentication attempts to allow before disconnecting:
+      'MaxAuthTries'         => '10',
+      'PermitEmptyPasswords' => 'no', 
+      'PermitRootLogin'      => 'no',
+      'Port'                 => [22],
+      'PubkeyAuthentication' => 'yes',
+      #Whether to be strict about the permissions on a user's .ssh/ folder and public keys:
+      'StrictModes'          => 'yes',
+      'TCPKeepAlive'         => 'yes',
+      #Whether to do reverse DNS lookups of client IP addresses when they connect:
+      'UseDNS'               => 'no',
+    },
   }
 
   #This module is: https://github.com/nickchappell/puppetlabs-denyhosts
