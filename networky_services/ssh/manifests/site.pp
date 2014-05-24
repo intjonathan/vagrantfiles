@@ -4,7 +4,7 @@ node default {
 }
 
 #puppet master node definition
-node 'riemannmaster.local' {
+node 'sshmaster.local' {
 
   #This module is from: https://github.com/puppetlabs/puppetlabs-puppetdb/
   class { 'puppetdb':
@@ -122,7 +122,7 @@ node 'ssh1.local' {
     log_local      => true,
     log_auth_local => true,
     custom_config  => undef,
-    server         => 'riemannmaster.local',
+    server         => 'sshmaster.local',
     port           => '514',
   }
 
@@ -178,7 +178,7 @@ node 'ssh2.local' {
     log_local      => true,
     log_auth_local => true,
     custom_config  => undef,
-    server         => 'riemannmaster.local',
+    server         => 'sshmaster.local',
     port           => '514',
   }
 
@@ -234,7 +234,7 @@ node 'ssh3.local' {
     log_local      => true,
     log_auth_local => true,
     custom_config  => undef,
-    server         => 'riemannmaster.local',
+    server         => 'sshmaster.local',
     port           => '514',
   }
 
