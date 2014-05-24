@@ -11,10 +11,6 @@ Vagrant.configure("2") do |config|
   #config.vm.synced_folder "modules", "/etc/puppet/modules", :nfs => true
   #master_config.vm.provision :shell, :inline => $rhel_centos_puppet_master_script
   
-  config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/modules"
-  config.vm.synced_folder "manifests/", "/etc/puppet/manifests"
-  config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/hieradata", "/etc/puppet/hieradata" 
-
   ####################
   ####################
   config.hostmanager.enabled = true
@@ -34,6 +30,9 @@ Vagrant.configure("2") do |config|
       v.customize ["modifyvm", :id, "--memory", "1024"]
     end
     sshmaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_master.sh"
+    sshmaster_config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/modules"
+    sshmaster_config.vm.synced_folder "manifests/", "/etc/puppet/manifests"
+    sshmaster_config.vm.synced_folder "hieradata/", "/etc/puppet/hieradata" 
   end
 
   #an ssh client
