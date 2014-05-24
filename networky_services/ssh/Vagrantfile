@@ -65,7 +65,7 @@ Vagrant.configure("2") do |config|
 
   #another ssh client
   config.vm.define "ssh3".to_sym do |ssh3_config|
-    ssh3_config.vm.box = "debian-7.2-amd64"
+    ssh3_config.vm.box = "debian-7.4-amd64"
     ssh3_config.vm.hostname = "ssh3.local"
     ssh3_config.hostmanager.enabled = true
     ssh3_config.vm.network :private_network, ip: "10.0.1.63"
@@ -74,6 +74,6 @@ Vagrant.configure("2") do |config|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
-    ssh3_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
+    ssh3_config.vm.provision :shell, :path => "../provisioning_scripts/debian_wheezy_puppet_agent.sh"
   end
 end
