@@ -1,15 +1,18 @@
 #Puppet master
 
-node 'master' {
+node 'saucymaster.local' {
 
-# class { 'puppetdb':
-#    listen_address => '0.0.0.0'
-#  }
-
-  #include puppetdb::master::config
-
-$message = hiera(blahmessage)
-notify {"${message}":}
+  #This module is from: https://github.com/puppetlabs/puppetlabs-puppetdb/
+  class { 'puppetdb':
+    listen_address => '0.0.0.0'
+  }
+  
+  class { 'puppetdb::master::config':
+    #enable_reports => 'true',
+    manage_storeconfigs => 'true',
+    manage_routes => 'true',
+    manage_report_processor => 'true',
+  }
 
 }
 
