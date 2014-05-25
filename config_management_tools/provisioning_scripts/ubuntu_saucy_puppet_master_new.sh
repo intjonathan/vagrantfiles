@@ -18,7 +18,7 @@ then
 	sudo /etc/init.d/puppetmaster start
 	sudo service ufw stop
 
-    sudo cat > /etc/puppet/puppet.conf <<"EOF"
+  sudo cat > /etc/puppet/puppet.conf <<"EOF"
 [main]
 logdir=/var/log/puppet
 vardir=/var/lib/puppet
