@@ -108,7 +108,7 @@ node 'minion1.local' {
     disable_monitor => true,
   }
 
-  include saltstack::master
+  include saltstack::minion
 
 }
 
