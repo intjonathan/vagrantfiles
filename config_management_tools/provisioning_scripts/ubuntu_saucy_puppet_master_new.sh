@@ -1,15 +1,12 @@
 #! /bin/bash
-echo "Checking to see if the Puppet Labs apt repo needs to be added..."
 
 if [ ! -f /home/vagrant/repos_added.txt ];
 then    
-	echo "Adding Puppet Labs apt repository..."
-    sudo wget -N http://apt.puppetlabs.com/puppetlabs-release-saucy.deb
-    sudo dpkg -i puppetlabs-release-saucy.deb
-    echo "Updating apt..."
-    sudo apt-get update
-    #Touch the repos_added file to skip this block the next time around
-	touch /home/vagrant/repos_added.txt
+  sudo wget -N http://apt.puppetlabs.com/puppetlabs-release-saucy.deb
+  sudo dpkg -i puppetlabs-release-saucy.deb
+  sudo apt-get update
+  #Touch the repos_added file to skip this block the next time around
+  touch /home/vagrant/repos_added.txt
 
 else
 	echo "Skipping repo addition and package installation..."
@@ -17,19 +14,10 @@ fi
 
 if [ ! -f /home/vagrant/puppet_master_installed.txt ];
 then
-	echo "Installing the Puppet master..."
 	sudo apt-get -y install puppetmaster
-	echo "DONE installing the Puppet master packages!"
-	
-	echo "Starting the Puppet master daemon..."
 	sudo /etc/init.d/puppetmaster start
-	echo "DONE starting the daemon!"
-	
-	echo "Stopping the UFW firewall..."
 	sudo service ufw stop
-	echo "DONE stopping ufw!"
 
-    echo "concatenating sample puppet.conf into puppet.conf file..."
     sudo cat > /etc/puppet/puppet.conf <<"EOF"
 [main]
 logdir=/var/log/puppet
@@ -49,12 +37,12 @@ storeconfigs = true
 storeconfigs_backend = puppetdb
 EOF
     
-    echo "Regenerating Puppet master certificate with the 'puppet' DNS altname..."
+
     sudo /etc/init.d/puppetmaster stop
     sudo puppet cert clean --all
     sudo puppet cert generate master --dns_alt_names=puppet,master,puppetmaster,puppet.local,master.local,puppetmaster.local >/dev/null
     sudo /etc/init.d/puppetmaster restart
-    echo "DONE regenerating the master certificate!"
+
     
     #Touch the puppet_installed.txt file to skip this block the next time around
 	touch /home/vagrant/puppet_master_installed.txt
