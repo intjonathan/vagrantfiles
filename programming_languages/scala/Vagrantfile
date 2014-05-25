@@ -16,7 +16,7 @@ Vagrant.configure("2") do |config|
   #manifests/ folder's location is relative to the Vagrantfile's location:
   config.vm.synced_folder "manifests/", "/etc/puppet/environments/production/manifests", :nfs => true
   #Mount Hiera data from the central folder where all of the data lives:
-  config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/hieradata", "/etc/puppet/environments/production/hieradata", :nfs => true
+  config.vm.synced_folder "hieradata/", "/etc/puppet/environments/production/hieradata", :nfs => true
 
   ####################
   ####################
