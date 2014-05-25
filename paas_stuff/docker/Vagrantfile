@@ -30,9 +30,9 @@ Vagrant.configure("2") do |config|
       v.customize ["modifyvm", :id, "--memory", "1024"]
     end
     #Set up synced folders for Puppet code:
-    dockermaster_config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/modules", :nfs => true
-    dockermaster_config.vm.synced_folder "manifests/", "/etc/puppet/manifests", :nfs => true
-    dockermaster_config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/hieradata", "/etc/puppet/hieradata", :nfs => true
+    dockermaster_config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/environments/production/modules", :nfs => true
+    dockermaster_config.vm.synced_folder "manifests/", "/etc/puppet/environments/production/manifests", :nfs => true
+    dockermaster_config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/hieradata", "/etc/puppet/environments/production/hieradata", :nfs => true
     dockermaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_master.sh"
   end
 

@@ -11,12 +11,12 @@ Vagrant.configure("2") do |config|
   #config.vm.synced_folder "modules", "/etc/puppet/modules", :nfs => true
 
   #Mount our Puppet modules from the folder where they all live:
-  config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/modules", :nfs => true
+  config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/environments/production/modules", :nfs => true
   #Mount our Puppet manifests from a manifests/ folder that's specific to this Vagrant project; paths are relative, so this
   #manifests/ folder's location is relative to the Vagrantfile's location:
-  config.vm.synced_folder "manifests/", "/etc/puppet/manifests", :nfs => true
+  config.vm.synced_folder "manifests/", "/etc/puppet/environments/production/manifests", :nfs => true
   #Mount Hiera data from the central folder where all of the data lives:
-  config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/hieradata", "/etc/puppet/hieradata", :nfs => true
+  config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/hieradata", "/etc/puppet/environments/production/hieradata", :nfs => true
 
   ####################
   ####################

@@ -31,8 +31,8 @@ Vagrant.configure("2") do |config|
       v.customize ["modifyvm", :id, "--memory", "1024"]
     end
     #NFS folder sharing for Puppet modules and manifests
-    influxdbmaster_config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/modules", :nfs => true
-    influxdbmaster_config.vm.synced_folder "manifests/", "/etc/puppet/manifests", :nfs => true
+    influxdbmaster_config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/environments/production/modules", :nfs => true
+    influxdbmaster_config.vm.synced_folder "manifests/", "/etc/puppet/environments/production/manifests", :nfs => true
     influxdbmaster_config.vm.synced_folder "hieradata", "/etc/puppet/hieradata", :nfs => true
     #Puppet master provisioning script
     influxdbmaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_master.sh"

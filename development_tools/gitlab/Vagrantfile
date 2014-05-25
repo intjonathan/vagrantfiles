@@ -33,8 +33,8 @@ Vagrant.configure("2") do |config|
       v.customize ["modifyvm", :id, "--memory", "1024"]
     end
     #NFS folder sharing for Puppet modules and manifests
-    gitlabmaster_config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/modules", :nfs => true
-    gitlabmaster_config.vm.synced_folder "manifests/", "/etc/puppet/manifests", :nfs => true
+    gitlabmaster_config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/environments/production/modules", :nfs => true
+    gitlabmaster_config.vm.synced_folder "manifests/", "/etc/puppet/environments/production/manifests", :nfs => true
     gitlabmaster_config.vm.synced_folder "hieradata", "/etc/puppet/hieradata", :nfs => true
     #Puppet master provisioning script
     gitlabmaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_master.sh"
