@@ -28,7 +28,15 @@ node 'saucymaster.local' {
     vhost_name => "puppetboard.${fqdn}",
     port => 80,
   }
-  
+
+  #This module is from: https://github.com/saz/puppet-rsyslog
+  class { 'rsyslog::server':
+    enable_tcp => true,
+    enable_udp => true,
+    port       => '514',
+    server_dir => '/var/log/remote/',
+  }
+
   #This module is: https://github.com/puppetlabs/puppetlabs-ntp
   class { '::ntp':
     servers  => [ '0.ubuntu.pool.ntp.org', '1.ubuntu.pool.ntp.org', '2.ubuntu.pool.ntp.org', '3.ubuntu.pool.ntp.org' ],
