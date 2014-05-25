@@ -51,7 +51,6 @@ then
     reports = store,puppetdb
     storeconfigs = true
     storeconfigs_backend = puppetdb
-    environmentpath = $confdir/environments
 EOF
     
     echo "Regenerating Puppet master certificate with the 'puppet' DNS altname..."
