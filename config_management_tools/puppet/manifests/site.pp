@@ -14,6 +14,10 @@ node 'saucymaster.local' {
     manage_report_processor => 'true',
   }
 
+  #Apache modules for PuppetBoard:
+  class { 'apache': }
+  class { 'apache::mod::wsgi': }
+
 }
 
 #Puppet agents
