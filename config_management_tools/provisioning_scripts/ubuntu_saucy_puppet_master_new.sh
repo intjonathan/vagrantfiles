@@ -48,3 +48,17 @@ EOF
 else
 	echo "Skipping Puppet master installation..."
 fi
+
+if [ ! -f /home/vagrant/puppet_master_initial_run_complete.txt ];
+then
+  #Do an initial Puppet run to set up PuppetDB:
+  puppet agent -t
+  #Enable PuppetDB report storage...
+  echo 'reports = store,puppetdb' >> /etc/puppet/puppet.conf
+  #...and restart PuppetDB:
+  service puppetmaster restart
+  #Touch the puppet_master_initial_run_complete.txt file to skip this block the next time around
+  touch /home/vagrant/puppet_master_initial_run_complete.txt
+else
+  echo "Skipping initial Puppet run..."
+fi
