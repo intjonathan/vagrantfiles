@@ -30,7 +30,7 @@ then
 	echo "DONE stopping ufw!"
 
 	echo "Administratively enabling the agent..."
-	sudo puppet agent --enable >/dev/null
+	sudo sed -i 's/START=no/START=yes/g' /etc/default/puppet
 	echo "DONE enabling the agent!"
 
     echo "concatenating sample puppet.conf into puppet.conf file..."
