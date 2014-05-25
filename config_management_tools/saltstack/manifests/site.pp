@@ -110,7 +110,7 @@ node 'minion1.local' {
     disable_monitor => true,
   }
 
-  include saltstack::minion
+  #include saltstack::minion
 
 }
 
@@ -156,7 +156,7 @@ node 'minion2.local' {
     disable_monitor => true,
   }
 
-  include saltstack::minion
+  #include saltstack::minion
 
 }
 
@@ -202,6 +202,8 @@ node 'minion3.local' {
     disable_monitor => true,
   }
 
+  #include saltstack::minion
+
 }
 
 #CentOS salt node
@@ -245,6 +247,9 @@ node 'minion4.local' {
     restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
     disable_monitor => true,
   }
+
+  #include saltstack::minion
+
 }
 
 #Ubuntu salt node
@@ -289,6 +294,8 @@ node 'minion5.local' {
     disable_monitor => true,
   }
 
+  #include saltstack::minion
+
 }
 
 #CentOS salt node
@@ -332,4 +339,7 @@ node 'minion6.local' {
     restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
     disable_monitor => true,
   }
+
+  #include saltstack::minion
+
 }
