@@ -64,6 +64,8 @@ node 'saltmaster.local' {
     disable_monitor => true,
   }
 
+  include saltstack::master
+
 }
 
 #Ubuntu salt node
