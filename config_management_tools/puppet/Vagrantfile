@@ -4,48 +4,10 @@ Vagrant.configure("2") do |config|
   # please see the online documentation at vagrantup.com.
 
   ####################
-  # Snippets to use
-  ####################
-
-  #NFS folder sharing
-  config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/modules"
-  config.vm.synced_folder "manifests/", "/etc/puppet/manifests"
-  config.vm.synced_folder "hieradata/", "/etc/puppet/environments/production/hieradata"
-
-  ####################
   ####################
   #vagrant-hostmanager plugin options
   config.hostmanager.enabled = true
   config.hostmanager.ignore_private_ip = false
   #update the /etc/hosts of the host OS
   config.hostmanager.manage_host = true
-
-  #Puppet master
-  config.vm.define "master".to_sym do |master_config|
-    master_config.vm.box = "ubuntu-13.10-server-amd64"
-    master_config.vm.hostname = "master.local"
-    master_config.hostmanager.enabled = true
-    master_config.hostmanager.aliases = %w(puppet puppet.local puppet master.puppet.local puppetboard.master.local puppetdb.master.local)
-    master_config.vm.network :private_network, ip: "10.0.1.249"
-    #set some machine-specific options	
-    master_config.vm.provider "virtualbox" do |v|
-      #change the amount of RAM 
-      v.customize ["modifyvm", :id, "--memory", "1024"]
-    end
-   master_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_master.sh" 
-  end
-
-  #Ubuntu Puppet agent
-  config.vm.define "ubuntuagent".to_sym do |ubuntuagent_config|
-    ubuntuagent_config.vm.box = "ubuntu-13.10-server-amd64"
-    ubuntuagent_config.vm.hostname = "ubuntuagent.local"
-    ubuntuagent_config.hostmanager.enabled = true
-    ubuntuagent_config.vm.network :private_network, ip: "10.0.1.248"
-    #set some machine-specific options	
-    ubuntuagent_config.vm.provider "virtualbox" do |v|
-      #change the amount of RAM 
-      v.customize ["modifyvm", :id, "--memory", "512"]
-    end
-   ubuntuagent_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"  
-  end
 end
