@@ -45,10 +45,13 @@ then
     [master]
     # These are needed when the puppetmaster is run by passenger
     # and can safely be removed if webrick is used.
-    ssl_client_header = SSL_CLIENT_S_DN 
+    ssl_client_header = SSL_CLIENT_S_DN.
     ssl_client_verify_header = SSL_CLIENT_VERIFY
     dns_alt_names = puppet,master,puppetmaster,puppet.local,master.local,puppetmaster.local
     reports = store,puppetdb
+    storeconfigs = true
+    storeconfigs_backend = puppetdb
+    environmentpath = $confdir/environments
 EOF
     
     echo "Regenerating Puppet master certificate with the 'puppet' DNS altname..."
