@@ -10,4 +10,24 @@ Vagrant.configure("2") do |config|
   config.hostmanager.ignore_private_ip = false
   #update the /etc/hosts of the host OS
   config.hostmanager.manage_host = true
+
+  #Ubuntu Saucy Puppet master
+  config.vm.define "saucymaster".to_sym do |saucymaster_config|
+    saucymaster_config.vm.box = "ubuntu-13.10-server-amd64"
+    saucymaster_config.vm.hostname = "saucymaster.local"
+    saucymaster_config.hostmanager.aliases = %w(puppetboard.saucymaster.local saucymaster puppet master)
+    saucymaster_config.hostmanager.enabled = true
+    saucymaster_config.vm.network :private_network, ip: "10.0.1.80"
+    #set some machine-specific options	
+    saucymaster_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+    #Set up synced folders for Puppet code:
+    saucymaster_config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/environments/production/modules", :nfs => true
+    saucymaster_config.vm.synced_folder "manifests/", "/etc/puppet/environments/production/manifests", :nfs => true
+    saucymaster_config.vm.synced_folder "hieradata/", "/etc/puppet/environments/production/hieradata", :nfs => true
+    saucymaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_master.sh"
+  end
+
 end
