@@ -36,16 +36,15 @@ reports = store,puppetdb
 storeconfigs = true
 storeconfigs_backend = puppetdb
 EOF
-    
 
-    sudo /etc/init.d/puppetmaster stop
-    sudo puppet cert clean --all
-    sudo puppet cert generate master --dns_alt_names=puppet,master,puppetmaster,puppet.local,master.local,puppetmaster.local >/dev/null
-    sudo /etc/init.d/puppetmaster restart
+  sudo /etc/init.d/puppetmaster stop
+  sudo puppet cert clean --all
+  sudo puppet cert generate master --dns_alt_names=puppet,master,puppetmaster,puppet.local,master.local,puppetmaster.local >/dev/null
+  sudo /etc/init.d/puppetmaster restart
 
-    
-    #Touch the puppet_installed.txt file to skip this block the next time around
-	touch /home/vagrant/puppet_master_installed.txt
+
+  #Touch the puppet_installed.txt file to skip this block the next time around
+  touch /home/vagrant/puppet_master_installed.txt
 else
 	echo "Skipping Puppet master installation..."
 fi
