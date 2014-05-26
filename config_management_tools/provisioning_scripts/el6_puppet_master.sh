@@ -26,31 +26,19 @@ fi
 echo "cating sample puppet.conf into puppet.conf file..."
 sudo cat > /etc/puppet/puppet.conf <<"EOF"
 [main]
-# The Puppet log directory.
-# The default value is '$vardir/log'.
-logdir = /var/log/puppet
+[main]
+logdir=/var/log/puppet
+vardir=/var/lib/puppet
+ssldir=/var/lib/puppet/ssl
+rundir=/var/run/puppet
+factpath=$vardir/lib/facter
 
-# Where Puppet PID files are kept.
-# The default value is '$vardir/run'.
-rundir = /var/run/puppet
-
-# Where SSL certificates are kept.
-# The default value is '$confdir/ssl'.
-ssldir = /var/lib/puppet/ssl/
-dns_alt_names=puppet, master
-
-[agent]
-# The file in which puppetd stores a list of the classes
-# associated with the retrieved configuratiion.  Can be loaded in
-# the separate ``puppet`` executable using the ``--loadclasses``
-# option.
-# The default value is '$confdir/classes.txt'.
-classfile = $vardir/classes.txt
-
-# Where puppetd caches the local configuration.  An
-# extension indicating the cache format is added automatically.
-# The default value is '$confdir/localconfig'.
-localconfig = $vardir/localconfig
+[master]
+# These are needed when the puppetmaster is run by passenger
+# and can safely be removed if webrick is used.
+ssl_client_header = SSL_CLIENT_S_DN.
+ssl_client_verify_header = SSL_CLIENT_VERIFY
+environmentpath = $confdir/environments
 EOF
     sudo /etc/init.d/puppetmaster stop
     sudo puppet cert clean --all
