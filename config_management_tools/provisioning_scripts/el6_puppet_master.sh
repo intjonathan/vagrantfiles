@@ -40,12 +40,26 @@ ssl_client_header = SSL_CLIENT_S_DN.
 ssl_client_verify_header = SSL_CLIENT_VERIFY
 environmentpath = $confdir/environments
 EOF
-    sudo /etc/init.d/puppetmaster stop
-    sudo puppet cert clean --all
-    sudo puppet cert generate master --dns_alt_names=puppet,master,puppetmaster,puppet.local,master.local,puppetmaster.local
-    sudo /etc/init.d/puppetmaster restart
-    #Touch the puppet_installed.txt file to skip this block the next time around
-	touch /home/vagrant/puppet_master_installed.txt
+  sudo /etc/init.d/puppetmaster stop
+  sudo puppet cert clean --all
+  sudo puppet cert generate master --dns_alt_names=puppet,master,puppetmaster,puppet.local,master.local,puppetmaster.local
+  sudo /etc/init.d/puppetmaster restart
+  #Touch the puppet_installed.txt file to skip this block the next time around
+  touch /home/vagrant/puppet_master_installed.txt
 else
 	echo "Skipping Puppet master installation..."
+fi
+
+if [ ! -f /home/vagrant/puppet_master_initial_run_complete.txt ];
+then
+  #Do an initial Puppet run to set up PuppetDB:
+  puppet agent -t
+  #Enable PuppetDB report storage...
+  echo 'reports = store,puppetdb' >> /etc/puppet/puppet.conf
+  #...and restart PuppetDB:
+  service puppetmaster restart
+  #Touch the puppet_master_initial_run_complete.txt file to skip this block the next time around
+  touch /home/vagrant/puppet_master_initial_run_complete.txt
+else
+  echo "Skipping initial Puppet run..."
 fi
