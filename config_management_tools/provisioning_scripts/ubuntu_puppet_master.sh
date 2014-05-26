@@ -1,9 +1,12 @@
 #! /bin/bash
 
+#Source the distro release name and version as environment variables:
+. /etc/lsb-release
+
 if [ ! -f /home/vagrant/repos_added.txt ];
 then    
-  sudo wget -N http://apt.puppetlabs.com/puppetlabs-release-saucy.deb
-  sudo dpkg -i puppetlabs-release-saucy.deb
+  sudo wget -N http://apt.puppetlabs.com/puppetlabs-release-${DISTRIB_CODENAME}.deb
+  sudo dpkg -i puppetlabs-release-${DISTRIB_CODENAME}.deb
   sudo apt-get update
   #Touch the repos_added file to skip this block the next time around
   touch /home/vagrant/repos_added.txt
