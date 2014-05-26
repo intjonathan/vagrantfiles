@@ -8,10 +8,8 @@ node 'saucymaster.local' {
   }
   
   class { 'puppetdb::master::config':
-    #enable_reports => 'true',
     manage_storeconfigs => 'true',
     manage_routes => 'true',
-    manage_report_processor => 'true',
   }
 
   #Apache modules for PuppetBoard:
