@@ -49,4 +49,18 @@ Vagrant.configure("2") do |config|
     trustymaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_master.sh"
   end
 
+  #Ubuntu Saucy Puppet agent
+  config.vm.define "saucyagent".to_sym do |saucyagent_config|
+    saucyagent_config.vm.box = "ubuntu-13.10-server-amd64"
+    saucyagent_config.vm.hostname = "saucyagent.local"
+    saucyagent_config.hostmanager.enabled = true
+    saucyagent_config.vm.network :private_network, ip: "10.0.1.82"
+    #set some machine-specific options	
+    saucyagent_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    saucyagent_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+  end
+  
 end
