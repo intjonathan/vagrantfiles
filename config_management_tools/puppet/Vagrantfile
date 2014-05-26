@@ -62,5 +62,5 @@ Vagrant.configure("2") do |config|
     end
     saucyagent_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
   end
-  
+
 end

@@ -19,6 +19,7 @@ if [ ! -f /home/vagrant/puppet_master_installed.txt ];
 then
 	sudo apt-get -y install puppet
 	sudo service ufw stop
+
   sudo cat > /etc/puppet/puppet.conf <<"EOF"
 [main]
 logdir=/var/log/puppet
