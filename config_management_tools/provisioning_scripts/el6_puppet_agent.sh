@@ -4,10 +4,10 @@ echo "Checking to see if the Puppet Labs RHEL/CentOS repo needs to be added..."
 if [ ! -f /home/vagrant/repos_added.txt ];
 then    
 
-	sudo rpm -ivh http://yum.puppetlabs.com/el/6/products/x86_64/puppetlabs-release-6-7.noarch.rpm >/dev/null
-	sudo yum check-update >/dev/null
+	sudo rpm -ivh http://yum.puppetlabs.com/el/6/products/x86_64/puppetlabs-release-6-7.noarch.rpm
+	sudo yum check-update
 	#Touch the repos_added file to skip this block the next time around
-	touch /home/vagrant/repos_added.txt >/dev/null
+	touch /home/vagrant/repos_added.txt
 
 else
 	echo "Skipping repo addition..."
@@ -18,20 +18,12 @@ echo "Checking to see if the Puppet agent package needs to be installed..."
 if [ ! -f /home/vagrant/puppet_agent_installed.txt ];
 then
 	
-	sudo yum install puppet -y >/dev/null
+	sudo yum install puppet -y
+	sudo chkconfig --levels 2345 puppet on
+	sudo /etc/init.d/puppet start
+	sudo service iptables stop
 
-		
-	sudo chkconfig --levels 2345 puppet on >/dev/null
-
-	
-
-	sudo /etc/init.d/puppet start >/dev/null
-
-	
-
-	sudo service iptables stop >/dev/null
-
-sudo cat > /etc/puppet/puppet.conf <<"EOF"
+  sudo cat > /etc/puppet/puppet.conf <<"EOF"
 [main]
     # The Puppet log directory.
     # The default value is '$vardir/log'.
@@ -62,10 +54,8 @@ sudo cat > /etc/puppet/puppet.conf <<"EOF"
     # The default value is '$confdir/localconfig'.
     localconfig = $vardir/localconfig
 EOF
-
 	#Touch the puppet_installed.txt file to skip this block the next time around
 	touch /home/vagrant/puppet_agent_installed.txt
-
 else
 	echo "Skipping Puppet agent package installation..."
 fi

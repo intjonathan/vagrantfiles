@@ -3,8 +3,8 @@ echo Checking to see if the Puppet Labs RHEL/CentOS repo needs to be added...
 
 if [ ! -f /home/vagrant/repos_added.txt ];
 then
-	sudo rpm -ivh http://yum.puppetlabs.com/el/6/products/x86_64/puppetlabs-release-6-7.noarch.rpm >/dev/null
-	sudo yum check-update >/dev/null
+	sudo rpm -ivh http://yum.puppetlabs.com/el/6/products/x86_64/puppetlabs-release-6-7.noarch.rpm
+	sudo yum check-update
 	#Touch the repos_added file to skip this block the next time around
 	touch /home/vagrant/repos_added.txt
 else
@@ -13,10 +13,10 @@ fi
 
 if [ ! -f /home/vagrant/puppet_master_installed.txt ];
 then
-	sudo yum install puppet-server -y >/dev/null
-	sudo chkconfig --levels 2345 puppetmaster on >/dev/null
-	sudo /etc/init.d/puppetmaster start >/dev/null
-	sudo service iptables stop >/dev/null
+	sudo yum install puppet-server -y
+	sudo chkconfig --levels 2345 puppetmaster on
+	sudo /etc/init.d/puppetmaster start
+	sudo service iptables stop
 	#Touch the puppet_installed.txt file to skip this block the next time around
 	touch /home/vagrant/puppet_master_installed.txt
 else
@@ -52,10 +52,10 @@ sudo cat > /etc/puppet/puppet.conf <<"EOF"
     # The default value is '$confdir/localconfig'.
     localconfig = $vardir/localconfig
 EOF
-    sudo /etc/init.d/puppetmaster stop >/dev/null
-    sudo puppet cert clean --all >/dev/null
-    sudo puppet cert generate master --dns_alt_names=puppet,master,puppetmaster,puppet.local,master.local,puppetmaster.local >/dev/null
-    sudo /etc/init.d/puppetmaster restart >/dev/null
+    sudo /etc/init.d/puppetmaster stop
+    sudo puppet cert clean --all
+    sudo puppet cert generate master --dns_alt_names=puppet,master,puppetmaster,puppet.local,master.local,puppetmaster.local
+    sudo /etc/init.d/puppetmaster restart
     #Touch the puppet_installed.txt file to skip this block the next time around
 	touch /home/vagrant/puppet_master_installed.txt
 else
