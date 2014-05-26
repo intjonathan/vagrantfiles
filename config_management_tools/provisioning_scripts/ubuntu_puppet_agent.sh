@@ -17,10 +17,8 @@ fi
 
 if [ ! -f /home/vagrant/puppet_master_installed.txt ];
 then
-	sudo apt-get -y install puppetmaster
-	sudo /etc/init.d/puppetmaster start
+	sudo apt-get -y install puppet
 	sudo service ufw stop
-
   sudo cat > /etc/puppet/puppet.conf <<"EOF"
 [main]
 logdir=/var/log/puppet
@@ -37,28 +35,11 @@ ssl_client_verify_header = SSL_CLIENT_VERIFY
 environmentpath = $confdir/environments
 EOF
 
-  sudo /etc/init.d/puppetmaster stop
-  sudo puppet cert clean --all
-  sudo puppet cert generate master --dns_alt_names=puppet,master,puppetmaster,puppet.local,master.local,puppetmaster.local >/dev/null
-  sudo /etc/init.d/puppetmaster restart
-
-
+  #Set the daemon to start automatically:
+  sed -i 's/START=no/START=yes/g' /etc/default/puppet 
+  sudo service puppet restart
   #Touch the puppet_installed.txt file to skip this block the next time around
   touch /home/vagrant/puppet_master_installed.txt
 else
-	echo "Skipping Puppet master installation..."
-fi
-
-if [ ! -f /home/vagrant/puppet_master_initial_run_complete.txt ];
-then
-  #Do an initial Puppet run to set up PuppetDB:
-  puppet agent -t
-  #Enable PuppetDB report storage...
-  echo 'reports = store,puppetdb' >> /etc/puppet/puppet.conf
-  #...and restart PuppetDB:
-  service puppetmaster restart
-  #Touch the puppet_master_initial_run_complete.txt file to skip this block the next time around
-  touch /home/vagrant/puppet_master_initial_run_complete.txt
-else
-  echo "Skipping initial Puppet run..."
+	echo "Skipping Puppet agent installation..."
 fi
