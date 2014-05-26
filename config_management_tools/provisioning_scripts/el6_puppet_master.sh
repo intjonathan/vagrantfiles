@@ -13,18 +13,12 @@ fi
 
 if [ ! -f /home/vagrant/puppet_master_installed.txt ];
 then
-	sudo yum install puppet-server -y
+	sudo yum install puppet-server -y --nogpgcheck 
 	sudo chkconfig --levels 2345 puppetmaster on
 	sudo /etc/init.d/puppetmaster start
 	sudo service iptables stop
-	#Touch the puppet_installed.txt file to skip this block the next time around
-	touch /home/vagrant/puppet_master_installed.txt
-else
-	echo "Skipping Puppet master package installation..."
-fi
-
-echo "cating sample puppet.conf into puppet.conf file..."
-sudo cat > /etc/puppet/puppet.conf <<"EOF"
+  echo "cating sample puppet.conf into puppet.conf file..."
+  sudo cat > /etc/puppet/puppet.conf <<"EOF"
 [main]
 [main]
 logdir=/var/log/puppet
@@ -40,6 +34,7 @@ ssl_client_header = SSL_CLIENT_S_DN.
 ssl_client_verify_header = SSL_CLIENT_VERIFY
 environmentpath = $confdir/environments
 EOF
+
   sudo /etc/init.d/puppetmaster stop
   sudo puppet cert clean --all
   sudo puppet cert generate master --dns_alt_names=puppet,master,puppetmaster,puppet.local,master.local,puppetmaster.local
