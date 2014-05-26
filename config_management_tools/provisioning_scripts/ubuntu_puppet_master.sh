@@ -41,8 +41,6 @@ EOF
   sudo puppet cert clean --all
   sudo puppet cert generate master --dns_alt_names=puppet,master,puppetmaster,puppet.local,master.local,puppetmaster.local >/dev/null
   sudo /etc/init.d/puppetmaster restart
-
-
   #Touch the puppet_installed.txt file to skip this block the next time around
   touch /home/vagrant/puppet_master_installed.txt
 else

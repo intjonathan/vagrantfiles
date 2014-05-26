@@ -53,4 +53,3 @@ EOF
 else
 	echo "Skipping Puppet agent package installation..."
 fi
-

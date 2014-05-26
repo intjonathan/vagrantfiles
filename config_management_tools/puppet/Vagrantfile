@@ -29,7 +29,7 @@ Vagrant.configure("2") do |config|
     saucymaster_config.vm.synced_folder "hieradata/", "/etc/puppet/environments/production/hieradata", :nfs => true
     saucymaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_master.sh"
   end
-
+  
   #Ubuntu Trusty Puppet master
   config.vm.define "trustymaster".to_sym do |trustymaster_config|
     trustymaster_config.vm.box = "ubuntu-14.04-server-amd64"
@@ -75,6 +75,25 @@ Vagrant.configure("2") do |config|
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
     trustyagent_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+  end
+
+  #CentOS 6 Puppet master
+  config.vm.define "centos6master".to_sym do |centos6master_config|
+    centos6master_config.vm.box = "centos-6.5-amd64"
+    centos6master_config.vm.hostname = "centos6master.local"
+    centos6master_config.hostmanager.aliases = %w(puppetboard.centos6master.local centos6master puppet master)
+    centos6master_config.hostmanager.enabled = true
+    centos6master_config.vm.network :private_network, ip: "10.0.1.84"
+    #set some machine-specific options	
+    centos6master_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+    #Set up synced folders for Puppet code:
+    centos6master_config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/environments/production/modules", :nfs => true
+    centos6master_config.vm.synced_folder "manifests/", "/etc/puppet/environments/production/manifests", :nfs => true
+    centos6master_config.vm.synced_folder "hieradata/", "/etc/puppet/environments/production/hieradata", :nfs => true
+    centos6master_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_master.sh"
   end
 
 end
