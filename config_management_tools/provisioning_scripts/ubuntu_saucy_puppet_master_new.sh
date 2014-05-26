@@ -32,9 +32,6 @@ factpath=$vardir/lib/facter
 ssl_client_header = SSL_CLIENT_S_DN.
 ssl_client_verify_header = SSL_CLIENT_VERIFY
 environmentpath = $confdir/environments
-reports = store,puppetdb
-storeconfigs = true
-storeconfigs_backend = puppetdb
 EOF
 
   sudo /etc/init.d/puppetmaster stop
