@@ -98,7 +98,7 @@ Vagrant.configure("2") do |config|
 
   #Debian Puppet master
   config.vm.define "debianmaster".to_sym do |debianmaster_config|
-    debianmaster_config.vm.box = "centos-6.5-amd64"
+    debianmaster_config.vm.box = "debian-7.4-amd64"
     debianmaster_config.vm.hostname = "debianmaster.local"
     debianmaster_config.hostmanager.aliases = %w(puppetboard.debianmaster.local debianmaster puppet master)
     debianmaster_config.hostmanager.enabled = true
