@@ -287,6 +287,34 @@ node 'node1.local' {
   #This is the Puppet Labs Apache module: https://github.com/puppetlabs/puppetlabs-apache
   include apache
 
+  #Install MySQL to test collectd's MySQL metrics gathering.
+  #This module is the Puppet Labs MySQL module: https://github.com/puppetlabs/puppetlabs-mysql
+  class { '::mysql::server':
+    root_password    => 'password',
+    override_options => { 'mysqld' => { 'max_connections' => '1024' } },
+    users => {
+      #Create a collectd DB user:
+      'collectd@localhost' => {
+          ensure                   => 'present',
+          max_connections_per_hour => '0',
+          max_queries_per_hour     => '0',
+          max_updates_per_hour     => '0',
+          max_user_connections     => '0',
+          password_hash            => mysql_password('password'),
+        }
+    },
+    grants => {
+      #Let the collectd DB user read
+      'collectd@localhost/*.*' => {
+        ensure     => 'present',
+        options    => ['GRANT'],
+        privileges => ['USAGE'],
+        table      => '*.*',
+        user       => 'collectd@localhost',
+      },
+    }
+  }
+
   include collectd
   
   collectd::plugin { 'df': }
@@ -349,6 +377,34 @@ node 'node2.local' {
   #Install Apache so we test collectd's Apache metrics gathering.
   #This is the Puppet Labs Apache module: https://github.com/puppetlabs/puppetlabs-apache
   include apache
+
+  #Install MySQL to test collectd's MySQL metrics gathering.
+  #This module is the Puppet Labs MySQL module: https://github.com/puppetlabs/puppetlabs-mysql
+  class { '::mysql::server':
+    root_password    => 'password',
+    override_options => { 'mysqld' => { 'max_connections' => '1024' } },
+    users => {
+      #Create a collectd DB user:
+      'collectd@localhost' => {
+          ensure                   => 'present',
+          max_connections_per_hour => '0',
+          max_queries_per_hour     => '0',
+          max_updates_per_hour     => '0',
+          max_user_connections     => '0',
+          password_hash            => mysql_password('password'),
+        }
+    },
+    grants => {
+      #Let the collectd DB user read
+      'collectd@localhost/*.*' => {
+        ensure     => 'present',
+        options    => ['GRANT'],
+        privileges => ['USAGE'],
+        table      => '*.*',
+        user       => 'collectd@localhost',
+      },
+    }
+  }
 
   include collectd
   
@@ -413,6 +469,34 @@ node 'node3.local' {
   #This is the Puppet Labs Apache module: https://github.com/puppetlabs/puppetlabs-apache
   include apache
 
+  #Install MySQL to test collectd's MySQL metrics gathering.
+  #This module is the Puppet Labs MySQL module: https://github.com/puppetlabs/puppetlabs-mysql
+  class { '::mysql::server':
+    root_password    => 'password',
+    override_options => { 'mysqld' => { 'max_connections' => '1024' } },
+    users => {
+      #Create a collectd DB user:
+      'collectd@localhost' => {
+          ensure                   => 'present',
+          max_connections_per_hour => '0',
+          max_queries_per_hour     => '0',
+          max_updates_per_hour     => '0',
+          max_user_connections     => '0',
+          password_hash            => mysql_password('password'),
+        }
+    },
+    grants => {
+      #Let the collectd DB user read
+      'collectd@localhost/*.*' => {
+        ensure     => 'present',
+        options    => ['GRANT'],
+        privileges => ['USAGE'],
+        table      => '*.*',
+        user       => 'collectd@localhost',
+      },
+    }
+  }
+
 }
 
 #CentOS Graphite node
@@ -461,6 +545,34 @@ node 'node4.local' {
   #This is the Puppet Labs Apache module: https://github.com/puppetlabs/puppetlabs-apache
   include apache
 
+  #Install MySQL to test collectd's MySQL metrics gathering.
+  #This module is the Puppet Labs MySQL module: https://github.com/puppetlabs/puppetlabs-mysql
+  class { '::mysql::server':
+    root_password    => 'password',
+    override_options => { 'mysqld' => { 'max_connections' => '1024' } },
+    users => {
+      #Create a collectd DB user:
+      'collectd@localhost' => {
+          ensure                   => 'present',
+          max_connections_per_hour => '0',
+          max_queries_per_hour     => '0',
+          max_updates_per_hour     => '0',
+          max_user_connections     => '0',
+          password_hash            => mysql_password('password'),
+        }
+    },
+    grants => {
+      #Let the collectd DB user read
+      'collectd@localhost/*.*' => {
+        ensure     => 'present',
+        options    => ['GRANT'],
+        privileges => ['USAGE'],
+        table      => '*.*',
+        user       => 'collectd@localhost',
+      },
+    }
+  }
+
 }
 
 #Ubuntu Graphite node
@@ -508,6 +620,34 @@ node 'node5.local' {
   #Install Apache so we test collectd's Apache metrics gathering.
   #This is the Puppet Labs Apache module: https://github.com/puppetlabs/puppetlabs-apache
   include apache
+
+  #Install MySQL to test collectd's MySQL metrics gathering.
+  #This module is the Puppet Labs MySQL module: https://github.com/puppetlabs/puppetlabs-mysql
+  class { '::mysql::server':
+    root_password    => 'password',
+    override_options => { 'mysqld' => { 'max_connections' => '1024' } },
+    users => {
+      #Create a collectd DB user:
+      'collectd@localhost' => {
+          ensure                   => 'present',
+          max_connections_per_hour => '0',
+          max_queries_per_hour     => '0',
+          max_updates_per_hour     => '0',
+          max_user_connections     => '0',
+          password_hash            => mysql_password('password'),
+        }
+    },
+    grants => {
+      #Let the collectd DB user read
+      'collectd@localhost/*.*' => {
+        ensure     => 'present',
+        options    => ['GRANT'],
+        privileges => ['USAGE'],
+        table      => '*.*',
+        user       => 'collectd@localhost',
+      },
+    }
+  }
 
   include collectd
   
@@ -571,5 +711,33 @@ node 'node6.local' {
   #Install Apache so we test collectd's Apache metrics gathering.
   #This is the Puppet Labs Apache module: https://github.com/puppetlabs/puppetlabs-apache
   include apache
+
+  #Install MySQL to test collectd's MySQL metrics gathering.
+  #This module is the Puppet Labs MySQL module: https://github.com/puppetlabs/puppetlabs-mysql
+  class { '::mysql::server':
+    root_password    => 'password',
+    override_options => { 'mysqld' => { 'max_connections' => '1024' } },
+    users => {
+      #Create a collectd DB user:
+      'collectd@localhost' => {
+          ensure                   => 'present',
+          max_connections_per_hour => '0',
+          max_queries_per_hour     => '0',
+          max_updates_per_hour     => '0',
+          max_user_connections     => '0',
+          password_hash            => mysql_password('password'),
+        }
+    },
+    grants => {
+      #Let the collectd DB user read
+      'collectd@localhost/*.*' => {
+        ensure     => 'present',
+        options    => ['GRANT'],
+        privileges => ['USAGE'],
+        table      => '*.*',
+        user       => 'collectd@localhost',
+      },
+    }
+  }
 
 }
