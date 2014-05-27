@@ -1,6 +1,5 @@
 #! /bin/bash
 echo "Checking to see if the Puppet Labs apt repo needs to be added..."
-
 if [ ! -f /home/vagrant/repos_added.txt ];
 then    
   #Install lsb_release and wget if they aren't already present:
@@ -18,24 +17,12 @@ else
 fi
 
 echo "Checking to see if the Puppet agent package needs to be installed..."
-
 if [ ! -f /home/vagrant/puppet_agent_installed.txt ];
 then
-	echo "Installing the Puppet agent..."
 	sudo apt-get -y install puppet >/dev/null
-	echo "DONE installing the Puppet agent packages!"
-		
-	echo "Starting the Puppet agent daemon..."
 	sudo /etc/init.d/puppet start >/dev/null
-	echo "DONE starting the daemon!"
-	
-	echo "Flushing iptables firwall rules..."
 	sudo iptables -F >/dev/null
-	echo "DONE flushing iptables firewall rules!"
-
-    echo "cating sample puppet.conf into puppet.conf file..."
-
-   sudo cat > /etc/puppet/puppet.conf <<"EOF"
+  sudo cat > /etc/puppet/puppet.conf <<"EOF"
 [main]
 # The Puppet log directory.
 # The default value is '$vardir/log'.
