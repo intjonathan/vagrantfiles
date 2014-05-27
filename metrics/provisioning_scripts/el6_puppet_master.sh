@@ -2,81 +2,59 @@
 echo Checking to see if the Puppet Labs RHEL/CentOS repo needs to be added...
 
 if [ ! -f /home/vagrant/repos_added.txt ];
-then    
-    echo "Adding repo..."
-	sudo rpm -ivh http://yum.puppetlabs.com/el/6/products/x86_64/puppetlabs-release-6-7.noarch.rpm >/dev/null
-	echo "DONE adding repo!"
-    echo "Updating package lists with new repo..."
-	sudo yum check-update >/dev/null
+then
+	sudo rpm -ivh http://yum.puppetlabs.com/el/6/products/x86_64/puppetlabs-release-6-7.noarch.rpm
+	sudo yum check-update
 	#Touch the repos_added file to skip this block the next time around
 	touch /home/vagrant/repos_added.txt
-
 else
 	echo "Skipping repo addition..."
 fi
 
 if [ ! -f /home/vagrant/puppet_master_installed.txt ];
 then
-	echo "Installing the Puppet master..."
-	sudo yum install puppet-server -y >/dev/null
-	echo "DONE installing the Puppet master packages!"
-	
-	sudo chkconfig --levels 2345 puppetmaster on >/dev/null
-	echo "DONE adding the Puppet master daemon to start up on system boot!"
-	
-	echo "Starting the Puppet master daemon..."
-	sudo /etc/init.d/puppetmaster start >/dev/null
-	echo "DONE starting the daemon!"
-	
-	echo "Disabling IP tables..."
-	sudo service iptables stop >/dev/null
-	echo "DONE disabling iptables!"
-	
-	#Touch the puppet_installed.txt file to skip this block the next time around
-	touch /home/vagrant/puppet_master_installed.txt
-else
-	echo "Skipping Puppet master package installation..."
-fi
-
-echo "cating sample puppet.conf into puppet.conf file..."
-sudo cat > /etc/puppet/puppet.conf <<"EOF"
+	sudo yum install puppet-server -y --nogpgcheck 
+	sudo chkconfig --levels 2345 puppetmaster on
+	sudo /etc/init.d/puppetmaster start
+	sudo service iptables stop
+  echo "cating sample puppet.conf into puppet.conf file..."
+  sudo cat > /etc/puppet/puppet.conf <<"EOF"
 [main]
-    # The Puppet log directory.
-    # The default value is '$vardir/log'.
-    logdir = /var/log/puppet
+[main]
+logdir=/var/log/puppet
+vardir=/var/lib/puppet
+ssldir=/var/lib/puppet/ssl
+rundir=/var/run/puppet
+factpath=$vardir/lib/facter
 
-    # Where Puppet PID files are kept.
-    # The default value is '$vardir/run'.
-    rundir = /var/run/puppet
-
-    # Where SSL certificates are kept.
-    # The default value is '$confdir/ssl'.
-    ssldir = /var/lib/puppet/ssl/
-    dns_alt_names=puppet, master
-
-[agent]
-    # The file in which puppetd stores a list of the classes
-    # associated with the retrieved configuratiion.  Can be loaded in
-    # the separate ``puppet`` executable using the ``--loadclasses``
-    # option.
-    # The default value is '$confdir/classes.txt'.
-    classfile = $vardir/classes.txt
-
-    # Where puppetd caches the local configuration.  An
-    # extension indicating the cache format is added automatically.
-    # The default value is '$confdir/localconfig'.
-    localconfig = $vardir/localconfig
+[master]
+# These are needed when the puppetmaster is run by passenger
+# and can safely be removed if webrick is used.
+ssl_client_header = SSL_CLIENT_S_DN.
+ssl_client_verify_header = SSL_CLIENT_VERIFY
+environmentpath = $confdir/environments
 EOF
-    
-    echo "Regenerating Puppet master certificate with the 'puppet' DNS altname..."
-    sudo /etc/init.d/puppetmaster stop >/dev/null
-    sudo puppet cert clean --all >/dev/null
-    sudo puppet cert generate master --dns_alt_names=puppet,master,puppetmaster,puppet.local,master.local,puppetmaster.local >/dev/null
-    sudo /etc/init.d/puppetmaster restart >/dev/null
-    echo "DONE regenerating the master certificate!"
-    
-    #Touch the puppet_installed.txt file to skip this block the next time around
-	touch /home/vagrant/puppet_master_installed.txt
+
+  sudo /etc/init.d/puppetmaster stop
+  sudo puppet cert clean --all
+  sudo puppet cert generate master --dns_alt_names=puppet,master,puppetmaster,puppet.local,master.local,puppetmaster.local
+  sudo /etc/init.d/puppetmaster restart
+  #Touch the puppet_installed.txt file to skip this block the next time around
+  touch /home/vagrant/puppet_master_installed.txt
 else
 	echo "Skipping Puppet master installation..."
+fi
+
+if [ ! -f /home/vagrant/puppet_master_initial_run_complete.txt ];
+then
+  #Do an initial Puppet run to set up PuppetDB:
+  puppet agent -t
+  #Enable PuppetDB report storage...
+  echo 'reports = store,puppetdb' >> /etc/puppet/puppet.conf
+  #...and restart PuppetDB:
+  service puppetmaster restart
+  #Touch the puppet_master_initial_run_complete.txt file to skip this block the next time around
+  touch /home/vagrant/puppet_master_initial_run_complete.txt
+else
+  echo "Skipping initial Puppet run..."
 fi
