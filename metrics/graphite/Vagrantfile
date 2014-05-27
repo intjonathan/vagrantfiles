@@ -27,7 +27,7 @@ Vagrant.configure("2") do |config|
     graphitemaster_config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/environments/production/modules", :nfs => true
     graphitemaster_config.vm.synced_folder "manifests/", "/etc/puppet/environments/production/manifests", :nfs => true
     graphitemaster_config.vm.synced_folder "hieradata/", "/etc/puppet/environments/production/hieradata", :nfs => true
-    graphitemaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_master.sh"
+    graphitemaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_master.sh"
   end
 
   #An Ubuntu Graphite server
@@ -42,7 +42,7 @@ Vagrant.configure("2") do |config|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "1024"]
     end
-    graphite1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh" 
+    graphite1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh" 
   end
 
   #A CentOS Graphite server
@@ -71,7 +71,7 @@ Vagrant.configure("2") do |config|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
-    node1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh" 
+    node1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh" 
   end
 
   #another node server
@@ -85,7 +85,7 @@ Vagrant.configure("2") do |config|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
-    node2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh" 
+    node2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh" 
   end
 
   #a client machine
@@ -127,7 +127,7 @@ Vagrant.configure("2") do |config|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
-    node5_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh" 
+    node5_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh" 
   end
 
   #another node server

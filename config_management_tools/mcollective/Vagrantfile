@@ -34,7 +34,7 @@ Vagrant.configure("2") do |config|
     mcomaster_config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/environments/production/modules", :nfs => true
     mcomaster_config.vm.synced_folder "manifests/", "/etc/puppet/environments/production/manifests", :nfs => true
     mcomaster_config.vm.synced_folder "hieradata/", "/etc/puppet/environments/production/hieradata", :nfs => true
-    mcomaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_master.sh"
+    mcomaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_master.sh"
   end
 
   #CentOS mco machine
@@ -48,7 +48,7 @@ Vagrant.configure("2") do |config|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
-    mco1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
+    mco1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
   end
 
   #CentOS mco machine
@@ -62,7 +62,7 @@ Vagrant.configure("2") do |config|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
-    mco2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
+    mco2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
   end
 
   #CentOS mco machine

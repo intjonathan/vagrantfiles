@@ -32,7 +32,7 @@ Vagrant.configure("2") do |config|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "1024"]
     end
-   hashmaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_master.sh" 
+   hashmaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_master.sh" 
   end
 
   config.vm.define "ubuntuhash".to_sym do |ubuntuhash_config|
@@ -45,7 +45,7 @@ Vagrant.configure("2") do |config|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
-   ubuntuhash_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"  
+   ubuntuhash_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"  
   end
 
   config.vm.define "debianhash".to_sym do |debianhash_config|

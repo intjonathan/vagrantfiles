@@ -33,7 +33,7 @@ Vagrant.configure("2") do |config|
     dockermaster_config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/environments/production/modules", :nfs => true
     dockermaster_config.vm.synced_folder "manifests/", "/etc/puppet/environments/production/manifests", :nfs => true
     dockermaster_config.vm.synced_folder "hieradata/", "/etc/puppet/environments/production/hieradata", :nfs => true
-    dockermaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_master.sh"
+    dockermaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_master.sh"
   end
 
   #Ubuntu Docker container server
@@ -48,7 +48,7 @@ Vagrant.configure("2") do |config|
       v.customize ["modifyvm", :id, "--memory", "2048"]
     end
     docker1_config.vm.synced_folder "/Users/nick/virtual_machines/dockerfiles", "/dockerfiles", :nfs => true
-    docker1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
+    docker1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
   end
 
   #Ubuntu Docker container server
@@ -63,7 +63,7 @@ Vagrant.configure("2") do |config|
       v.customize ["modifyvm", :id, "--memory", "2048"]
     end
     docker2_config.vm.synced_folder "/Users/nick/virtual_machines/dockerfiles", "/dockerfiles", :nfs => true
-    docker2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
+    docker2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
   end
 
   #Ubuntu Docker container server
@@ -78,6 +78,6 @@ Vagrant.configure("2") do |config|
       v.customize ["modifyvm", :id, "--memory", "2048"]
     end
     docker3_config.vm.synced_folder "/Users/nick/virtual_machines/dockerfiles", "/dockerfiles", :nfs => true
-    docker3_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
+    docker3_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
   end
 end

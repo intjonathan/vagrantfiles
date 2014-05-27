@@ -35,7 +35,7 @@ Vagrant.configure("2") do |config|
     grafanamaster_config.vm.synced_folder "manifests/", "/etc/puppet/environments/production/manifests", :nfs => true
     grafanamaster_config.vm.synced_folder "hieradata", "/etc/puppet/environments/production/hieradata", :nfs => true
     #Puppet master provisioning script
-    grafanamaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_master.sh"
+    grafanamaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_master.sh"
   end
 
   #A machine running Grafana
@@ -49,7 +49,7 @@ Vagrant.configure("2") do |config|
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
     #Puppet agent provisioning script
-	  grafana1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
+	  grafana1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
   end
 
   #A machine running Grafana

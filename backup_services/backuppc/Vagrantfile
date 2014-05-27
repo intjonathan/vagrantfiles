@@ -35,7 +35,7 @@ Vagrant.configure("2") do |config|
     backuppcmaster_config.vm.synced_folder "manifests/", "/etc/puppet/environments/production/manifests", :nfs => true
     backuppcmaster_config.vm.synced_folder "hieradata", "/etc/puppet/environments/production/hieradata", :nfs => true
     #Puppet master provisioning script
-    backuppcmaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_master.sh"
+    backuppcmaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_master.sh"
   end
 
   #A machine running BackupPC
@@ -49,7 +49,7 @@ Vagrant.configure("2") do |config|
       v.customize ["modifyvm", :id, "--memory", "1024"]
     end
     #Puppet agent provisioning script
-	  backupserver_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
+	  backupserver_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
   end
 
   #A machine BackupPC will back things up from
@@ -63,7 +63,7 @@ Vagrant.configure("2") do |config|
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
     #Puppet agent provisioning script
-	  backupclient1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
+	  backupclient1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
   end
 
   #A machine BackupPC will back things up from

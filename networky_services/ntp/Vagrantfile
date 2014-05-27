@@ -27,7 +27,7 @@ Vagrant.configure("2") do |config|
     ntpmaster_config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/environments/production/modules", :nfs => true
     ntpmaster_config.vm.synced_folder "manifests/", "/etc/puppet/environments/production/manifests", :nfs => true
     ntpmaster_config.vm.synced_folder "hieradata/", "/etc/puppet/environments/production/hieradata", :nfs => true
-    ntpmaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_master.sh"
+    ntpmaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_master.sh"
   end
 
   #main NTP server
@@ -41,7 +41,7 @@ Vagrant.configure("2") do |config|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
-    ntp1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh" 
+    ntp1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh" 
   end
 
   #another NTP server
@@ -55,7 +55,7 @@ Vagrant.configure("2") do |config|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
-    ntp2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh" 
+    ntp2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh" 
   end
 
   #a client machine

@@ -27,7 +27,7 @@ Vagrant.configure("2") do |config|
     netflowmaster_config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/environments/production/modules", :nfs => true
     netflowmaster_config.vm.synced_folder "manifests/", "/etc/puppet/environments/production/manifests", :nfs => true
     netflowmaster_config.vm.synced_folder "hieradata/", "/etc/puppet/environments/production/hieradata", :nfs => true
-    netflowmaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_master.sh"
+    netflowmaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_master.sh"
   end
 
   #An Ubuntu NetFlow collector
@@ -41,7 +41,7 @@ Vagrant.configure("2") do |config|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "1024"]
     end
-    netflow1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh" 
+    netflow1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh" 
   end
 
   #A CentOS NetFlow collector
@@ -69,7 +69,7 @@ Vagrant.configure("2") do |config|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
-    flow1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh" 
+    flow1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh" 
   end
 
   #another flow sender
@@ -83,7 +83,7 @@ Vagrant.configure("2") do |config|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
-    flow2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh" 
+    flow2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh" 
   end
 
   #another flow sender
@@ -125,7 +125,7 @@ Vagrant.configure("2") do |config|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
-    flow5_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh" 
+    flow5_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh" 
   end
 
   #another flow server

@@ -35,7 +35,7 @@ Vagrant.configure("2") do |config|
     config.vm.synced_folder "manifests/", "/etc/puppet/environments/production/manifests", :nfs => true
     config.vm.synced_folder "hieradata", "/etc/puppet/environments/production/hieradata", :nfs => true
     #Puppet master provisioning script
-    openmanagemaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_master.sh"
+    openmanagemaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_master.sh"
   end
 
   #An Ubuntu VM to test OpenManage installations via Puppet
@@ -49,7 +49,7 @@ Vagrant.configure("2") do |config|
           v.customize ["modifyvm", :id, "--memory", "512"]
     end
     #Puppet agent provisioning script
-	  openmanage1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
+	  openmanage1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
   end
 
   #A CentOS VM to test OpenManage installations via Puppet

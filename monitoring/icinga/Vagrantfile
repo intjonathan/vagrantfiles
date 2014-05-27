@@ -38,7 +38,7 @@ Vagrant.configure("2") do |config|
     config.vm.synced_folder "manifests/", "/etc/puppet/environments/production/manifests", :nfs => true
     config.vm.synced_folder "hieradata/", "/etc/puppet/environments/production/hieradata", :nfs => true
     #Puppet icingamaster provisioning script
-    icingamaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_master.sh"
+    icingamaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_master.sh"
   end  
 
   #ubuntuicinga server
@@ -54,7 +54,7 @@ Vagrant.configure("2") do |config|
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
     #Puppet agent provisioning script
-    ubuntuicinga_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
+    ubuntuicinga_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
   end
 
   #centosicinga server
@@ -85,7 +85,7 @@ Vagrant.configure("2") do |config|
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
     #Puppet agent provisioning script
-    icingaclient1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
+    icingaclient1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
   end
 
   #an icingaserver client
@@ -114,7 +114,7 @@ Vagrant.configure("2") do |config|
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
     #Puppet agent provisioning script
-    icingaclient3_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
+    icingaclient3_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
   end
 
   #an icingaserver client

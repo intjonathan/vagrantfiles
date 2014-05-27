@@ -35,7 +35,7 @@ Vagrant.configure("2") do |config|
     spacewalkmaster_config.vm.synced_folder "manifests/", "/etc/puppet/environments/production/manifests", :nfs => true
     spacewalkmaster_config.vm.synced_folder "hieradata", "/etc/puppet/environments/production/hieradata", :nfs => true
     #Puppet master provisioning script
-    spacewalkmaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_master.sh"
+    spacewalkmaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_master.sh"
   end
 
   #A Spacewalk client
@@ -91,6 +91,6 @@ Vagrant.configure("2") do |config|
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
     #Puppet agent provisioning script
-	  server3_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_saucy_puppet_agent.sh"
+	  server3_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
   end
 end
