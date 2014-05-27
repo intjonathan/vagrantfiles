@@ -283,6 +283,10 @@ node 'node1.local' {
     disable_monitor => true,
   }
   
+  #Install Apache so we test collectd's Apache metrics gathering.
+  #This is the Puppet Labs Apache module: https://github.com/puppetlabs/puppetlabs-apache
+  include apache
+  
   include collectd
   
   collectd::plugin { 'df': }
@@ -341,6 +345,10 @@ node 'node2.local' {
     restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
     disable_monitor => true,
   }
+
+  #Install Apache so we test collectd's Apache metrics gathering.
+  #This is the Puppet Labs Apache module: https://github.com/puppetlabs/puppetlabs-apache
+  include apache
 
   include collectd
   
@@ -401,6 +409,10 @@ node 'node3.local' {
     disable_monitor => true,
   }
 
+  #Install Apache so we test collectd's Apache metrics gathering.
+  #This is the Puppet Labs Apache module: https://github.com/puppetlabs/puppetlabs-apache
+  include apache
+
 }
 
 #CentOS Graphite node
@@ -444,6 +456,11 @@ node 'node4.local' {
     restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
     disable_monitor => true,
   }
+
+  #Install Apache so we test collectd's Apache metrics gathering.
+  #This is the Puppet Labs Apache module: https://github.com/puppetlabs/puppetlabs-apache
+  include apache
+
 }
 
 #Ubuntu Graphite node
@@ -487,6 +504,10 @@ node 'node5.local' {
     restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
     disable_monitor => true,
   }
+
+  #Install Apache so we test collectd's Apache metrics gathering.
+  #This is the Puppet Labs Apache module: https://github.com/puppetlabs/puppetlabs-apache
+  include apache
 
   include collectd
   
@@ -546,4 +567,9 @@ node 'node6.local' {
     restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
     disable_monitor => true,
   }
+
+  #Install Apache so we test collectd's Apache metrics gathering.
+  #This is the Puppet Labs Apache module: https://github.com/puppetlabs/puppetlabs-apache
+  include apache
+
 }
