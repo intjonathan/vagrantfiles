@@ -113,7 +113,7 @@ node 'graphite1.local' {
 
   #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
-    log_remote     => true,
+    log_remote     => false,
     remote_type    => 'tcp',
     log_local      => true,
     log_auth_local => true,
@@ -190,7 +190,7 @@ node 'graphite2.local' {
 
   #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
-    log_remote     => true,
+    log_remote     => false,
     remote_type    => 'tcp',
     log_local      => true,
     log_auth_local => true,
@@ -267,7 +267,7 @@ node 'node1.local' {
 
   #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
-    log_remote     => true,
+    log_remote     => false,
     remote_type    => 'tcp',
     log_local      => true,
     log_auth_local => true,
@@ -286,7 +286,7 @@ node 'node1.local' {
   #Install Apache so we test collectd's Apache metrics gathering.
   #This is the Puppet Labs Apache module: https://github.com/puppetlabs/puppetlabs-apache
   include apache
-  
+
   include collectd
   
   collectd::plugin { 'df': }
@@ -330,7 +330,7 @@ node 'node2.local' {
 
   #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
-    log_remote     => true,
+    log_remote     => false,
     remote_type    => 'tcp',
     log_local      => true,
     log_auth_local => true,
@@ -393,7 +393,7 @@ node 'node3.local' {
 
   #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
-    log_remote     => true,
+    log_remote     => false,
     remote_type    => 'tcp',
     log_local      => true,
     log_auth_local => true,
@@ -441,7 +441,7 @@ node 'node4.local' {
 
   #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
-    log_remote     => true,
+    log_remote     => false,
     remote_type    => 'tcp',
     log_local      => true,
     log_auth_local => true,
@@ -489,7 +489,7 @@ node 'node5.local' {
 
   #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
-    log_remote     => true,
+    log_remote     => false,
     remote_type    => 'tcp',
     log_local      => true,
     log_auth_local => true,
@@ -552,7 +552,7 @@ node 'node6.local' {
 
   #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
-    log_remote     => true,
+    log_remote     => false,
     remote_type    => 'tcp',
     log_local      => true,
     log_auth_local => true,
