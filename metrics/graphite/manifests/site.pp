@@ -90,8 +90,6 @@ node 'graphitemaster.local' {
 #Ubuntu Graphite server
 node 'graphite1.local' {
 
-  #include apache
-
   #This module is from: https://github.com/saz/puppet-ssh
   class { 'ssh':
     #Export host keys to PuppetDB:
@@ -130,6 +128,10 @@ node 'graphite1.local' {
     restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
     disable_monitor => true,
   }
+  
+  #Install Apache so we have something that can serve the Graphite web UI and HTTP API.
+  #This is the Puppet Labs Apache module: https://github.com/puppetlabs/puppetlabs-apache
+  include apache
 
   #Install Postgres:
   class { 'postgresql::server': }
@@ -203,6 +205,10 @@ node 'graphite2.local' {
     restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
     disable_monitor => true,
   }
+
+  #Install Apache so we have something that can serve the Graphite web UI and HTTP API.
+  #This is the Puppet Labs Apache module: https://github.com/puppetlabs/puppetlabs-apache
+  include apache
 
   #Install Postgres:
   class { 'postgresql::server': }
