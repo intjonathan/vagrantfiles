@@ -15,32 +15,48 @@ else
 	echo "Skipping repo addition and package installation..."
 fi
 
-if [ ! -f /home/vagrant/puppet_master_installed.txt ];
+if [ ! -f /home/vagrant/puppet_agent_installed.txt ];
 then
 	sudo apt-get -y install puppet
 	sudo service ufw stop
 
   sudo cat > /etc/puppet/puppet.conf <<"EOF"
 [main]
-logdir=/var/log/puppet
-vardir=/var/lib/puppet
-ssldir=/var/lib/puppet/ssl
-rundir=/var/run/puppet
-factpath=$vardir/lib/facter
+# The Puppet log directory.
+# The default value is '$vardir/log'.
+logdir = /var/log/puppet
 
-[master]
-# These are needed when the puppetmaster is run by passenger
-# and can safely be removed if webrick is used.
-ssl_client_header = SSL_CLIENT_S_DN.
-ssl_client_verify_header = SSL_CLIENT_VERIFY
-environmentpath = $confdir/environments
+# Where Puppet PID files are kept.
+# The default value is '$vardir/run'.
+rundir = /var/run/puppet
+
+# Where SSL certificates are kept.
+# The default value is '$confdir/ssl'.
+ssldir = /var/lib/puppet/ssl/
+
+server=puppet
+reports=true
+pluginsync=true
+
+[agent]
+# The file in which puppetd stores a list of the classes
+# associated with the retrieved configuratiion.  Can be loaded in
+# the separate ``puppet`` executable using the ``--loadclasses``
+# option.
+# The default value is '$confdir/classes.txt'.
+classfile = $vardir/classes.txt
+
+# Where puppetd caches the local configuration.  An
+# extension indicating the cache format is added automatically.
+# The default value is '$confdir/localconfig'.
+localconfig = $vardir/localconfig
 EOF
 
   #Set the daemon to start automatically:
   sed -i 's/START=no/START=yes/g' /etc/default/puppet 
   sudo service puppet restart
   #Touch the puppet_installed.txt file to skip this block the next time around
-  touch /home/vagrant/puppet_master_installed.txt
+  touch /home/vagrant/puppet_agent_installed.txt
 else
 	echo "Skipping Puppet agent installation..."
 fi
