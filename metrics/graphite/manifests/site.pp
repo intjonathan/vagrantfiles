@@ -38,6 +38,11 @@ node 'graphitemaster.local' {
   class { 'apache': 
     purge_configs => 'false'
   }
+  
+  ::apache::mod { 'ssl': } #Install/enable the SSL module
+  ::apache::mod { 'proxy': } #Install/enable the proxy module
+  ::apache::mod { 'proxy_http': } #Install/enable the HTTP proxy module
+  ::apache::mod { 'headers': }
   class { 'apache::mod::wsgi': }
 
   #Configure Puppetboard with this module: https://github.com/nibalizer/puppet-module-puppetboard
