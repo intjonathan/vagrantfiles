@@ -35,7 +35,9 @@ node 'graphitemaster.local' {
   include puppetdb::master::config
 
   #Apache modules for PuppetBoard:
-  class { 'apache': }
+  class { 'apache': 
+    purge_configs => 'false'
+  }
   class { 'apache::mod::wsgi': }
 
   #Configure Puppetboard with this module: https://github.com/nibalizer/puppet-module-puppetboard
