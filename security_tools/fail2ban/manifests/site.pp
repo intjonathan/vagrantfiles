@@ -6,15 +6,22 @@ node default {
 #puppet master node definition
 node 'failmaster.local' {
 
-  #This module is from: https://github.com/puppetlabs/puppetlabs-puppetdb/
+    #This module is from: https://github.com/puppetlabs/puppetlabs-puppetdb/
   class { 'puppetdb':
     listen_address => '0.0.0.0'
   }
-
+  
   include puppetdb::master::config
 
   #Apache modules for PuppetBoard:
-  class { 'apache': }
+  class { 'apache': 
+    purge_configs => 'false'
+  }
+  
+  ::apache::mod { 'ssl': } #Install/enable the SSL module
+  ::apache::mod { 'proxy': } #Install/enable the proxy module
+  ::apache::mod { 'proxy_http': } #Install/enable the HTTP proxy module
+  ::apache::mod { 'headers': }
   class { 'apache::mod::wsgi': }
 
   #Configure Puppetboard with this module: https://github.com/nibalizer/puppet-module-puppetboard
