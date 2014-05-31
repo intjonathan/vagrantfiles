@@ -90,6 +90,6 @@ Vagrant.configure("2") do |config|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
-    ssh4_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_trusty_puppet_agent.sh"
+    ssh4_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
   end
 end
