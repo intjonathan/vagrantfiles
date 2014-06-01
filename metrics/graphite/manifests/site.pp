@@ -32,7 +32,11 @@ node 'graphitemaster.local' {
     listen_address => '0.0.0.0'
   }
   
-  include puppetdb::master::config
+  class {'puppetdb::master::config':
+    #Don't restart the puppetmaster process; we're loading the Puppet master's Ruby code via
+    #Apache and Passenger, so we don't want the Webrick daemon started:
+    restart_puppet => false,
+  }
 
   #Apache modules for PuppetBoard:
   class { 'apache': 
