@@ -128,7 +128,7 @@ node 'riemann1.local' {
     port     => 'ssh',
     filter   => 'sshd',
     ignoreip => ['1270.0.0.1', '10.0.1.0/24'],
-    logpath  => '/var/log/audit/audit.log',
+    logpath  => '/var/log/auth.log',
     maxretry => '10',
     bantime => '3600',
   }
