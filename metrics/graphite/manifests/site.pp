@@ -143,6 +143,8 @@ node 'graphite1.local' {
   #Install Apache so we have something that can serve the Graphite web UI and HTTP API.
   #This is the Puppet Labs Apache module: https://github.com/puppetlabs/puppetlabs-apache
   include apache
+  
+  class { 'apache::mod::wsgi': }
 
   #Install Postgres:
   class { 'postgresql::server': }
