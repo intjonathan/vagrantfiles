@@ -362,7 +362,11 @@ node 'collectd1.local' {
     mydomain       => 'local',
   }
 
-  include collectd
+  class { '::collectd':
+    purge        => true,
+    recurse      => true,
+    purge_config => true,
+  }
   
   collectd::plugin { 'df': }
   collectd::plugin { 'disk': }
@@ -463,7 +467,11 @@ node 'collectd2.local' {
     mydomain       => 'local',
   }
 
-  include collectd
+  class { '::collectd':
+    purge        => true,
+    recurse      => true,
+    purge_config => true,
+  }
   
   collectd::plugin { 'df': }
   collectd::plugin { 'disk': }
