@@ -373,14 +373,14 @@ node 'collectd1.local' {
   collectd::plugin { 'cpufreq': }
   collectd::plugin { 'contextswitch': }
   
- # class { 'collectd::plugin::write_graphite':
- #   graphitehost => 'riemann1.local',
-  #}
-  
-  class { 'collectd::plugin::write_riemann':
-    riemann_host => 'riemann1.local',
-    riemann_port => 5555,
+  class { 'collectd::plugin::write_graphite':
+    graphitehost => 'riemann1.local',
   }
+  
+ # class { 'collectd::plugin::write_riemann':
+ #   riemann_host => 'riemann1.local',
+ #   riemann_port => 5555,
+ # }
 
 }
 
@@ -474,13 +474,13 @@ node 'collectd2.local' {
   collectd::plugin { 'cpufreq': }
   collectd::plugin { 'contextswitch': }
   
- # class { 'collectd::plugin::write_graphite':
- #   graphitehost => 'riemann1.local',
-  #}
-  
-  class { 'collectd::plugin::write_riemann':
-    riemann_host => 'riemann1.local',
-    riemann_port => 5555,
+  class { 'collectd::plugin::write_graphite':
+    graphitehost => 'riemann1.local',
   }
+  
+ # class { 'collectd::plugin::write_riemann':
+ #   riemann_host => 'riemann1.local',
+ #   riemann_port => 5555,
+ # }
 
 }
