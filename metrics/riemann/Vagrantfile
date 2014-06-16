@@ -94,5 +94,19 @@ Vagrant.configure("2") do |config|
     #Puppet agent provisioning script
 	  collectd2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
   end
+  
+  #A machine running InfluxDB
+  config.vm.define "influxdb1".to_sym do |influxdb1_config|
+    influxdb1_config.vm.box = "ubuntu-14.04-server-amd64"
+    influxdb1_config.vm.hostname = "influxdb1.local"
+    influxdb1_config.vm.network :private_network, ip: "10.0.1.195"
+    #set some machine-specific options	
+    influxdb1_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+    #Puppet agent provisioning script
+	  influxdb1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+  end
 
 end
