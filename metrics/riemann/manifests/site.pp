@@ -285,6 +285,16 @@ node 'riemann2.local' {
 
 node 'collectd1.local' {
 
+  #Install Apache with the module so we can test measuring Apache stats with Collectd:
+  class { 'apache': 
+    purge_configs => 'false'
+  }
+  
+  ::apache::mod { 'ssl': } #Install/enable the SSL module
+  ::apache::mod { 'proxy': } #Install/enable the proxy module
+  ::apache::mod { 'proxy_http': } #Install/enable the HTTP proxy module
+  ::apache::mod { 'headers': }
+
   class { 'fail2ban':
     log_level => '3',
   }
@@ -390,6 +400,16 @@ node 'collectd1.local' {
 
 node 'collectd2.local' {
 
+  #Install Apache with the module so we can test measuring Apache stats with Collectd:
+  class { 'apache': 
+    purge_configs => 'false'
+  }
+  
+  ::apache::mod { 'ssl': } #Install/enable the SSL module
+  ::apache::mod { 'proxy': } #Install/enable the proxy module
+  ::apache::mod { 'proxy_http': } #Install/enable the HTTP proxy module
+  ::apache::mod { 'headers': }
+  
   class { 'fail2ban':
     log_level => '3',
   }
