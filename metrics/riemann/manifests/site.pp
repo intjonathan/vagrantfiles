@@ -296,6 +296,34 @@ node 'collectd1.local' {
   ::apache::mod { 'proxy_http': } #Install/enable the HTTP proxy module
   ::apache::mod { 'headers': }
 
+  #Install MySQL to test collectd's MySQL metrics gathering.
+  #This module is the Puppet Labs MySQL module: https://github.com/puppetlabs/puppetlabs-mysql
+  class { '::mysql::server':
+    root_password    => 'password',
+    override_options => { 'mysqld' => { 'max_connections' => '1024' } },
+    users => {
+      #Create a collectd DB user:
+      'collectd@localhost' => {
+          ensure                   => 'present',
+          max_connections_per_hour => '0',
+          max_queries_per_hour     => '0',
+          max_updates_per_hour     => '0',
+          max_user_connections     => '0',
+          password_hash            => mysql_password('password'),
+        }
+    },
+    grants => {
+      #Let the collectd DB user read
+      'collectd@localhost/*.*' => {
+        ensure     => 'present',
+        options    => ['GRANT'],
+        privileges => ['USAGE'],
+        table      => '*.*',
+        user       => 'collectd@localhost',
+      },
+    }
+  }
+
   class { 'fail2ban':
     log_level => '3',
   }
@@ -411,7 +439,35 @@ node 'collectd2.local' {
   ::apache::mod { 'proxy': } #Install/enable the proxy module
   ::apache::mod { 'proxy_http': } #Install/enable the HTTP proxy module
   ::apache::mod { 'headers': }
-  
+
+  #Install MySQL to test collectd's MySQL metrics gathering.
+  #This module is the Puppet Labs MySQL module: https://github.com/puppetlabs/puppetlabs-mysql
+  class { '::mysql::server':
+    root_password    => 'password',
+    override_options => { 'mysqld' => { 'max_connections' => '1024' } },
+    users => {
+      #Create a collectd DB user:
+      'collectd@localhost' => {
+          ensure                   => 'present',
+          max_connections_per_hour => '0',
+          max_queries_per_hour     => '0',
+          max_updates_per_hour     => '0',
+          max_user_connections     => '0',
+          password_hash            => mysql_password('password'),
+        }
+    },
+    grants => {
+      #Let the collectd DB user read
+      'collectd@localhost/*.*' => {
+        ensure     => 'present',
+        options    => ['GRANT'],
+        privileges => ['USAGE'],
+        table      => '*.*',
+        user       => 'collectd@localhost',
+      },
+    }
+  }
+
   class { 'fail2ban':
     log_level => '3',
   }
