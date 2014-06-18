@@ -416,6 +416,14 @@ node 'collectd1.local' {
   collectd::plugin { 'cpufreq': }
   collectd::plugin { 'contextswitch': }
   
+  #Gather NTP stats:
+  class { 'collectd::plugin::ntpd':
+    host           => 'localhost',
+    port           => 123,
+    reverselookups => false,
+    includeunitid  => false,
+  }
+
   class { 'collectd::plugin::write_graphite':
     graphitehost => 'riemann1.local',
   }
@@ -545,6 +553,7 @@ node 'collectd2.local' {
     mydomain       => 'local',
   }
 
+  #Gather NTP stats:
   class { '::collectd':
     purge        => true,
     recurse      => true,
@@ -559,6 +568,13 @@ node 'collectd2.local' {
   collectd::plugin { 'cpu': }
   collectd::plugin { 'cpufreq': }
   collectd::plugin { 'contextswitch': }
+  
+  class { 'collectd::plugin::ntpd':
+    host           => 'localhost',
+    port           => 123,
+    reverselookups => false,
+    includeunitid  => false,
+  }
   
   class { 'collectd::plugin::write_graphite':
     graphitehost => 'riemann1.local',
