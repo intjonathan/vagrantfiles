@@ -196,6 +196,33 @@ node 'riemann1.local' {
     mydomain       => 'local',
   }
 
+class { '::collectd':
+    purge        => true,
+    recurse      => true,
+    purge_config => true,
+  }
+  
+  collectd::plugin { 'df': }
+  collectd::plugin { 'disk': }
+  collectd::plugin { 'entropy': }
+  collectd::plugin { 'memory': }
+  collectd::plugin { 'swap': }
+  collectd::plugin { 'cpu': }
+  collectd::plugin { 'cpufreq': }
+  collectd::plugin { 'contextswitch': }
+  
+  #Gather NTP stats:
+  class { 'collectd::plugin::ntpd':
+    host           => 'localhost',
+    port           => 123,
+    reverselookups => false,
+    includeunitid  => false,
+  }
+
+  class { 'collectd::plugin::write_graphite':
+    graphitehost => 'riemann1.local',
+  }
+
 }
 
 node 'riemann2.local' {
