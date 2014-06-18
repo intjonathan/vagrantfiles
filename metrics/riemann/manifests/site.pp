@@ -652,6 +652,44 @@ node 'grafana1.local' {
     purge_configs => 'false'
   }
   
+  #Install Java so we can run ElasticSearch:
+  package {'openjdk-7-jdk':
+    ensure => installed,
+  }
+
+  #Install Elasticsearch so we can store Grafana dashboards:
+  class { 'elasticsearch':
+    package_url => 'https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.0.0.deb',
+    config => {
+      'node'    => {
+        'name' => $fqdn
+      },
+      'index' => {
+        'number_of_replicas' => '1',
+        'number_of_shards'   => '8'
+      },
+      'network' => {
+        'host' => $ipaddress_eth1
+      },
+      'cluster' => {
+        'name' => 'grafana',
+      }
+    }
+  }
+
+  #Install some Elasticsearch plugins
+  elasticsearch::plugin{'mobz/elasticsearch-head':
+    module_dir => 'head'
+  }
+
+  elasticsearch::plugin{'karmi/elasticsearch-paramedic':
+    module_dir => 'paramedic'
+  }
+
+  elasticsearch::plugin{'lmenezes/elasticsearch-kopf':
+    module_dir => 'kopf'
+  }
+  
   ::apache::mod { 'ssl': } #Install/enable the SSL module
   ::apache::mod { 'proxy': } #Install/enable the proxy module
   ::apache::mod { 'proxy_http': } #Install/enable the HTTP proxy module
