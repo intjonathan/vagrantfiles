@@ -109,6 +109,22 @@ node 'riemannmaster.local' {
     mydomain       => 'local',
   }
 
+  #Install Collectd and enable some plugins so we can get metrics from this machine into Riemann/InfluxDB:
+  class { '::collectd':
+    purge        => true,
+    recurse      => true,
+    purge_config => true,
+  }
+  
+  collectd::plugin { 'df': }
+  collectd::plugin { 'disk': }
+  collectd::plugin { 'entropy': }
+  collectd::plugin { 'memory': }
+  collectd::plugin { 'swap': }
+  collectd::plugin { 'cpu': }
+  collectd::plugin { 'cpufreq': }
+  collectd::plugin { 'contextswitch': }
+
 }
 
 node 'riemann1.local' {
@@ -196,7 +212,8 @@ node 'riemann1.local' {
     mydomain       => 'local',
   }
 
-class { '::collectd':
+  #Install Collectd so we can get metrics from this machine into Riemann/InfluxDB:
+  class { '::collectd':
     purge        => true,
     recurse      => true,
     purge_config => true,
@@ -307,6 +324,22 @@ node 'riemann2.local' {
     inet_protocols => 'all', #Use both IPv4 and IPv6
     mydomain       => 'local',
   }
+
+  #Install Collectd so we can get metrics from this machine into Riemann/InfluxDB:
+  class { '::collectd':
+    purge        => true,
+    recurse      => true,
+    purge_config => true,
+  }
+  
+  collectd::plugin { 'df': }
+  collectd::plugin { 'disk': }
+  collectd::plugin { 'entropy': }
+  collectd::plugin { 'memory': }
+  collectd::plugin { 'swap': }
+  collectd::plugin { 'cpu': }
+  collectd::plugin { 'cpufreq': }
+  collectd::plugin { 'contextswitch': }
 
 }
 
@@ -686,6 +719,22 @@ node 'influxdb1.local' {
     disable_monitor => true,
   }
 
+  #Install Collectd so we can get metrics from this machine into Riemann/InfluxDB:
+  class { '::collectd':
+    purge        => true,
+    recurse      => true,
+    purge_config => true,
+  }
+  
+  collectd::plugin { 'df': }
+  collectd::plugin { 'disk': }
+  collectd::plugin { 'entropy': }
+  collectd::plugin { 'memory': }
+  collectd::plugin { 'swap': }
+  collectd::plugin { 'cpu': }
+  collectd::plugin { 'cpufreq': }
+  collectd::plugin { 'contextswitch': }
+
 }
 
 node 'grafana1.local' {
@@ -807,5 +856,21 @@ node 'grafana1.local' {
     restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
     disable_monitor => true,
   }
+
+  #Install Collectd so we can get metrics from this machine into Riemann/InfluxDB:
+  class { '::collectd':
+    purge        => true,
+    recurse      => true,
+    purge_config => true,
+  }
+  
+  collectd::plugin { 'df': }
+  collectd::plugin { 'disk': }
+  collectd::plugin { 'entropy': }
+  collectd::plugin { 'memory': }
+  collectd::plugin { 'swap': }
+  collectd::plugin { 'cpu': }
+  collectd::plugin { 'cpufreq': }
+  collectd::plugin { 'contextswitch': }
 
 }
