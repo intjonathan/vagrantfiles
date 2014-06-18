@@ -109,7 +109,7 @@ node 'riemannmaster.local' {
     mydomain       => 'local',
   }
 
-  #Install Collectd and enable some plugins so we can get metrics from this machine into Riemann/InfluxDB:
+  #Install Collectd so we can get metrics from this machine into Riemann/InfluxDB:
   class { '::collectd':
     purge        => true,
     recurse      => true,
@@ -124,6 +124,19 @@ node 'riemannmaster.local' {
   collectd::plugin { 'cpu': }
   collectd::plugin { 'cpufreq': }
   collectd::plugin { 'contextswitch': }
+  
+  #Gather NTP stats:
+  class { 'collectd::plugin::ntpd':
+    host           => 'localhost',
+    port           => 123,
+    reverselookups => false,
+    includeunitid  => false,
+  }
+  
+  #Write the collectd status to the Riemann VM in the Graphite format:
+  class { 'collectd::plugin::write_graphite':
+    graphitehost => 'riemann1.local',
+  }
 
 }
 
@@ -212,7 +225,7 @@ node 'riemann1.local' {
     mydomain       => 'local',
   }
 
-  #Install Collectd so we can get metrics from this machine into Riemann/InfluxDB:
+   #Install Collectd so we can get metrics from this machine into Riemann/InfluxDB:
   class { '::collectd':
     purge        => true,
     recurse      => true,
@@ -235,7 +248,8 @@ node 'riemann1.local' {
     reverselookups => false,
     includeunitid  => false,
   }
-
+  
+  #Write the collectd status to the Riemann VM in the Graphite format:
   class { 'collectd::plugin::write_graphite':
     graphitehost => 'riemann1.local',
   }
@@ -340,6 +354,19 @@ node 'riemann2.local' {
   collectd::plugin { 'cpu': }
   collectd::plugin { 'cpufreq': }
   collectd::plugin { 'contextswitch': }
+  
+  #Gather NTP stats:
+  class { 'collectd::plugin::ntpd':
+    host           => 'localhost',
+    port           => 123,
+    reverselookups => false,
+    includeunitid  => false,
+  }
+  
+  #Write the collectd status to the Riemann VM in the Graphite format:
+  class { 'collectd::plugin::write_graphite':
+    graphitehost => 'riemann1.local',
+  }
 
 }
 
@@ -461,6 +488,7 @@ node 'collectd1.local' {
     mydomain       => 'local',
   }
 
+  #Install Collectd so we can get metrics from this machine into Riemann/InfluxDB:
   class { '::collectd':
     purge        => true,
     recurse      => true,
@@ -483,15 +511,11 @@ node 'collectd1.local' {
     reverselookups => false,
     includeunitid  => false,
   }
-
+  
+  #Write the collectd status to the Riemann VM in the Graphite format:
   class { 'collectd::plugin::write_graphite':
     graphitehost => 'riemann1.local',
   }
-  
- # class { 'collectd::plugin::write_riemann':
- #   riemann_host => 'riemann1.local',
- #   riemann_port => 5555,
- # }
 
 }
 
@@ -613,7 +637,8 @@ node 'collectd2.local' {
     mydomain       => 'local',
   }
 
-  #Gather NTP stats:
+
+  #Install Collectd so we can get metrics from this machine into Riemann/InfluxDB:
   class { '::collectd':
     purge        => true,
     recurse      => true,
@@ -629,6 +654,7 @@ node 'collectd2.local' {
   collectd::plugin { 'cpufreq': }
   collectd::plugin { 'contextswitch': }
   
+  #Gather NTP stats:
   class { 'collectd::plugin::ntpd':
     host           => 'localhost',
     port           => 123,
@@ -636,14 +662,10 @@ node 'collectd2.local' {
     includeunitid  => false,
   }
   
+  #Write the collectd status to the Riemann VM in the Graphite format:
   class { 'collectd::plugin::write_graphite':
     graphitehost => 'riemann1.local',
   }
-  
- # class { 'collectd::plugin::write_riemann':
- #   riemann_host => 'riemann1.local',
- #   riemann_port => 5555,
- # }
 
 }
 
@@ -734,6 +756,19 @@ node 'influxdb1.local' {
   collectd::plugin { 'cpu': }
   collectd::plugin { 'cpufreq': }
   collectd::plugin { 'contextswitch': }
+  
+  #Gather NTP stats:
+  class { 'collectd::plugin::ntpd':
+    host           => 'localhost',
+    port           => 123,
+    reverselookups => false,
+    includeunitid  => false,
+  }
+  
+  #Write the collectd status to the Riemann VM in the Graphite format:
+  class { 'collectd::plugin::write_graphite':
+    graphitehost => 'riemann1.local',
+  }
 
 }
 
@@ -872,5 +907,18 @@ node 'grafana1.local' {
   collectd::plugin { 'cpu': }
   collectd::plugin { 'cpufreq': }
   collectd::plugin { 'contextswitch': }
+  
+  #Gather NTP stats:
+  class { 'collectd::plugin::ntpd':
+    host           => 'localhost',
+    port           => 123,
+    reverselookups => false,
+    includeunitid  => false,
+  }
+  
+  #Write the collectd status to the Riemann VM in the Graphite format:
+  class { 'collectd::plugin::write_graphite':
+    graphitehost => 'riemann1.local',
+  }
 
 }
