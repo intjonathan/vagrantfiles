@@ -285,9 +285,10 @@ node 'riemann2.local' {
 
 node 'collectd1.local' {
 
-  #Install Apache with the module so we can test measuring Apache stats with Collectd:
+  #Install Apache so we test collectd's Apache metrics gathering.
+  #This is the Puppet Labs Apache module: https://github.com/puppetlabs/puppetlabs-apache
   class { 'apache': 
-    purge_configs => 'false'
+    purge_configs => 'true'
   }
   
   ::apache::mod { 'ssl': } #Install/enable the SSL module
@@ -400,9 +401,10 @@ node 'collectd1.local' {
 
 node 'collectd2.local' {
 
-  #Install Apache with the module so we can test measuring Apache stats with Collectd:
+  #Install Apache so we test collectd's Apache metrics gathering.
+  #This is the Puppet Labs Apache module: https://github.com/puppetlabs/puppetlabs-apache
   class { 'apache': 
-    purge_configs => 'false'
+    purge_configs => 'true'
   }
   
   ::apache::mod { 'ssl': } #Install/enable the SSL module
