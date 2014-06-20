@@ -11,7 +11,7 @@ node 'mysqlmaster.local' {
     listen_address => '0.0.0.0'
   }
 
-  include denyhosts
+  
 
   include puppetdb::master::config
 
@@ -70,7 +70,7 @@ node 'mysqlmaster.local' {
 
 node 'mysqlserver1.local' {
 
-  include denyhosts
+  
 
   #This module is from: https://github.com/saz/puppet-ssh
   class { 'ssh':
@@ -165,7 +165,7 @@ node 'mysqlserver1.local' {
 
 node 'mysqlserver2.local' {
 
-  include denyhosts
+  
 
   #This module is from: https://github.com/saz/puppet-ssh
   class { 'ssh':
@@ -254,7 +254,7 @@ node 'mysqlserver2.local' {
 
 node 'mysqlslave1.local' {
 
-  include denyhosts
+  
 
   #This module is from: https://github.com/saz/puppet-ssh
   class { 'ssh':
@@ -309,7 +309,7 @@ node 'mysqlslave1.local' {
 
 node 'mysqlslave2.local' {
 
-  include denyhosts
+  
 
   #This module is from: https://github.com/saz/puppet-ssh
   class { 'ssh':
@@ -364,7 +364,7 @@ node 'mysqlslave2.local' {
 
 node 'mysqlclient1.local' {
 
-  include denyhosts
+  
 
   #This module is from: https://github.com/saz/puppet-ssh
   class { 'ssh':
@@ -409,7 +409,7 @@ node 'mysqlclient1.local' {
 
 node 'mysqlclient2.local' {
 
-  include denyhosts
+  
 
   #This module is from: https://github.com/saz/puppet-ssh
   class { 'ssh':

@@ -11,7 +11,7 @@ node 'dnspuppetmaster.local' {
     listen_address => '0.0.0.0'
   }
 
-  include denyhosts
+  
 
   include puppetdb::master::config
 
@@ -77,7 +77,7 @@ node 'dnspuppetmaster.local' {
 
 node 'dnsmaster1.local' {
 
-  include denyhosts
+  
 
   #This module is from: https://github.com/saz/puppet-ssh
   class { 'ssh':
@@ -122,7 +122,7 @@ node 'dnsmaster1.local' {
 
 node 'dnsmaster2.local' {
 
-  include denyhosts
+  
 
   #This module is from: https://github.com/saz/puppet-ssh
   class { 'ssh':
@@ -167,7 +167,7 @@ node 'dnsmaster2.local' {
 
 node 'dnsslave1.local' {
 
-  include denyhosts
+  
 
   #This module is from: https://github.com/saz/puppet-ssh
   class { 'ssh':
@@ -212,7 +212,7 @@ node 'dnsslave1.local' {
 
 node 'dnsslave2.local' {
 
-  include denyhosts
+  
 
   #This module is from: https://github.com/saz/puppet-ssh
   class { 'ssh':
@@ -257,7 +257,7 @@ node 'dnsslave2.local' {
 
 node 'dnsclient1.local' {
 
-  include denyhosts
+  
 
   #This module is from: https://github.com/saz/puppet-ssh
   class { 'ssh':
@@ -302,7 +302,7 @@ node 'dnsclient1.local' {
 
 node 'dnsclient2.local' {
 
-  include denyhosts
+  
 
   #This module is from: https://github.com/saz/puppet-ssh
   class { 'ssh':
