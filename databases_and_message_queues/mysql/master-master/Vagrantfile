@@ -1,0 +1,98 @@
+Vagrant.configure("2") do |config|
+  # All Vagrant configuration is done here. The most common configuration
+  # options are documented and commented below. For a complete reference,
+  # please see the online documentation at vagrantup.com.
+  
+  ####################
+  # Snippets to use
+  ####################
+  
+  #NFS folder sharing
+  #config.vm.synced_folder "modules", "/etc/puppet/modules", :nfs => true
+  
+  ####################
+  ####################
+  
+  #vagrant-hostmanager plugin options
+  config.hostmanager.enabled = true
+  config.hostmanager.ignore_private_ip = false
+  #update the /etc/hosts of the host OS
+  config.hostmanager.manage_host = true
+  
+  #Puppet master
+  config.vm.define "mysqlmaster".to_sym do |master_config|
+    master_config.vm.box = "ubuntu-14.04-server-amd64"
+    master_config.vm.hostname = "mysqlmaster.local"
+    master_config.hostmanager.aliases = %w(master puppet master.local puppetboard.mysqlmaster.local)
+    master_config.vm.network :private_network, ip: "10.0.1.170"
+    #set some machine-specific options	
+    master_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+    #NFS folder sharing for Puppet modules and manifests
+    config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/modules" #,:nfs => true
+    config.vm.synced_folder "manifests/", "/etc/puppet/manifests" #,:nfs => true
+    config.vm.synced_folder "hieradata", "/etc/puppet/environments/production/hieradata" #,:nfs => true
+    #Puppet master provisioning script
+    
+    master_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_master.sh"
+  end
+
+  #An Ubuntu HAProxy VM that can send traffic to either of the MySQL master VMs
+  config.vm.define "haproxy1".to_sym do |haproxy1_config|
+    haproxy1_config.vm.box = "ubuntu-14.04-server-amd64"
+    haproxy1_config.vm.hostname = "haproxy1.local"
+    haproxy1_config.vm.network :private_network, ip: "10.0.1.173"
+    #set some machine-specific options	
+    haproxy1_config.vm.provider "virtualbox" do |v|
+         #change the amount of RAM 
+          v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    #Puppet agent provisioning script
+	  haproxy1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+  end
+
+  #An Ubuntu MySQL master server
+  config.vm.define "mysqlserver1".to_sym do |mysqlserver1_config|
+    mysqlserver1_config.vm.box = "ubuntu-14.04-server-amd64"
+    mysqlserver1_config.vm.hostname = "mysqlserver1.local"
+    mysqlserver1_config.vm.network :private_network, ip: "10.0.1.171"
+    #set some machine-specific options	
+    mysqlserver1_config.vm.provider "virtualbox" do |v|
+         #change the amount of RAM 
+          v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    #Puppet agent provisioning script
+	  mysqlserver1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+  end
+
+  #Another Ubuntu MySQL master server
+  config.vm.define "mysqlserver2".to_sym do |mysqlserver2_config|
+    mysqlserver2_config.vm.box = "ubuntu-14.04-server-amd64"
+    mysqlserver2_config.vm.hostname = "mysqlserver2.local"
+    mysqlserver2_config.vm.network :private_network, ip: "10.0.1.171"
+    #set some machine-specific options	
+    mysqlserver2_config.vm.provider "virtualbox" do |v|
+         #change the amount of RAM 
+          v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    #Puppet agent provisioning script
+	  mysqlserver2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+  end
+
+  #An Ubuntu MySQL client machine running a MySQL webapp
+  config.vm.define "mysqlclient1".to_sym do |mysqlclient1_config|
+    mysqlclient1_config.vm.box = "ubuntu-14.04-server-amd64"
+    mysqlclient1_config.vm.hostname = "mysqlclient1.local"
+    mysqlclient1_config.vm.network :private_network, ip: "10.0.1.174"
+    #set some machine-specific options	
+    mysqlclient1_config.vm.provider "virtualbox" do |v|
+         #change the amount of RAM 
+          v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    #Puppet agent provisioning script
+	  mysqlclient1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+  end
+
+end
