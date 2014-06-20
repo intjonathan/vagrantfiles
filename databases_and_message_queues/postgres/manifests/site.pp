@@ -11,7 +11,7 @@ node 'postgresmaster.local' {
     listen_address => '0.0.0.0'
   }
 
-  include denyhosts
+  
 
   include puppetdb::master::config
 
@@ -70,7 +70,7 @@ node 'postgresmaster.local' {
 
 node 'postgresserver1.local' {
 
-  include denyhosts
+  
 
   #This module is from: https://github.com/saz/puppet-ssh
   class { 'ssh':
@@ -139,7 +139,7 @@ node 'postgresserver1.local' {
 
 node 'postgresserver2.local' {
 
-  include denyhosts
+  
 
   #This module is from: https://github.com/saz/puppet-ssh
   class { 'ssh':
@@ -202,7 +202,7 @@ node 'postgresserver2.local' {
 
 node 'postgresslave1.local' {
 
-  include denyhosts
+  
 
   #This module is from: https://github.com/saz/puppet-ssh
   class { 'ssh':
@@ -254,7 +254,7 @@ node 'postgresslave1.local' {
 
 node 'postgresslave2.local' {
 
-  include denyhosts
+  
 
   #This module is from: https://github.com/saz/puppet-ssh
   class { 'ssh':
@@ -306,7 +306,7 @@ node 'postgresslave2.local' {
 
 node 'postgresclient1.local' {
 
-  include denyhosts
+  
 
   #This module is from: https://github.com/saz/puppet-ssh
   class { 'ssh':
@@ -351,7 +351,7 @@ node 'postgresclient1.local' {
 
 node 'postgresclient2.local' {
 
-  include denyhosts
+  
 
   #This module is from: https://github.com/saz/puppet-ssh
   class { 'ssh':

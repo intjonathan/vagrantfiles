@@ -21,7 +21,7 @@ Vagrant.configure("2") do |config|
   
   #Puppet master
   config.vm.define "mysqlmaster".to_sym do |master_config|
-    master_config.vm.box = "ubuntu-13.10-server-amd64"
+    master_config.vm.box = "ubuntu-14.04-server-amd64"
     master_config.vm.hostname = "mysqlmaster.local"
     master_config.hostmanager.aliases = %w(master puppet master.local puppetboard.mysqlmaster.local)
     master_config.vm.network :private_network, ip: "10.0.1.170"
@@ -32,16 +32,30 @@ Vagrant.configure("2") do |config|
     end
     #NFS folder sharing for Puppet modules and manifests
     config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/modules" #,:nfs => true
-    config.vm.synced_folder "manifests/", "/etc/puppet/manifests" #,:nfs => true
+    config.vm.synced_folder "manifests/", "/etc/puppet/environments/production/manifests" #,:nfs => true
     config.vm.synced_folder "hieradata", "/etc/puppet/environments/production/hieradata" #,:nfs => true
     #Puppet master provisioning script
     
     master_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_master.sh"
   end
 
+  #An Ubuntu HAProxy VM that can send traffic to either of the MySQL master VMs
+  config.vm.define "haproxy1".to_sym do |haproxy1_config|
+    haproxy1_config.vm.box = "ubuntu-14.04-server-amd64"
+    haproxy1_config.vm.hostname = "haproxy1.local"
+    haproxy1_config.vm.network :private_network, ip: "10.0.1.173"
+    #set some machine-specific options	
+    haproxy1_config.vm.provider "virtualbox" do |v|
+         #change the amount of RAM 
+          v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    #Puppet agent provisioning script
+	  haproxy1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+  end
+
   #An Ubuntu MySQL master server
   config.vm.define "mysqlserver1".to_sym do |mysqlserver1_config|
-    mysqlserver1_config.vm.box = "ubuntu-13.10-server-amd64"
+    mysqlserver1_config.vm.box = "ubuntu-14.04-server-amd64"
     mysqlserver1_config.vm.hostname = "mysqlserver1.local"
     mysqlserver1_config.vm.network :private_network, ip: "10.0.1.171"
     #set some machine-specific options	
@@ -53,53 +67,25 @@ Vagrant.configure("2") do |config|
 	  mysqlserver1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
   end
 
-  #A CentOS MySQL master server
+  #Another Ubuntu MySQL master server
   config.vm.define "mysqlserver2".to_sym do |mysqlserver2_config|
-    mysqlserver2_config.vm.box = "centos-6.5-amd64"
+    mysqlserver2_config.vm.box = "ubuntu-14.04-server-amd64"
     mysqlserver2_config.vm.hostname = "mysqlserver2.local"
-    mysqlserver2_config.vm.network :private_network, ip: "10.0.1.172"
+    mysqlserver2_config.vm.network :private_network, ip: "10.0.1.171"
     #set some machine-specific options	
     mysqlserver2_config.vm.provider "virtualbox" do |v|
          #change the amount of RAM 
           v.customize ["modifyvm", :id, "--memory", "512"]
     end
     #Puppet agent provisioning script
-	  mysqlserver2_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
+	  mysqlserver2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
   end
 
-  #An Ubuntu MySQL slave server for replication
-  config.vm.define "mysqlslave1".to_sym do |mysqlslave1_config|
-    mysqlslave1_config.vm.box = "ubuntu-13.10-server-amd64"
-    mysqlslave1_config.vm.hostname = "mysqlslave1.local"
-    mysqlslave1_config.vm.network :private_network, ip: "10.0.1.173"
-    #set some machine-specific options	
-    mysqlslave1_config.vm.provider "virtualbox" do |v|
-         #change the amount of RAM 
-          v.customize ["modifyvm", :id, "--memory", "512"]
-    end
-    #Puppet agent provisioning script
-	  mysqlslave1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
-  end
-  
-  #A CentOS MySQL slave server for replication
-  config.vm.define "mysqlslave2".to_sym do |mysqlslave2_config|
-    mysqlslave2_config.vm.box = "centos-6.5-amd64"
-    mysqlslave2_config.vm.hostname = "mysqlslave2.local"
-    mysqlslave2_config.vm.network :private_network, ip: "10.0.1.174"
-    #set some machine-specific options	
-    mysqlslave2_config.vm.provider "virtualbox" do |v|
-         #change the amount of RAM 
-          v.customize ["modifyvm", :id, "--memory", "512"]
-    end
-    #Puppet agent provisioning script
-	  mysqlslave2_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
-  end
-
-  #An Ubuntu BIND DNS client
+  #An Ubuntu MySQL client machine running a MySQL webapp
   config.vm.define "mysqlclient1".to_sym do |mysqlclient1_config|
-    mysqlclient1_config.vm.box = "ubuntu-13.10-server-amd64"
+    mysqlclient1_config.vm.box = "ubuntu-14.04-server-amd64"
     mysqlclient1_config.vm.hostname = "mysqlclient1.local"
-    mysqlclient1_config.vm.network :private_network, ip: "10.0.1.175"
+    mysqlclient1_config.vm.network :private_network, ip: "10.0.1.174"
     #set some machine-specific options	
     mysqlclient1_config.vm.provider "virtualbox" do |v|
          #change the amount of RAM 
@@ -107,20 +93,6 @@ Vagrant.configure("2") do |config|
     end
     #Puppet agent provisioning script
 	  mysqlclient1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
-  end
-  
-  #A CentOS BIND DNS client
-  config.vm.define "mysqlclient2".to_sym do |mysqlclient2_config|
-    mysqlclient2_config.vm.box = "centos-6.5-amd64"
-    mysqlclient2_config.vm.hostname = "mysqlclient2.local"
-    mysqlclient2_config.vm.network :private_network, ip: " 6"
-    #set some machine-specific options	
-    mysqlclient2_config.vm.provider "virtualbox" do |v|
-         #change the amount of RAM 
-          v.customize ["modifyvm", :id, "--memory", "512"]
-    end
-    #Puppet agent provisioning script
-	  mysqlclient2_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
   end
 
 end

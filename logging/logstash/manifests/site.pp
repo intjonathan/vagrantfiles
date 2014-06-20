@@ -75,7 +75,7 @@ node 'logstashmaster.local' {
 node 'logstash.local' {
 
   #This module is: https://github.com/nickchappell/puppetlabs-denyhosts
-  include denyhosts
+  
  
   #This module is from: https://github.com/saz/puppet-ssh
   class { 'ssh':
@@ -136,7 +136,7 @@ node 'logstash.local' {
 node 'kibanathree.local' {
   
   #This module is: https://github.com/nickchappell/puppetlabs-denyhosts
-  include denyhosts
+  
 
   #This module is from: https://github.com/saz/puppet-ssh
   class { 'ssh':
@@ -237,7 +237,7 @@ node 'kibanathree.local' {
 node 'elasticsearch1.local' {
 
   #This module is: https://github.com/nickchappell/puppetlabs-denyhosts
-  include denyhosts
+  
   
   class { 'elasticsearch':
     java_install => true,
@@ -343,7 +343,7 @@ node 'elasticsearch2.local', 'elasticsearch3.local', 'elasticsearch4.local' {
   }
 
   #This module is: https://github.com/nickchappell/puppetlabs-denyhosts
-  include denyhosts
+  
 
     #This module is: https://github.com/puppetlabs/puppetlabs-ntp
   class { '::ntp':
@@ -416,7 +416,7 @@ node 'rsyslog1.local', 'rsyslog2.local' {
   }
 
   #This module is: https://github.com/nickchappell/puppetlabs-denyhosts
-  include denyhosts
+  
 
     #This module is: https://github.com/puppetlabs/puppetlabs-ntp
   class { '::ntp':

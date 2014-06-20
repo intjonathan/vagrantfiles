@@ -11,7 +11,7 @@ node 'openmanagemaster.local' {
     listen_address => '0.0.0.0'
   }
 
-  include denyhosts
+  
 
   include puppetdb::master::config
 
@@ -70,7 +70,7 @@ node 'openmanagemaster.local' {
 
 node 'openmanage1.local' {
 
-  include denyhosts
+  
 
   #This module is from: https://github.com/saz/puppet-ssh
   class { 'ssh':
@@ -176,7 +176,7 @@ node 'openmanage1.local' {
 
 node 'openmanage2.local' {
 
-  include denyhosts
+  
 
   #This module is from: https://github.com/saz/puppet-ssh
   class { 'ssh':

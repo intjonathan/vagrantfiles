@@ -11,7 +11,7 @@ node 'denymaster.local' {
     listen_address => '0.0.0.0'
   }
 
-  include denyhosts
+  
 
   include puppetdb::master::config
 
@@ -70,7 +70,7 @@ node 'denymaster.local' {
 
 node 'denyclient1.local' {
   
-  include denyhosts
+  
 
   #This module is from: https://github.com/saz/puppet-ssh
   class { 'ssh':
@@ -116,7 +116,7 @@ node 'denyclient1.local' {
 
 node 'denyclient2.local' {
 
-  include denyhosts
+  
 
   #This module is from: https://github.com/saz/puppet-ssh
   class { 'ssh':
