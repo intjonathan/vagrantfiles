@@ -18,7 +18,7 @@ Vagrant::Config.run do |config|
 	#share the Puppet modules and manifests folders
 	#master_config.ssh.port = 22
 	master_config.vm.share_folder "v-data", "/etc/puppet/modules", "modules", :nfs=> true
-	master_config.vm.share_folder "v-data2", "/etc/puppet/manifests", "manifests", :nfs=> true
+	master_config.vm.share_folder "v-data2", "/etc/puppet/environments/production/manifests", "manifests", :nfs=> true
 	master_config.vm.host_name = "master"
   end	
 
