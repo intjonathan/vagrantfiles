@@ -81,35 +81,7 @@ Vagrant.configure("2") do |config|
 	  mysqlserver2_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
   end
 
-  #An Ubuntu MySQL slave server for replication
-  config.vm.define "mysqlslave1".to_sym do |mysqlslave1_config|
-    mysqlslave1_config.vm.box = "ubuntu-14.04-server-amd64"
-    mysqlslave1_config.vm.hostname = "mysqlslave1.local"
-    mysqlslave1_config.vm.network :private_network, ip: "10.0.1.173"
-    #set some machine-specific options	
-    mysqlslave1_config.vm.provider "virtualbox" do |v|
-         #change the amount of RAM 
-          v.customize ["modifyvm", :id, "--memory", "512"]
-    end
-    #Puppet agent provisioning script
-	  mysqlslave1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
-  end
-  
-  #A CentOS MySQL slave server for replication
-  config.vm.define "mysqlslave2".to_sym do |mysqlslave2_config|
-    mysqlslave2_config.vm.box = "centos-6.5-amd64"
-    mysqlslave2_config.vm.hostname = "mysqlslave2.local"
-    mysqlslave2_config.vm.network :private_network, ip: "10.0.1.174"
-    #set some machine-specific options	
-    mysqlslave2_config.vm.provider "virtualbox" do |v|
-         #change the amount of RAM 
-          v.customize ["modifyvm", :id, "--memory", "512"]
-    end
-    #Puppet agent provisioning script
-	  mysqlslave2_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
-  end
-
-  #An Ubuntu BIND DNS client
+  #An Ubuntu MySQL client
   config.vm.define "mysqlclient1".to_sym do |mysqlclient1_config|
     mysqlclient1_config.vm.box = "ubuntu-14.04-server-amd64"
     mysqlclient1_config.vm.hostname = "mysqlclient1.local"
@@ -123,7 +95,7 @@ Vagrant.configure("2") do |config|
 	  mysqlclient1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
   end
   
-  #A CentOS BIND DNS client
+  #A CentOS MySQL client
   config.vm.define "mysqlclient2".to_sym do |mysqlclient2_config|
     mysqlclient2_config.vm.box = "centos-6.5-amd64"
     mysqlclient2_config.vm.hostname = "mysqlclient2.local"
