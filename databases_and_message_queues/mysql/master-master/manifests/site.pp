@@ -11,8 +11,6 @@ node 'mysqlmaster.local' {
     listen_address => '0.0.0.0'
   }
 
-  include denyhosts
-
   include puppetdb::master::config
 
   #Apache modules for PuppetBoard:
