@@ -19,7 +19,7 @@ Vagrant.configure("2") do |config|
 
   #Ubuntu Puppet master
   config.vm.define "consulmaster".to_sym do |consulmaster_config|
-    consulmaster_config.vm.box = "ubuntu-13.10-server-amd64"
+    consulmaster_config.vm.box = "ubuntu-14.04-server-amd64"
     consulmaster_config.vm.hostname = "consulmaster.local"
     consulmaster_config.hostmanager.enabled = true
     consulmaster_config.hostmanager.aliases = %w(consulmaster consulmaster.local puppet puppetboard.consulmaster.local)
@@ -38,7 +38,7 @@ Vagrant.configure("2") do |config|
 
   #Ubuntu Consul agent VM
   config.vm.define "consul1".to_sym do |consul1_config|
-    consul1_config.vm.box = "ubuntu-13.10-server-amd64"
+    consul1_config.vm.box = "ubuntu-14.04-server-amd64"
     consul1_config.vm.hostname = "consul1.local"
     consul1_config.hostmanager.enabled = true
     consul1_config.hostmanager.aliases = %w(consul1 consul1.local)
@@ -68,7 +68,7 @@ Vagrant.configure("2") do |config|
 
   #Ubuntu Consul agent VM
   config.vm.define "consul3".to_sym do |consul3_config|
-    consul3_config.vm.box = "ubuntu-13.10-server-amd64"
+    consul3_config.vm.box = "ubuntu-14.04-server-amd64"
     consul3_config.vm.hostname = "consul3.local"
     consul3_config.hostmanager.enabled = true
     consul3_config.hostmanager.aliases = %w(consul3 consul3.local)
@@ -98,7 +98,7 @@ Vagrant.configure("2") do |config|
 
   #Ubuntu Consul agent VM
   config.vm.define "consul5".to_sym do |consul5_config|
-    consul5_config.vm.box = "ubuntu-13.10-server-amd64"
+    consul5_config.vm.box = "ubuntu-14.04-server-amd64"
     consul5_config.vm.hostname = "consul5.local"
     consul5_config.hostmanager.enabled = true
     consul5_config.hostmanager.aliases = %w(consul5 consul5.local)
