@@ -110,7 +110,6 @@ node 'consul1.local' {
 
 }
 
-
 node 'consul2.local' {
 
   #This module is from: https://github.com/saz/puppet-rsyslog
@@ -132,7 +131,6 @@ node 'consul2.local' {
   }
 
 }
-
 
 node 'consul3.local' {
 
@@ -176,7 +174,6 @@ node 'consul3.local' {
   }
 
 }
-
 
 node 'consul4.local' {
 
