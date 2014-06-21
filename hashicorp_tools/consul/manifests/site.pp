@@ -9,7 +9,7 @@ node 'consulmaster.local' {
 
   #Apache modules for PuppetBoard:
   class { 'apache': 
-    purge_configs => 'false'
+    purge_configs => 'true'
   }
   
   ::apache::mod { 'ssl': } #Install/enable the SSL module

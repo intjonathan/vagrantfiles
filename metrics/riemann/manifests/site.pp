@@ -782,7 +782,7 @@ node 'grafana1.local' {
 
   #Apache module classes for Grafana:
   class { 'apache': 
-    purge_configs => 'false'
+    purge_configs => 'true'
   }
   
   #Install Java so we can run ElasticSearch:
