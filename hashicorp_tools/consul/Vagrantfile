@@ -46,7 +46,7 @@ Vagrant.configure("2") do |config|
     #set some machine-specific options	
     consul1_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
-      v.customize ["modifyvm", :id, "--memory", "1024"]
+      v.customize ["modifyvm", :id, "--memory", "512"]
     end
     consul1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
   end
@@ -61,7 +61,7 @@ Vagrant.configure("2") do |config|
     #set some machine-specific options	
     consul2_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
-      v.customize ["modifyvm", :id, "--memory", "1024"]
+      v.customize ["modifyvm", :id, "--memory", "512"]
     end
     consul2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
   end
@@ -76,7 +76,7 @@ Vagrant.configure("2") do |config|
     #set some machine-specific options	
     consul3_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
-      v.customize ["modifyvm", :id, "--memory", "1024"]
+      v.customize ["modifyvm", :id, "--memory", "512"]
     end
     consul3_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
   end
@@ -91,7 +91,7 @@ Vagrant.configure("2") do |config|
     #set some machine-specific options	
     consul4_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
-      v.customize ["modifyvm", :id, "--memory", "1024"]
+      v.customize ["modifyvm", :id, "--memory", "512"]
     end
     consul4_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
   end
@@ -106,7 +106,7 @@ Vagrant.configure("2") do |config|
     #set some machine-specific options	
     consul5_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
-      v.customize ["modifyvm", :id, "--memory", "1024"]
+      v.customize ["modifyvm", :id, "--memory", "512"]
     end
     consul5_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
   end
@@ -121,7 +121,7 @@ Vagrant.configure("2") do |config|
     #set some machine-specific options	
     consul6_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
-      v.customize ["modifyvm", :id, "--memory", "1024"]
+      v.customize ["modifyvm", :id, "--memory", "512"]
     end
     consul6_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
   end
