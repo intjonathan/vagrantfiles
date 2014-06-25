@@ -141,6 +141,11 @@ node 'haproxy1.local' {
 
 node 'webserver1.local' {
 
+  #This is the Puppet Labs Apache module: https://github.com/puppetlabs/puppetlabs-apache
+  class { 'apache': 
+    purge_configs => 'true'
+  }
+
   class { 'fail2ban':
     log_level => '3',
   }
@@ -214,6 +219,11 @@ node 'webserver1.local' {
 
 node 'webserver2.local' {
 
+  #This is the Puppet Labs Apache module: https://github.com/puppetlabs/puppetlabs-apache
+  class { 'apache': 
+    purge_configs => 'true'
+  }
+
   class { 'fail2ban':
     log_level => '3',
   }
@@ -284,4 +294,3 @@ node 'webserver2.local' {
     disable_monitor => true,
   }
 }
-
