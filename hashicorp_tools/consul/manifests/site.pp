@@ -67,7 +67,7 @@ node 'consulmaster.local' {
 
 }
 
-node 'consul1.local' {
+node 'consulserver1.local' {
 
   #This module is from: https://github.com/saz/puppet-ssh
   class { 'ssh':
@@ -110,7 +110,7 @@ node 'consul1.local' {
 
 }
 
-node 'consul2.local' {
+node 'consulserver2.local' {
 
   #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
@@ -132,7 +132,7 @@ node 'consul2.local' {
 
 }
 
-node 'consul3.local' {
+node 'consulserver3.local' {
 
   #This module is from: https://github.com/saz/puppet-ssh
   class { 'ssh':
@@ -175,7 +175,7 @@ node 'consul3.local' {
 
 }
 
-node 'consul4.local' {
+node 'consulagent1.local' {
 
   #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
@@ -197,7 +197,7 @@ node 'consul4.local' {
 
 }
 
-node 'consul5.local' {
+node 'consulagent2.local' {
 
   #This module is from: https://github.com/saz/puppet-ssh
   class { 'ssh':
@@ -240,7 +240,7 @@ node 'consul5.local' {
 
 }
 
-node 'consul6.local' {
+node 'consulagent3.local' {
 
   #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
