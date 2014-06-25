@@ -37,92 +37,92 @@ Vagrant.configure("2") do |config|
   end
 
   #Ubuntu Consul agent VM
-  config.vm.define "consul1".to_sym do |consul1_config|
-    consul1_config.vm.box = "ubuntu-14.04-server-amd64"
-    consul1_config.vm.hostname = "consul1.local"
-    consul1_config.hostmanager.enabled = true
-    consul1_config.hostmanager.aliases = %w(consul1 consul1.local)
-    consul1_config.vm.network :private_network, ip: "10.0.1.151"
+  config.vm.define "consulserver1".to_sym do |consulserver1_config|
+    consulserver1_config.vm.box = "ubuntu-14.04-server-amd64"
+    consulserver1_config.vm.hostname = "consulserver1.local"
+    consulserver1_config.hostmanager.enabled = true
+    consulserver1_config.hostmanager.aliases = %w(consulserver1 consulserver1.local)
+    consulserver1_config.vm.network :private_network, ip: "10.0.1.151"
     #set some machine-specific options	
-    consul1_config.vm.provider "virtualbox" do |v|
+    consulserver1_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
-    consul1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+    consulserver1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
   end
 
   #Ubuntu Consul agent VM
-  config.vm.define "consul2".to_sym do |consul2_config|
-    consul2_config.vm.box = "ubuntu-14.04-server-amd64"
-    consul2_config.vm.hostname = "consul2.local"
-    consul2_config.hostmanager.enabled = true
-    consul2_config.hostmanager.aliases = %w(consul2 consul2.local)
-    consul2_config.vm.network :private_network, ip: "10.0.1.152"
+  config.vm.define "consulserver2".to_sym do |consulserver2_config|
+    consulserver2_config.vm.box = "ubuntu-14.04-server-amd64"
+    consulserver2_config.vm.hostname = "consulserver2.local"
+    consulserver2_config.hostmanager.enabled = true
+    consulserver2_config.hostmanager.aliases = %w(consulserver2 consulserver2.local)
+    consulserver2_config.vm.network :private_network, ip: "10.0.1.152"
     #set some machine-specific options	
-    consul2_config.vm.provider "virtualbox" do |v|
+    consulserver2_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
-    consul2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+    consulserver2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
   end
 
   #Ubuntu Consul agent VM
-  config.vm.define "consul3".to_sym do |consul3_config|
-    consul3_config.vm.box = "ubuntu-14.04-server-amd64"
-    consul3_config.vm.hostname = "consul3.local"
-    consul3_config.hostmanager.enabled = true
-    consul3_config.hostmanager.aliases = %w(consul3 consul3.local)
-    consul3_config.vm.network :private_network, ip: "10.0.1.153"
+  config.vm.define "consulserver3".to_sym do |consulserver3_config|
+    consulserver3_config.vm.box = "ubuntu-14.04-server-amd64"
+    consulserver3_config.vm.hostname = "consulserver3.local"
+    consulserver3_config.hostmanager.enabled = true
+    consulserver3_config.hostmanager.aliases = %w(consulserver3 consulserver3.local)
+    consulserver3_config.vm.network :private_network, ip: "10.0.1.153"
     #set some machine-specific options	
-    consul3_config.vm.provider "virtualbox" do |v|
+    consulserver3_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
-    consul3_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+    consulserver3_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
   end
 
   #Ubuntu Consul agent VM
-  config.vm.define "consul4".to_sym do |consul4_config|
-    consul4_config.vm.box = "ubuntu-14.04-server-amd64"
-    consul4_config.vm.hostname = "consul4.local"
-    consul4_config.hostmanager.enabled = true
-    consul4_config.hostmanager.aliases = %w(consul4 consul4.local)
-    consul4_config.vm.network :private_network, ip: "10.0.1.154"
+  config.vm.define "consulagent1".to_sym do |consulagent1_config|
+    consulagent1_config.vm.box = "ubuntu-14.04-server-amd64"
+    consulagent1_config.vm.hostname = "consulagent1.local"
+    consulagent1_config.hostmanager.enabled = true
+    consulagent1_config.hostmanager.aliases = %w(consulagent1 consulagent1.local)
+    consulagent1_config.vm.network :private_network, ip: "10.0.1.154"
     #set some machine-specific options	
-    consul4_config.vm.provider "virtualbox" do |v|
+    consulagent1_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
-    consul4_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+    consulagent1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
   end
 
   #Ubuntu Consul agent VM
-  config.vm.define "consul5".to_sym do |consul5_config|
-    consul5_config.vm.box = "ubuntu-14.04-server-amd64"
-    consul5_config.vm.hostname = "consul5.local"
-    consul5_config.hostmanager.enabled = true
-    consul5_config.hostmanager.aliases = %w(consul5 consul5.local)
-    consul5_config.vm.network :private_network, ip: "10.0.1.155"
+  config.vm.define "consulagent2".to_sym do |consulagent2_config|
+    consulagent2_config.vm.box = "ubuntu-14.04-server-amd64"
+    consulagent2_config.vm.hostname = "consulagent2.local"
+    consulagent2_config.hostmanager.enabled = true
+    consulagent2_config.hostmanager.aliases = %w(consulagent2 consulagent2.local)
+    consulagent2_config.vm.network :private_network, ip: "10.0.1.155"
     #set some machine-specific options	
-    consul5_config.vm.provider "virtualbox" do |v|
+    consulagent2_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
-    consul5_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+    consulagent2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
   end
 
   #Ubuntu Consul agent VM
-  config.vm.define "consul6".to_sym do |consul6_config|
-    consul6_config.vm.box = "ubuntu-14.04-server-amd64"
-    consul6_config.vm.hostname = "consul6.local"
-    consul6_config.hostmanager.enabled = true
-    consul6_config.hostmanager.aliases = %w(consul6 consul6.local)
-    consul6_config.vm.network :private_network, ip: "10.0.1.156"
+  config.vm.define "consulagent3".to_sym do |consulagent3_config|
+    consulagent3_config.vm.box = "ubuntu-14.04-server-amd64"
+    consulagent3_config.vm.hostname = "consulagent3.local"
+    consulagent3_config.hostmanager.enabled = true
+    consulagent3_config.hostmanager.aliases = %w(consulagent3 consulagent3.local)
+    consulagent3_config.vm.network :private_network, ip: "10.0.1.156"
     #set some machine-specific options	
-    consul6_config.vm.provider "virtualbox" do |v|
+    consulagent3_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
-    consul6_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+    consulagent3_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
   end
 end
