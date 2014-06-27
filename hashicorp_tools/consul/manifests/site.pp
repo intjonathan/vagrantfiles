@@ -108,6 +108,11 @@ node 'consulserver1.local' {
     disable_monitor => true,
   }
 
+  #Install Apache so we can do a basic service check against HTTP port 80:
+  class { 'apache': 
+    purge_configs => 'true'
+  }
+
 }
 
 node 'consulserver2.local' {
@@ -128,6 +133,11 @@ node 'consulserver2.local' {
     servers  => [ '0.centos.pool.ntp.org', '1.centos.pool.ntp.org', '2.centos.pool.ntp.org', '3.centos.pool.ntp.org' ],
     restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
     disable_monitor => true,
+  }
+
+  #Install Apache so we can do a basic service check against HTTP port 80:
+  class { 'apache': 
+    purge_configs => 'true'
   }
 
 }
@@ -173,6 +183,11 @@ node 'consulserver3.local' {
     disable_monitor => true,
   }
 
+  #Install Apache so we can do a basic service check against HTTP port 80:
+  class { 'apache': 
+    purge_configs => 'true'
+  }
+
 }
 
 node 'consulagent1.local' {
@@ -193,6 +208,11 @@ node 'consulagent1.local' {
     servers  => [ '0.centos.pool.ntp.org', '1.centos.pool.ntp.org', '2.centos.pool.ntp.org', '3.centos.pool.ntp.org' ],
     restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
     disable_monitor => true,
+  }
+
+  #Install Apache so we can do a basic service check against HTTP port 80:
+  class { 'apache': 
+    purge_configs => 'true'
   }
 
 }
@@ -238,6 +258,11 @@ node 'consulagent2.local' {
     disable_monitor => true,
   }
 
+  #Install Apache so we can do a basic service check against HTTP port 80:
+  class { 'apache': 
+    purge_configs => 'true'
+  }
+
 }
 
 node 'consulagent3.local' {
@@ -279,6 +304,11 @@ node 'consulagent3.local' {
     servers  => [ '0.centos.pool.ntp.org', '1.centos.pool.ntp.org', '2.centos.pool.ntp.org', '3.centos.pool.ntp.org' ],
     restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
     disable_monitor => true,
+  }
+
+  #Install Apache so we can do a basic service check against HTTP port 80:
+  class { 'apache': 
+    purge_configs => 'true'
   }
 
 }
