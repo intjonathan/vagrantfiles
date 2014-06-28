@@ -311,4 +311,7 @@ node 'consulagent3.local' {
     purge_configs => 'true'
   }
 
+  #Apply this class so we can get the Nagios plugins packages installed:
+  class { 'icinga::client': }
+
 }
