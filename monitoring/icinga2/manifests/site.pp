@@ -139,9 +139,9 @@ node 'ubuntuicinga2.local' {
   }
 
   #Add the Icinga 2 snapshots apt repo for Ubuntu Saucy Salamander:
-  apt::source { 'icinga2_ubuntu_saucy_snapshots_apt':
+  apt::source { 'icinga2_ubuntu_trusty_snapshots_apt':
     location          => 'http://packages.icinga.org/ubuntu',
-    release           => 'icinga-saucy-snapshots',
+    release           => 'icinga-trusty',
     repos             => 'main',
     required_packages => 'debian-keyring debian-archive-keyring',
     key               => '34410682',
