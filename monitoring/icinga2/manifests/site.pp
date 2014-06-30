@@ -138,17 +138,6 @@ node 'trustyicinga2.local' {
     override_options => { 'mysqld' => { 'max_connections' => '1024' } }
   }
 
-  #Add the Icinga 2 snapshots apt repo for Ubuntu Saucy Salamander:
-  apt::source { 'icinga2_ubuntu_trusty_snapshots_apt':
-    location          => 'http://packages.icinga.org/ubuntu',
-    release           => 'icinga-trusty',
-    repos             => 'main',
-    required_packages => 'debian-keyring debian-archive-keyring',
-    key               => '34410682',
-    key_source        => 'http://packages.icinga.org/icinga.key',
-    include_src       => true
-  }
-
   postgresql::server::db { 'icinga2_data':
     user     => 'icinga2',
     password => postgresql_password('icinga2', 'password'),
@@ -206,17 +195,6 @@ node 'preciseicinga2.local' {
   class { '::mysql::server':
     root_password    => 'horsebatterystaple',
     override_options => { 'mysqld' => { 'max_connections' => '1024' } }
-  }
-
-  #Add the Icinga 2 snapshots apt repo for Ubuntu Saucy Salamander:
-  apt::source { 'icinga2_ubuntu_precise_snapshots_apt':
-    location          => 'http://packages.icinga.org/ubuntu',
-    release           => 'icinga-precise',
-    repos             => 'main',
-    required_packages => 'debian-keyring debian-archive-keyring',
-    key               => '34410682',
-    key_source        => 'http://packages.icinga.org/icinga.key',
-    include_src       => true
   }
 
   postgresql::server::db { 'icinga2_data':
