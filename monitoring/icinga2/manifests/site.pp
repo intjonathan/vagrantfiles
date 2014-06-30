@@ -53,7 +53,7 @@ node 'icinga2master.local' {
   class { 'rsyslog::server':
     enable_tcp => true,
     enable_udp => true,
-    port       => '514',
+    port       => '5514',
     server_dir => '/var/log/remote/',
   }
  
@@ -119,7 +119,7 @@ node 'trustyicinga2.local' {
     log_auth_local => true,
     custom_config  => undef,
     server         => 'icinga2master.local',
-    port           => '514',
+    port           => '5514',
   }
 
   #This module is: https://github.com/puppetlabs/puppetlabs-ntp
@@ -181,7 +181,7 @@ node 'preciseicinga2.local' {
     log_auth_local => true,
     custom_config  => undef,
     server         => 'icinga2master.local',
-    port           => '514',
+    port           => '5514',
   }
 
   #This module is: https://github.com/puppetlabs/puppetlabs-ntp
@@ -241,7 +241,7 @@ node 'centosicinga2.local' {
     log_auth_local => true,
     custom_config  => undef,
     server         => 'icinga2master.local',
-    port           => '514',
+    port           => '5514',
   }
 
   #This module is: https://github.com/puppetlabs/puppetlabs-ntp
@@ -295,7 +295,7 @@ node 'icinga2client1.local' {
     log_auth_local => true,
     custom_config  => undef,
     server         => 'icinga2master.local',
-    port           => '514',
+    port           => '5514',
   }
 
   #This module is: https://github.com/puppetlabs/puppetlabs-ntp
@@ -406,7 +406,7 @@ node 'icinga2client2.local' {
     log_auth_local => true,
     custom_config  => undef,
     server         => 'icinga2master.local',
-    port           => '514',
+    port           => '5514',
   }
 
   #This module is: https://github.com/puppetlabs/puppetlabs-ntp
@@ -516,7 +516,7 @@ node 'icinga2client3.local' {
     log_auth_local => true,
     custom_config  => undef,
     server         => 'icinga2master.local',
-    port           => '514',
+    port           => '5514',
   }
 
   #This module is: https://github.com/puppetlabs/puppetlabs-ntp
@@ -625,7 +625,7 @@ node 'icinga2client4.local' {
     log_auth_local => true,
     custom_config  => undef,
     server         => 'icinga2master.local',
-    port           => '514',
+    port           => '5514',
   }
 
   #This module is: https://github.com/puppetlabs/puppetlabs-ntp
