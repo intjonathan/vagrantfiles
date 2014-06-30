@@ -143,6 +143,9 @@ node 'trustyicinga2.local' {
     password => postgresql_password('icinga2', 'password'),
   }
 
+  #Install Icinga 2:
+  class { 'icinga2::server': }
+
 }
 
 
@@ -202,6 +205,9 @@ node 'preciseicinga2.local' {
     password => postgresql_password('icinga2', 'password'),
   }
 
+  #Install Icinga 2:
+  class { 'icinga2::server': }
+
 }
 
 node 'centosicinga2.local' {
@@ -254,6 +260,8 @@ node 'centosicinga2.local' {
     override_options => { 'mysqld' => { 'max_connections' => '1024' } }
   }
 
+  #Install Icinga 2:
+  class { 'icinga2::server': }
 }
 
 node 'icinga2client1.local' {
