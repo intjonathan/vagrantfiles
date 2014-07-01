@@ -703,3 +703,114 @@ node 'icinga2client4.local' {
   }
 
 }
+
+node 'icinga2mail.local' {
+
+  #This module is from: https://github.com/saz/puppet-ssh
+  class { 'ssh':
+    #Export host keys to PuppetDB:
+    storeconfigs_enabled => true,
+    server_options => {
+      #Whether to allow password auth; if set to 'no', only SSH keys can be used:
+      #'PasswordAuthentication' => 'no',
+      #How many authentication attempts to allow before disconnecting:
+      'MaxAuthTries'         => '10',
+      'PermitEmptyPasswords' => 'no', 
+      'PermitRootLogin'      => 'no',
+      'Port'                 => [22],
+      'PubkeyAuthentication' => 'yes',
+      #Whether to be strict about the permissions on a user's .ssh/ folder and public keys:
+      'StrictModes'          => 'yes',
+      'TCPKeepAlive'         => 'yes',
+      #Whether to do reverse DNS lookups of client IP addresses when they connect:
+      'UseDNS'               => 'no',
+    },
+  }
+
+  #This module is from: https://github.com/saz/puppet-rsyslog
+  class { 'rsyslog::client':
+    log_remote     => true,
+    remote_type    => 'tcp',
+    log_local      => true,
+    log_auth_local => true,
+    custom_config  => undef,
+    server         => 'icinga2master.local',
+    port           => '5514',
+  }
+
+  #This module is: https://github.com/puppetlabs/puppetlabs-ntp
+  class { '::ntp':
+    servers  => [ '0.ubuntu.pool.ntp.org', '1.ubuntu.pool.ntp.org', '2.ubuntu.pool.ntp.org', '3.ubuntu.pool.ntp.org' ],
+    restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
+    disable_monitor => true,
+  }
+
+  #Install some stuff to monitor like...
+  
+  #...Apache:
+  class{ '::apache':}
+  ::apache::mod { 'ssl': } #Install/enable the SSL module
+  ::apache::mod { 'proxy': } #Install/enable the proxy module
+  ::apache::mod { 'proxy_http': } #Install/enable the HTTP proxy module
+  ::apache::mod { 'rewrite': } #Install/enable the rewrite module
+  
+  #...and MySQL:
+  class { '::mysql::server':
+    root_password    => 'horsebatterystaple',
+    override_options => { 'mysqld' => { 'max_connections' => '1024' } }
+  }
+
+ @@nagios_host { $::fqdn:
+    address => $::ipaddress_eth1,
+    check_command => 'check_ping!100.0,20%!500.0,60%',
+    use => 'generic-host',
+    hostgroups => ['ssh_servers'],
+    target => "/etc/icinga/objects/hosts/host_${::fqdn}.cfg",
+  }
+
+  class { 'icinga::client':
+    nrpe_allowed_hosts => ['10.0.1.79', '10.0.1.80', '127.0.0.1'],
+  }
+
+  #Some basic box health stuff
+  icinga::client::command { 'check_users':
+    nrpe_plugin_name => 'check_users',
+    nrpe_plugin_args => '-w 5 -c 10',
+  }
+  
+  #check_load
+  icinga::client::command { 'check_load':
+    nrpe_plugin_name => 'check_load',
+    nrpe_plugin_args => '-w 50,40,30 -c 60,50,40',
+  }
+  
+  #check_disk
+  icinga::client::command { 'check_disk':
+    nrpe_plugin_name => 'check_disk',
+    nrpe_plugin_args => '-w 20% -c 10% -p /',
+  }
+
+  #check_total_procs  
+  icinga::client::command { 'check_total_procs':
+    nrpe_plugin_name => 'check_procs',
+    nrpe_plugin_args => '-w 1000 -c 1500',
+  }
+ 
+  #check_zombie_procs
+  icinga::client::command { 'check_zombie_procs':
+    nrpe_plugin_name => 'check_procs',
+    nrpe_plugin_args => '-w 5 -c 10 -s Z',
+  }
+  
+  icinga::client::command { 'check_ntp_time':
+    nrpe_plugin_name => 'check_ntp_time',
+    nrpe_plugin_args => '-H 127.0.0.1',
+  }
+  
+  #Create an NRPE command to monitor MySQL:
+  icinga::client::command { 'check_mysql_service':
+    nrpe_plugin_name => 'check_mysql',
+    nrpe_plugin_args => '-H 127.0.0.1 -u root -p horsebatterystaple',
+  }
+
+}
