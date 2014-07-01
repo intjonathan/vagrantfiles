@@ -144,7 +144,9 @@ node 'trustyicinga2.local' {
   }
 
   #Install Icinga 2:
-  class { 'icinga2::server': }
+  class { 'icinga2::server': 
+    server_db_type => 'mysql',
+  }
 
 }
 
