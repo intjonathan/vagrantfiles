@@ -215,7 +215,8 @@ node 'preciseicinga2.local' {
   }
 
   #Install Icinga 2:
-  class { 'icinga2::server': }
+  class { 'icinga2::server':
+  }
 
   #Install Postfix so we can monitor SMTP services and send out email alerts:
   class { '::postfix::server':
@@ -277,7 +278,8 @@ node 'centosicinga2.local' {
   }
 
   #Install Icinga 2:
-  class { 'icinga2::server': }
+  class { 'icinga2::server':
+  }
 
   #Install Postfix so we can monitor SMTP services and send out email alerts:
   class { '::postfix::server':
@@ -505,6 +507,26 @@ node 'icinga2client2.local' {
   icinga::client::command { 'check_mysql_service':
     nrpe_plugin_name => 'check_mysql',
     nrpe_plugin_args => '-H 127.0.0.1 -u root -p horsebatterystaple',
+  }
+
+  #Install BIND 9 so we can monitor DNS.
+  #BIND module is from: https://github.com/thias/puppet-bind
+  include bind
+  bind::server::conf { '/etc/named.conf':
+    acls => {
+      'rfc1918' => [ '10/8', '172.16/12', '192.168/16' ],
+      'local'   => [ '127.0.0.1' ],
+      '10net'   => [ '10.0.0.0/24', '10.0.1.0/24', '10.1.1.0/24', '10.1.0.0/24'],
+    },
+    directory => '/var/named',
+    listen_on_addr    => [ '127.0.0.1' ],
+    listen_on_v6_addr => [ '::1' ],
+    forwarders        => [ '8.8.8.8', '8.8.4.4' ],
+    allow_query       => [ 'localhost', 'local', '10net'],
+    recursion         => 'yes',
+    allow_recursion   => [ 'localhost', 'local', '10net'],
+    #Include some other zone files and root keys.
+    includes => ['/etc/named.root.key'],
   }
 
 }
