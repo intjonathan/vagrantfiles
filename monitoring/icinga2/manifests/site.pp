@@ -278,6 +278,14 @@ node 'centosicinga2.local' {
 
   #Install Icinga 2:
   class { 'icinga2::server': }
+
+  #Install Postfix so we can monitor SMTP services and send out email alerts:
+  class { '::postfix::server':
+    inet_interfaces => 'localhost', #Only listen on localhost
+    inet_protocols => 'all', #Use both IPv4 and IPv6
+    mydomain       => 'local',
+  }
+
 }
 
 node 'icinga2client1.local' {
