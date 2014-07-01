@@ -148,6 +148,13 @@ node 'trustyicinga2.local' {
     server_db_type => 'mysql',
   }
 
+  #Install Postfix so we can monitor SMTP services and send out email alerts:
+  class { '::postfix::server':
+    inet_interfaces => 'localhost', #Only listen on localhost
+    inet_protocols => 'all', #Use both IPv4 and IPv6
+    mydomain       => 'local',
+  }
+
 }
 
 
