@@ -278,6 +278,11 @@ node 'centosicinga2.local' {
     override_options => { 'mysqld' => { 'max_connections' => '1024' } }
   }
 
+  postgresql::server::db { 'icinga2_data':
+    user     => 'icinga2',
+    password => postgresql_password('icinga2', 'password'),
+  }
+
   #Install Icinga 2:
   class { 'icinga2::server': 
     server_db_type => 'pgsql',
