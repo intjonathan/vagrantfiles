@@ -143,6 +143,14 @@ node 'trustyicinga2.local' {
     password => postgresql_password('icinga2', 'password'),
   }
 
+  #Create a MySQL database for Icinga 2:
+  mysql::db { 'icinga2_data':
+    user     => 'icinga2',
+    password => 'password',
+    host     => 'localhost',
+    grant    => ['SELECT', 'INSERT', 'UPDATE', 'DELETE', 'DROP', 'CREATE VIEW', 'INDEX', 'EXECUTE'],
+  }
+
   #Install Icinga 2:
   class { 'icinga2::server': 
     server_db_type => 'pgsql',
@@ -214,6 +222,14 @@ node 'preciseicinga2.local' {
     password => postgresql_password('icinga2', 'password'),
   }
 
+  #Create a MySQL database for Icinga 2:
+  mysql::db { 'icinga2_data':
+    user     => 'icinga2',
+    password => 'password',
+    host     => 'localhost',
+    grant    => ['SELECT', 'INSERT', 'UPDATE', 'DELETE', 'DROP', 'CREATE VIEW', 'INDEX', 'EXECUTE'],
+  }
+
   #Install Icinga 2:
   class { 'icinga2::server': 
     server_db_type => 'pgsql',
@@ -281,6 +297,14 @@ node 'centosicinga2.local' {
   postgresql::server::db { 'icinga2_data':
     user     => 'icinga2',
     password => postgresql_password('icinga2', 'password'),
+  }
+
+  #Create a MySQL database for Icinga 2:
+  mysql::db { 'icinga2_data':
+    user     => 'icinga2',
+    password => 'password',
+    host     => 'localhost',
+    grant    => ['SELECT', 'INSERT', 'UPDATE', 'DELETE', 'DROP', 'CREATE VIEW', 'INDEX', 'EXECUTE'],
   }
 
   #Install Icinga 2:
