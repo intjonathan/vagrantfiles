@@ -148,7 +148,7 @@ node 'trustyicinga2.local' {
     user     => 'icinga2',
     password => 'password',
     host     => 'localhost',
-    grant    => ['SELECT', 'INSERT', 'UPDATE', 'DELETE', 'DROP', 'CREATE VIEW', 'INDEX', 'EXECUTE'],
+    grant    => ['ALL'],
   }
 
   #Install Icinga 2:
@@ -227,7 +227,7 @@ node 'preciseicinga2.local' {
     user     => 'icinga2',
     password => 'password',
     host     => 'localhost',
-    grant    => ['SELECT', 'INSERT', 'UPDATE', 'DELETE', 'DROP', 'CREATE VIEW', 'INDEX', 'EXECUTE'],
+    grant    => ['ALL'],
   }
 
   #Install Icinga 2:
@@ -304,7 +304,7 @@ node 'centosicinga2.local' {
     user     => 'icinga2',
     password => 'password',
     host     => 'localhost',
-    grant    => ['SELECT', 'INSERT', 'UPDATE', 'DELETE', 'DROP', 'CREATE VIEW', 'INDEX', 'EXECUTE'],
+    grant    => ['ALL'],
   }
 
   #Install Icinga 2:
