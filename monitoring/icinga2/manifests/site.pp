@@ -142,11 +142,13 @@ node 'trustyicinga2.local' {
   postgresql::server::db { 'icinga2_data':
     user     => 'icinga2',
     password => postgresql_password('icinga2', 'password'),
+    grant => 'all',
   }
 
   #Create a Postgres DB for Icinga Web 2:
   postgresql::server::db { 'icingaweb2_data':
     user     => 'icingaweb2',
+    owner    => 'icinga2',
     password => postgresql_password('icingaweb2', 'password'),
   }
 
@@ -170,6 +172,11 @@ node 'trustyicinga2.local' {
   class { 'icinga2::server': 
     server_db_type => 'pgsql',
   }
+  
+  #Apply the Icinga module's client class so we can get the Nagios plugin packages installed:
+  class { 'icinga::client':
+    nrpe_allowed_hosts => ['10.0.1.79', '127.0.0.1'],
+  }
 
   #Install Postfix so we can monitor SMTP services and send out email alerts:
   class { '::postfix::server':
@@ -179,7 +186,6 @@ node 'trustyicinga2.local' {
   }
 
 }
-
 
 #Ubuntu Precise Icinga2 server node
 node 'preciseicinga2.local' {
@@ -274,6 +280,7 @@ node 'preciseicinga2.local' {
 
 }
 
+#CentOS Icinga 2 server node
 node 'centosicinga2.local' {
 
   #This module is from: https://github.com/saz/puppet-ssh
@@ -430,47 +437,47 @@ node 'icinga2client1.local' {
     target => "/etc/icinga/objects/hosts/host_${::fqdn}.cfg",
   }
 
-  class { 'icinga::client':
+ class { 'icinga2::client':
     nrpe_allowed_hosts => ['10.0.1.79', '10.0.1.80', '127.0.0.1'],
   }
 
-#Some basic box health stuff
-  icinga::client::command { 'check_users':
+  #Some basic box health stuff
+  icinga2::client::command { 'check_users':
     nrpe_plugin_name => 'check_users',
     nrpe_plugin_args => '-w 5 -c 10',
   }
   
   #check_load
-  icinga::client::command { 'check_load':
+  icinga2::client::command { 'check_load':
     nrpe_plugin_name => 'check_load',
     nrpe_plugin_args => '-w 50,40,30 -c 60,50,40',
   }
   
   #check_disk
-  icinga::client::command { 'check_disk':
+  icinga2::client::command { 'check_disk':
     nrpe_plugin_name => 'check_disk',
     nrpe_plugin_args => '-w 20% -c 10% -p /',
   }
 
   #check_total_procs  
-  icinga::client::command { 'check_total_procs':
+  icinga2::client::command { 'check_total_procs':
     nrpe_plugin_name => 'check_procs',
     nrpe_plugin_args => '-w 1000 -c 1500',
   }
  
   #check_zombie_procs
-  icinga::client::command { 'check_zombie_procs':
+  icinga2::client::command { 'check_zombie_procs':
     nrpe_plugin_name => 'check_procs',
     nrpe_plugin_args => '-w 5 -c 10 -s Z',
   }
   
-  icinga::client::command { 'check_ntp_time':
+  icinga2::client::command { 'check_ntp_time':
     nrpe_plugin_name => 'check_ntp_time',
     nrpe_plugin_args => '-H 127.0.0.1',
   }
   
   #Create an NRPE command to monitor MySQL:
-  icinga::client::command { 'check_mysql_service':
+  icinga2::client::command { 'check_mysql_service':
     nrpe_plugin_name => 'check_mysql',
     nrpe_plugin_args => '-H 127.0.0.1 -u root -p horsebatterystaple',
   }
@@ -540,51 +547,6 @@ node 'icinga2client2.local' {
     target => "/etc/icinga/objects/hosts/host_${::fqdn}.cfg",
   }
 
-  class { 'icinga::client':
-    nrpe_allowed_hosts => ['10.0.1.79', '10.0.1.80', '127.0.0.1'],
-  }
-
-#Some basic box health stuff
-  icinga::client::command { 'check_users':
-    nrpe_plugin_name => 'check_users',
-    nrpe_plugin_args => '-w 5 -c 10',
-  }
-  
-  #check_load
-  icinga::client::command { 'check_load':
-    nrpe_plugin_name => 'check_load',
-    nrpe_plugin_args => '-w 50,40,30 -c 60,50,40',
-  }
-  
-  #check_disk
-  icinga::client::command { 'check_disk':
-    nrpe_plugin_name => 'check_disk',
-    nrpe_plugin_args => '-w 20% -c 10% -p /',
-  }
-
-  #check_total_procs  
-  icinga::client::command { 'check_total_procs':
-    nrpe_plugin_name => 'check_procs',
-    nrpe_plugin_args => '-w 1000 -c 1500',
-  }
- 
-  #check_zombie_procs
-  icinga::client::command { 'check_zombie_procs':
-    nrpe_plugin_name => 'check_procs',
-    nrpe_plugin_args => '-w 5 -c 10 -s Z',
-  }
-  
-  icinga::client::command { 'check_ntp_time':
-    nrpe_plugin_name => 'check_ntp_time',
-    nrpe_plugin_args => '-H 127.0.0.1',
-  }
-  
-  #Create an NRPE command to monitor MySQL:
-  icinga::client::command { 'check_mysql_service':
-    nrpe_plugin_name => 'check_mysql',
-    nrpe_plugin_args => '-H 127.0.0.1 -u root -p horsebatterystaple',
-  }
-
   #Install BIND 9 so we can monitor DNS.
   #BIND module is from: https://github.com/thias/puppet-bind
   include bind
@@ -603,6 +565,51 @@ node 'icinga2client2.local' {
     allow_recursion   => [ 'localhost', 'local', '10net'],
     #Include some other zone files and root keys.
     includes => ['/etc/named.root.key'],
+  }
+
+ class { 'icinga2::client':
+    nrpe_allowed_hosts => ['10.0.1.79', '10.0.1.80', '127.0.0.1'],
+  }
+
+  #Some basic box health stuff
+  icinga2::client::command { 'check_users':
+    nrpe_plugin_name => 'check_users',
+    nrpe_plugin_args => '-w 5 -c 10',
+  }
+  
+  #check_load
+  icinga2::client::command { 'check_load':
+    nrpe_plugin_name => 'check_load',
+    nrpe_plugin_args => '-w 50,40,30 -c 60,50,40',
+  }
+  
+  #check_disk
+  icinga2::client::command { 'check_disk':
+    nrpe_plugin_name => 'check_disk',
+    nrpe_plugin_args => '-w 20% -c 10% -p /',
+  }
+
+  #check_total_procs  
+  icinga2::client::command { 'check_total_procs':
+    nrpe_plugin_name => 'check_procs',
+    nrpe_plugin_args => '-w 1000 -c 1500',
+  }
+ 
+  #check_zombie_procs
+  icinga2::client::command { 'check_zombie_procs':
+    nrpe_plugin_name => 'check_procs',
+    nrpe_plugin_args => '-w 5 -c 10 -s Z',
+  }
+  
+  icinga2::client::command { 'check_ntp_time':
+    nrpe_plugin_name => 'check_ntp_time',
+    nrpe_plugin_args => '-H 127.0.0.1',
+  }
+  
+  #Create an NRPE command to monitor MySQL:
+  icinga2::client::command { 'check_mysql_service':
+    nrpe_plugin_name => 'check_mysql',
+    nrpe_plugin_args => '-H 127.0.0.1 -u root -p horsebatterystaple',
   }
 
 }
@@ -669,47 +676,47 @@ node 'icinga2client3.local' {
     target => "/etc/icinga/objects/hosts/host_${::fqdn}.cfg",
   }
 
-  class { 'icinga::client':
+ class { 'icinga2::client':
     nrpe_allowed_hosts => ['10.0.1.79', '10.0.1.80', '127.0.0.1'],
   }
 
   #Some basic box health stuff
-  icinga::client::command { 'check_users':
+  icinga2::client::command { 'check_users':
     nrpe_plugin_name => 'check_users',
     nrpe_plugin_args => '-w 5 -c 10',
   }
   
   #check_load
-  icinga::client::command { 'check_load':
+  icinga2::client::command { 'check_load':
     nrpe_plugin_name => 'check_load',
     nrpe_plugin_args => '-w 50,40,30 -c 60,50,40',
   }
   
   #check_disk
-  icinga::client::command { 'check_disk':
+  icinga2::client::command { 'check_disk':
     nrpe_plugin_name => 'check_disk',
     nrpe_plugin_args => '-w 20% -c 10% -p /',
   }
 
   #check_total_procs  
-  icinga::client::command { 'check_total_procs':
+  icinga2::client::command { 'check_total_procs':
     nrpe_plugin_name => 'check_procs',
     nrpe_plugin_args => '-w 1000 -c 1500',
   }
  
   #check_zombie_procs
-  icinga::client::command { 'check_zombie_procs':
+  icinga2::client::command { 'check_zombie_procs':
     nrpe_plugin_name => 'check_procs',
     nrpe_plugin_args => '-w 5 -c 10 -s Z',
   }
   
-  icinga::client::command { 'check_ntp_time':
+  icinga2::client::command { 'check_ntp_time':
     nrpe_plugin_name => 'check_ntp_time',
     nrpe_plugin_args => '-H 127.0.0.1',
   }
   
   #Create an NRPE command to monitor MySQL:
-  icinga::client::command { 'check_mysql_service':
+  icinga2::client::command { 'check_mysql_service':
     nrpe_plugin_name => 'check_mysql',
     nrpe_plugin_args => '-H 127.0.0.1 -u root -p horsebatterystaple',
   }
@@ -777,47 +784,47 @@ node 'icinga2client4.local' {
     target => "/etc/icinga/objects/hosts/host_${::fqdn}.cfg",
   }
 
-  class { 'icinga::client':
+ class { 'icinga2::client':
     nrpe_allowed_hosts => ['10.0.1.79', '10.0.1.80', '127.0.0.1'],
   }
 
-#Some basic box health stuff
-  icinga::client::command { 'check_users':
+  #Some basic box health stuff
+  icinga2::client::command { 'check_users':
     nrpe_plugin_name => 'check_users',
     nrpe_plugin_args => '-w 5 -c 10',
   }
   
   #check_load
-  icinga::client::command { 'check_load':
+  icinga2::client::command { 'check_load':
     nrpe_plugin_name => 'check_load',
     nrpe_plugin_args => '-w 50,40,30 -c 60,50,40',
   }
   
   #check_disk
-  icinga::client::command { 'check_disk':
+  icinga2::client::command { 'check_disk':
     nrpe_plugin_name => 'check_disk',
     nrpe_plugin_args => '-w 20% -c 10% -p /',
   }
 
   #check_total_procs  
-  icinga::client::command { 'check_total_procs':
+  icinga2::client::command { 'check_total_procs':
     nrpe_plugin_name => 'check_procs',
     nrpe_plugin_args => '-w 1000 -c 1500',
   }
  
   #check_zombie_procs
-  icinga::client::command { 'check_zombie_procs':
+  icinga2::client::command { 'check_zombie_procs':
     nrpe_plugin_name => 'check_procs',
     nrpe_plugin_args => '-w 5 -c 10 -s Z',
   }
   
-  icinga::client::command { 'check_ntp_time':
+  icinga2::client::command { 'check_ntp_time':
     nrpe_plugin_name => 'check_ntp_time',
     nrpe_plugin_args => '-H 127.0.0.1',
   }
   
   #Create an NRPE command to monitor MySQL:
-  icinga::client::command { 'check_mysql_service':
+  icinga2::client::command { 'check_mysql_service':
     nrpe_plugin_name => 'check_mysql',
     nrpe_plugin_args => '-H 127.0.0.1 -u root -p horsebatterystaple',
   }
@@ -880,6 +887,13 @@ node 'icinga2mail.local' {
     override_options => { 'mysqld' => { 'max_connections' => '1024' } }
   }
 
+  #Install Postfix so we can monitor SMTP services and send out email alerts:
+  class { '::postfix::server':
+    inet_interfaces => 'localhost', #Only listen on localhost
+    inet_protocols => 'all', #Use both IPv4 and IPv6
+    mydomain       => 'local',
+  }
+
  @@nagios_host { $::fqdn:
     address => $::ipaddress_eth1,
     check_command => 'check_ping!100.0,20%!500.0,60%',
@@ -888,47 +902,47 @@ node 'icinga2mail.local' {
     target => "/etc/icinga/objects/hosts/host_${::fqdn}.cfg",
   }
 
-  class { 'icinga::client':
+ class { 'icinga2::client':
     nrpe_allowed_hosts => ['10.0.1.79', '10.0.1.80', '127.0.0.1'],
   }
 
   #Some basic box health stuff
-  icinga::client::command { 'check_users':
+  icinga2::client::command { 'check_users':
     nrpe_plugin_name => 'check_users',
     nrpe_plugin_args => '-w 5 -c 10',
   }
   
   #check_load
-  icinga::client::command { 'check_load':
+  icinga2::client::command { 'check_load':
     nrpe_plugin_name => 'check_load',
     nrpe_plugin_args => '-w 50,40,30 -c 60,50,40',
   }
   
   #check_disk
-  icinga::client::command { 'check_disk':
+  icinga2::client::command { 'check_disk':
     nrpe_plugin_name => 'check_disk',
     nrpe_plugin_args => '-w 20% -c 10% -p /',
   }
 
   #check_total_procs  
-  icinga::client::command { 'check_total_procs':
+  icinga2::client::command { 'check_total_procs':
     nrpe_plugin_name => 'check_procs',
     nrpe_plugin_args => '-w 1000 -c 1500',
   }
  
   #check_zombie_procs
-  icinga::client::command { 'check_zombie_procs':
+  icinga2::client::command { 'check_zombie_procs':
     nrpe_plugin_name => 'check_procs',
     nrpe_plugin_args => '-w 5 -c 10 -s Z',
   }
   
-  icinga::client::command { 'check_ntp_time':
+  icinga2::client::command { 'check_ntp_time':
     nrpe_plugin_name => 'check_ntp_time',
     nrpe_plugin_args => '-H 127.0.0.1',
   }
   
   #Create an NRPE command to monitor MySQL:
-  icinga::client::command { 'check_mysql_service':
+  icinga2::client::command { 'check_mysql_service':
     nrpe_plugin_name => 'check_mysql',
     nrpe_plugin_args => '-H 127.0.0.1 -u root -p horsebatterystaple',
   }
@@ -991,6 +1005,13 @@ node 'usermail.local' {
     override_options => { 'mysqld' => { 'max_connections' => '1024' } }
   }
 
+  #Install Postfix so we can monitor SMTP services and send out email alerts:
+  class { '::postfix::server':
+    inet_interfaces => 'localhost', #Only listen on localhost
+    inet_protocols => 'all', #Use both IPv4 and IPv6
+    mydomain       => 'local',
+  }
+
  @@nagios_host { $::fqdn:
     address => $::ipaddress_eth1,
     check_command => 'check_ping!100.0,20%!500.0,60%',
@@ -999,47 +1020,47 @@ node 'usermail.local' {
     target => "/etc/icinga/objects/hosts/host_${::fqdn}.cfg",
   }
 
-  class { 'icinga::client':
+ class { 'icinga2::client':
     nrpe_allowed_hosts => ['10.0.1.79', '10.0.1.80', '127.0.0.1'],
   }
 
-#Some basic box health stuff
-  icinga::client::command { 'check_users':
+  #Some basic box health stuff
+  icinga2::client::command { 'check_users':
     nrpe_plugin_name => 'check_users',
     nrpe_plugin_args => '-w 5 -c 10',
   }
   
   #check_load
-  icinga::client::command { 'check_load':
+  icinga2::client::command { 'check_load':
     nrpe_plugin_name => 'check_load',
     nrpe_plugin_args => '-w 50,40,30 -c 60,50,40',
   }
   
   #check_disk
-  icinga::client::command { 'check_disk':
+  icinga2::client::command { 'check_disk':
     nrpe_plugin_name => 'check_disk',
     nrpe_plugin_args => '-w 20% -c 10% -p /',
   }
 
   #check_total_procs  
-  icinga::client::command { 'check_total_procs':
+  icinga2::client::command { 'check_total_procs':
     nrpe_plugin_name => 'check_procs',
     nrpe_plugin_args => '-w 1000 -c 1500',
   }
  
   #check_zombie_procs
-  icinga::client::command { 'check_zombie_procs':
+  icinga2::client::command { 'check_zombie_procs':
     nrpe_plugin_name => 'check_procs',
     nrpe_plugin_args => '-w 5 -c 10 -s Z',
   }
   
-  icinga::client::command { 'check_ntp_time':
+  icinga2::client::command { 'check_ntp_time':
     nrpe_plugin_name => 'check_ntp_time',
     nrpe_plugin_args => '-H 127.0.0.1',
   }
   
   #Create an NRPE command to monitor MySQL:
-  icinga::client::command { 'check_mysql_service':
+  icinga2::client::command { 'check_mysql_service':
     nrpe_plugin_name => 'check_mysql',
     nrpe_plugin_args => '-H 127.0.0.1 -u root -p horsebatterystaple',
   }
