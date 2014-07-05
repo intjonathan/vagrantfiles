@@ -138,9 +138,16 @@ node 'trustyicinga2.local' {
     override_options => { 'mysqld' => { 'max_connections' => '1024' } }
   }
 
+  #Create a Postgres DB for Icinga 2:
   postgresql::server::db { 'icinga2_data':
     user     => 'icinga2',
     password => postgresql_password('icinga2', 'password'),
+  }
+
+  #Create a Postgres DB for Icinga Web 2:
+  postgresql::server::db { 'icingaweb2_data':
+    user     => 'icingaweb2',
+    password => postgresql_password('icingaweb2', 'password'),
   }
 
   #Create a MySQL database for Icinga 2:
@@ -225,9 +232,16 @@ node 'preciseicinga2.local' {
     override_options => { 'mysqld' => { 'max_connections' => '1024' } }
   }
 
+  #Create a Postgres DB for Icinga 2:
   postgresql::server::db { 'icinga2_data':
     user     => 'icinga2',
     password => postgresql_password('icinga2', 'password'),
+  }
+
+  #Create a Postgres DB for Icinga Web 2:
+  postgresql::server::db { 'icingaweb2_data':
+    user     => 'icingaweb2',
+    password => postgresql_password('icingaweb2', 'password'),
   }
 
   #Create a MySQL database for Icinga 2:
@@ -310,9 +324,16 @@ node 'centosicinga2.local' {
     override_options => { 'mysqld' => { 'max_connections' => '1024' } }
   }
 
+  #Create a Postgres DB for Icinga 2:
   postgresql::server::db { 'icinga2_data':
     user     => 'icinga2',
     password => postgresql_password('icinga2', 'password'),
+  }
+
+  #Create a Postgres DB for Icinga Web 2:
+  postgresql::server::db { 'icingaweb2_data':
+    user     => 'icingaweb2',
+    password => postgresql_password('icingaweb2', 'password'),
   }
 
   #Create a MySQL database for Icinga 2:
