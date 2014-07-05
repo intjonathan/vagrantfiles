@@ -151,6 +151,14 @@ node 'trustyicinga2.local' {
     grant    => ['ALL'],
   }
 
+  #Create a MySQL database for Icinga Web 2:
+  mysql::db { 'icingaweb2_data':
+    user     => 'icingaweb2',
+    password => 'password',
+    host     => 'localhost',
+    grant    => ['ALL'],
+  }
+
   #Install Icinga 2:
   class { 'icinga2::server': 
     server_db_type => 'pgsql',
@@ -230,6 +238,14 @@ node 'preciseicinga2.local' {
     grant    => ['ALL'],
   }
 
+  #Create a MySQL database for Icinga Web 2:
+  mysql::db { 'icingaweb2_data':
+    user     => 'icingaweb2',
+    password => 'password',
+    host     => 'localhost',
+    grant    => ['ALL'],
+  }
+
   #Install Icinga 2:
   class { 'icinga2::server': 
     server_db_type => 'pgsql',
@@ -302,6 +318,14 @@ node 'centosicinga2.local' {
   #Create a MySQL database for Icinga 2:
   mysql::db { 'icinga2_data':
     user     => 'icinga2',
+    password => 'password',
+    host     => 'localhost',
+    grant    => ['ALL'],
+  }
+
+  #Create a MySQL database for Icinga Web 2:
+  mysql::db { 'icingaweb2_data':
+    user     => 'icingaweb2',
     password => 'password',
     host     => 'localhost',
     grant    => ['ALL'],
