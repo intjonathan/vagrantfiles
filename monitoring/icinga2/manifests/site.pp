@@ -429,6 +429,13 @@ node 'icinga2client1.local' {
     override_options => { 'mysqld' => { 'max_connections' => '1024' } }
   }
 
+  #Install Postfix so we can monitor SMTP services and send out email alerts:
+  class { '::postfix::server':
+    inet_interfaces => 'localhost', #Only listen on localhost
+    inet_protocols => 'all', #Use both IPv4 and IPv6
+    mydomain       => 'local',
+  }
+
  @@nagios_host { $::fqdn:
     address => $::ipaddress_eth1,
     check_command => 'check_ping!100.0,20%!500.0,60%',
@@ -539,12 +546,11 @@ node 'icinga2client2.local' {
     override_options => { 'mysqld' => { 'max_connections' => '1024' } }
   }
 
- @@nagios_host { $::fqdn:
-    address => $::ipaddress_eth1,
-    check_command => 'check_ping!100.0,20%!500.0,60%',
-    use => 'generic-host',
-    hostgroups => ['ssh_servers'],
-    target => "/etc/icinga/objects/hosts/host_${::fqdn}.cfg",
+  #Install Postfix so we can monitor SMTP services and send out email alerts:
+  class { '::postfix::server':
+    inet_interfaces => 'localhost', #Only listen on localhost
+    inet_protocols => 'all', #Use both IPv4 and IPv6
+    mydomain       => 'local',
   }
 
   #Install BIND 9 so we can monitor DNS.
@@ -565,6 +571,14 @@ node 'icinga2client2.local' {
     allow_recursion   => [ 'localhost', 'local', '10net'],
     #Include some other zone files and root keys.
     includes => ['/etc/named.root.key'],
+  }
+
+ @@nagios_host { $::fqdn:
+    address => $::ipaddress_eth1,
+    check_command => 'check_ping!100.0,20%!500.0,60%',
+    use => 'generic-host',
+    hostgroups => ['ssh_servers'],
+    target => "/etc/icinga/objects/hosts/host_${::fqdn}.cfg",
   }
 
  class { 'icinga2::client':
@@ -666,6 +680,13 @@ node 'icinga2client3.local' {
   class { '::mysql::server':
     root_password    => 'horsebatterystaple',
     override_options => { 'mysqld' => { 'max_connections' => '1024' } }
+  }
+
+  #Install Postfix so we can monitor SMTP services and send out email alerts:
+  class { '::postfix::server':
+    inet_interfaces => 'localhost', #Only listen on localhost
+    inet_protocols => 'all', #Use both IPv4 and IPv6
+    mydomain       => 'local',
   }
 
    @@nagios_host { $::fqdn:
@@ -774,6 +795,13 @@ node 'icinga2client4.local' {
   class { '::mysql::server':
     root_password    => 'horsebatterystaple',
     override_options => { 'mysqld' => { 'max_connections' => '1024' } }
+  }
+
+  #Install Postfix so we can monitor SMTP services and send out email alerts:
+  class { '::postfix::server':
+    inet_interfaces => 'localhost', #Only listen on localhost
+    inet_protocols => 'all', #Use both IPv4 and IPv6
+    mydomain       => 'local',
   }
 
  @@nagios_host { $::fqdn:
