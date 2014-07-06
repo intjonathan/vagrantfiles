@@ -1140,6 +1140,11 @@ node 'usermail.local' {
     inet_interfaces => 'all', #Only listen on localhost
     inet_protocols => 'all', #Use both IPv4 and IPv6
     mydomain       => 'local',
+    extra_main_parameters => {
+      'home_mailbox' => 'Maildir/',
+      'mailbox_command' => ''
+    }
+      
   }
 
   #Create a user account so we can test receiving mail:
