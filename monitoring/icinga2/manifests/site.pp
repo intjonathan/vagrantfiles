@@ -180,7 +180,7 @@ node 'trustyicinga2.local' {
 
   #Install Postfix so we can monitor SMTP services and send out email alerts:
   class { '::postfix::server':
-    inet_interfaces => 'localhost', #Only listen on localhost
+    inet_interfaces => 'all', #Only listen on localhost
     inet_protocols => 'all', #Use both IPv4 and IPv6
     mydomain       => 'local',
   }
@@ -273,7 +273,7 @@ node 'preciseicinga2.local' {
 
   #Install Postfix so we can monitor SMTP services and send out email alerts:
   class { '::postfix::server':
-    inet_interfaces => 'localhost', #Only listen on localhost
+    inet_interfaces => 'all', #Only listen on localhost
     inet_protocols => 'all', #Use both IPv4 and IPv6
     mydomain       => 'local',
   }
@@ -366,7 +366,7 @@ node 'centosicinga2.local' {
 
   #Install Postfix so we can monitor SMTP services and send out email alerts:
   class { '::postfix::server':
-    inet_interfaces => 'localhost', #Only listen on localhost
+    inet_interfaces => 'all', #Only listen on localhost
     inet_protocols => 'all', #Use both IPv4 and IPv6
     mydomain       => 'local',
   }
@@ -448,7 +448,7 @@ node 'icinga2client1.local' {
 
   #Install Postfix so we can monitor SMTP services and send out email alerts:
   class { '::postfix::server':
-    inet_interfaces => 'localhost', #Only listen on localhost
+    inet_interfaces => 'all', #Only listen on localhost
     inet_protocols => 'all', #Use both IPv4 and IPv6
     mydomain       => 'local',
   }
@@ -582,7 +582,7 @@ node 'icinga2client2.local' {
 
   #Install Postfix so we can monitor SMTP services and send out email alerts:
   class { '::postfix::server':
-    inet_interfaces => 'localhost', #Only listen on localhost
+    inet_interfaces => 'all', #Only listen on localhost
     inet_protocols => 'all', #Use both IPv4 and IPv6
     mydomain       => 'local',
   }
@@ -735,7 +735,7 @@ node 'icinga2client3.local' {
 
   #Install Postfix so we can monitor SMTP services and send out email alerts:
   class { '::postfix::server':
-    inet_interfaces => 'localhost', #Only listen on localhost
+    inet_interfaces => 'all', #Only listen on localhost
     inet_protocols => 'all', #Use both IPv4 and IPv6
     mydomain       => 'local',
   }
@@ -867,7 +867,7 @@ node 'icinga2client4.local' {
 
   #Install Postfix so we can monitor SMTP services and send out email alerts:
   class { '::postfix::server':
-    inet_interfaces => 'localhost', #Only listen on localhost
+    inet_interfaces => 'all', #Only listen on localhost
     inet_protocols => 'all', #Use both IPv4 and IPv6
     mydomain       => 'local',
   }
@@ -1002,7 +1002,7 @@ node 'icinga2mail.local' {
 
   #Install Postfix so we can monitor SMTP services and send out email alerts:
   class { '::postfix::server':
-    inet_interfaces => 'localhost', #Only listen on localhost
+    inet_interfaces => 'all', #Only listen on localhost
     inet_protocols => 'all', #Use both IPv4 and IPv6
     mydomain       => 'local',
   }
@@ -1137,7 +1137,7 @@ node 'usermail.local' {
 
   #Install Postfix so we can monitor SMTP services and send out email alerts:
   class { '::postfix::server':
-    inet_interfaces => 'localhost', #Only listen on localhost
+    inet_interfaces => 'all', #Only listen on localhost
     inet_protocols => 'all', #Use both IPv4 and IPv6
     mydomain       => 'local',
   }
