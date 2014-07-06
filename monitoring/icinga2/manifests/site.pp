@@ -174,8 +174,8 @@ node 'trustyicinga2.local' {
   }
   
   #Apply the Icinga module's client class so we can get the Nagios plugin packages installed:
-  class { 'icinga::client':
-    nrpe_allowed_hosts => ['10.0.1.79', '127.0.0.1'],
+  class { 'icinga2::client':
+    nrpe_allowed_hosts => ['10.0.1.79', '10.0.1.80', '10.0.1.85', '127.0.0.1'],
   }
 
   #Install Postfix so we can monitor SMTP services and send out email alerts:
@@ -423,10 +423,27 @@ node 'icinga2client1.local' {
   ::apache::mod { 'proxy_http': } #Install/enable the HTTP proxy module
   ::apache::mod { 'rewrite': } #Install/enable the rewrite module
   
-  #...and MySQL:
+  #Install Postgres so we can monitor it with Icinga 2...
+  class { 'postgresql::server': }
+
+  #...and install MySQL as well:
   class { '::mysql::server':
     root_password    => 'horsebatterystaple',
     override_options => { 'mysqld' => { 'max_connections' => '1024' } }
+  }
+
+  #Create a Postgres test DB for Icinga 2 to monitor:
+  postgresql::server::db { 'test_data':
+    user     => 'tester',
+    password => postgresql_password('tester', 'password'),
+  }
+
+  #Create a MySQL test database for Icinga 2 to monitor:
+  mysql::db { 'test_data':
+    user     => 'test',
+    password => 'password',
+    host     => 'localhost',
+    grant    => ['ALL'],
   }
 
   #Install Postfix so we can monitor SMTP services and send out email alerts:
@@ -444,7 +461,7 @@ node 'icinga2client1.local' {
     target => "/etc/icinga/objects/hosts/host_${::fqdn}.cfg",
   }
 
- class { 'icinga2::client':
+  class { 'icinga2::client':
     nrpe_allowed_hosts => ['10.0.1.79', '10.0.1.80', '10.0.1.85', '127.0.0.1'],
   }
 
@@ -540,10 +557,27 @@ node 'icinga2client2.local' {
   ::apache::mod { 'proxy': } #Install/enable the proxy module
   ::apache::mod { 'proxy_http': } #Install/enable the HTTP proxy module
  
-  #...and MySQL:
+  #Install Postgres so we can monitor it with Icinga 2...
+  class { 'postgresql::server': }
+
+  #...and install MySQL as well:
   class { '::mysql::server':
     root_password    => 'horsebatterystaple',
     override_options => { 'mysqld' => { 'max_connections' => '1024' } }
+  }
+
+  #Create a Postgres test DB for Icinga 2 to monitor:
+  postgresql::server::db { 'test_data':
+    user     => 'tester',
+    password => postgresql_password('tester', 'password'),
+  }
+
+  #Create a MySQL test database for Icinga 2 to monitor:
+  mysql::db { 'test_data':
+    user     => 'test',
+    password => 'password',
+    host     => 'localhost',
+    grant    => ['ALL'],
   }
 
   #Install Postfix so we can monitor SMTP services and send out email alerts:
@@ -581,7 +615,7 @@ node 'icinga2client2.local' {
     target => "/etc/icinga/objects/hosts/host_${::fqdn}.cfg",
   }
 
- class { 'icinga2::client':
+  class { 'icinga2::client':
     nrpe_allowed_hosts => ['10.0.1.79', '10.0.1.80', '10.0.1.85', '127.0.0.1'],
   }
 
@@ -676,10 +710,27 @@ node 'icinga2client3.local' {
   ::apache::mod { 'proxy_http': } #Install/enable the HTTP proxy module
   ::apache::mod { 'rewrite': } #Install/enable the rewrite module
   
-  #...and MySQL:
+  #Install Postgres so we can monitor it with Icinga 2...
+  class { 'postgresql::server': }
+
+  #...and install MySQL as well:
   class { '::mysql::server':
     root_password    => 'horsebatterystaple',
     override_options => { 'mysqld' => { 'max_connections' => '1024' } }
+  }
+
+  #Create a Postgres test DB for Icinga 2 to monitor:
+  postgresql::server::db { 'test_data':
+    user     => 'tester',
+    password => postgresql_password('tester', 'password'),
+  }
+
+  #Create a MySQL test database for Icinga 2 to monitor:
+  mysql::db { 'test_data':
+    user     => 'test',
+    password => 'password',
+    host     => 'localhost',
+    grant    => ['ALL'],
   }
 
   #Install Postfix so we can monitor SMTP services and send out email alerts:
@@ -697,7 +748,7 @@ node 'icinga2client3.local' {
     target => "/etc/icinga/objects/hosts/host_${::fqdn}.cfg",
   }
 
- class { 'icinga2::client':
+  class { 'icinga2::client':
     nrpe_allowed_hosts => ['10.0.1.79', '10.0.1.80', '10.0.1.85', '127.0.0.1'],
   }
 
@@ -791,10 +842,27 @@ node 'icinga2client4.local' {
   ::apache::mod { 'proxy': } #Install/enable the proxy module
   ::apache::mod { 'proxy_http': } #Install/enable the HTTP proxy module
   
-  #...and MySQL:
+  #Install Postgres so we can monitor it with Icinga 2...
+  class { 'postgresql::server': }
+
+  #...and install MySQL as well:
   class { '::mysql::server':
     root_password    => 'horsebatterystaple',
     override_options => { 'mysqld' => { 'max_connections' => '1024' } }
+  }
+
+  #Create a Postgres test DB for Icinga 2 to monitor:
+  postgresql::server::db { 'test_data':
+    user     => 'tester',
+    password => postgresql_password('tester', 'password'),
+  }
+
+  #Create a MySQL test database for Icinga 2 to monitor:
+  mysql::db { 'test_data':
+    user     => 'test',
+    password => 'password',
+    host     => 'localhost',
+    grant    => ['ALL'],
   }
 
   #Install Postfix so we can monitor SMTP services and send out email alerts:
@@ -812,7 +880,7 @@ node 'icinga2client4.local' {
     target => "/etc/icinga/objects/hosts/host_${::fqdn}.cfg",
   }
 
- class { 'icinga2::client':
+  class { 'icinga2::client':
     nrpe_allowed_hosts => ['10.0.1.79', '10.0.1.80', '10.0.1.85', '127.0.0.1'],
   }
 
@@ -909,10 +977,27 @@ node 'icinga2mail.local' {
   ::apache::mod { 'proxy_http': } #Install/enable the HTTP proxy module
   ::apache::mod { 'rewrite': } #Install/enable the rewrite module
   
-  #...and MySQL:
+  #Install Postgres so we can monitor it with Icinga 2...
+  class { 'postgresql::server': }
+
+  #...and install MySQL as well:
   class { '::mysql::server':
     root_password    => 'horsebatterystaple',
     override_options => { 'mysqld' => { 'max_connections' => '1024' } }
+  }
+
+  #Create a Postgres test DB for Icinga 2 to monitor:
+  postgresql::server::db { 'test_data':
+    user     => 'tester',
+    password => postgresql_password('tester', 'password'),
+  }
+
+  #Create a MySQL test database for Icinga 2 to monitor:
+  mysql::db { 'test_data':
+    user     => 'test',
+    password => 'password',
+    host     => 'localhost',
+    grant    => ['ALL'],
   }
 
   #Install Postfix so we can monitor SMTP services and send out email alerts:
@@ -930,7 +1015,7 @@ node 'icinga2mail.local' {
     target => "/etc/icinga/objects/hosts/host_${::fqdn}.cfg",
   }
 
- class { 'icinga2::client':
+  class { 'icinga2::client':
     nrpe_allowed_hosts => ['10.0.1.79', '10.0.1.80', '10.0.1.85', '127.0.0.1'],
   }
 
@@ -1027,10 +1112,27 @@ node 'usermail.local' {
   ::apache::mod { 'proxy_http': } #Install/enable the HTTP proxy module
   ::apache::mod { 'rewrite': } #Install/enable the rewrite module
   
-  #...and MySQL:
+  #Install Postgres so we can monitor it with Icinga 2...
+  class { 'postgresql::server': }
+
+  #...and install MySQL as well:
   class { '::mysql::server':
     root_password    => 'horsebatterystaple',
     override_options => { 'mysqld' => { 'max_connections' => '1024' } }
+  }
+
+  #Create a Postgres test DB for Icinga 2 to monitor:
+  postgresql::server::db { 'test_data':
+    user     => 'tester',
+    password => postgresql_password('tester', 'password'),
+  }
+
+  #Create a MySQL test database for Icinga 2 to monitor:
+  mysql::db { 'test_data':
+    user     => 'test',
+    password => 'password',
+    host     => 'localhost',
+    grant    => ['ALL'],
   }
 
   #Install Postfix so we can monitor SMTP services and send out email alerts:
@@ -1038,6 +1140,23 @@ node 'usermail.local' {
     inet_interfaces => 'localhost', #Only listen on localhost
     inet_protocols => 'all', #Use both IPv4 and IPv6
     mydomain       => 'local',
+  }
+
+  #Create a user account so we can test receiving mail:
+  user { 'nick':
+    ensure => present,
+    home => '/home/nick',
+    groups => ['sudo', 'admin'],
+    #This is 'password', in salted SHA-512 form:
+    password => '$6$IPYwCTfWyO$bIVTSw4ai/BGtZpfI4HtC8XE7bmb8b3kdZ6gRz4DF4hm7WmD35azXoFxN90TRrSYQdKo011YnBl7p3UXR2osQ1',
+    shell => '/bin/bash',
+  }
+
+  file { '/home/nick' :
+    ensure => directory,
+    owner => 'nick',
+    group => 'nick',
+    mode =>  '755',
   }
 
  @@nagios_host { $::fqdn:
@@ -1048,7 +1167,7 @@ node 'usermail.local' {
     target => "/etc/icinga/objects/hosts/host_${::fqdn}.cfg",
   }
 
- class { 'icinga2::client':
+  class { 'icinga2::client':
     nrpe_allowed_hosts => ['10.0.1.79', '10.0.1.80', '10.0.1.85', '127.0.0.1'],
   }
 
