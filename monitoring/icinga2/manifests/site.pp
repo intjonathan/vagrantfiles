@@ -445,7 +445,7 @@ node 'icinga2client1.local' {
   }
 
  class { 'icinga2::client':
-    nrpe_allowed_hosts => ['10.0.1.79', '10.0.1.80', '127.0.0.1'],
+    nrpe_allowed_hosts => ['10.0.1.79', '10.0.1.80', '10.0.1.85', '127.0.0.1'],
   }
 
   #Some basic box health stuff
@@ -582,7 +582,7 @@ node 'icinga2client2.local' {
   }
 
  class { 'icinga2::client':
-    nrpe_allowed_hosts => ['10.0.1.79', '10.0.1.80', '127.0.0.1'],
+    nrpe_allowed_hosts => ['10.0.1.79', '10.0.1.80', '10.0.1.85', '127.0.0.1'],
   }
 
   #Some basic box health stuff
@@ -698,7 +698,7 @@ node 'icinga2client3.local' {
   }
 
  class { 'icinga2::client':
-    nrpe_allowed_hosts => ['10.0.1.79', '10.0.1.80', '127.0.0.1'],
+    nrpe_allowed_hosts => ['10.0.1.79', '10.0.1.80', '10.0.1.85', '127.0.0.1'],
   }
 
   #Some basic box health stuff
@@ -813,7 +813,7 @@ node 'icinga2client4.local' {
   }
 
  class { 'icinga2::client':
-    nrpe_allowed_hosts => ['10.0.1.79', '10.0.1.80', '127.0.0.1'],
+    nrpe_allowed_hosts => ['10.0.1.79', '10.0.1.80', '10.0.1.85', '127.0.0.1'],
   }
 
   #Some basic box health stuff
@@ -931,7 +931,7 @@ node 'icinga2mail.local' {
   }
 
  class { 'icinga2::client':
-    nrpe_allowed_hosts => ['10.0.1.79', '10.0.1.80', '127.0.0.1'],
+    nrpe_allowed_hosts => ['10.0.1.79', '10.0.1.80', '10.0.1.85', '127.0.0.1'],
   }
 
   #Some basic box health stuff
@@ -1049,7 +1049,7 @@ node 'usermail.local' {
   }
 
  class { 'icinga2::client':
-    nrpe_allowed_hosts => ['10.0.1.79', '10.0.1.80', '127.0.0.1'],
+    nrpe_allowed_hosts => ['10.0.1.79', '10.0.1.80', '10.0.1.85', '127.0.0.1'],
   }
 
   #Some basic box health stuff
