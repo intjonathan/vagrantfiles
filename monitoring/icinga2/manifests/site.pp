@@ -1142,7 +1142,8 @@ node 'usermail.local' {
     mydomain       => 'local',
     extra_main_parameters => {
       'home_mailbox' => 'Maildir/',
-      'mailbox_command' => ''
+      'mailbox_command' => '',
+      'disable_dns_lookups' => 'yes'
     }
       
   }
