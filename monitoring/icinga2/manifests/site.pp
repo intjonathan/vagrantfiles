@@ -172,11 +172,6 @@ node 'trustyicinga2.local' {
   class { 'icinga2::server': 
     server_db_type => 'pgsql',
   }
-  
-  #Apply the Icinga module's client class so we can get the Nagios plugin packages installed:
-  class { 'icinga2::client':
-    nrpe_allowed_hosts => ['10.0.1.79', '10.0.1.80', '10.0.1.85', '127.0.0.1'],
-  }
 
   #Install Postfix so we can monitor SMTP services and send out email alerts:
   class { '::postfix::server':
