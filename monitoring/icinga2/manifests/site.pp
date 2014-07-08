@@ -183,6 +183,12 @@ node 'trustyicinga2.local' {
     inet_interfaces => 'all', #Only listen on localhost
     inet_protocols => 'all', #Use both IPv4 and IPv6
     mydomain       => 'local',
+    mynetworks => '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 10.0.1.0/16',
+    extra_main_parameters => {
+      'home_mailbox' => 'Maildir/',
+      'mailbox_command' => '',
+      'disable_dns_lookups' => 'yes'
+    }  
   }
 
 }
@@ -276,6 +282,12 @@ node 'preciseicinga2.local' {
     inet_interfaces => 'all', #Only listen on localhost
     inet_protocols => 'all', #Use both IPv4 and IPv6
     mydomain       => 'local',
+    mynetworks => '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 10.0.1.0/16',
+    extra_main_parameters => {
+      'home_mailbox' => 'Maildir/',
+      'mailbox_command' => '',
+      'disable_dns_lookups' => 'yes'
+    }  
   }
 
 }
@@ -369,6 +381,12 @@ node 'centosicinga2.local' {
     inet_interfaces => 'all', #Only listen on localhost
     inet_protocols => 'all', #Use both IPv4 and IPv6
     mydomain       => 'local',
+    mynetworks => '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 10.0.1.0/16',
+    extra_main_parameters => {
+      'home_mailbox' => 'Maildir/',
+      'mailbox_command' => '',
+      'disable_dns_lookups' => 'yes'
+    }  
   }
 
 }
@@ -451,6 +469,12 @@ node 'icinga2client1.local' {
     inet_interfaces => 'all', #Only listen on localhost
     inet_protocols => 'all', #Use both IPv4 and IPv6
     mydomain       => 'local',
+    mynetworks => '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 10.0.1.0/16',
+    extra_main_parameters => {
+      'home_mailbox' => 'Maildir/',
+      'mailbox_command' => '',
+      'disable_dns_lookups' => 'yes'
+    }  
   }
 
  @@nagios_host { $::fqdn:
@@ -585,6 +609,12 @@ node 'icinga2client2.local' {
     inet_interfaces => 'all', #Only listen on localhost
     inet_protocols => 'all', #Use both IPv4 and IPv6
     mydomain       => 'local',
+    mynetworks => '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 10.0.1.0/16',
+    extra_main_parameters => {
+      'home_mailbox' => 'Maildir/',
+      'mailbox_command' => '',
+      'disable_dns_lookups' => 'yes'
+    }  
   }
 
   #Install BIND 9 so we can monitor DNS.
@@ -738,6 +768,12 @@ node 'icinga2client3.local' {
     inet_interfaces => 'all', #Only listen on localhost
     inet_protocols => 'all', #Use both IPv4 and IPv6
     mydomain       => 'local',
+    mynetworks => '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 10.0.1.0/16',
+    extra_main_parameters => {
+      'home_mailbox' => 'Maildir/',
+      'mailbox_command' => '',
+      'disable_dns_lookups' => 'yes'
+    }  
   }
 
    @@nagios_host { $::fqdn:
@@ -870,6 +906,12 @@ node 'icinga2client4.local' {
     inet_interfaces => 'all', #Only listen on localhost
     inet_protocols => 'all', #Use both IPv4 and IPv6
     mydomain       => 'local',
+    mynetworks => '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 10.0.1.0/16',
+    extra_main_parameters => {
+      'home_mailbox' => 'Maildir/',
+      'mailbox_command' => '',
+      'disable_dns_lookups' => 'yes'
+    }  
   }
 
  @@nagios_host { $::fqdn:
@@ -1005,6 +1047,12 @@ node 'icinga2mail.local' {
     inet_interfaces => 'all', #Only listen on localhost
     inet_protocols => 'all', #Use both IPv4 and IPv6
     mydomain       => 'local',
+    mynetworks => '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 10.0.1.0/16',
+    extra_main_parameters => {
+      'home_mailbox' => 'Maildir/',
+      'mailbox_command' => '',
+      'disable_dns_lookups' => 'yes'
+    }  
   }
 
  @@nagios_host { $::fqdn:
@@ -1145,8 +1193,7 @@ node 'usermail.local' {
       'home_mailbox' => 'Maildir/',
       'mailbox_command' => '',
       'disable_dns_lookups' => 'yes'
-    }
-      
+    }  
   }
 
   #Create a user account so we can test receiving mail:
