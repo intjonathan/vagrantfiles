@@ -172,6 +172,11 @@ node 'trustyicinga2.local' {
   class { 'icinga2::server': 
     server_db_type => 'pgsql',
   }
+  
+  icinga2::objects::host { 'icinga2client1.local':
+    display_name => 'icinga2client1.local',
+    ipv4_address => $ipaddress_eth1,
+  }
 
   #Install Postfix so we can monitor SMTP services and send out email alerts:
   class { '::postfix::server':
