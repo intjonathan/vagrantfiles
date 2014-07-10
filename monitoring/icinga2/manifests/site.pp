@@ -172,11 +172,9 @@ node 'trustyicinga2.local' {
   class { 'icinga2::server': 
     server_db_type => 'pgsql',
   }
-  
-  icinga2::objects::host { 'icinga2client1.local':
-    display_name => 'icinga2client1.local',
-    ipv4_address => $ipaddress_eth1,
-  }
+
+  #Collect all @@nagios_host resources from PuppetDB that were exported by other machines:
+  Icinga2::Objects::Host <<| |>> { }
 
   #Install Postfix so we can monitor SMTP services and send out email alerts:
   class { '::postfix::server':
@@ -528,6 +526,13 @@ node 'icinga2client1.local' {
   icinga2::client::command { 'check_mysql_service':
     nrpe_plugin_name => 'check_mysql',
     nrpe_plugin_args => '-H 127.0.0.1 -u root -p horsebatterystaple',
+  }
+
+  @@icinga2::objects::host { $::fqdn:
+    display_name => $::fqdn,
+    ipv4_address => $::ipaddress_eth1,
+    target_dir => '/etc/icinga2/conf.d/hosts',
+    target_file_name => "${fqdn}.conf"
   }
 
 }
