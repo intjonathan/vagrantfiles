@@ -4,7 +4,7 @@
     "filter": {
       "list": [],
       "time": {
-        "from": "now-15m",
+        "from": "now-1h",
         "to": "now"
       }
     }
@@ -14,7 +14,7 @@
       "title": "Welcome to Grafana",
       "height": "150px",
       "editable": true,
-      "collapse": false,
+      "collapse": true,
       "collapsable": true,
       "panels": [
         {
@@ -93,7 +93,7 @@
               "function": "mean",
               "column": "value",
               "series": "collectd1.local.cpu-0.cpu-system",
-              "query": "select  mean(\"value\") as \"value_mean\" from \"collectd1.local.cpu-0.cpu-system\" where  time > now() - 15m     group by time(0.1s)  order asc",
+              "query": "select  mean(\"value\") as \"value_mean\" from \"collectd1.local.cpu-0.cpu-system\" where  time > now() - 1h     group by time(1s)  order asc",
               "alias": "collectd1 CPU system"
             },
             {
@@ -101,7 +101,7 @@
               "function": "mean",
               "column": "value",
               "series": "collectd1.local.cpu-0.cpu-user",
-              "query": "select  mean(\"value\") as \"value_mean\" from \"collectd1.local.cpu-0.cpu-user\" where  time > now() - 15m     group by time(0.1s)  order asc",
+              "query": "select  mean(\"value\") as \"value_mean\" from \"collectd1.local.cpu-0.cpu-user\" where  time > now() - 1h     group by time(1s)  order asc",
               "alias": "collectd1 CPU user"
             },
             {
@@ -109,7 +109,7 @@
               "function": "mean",
               "column": "value",
               "series": "riemann1.local.cpu-0.cpu-system",
-              "query": "select  mean(\"value\") as \"value_mean\" from \"riemann1.local.cpu-0.cpu-system\" where  time > now() - 15m     group by time(0.1s)  order asc",
+              "query": "select  mean(\"value\") as \"value_mean\" from \"riemann1.local.cpu-0.cpu-system\" where  time > now() - 1h     group by time(1s)  order asc",
               "alias": "riemann1 CPU system"
             },
             {
@@ -117,7 +117,7 @@
               "function": "mean",
               "column": "value",
               "series": "riemann1.local.cpu-0.cpu-user",
-              "query": "select  mean(\"value\") as \"value_mean\" from \"riemann1.local.cpu-0.cpu-user\" where  time > now() - 15m     group by time(0.1s)  order asc",
+              "query": "select  mean(\"value\") as \"value_mean\" from \"riemann1.local.cpu-0.cpu-user\" where  time > now() - 1h     group by time(1s)  order asc",
               "alias": "riemann1 CPU user"
             },
             {
@@ -125,7 +125,7 @@
               "function": "mean",
               "column": "value",
               "series": "collectd2.local.cpu-0.cpu-system",
-              "query": "select  mean(\"value\") as \"value_mean\" from \"collectd2.local.cpu-0.cpu-system\" where  time > now() - 15m     group by time(0.1s)  order asc",
+              "query": "select  mean(\"value\") as \"value_mean\" from \"collectd2.local.cpu-0.cpu-system\" where  time > now() - 1h     group by time(1s)  order asc",
               "alias": "collectd2 CPU system"
             },
             {
@@ -134,14 +134,14 @@
               "column": "value",
               "alias": "collectd2 CPU user",
               "series": "collectd2.local.cpu-0.cpu-user",
-              "query": "select  mean(\"value\") as \"value_mean\" from \"collectd2.local.cpu-0.cpu-user\" where  time > now() - 15m     group by time(0.1s)  order asc"
+              "query": "select  mean(\"value\") as \"value_mean\" from \"collectd2.local.cpu-0.cpu-user\" where  time > now() - 1h     group by time(1s)  order asc"
             },
             {
               "target": "",
               "function": "mean",
               "column": "value",
               "series": "grafana1.local.cpu-0.cpu-system",
-              "query": "select  mean(\"value\") as \"value_mean\" from \"grafana1.local.cpu-0.cpu-system\" where  time > now() - 15m     group by time(0.1s)  order asc",
+              "query": "select  mean(\"value\") as \"value_mean\" from \"grafana1.local.cpu-0.cpu-system\" where  time > now() - 1h     group by time(1s)  order asc",
               "alias": "grafana1 CPU system"
             },
             {
@@ -149,7 +149,7 @@
               "function": "mean",
               "column": "value",
               "series": "grafana1.local.cpu-0.cpu-user",
-              "query": "select  mean(\"value\") as \"value_mean\" from \"grafana1.local.cpu-0.cpu-user\" where  time > now() - 15m     group by time(0.1s)  order asc",
+              "query": "select  mean(\"value\") as \"value_mean\" from \"grafana1.local.cpu-0.cpu-user\" where  time > now() - 1h     group by time(1s)  order asc",
               "alias": "grafana1 CPU user"
             }
           ],
@@ -226,7 +226,7 @@
               "function": "mean",
               "column": "value",
               "series": "riemann1.local.load.load.shortterm",
-              "query": "select  mean(\"value\") as \"value_mean\" from \"riemann1.local.load.load.shortterm\" where  time > now() - 15m     group by time(0.1s)  order asc",
+              "query": "select  mean(\"value\") as \"value_mean\" from \"riemann1.local.load.load.shortterm\" where  time > now() - 1h     group by time(1s)  order asc",
               "alias": "riemann1 load short"
             },
             {
@@ -234,7 +234,7 @@
               "function": "mean",
               "column": "value",
               "series": "riemann1.local.load.load.longterm",
-              "query": "select  mean(\"value\") as \"value_mean\" from \"riemann1.local.load.load.longterm\" where  time > now() - 15m     group by time(0.1s)  order asc",
+              "query": "select  mean(\"value\") as \"value_mean\" from \"riemann1.local.load.load.longterm\" where  time > now() - 1h     group by time(1s)  order asc",
               "interval": "",
               "alias": "riemann1 load long"
             },
@@ -243,7 +243,7 @@
               "function": "mean",
               "column": "value",
               "series": "influxdb1.local.load.load.shortterm",
-              "query": "select  mean(\"value\") as \"value_mean\" from \"influxdb1.local.load.load.shortterm\" where  time > now() - 15m     group by time(0.1s)  order asc",
+              "query": "select  mean(\"value\") as \"value_mean\" from \"influxdb1.local.load.load.shortterm\" where  time > now() - 1h     group by time(1s)  order asc",
               "alias": "influxdb1 load short"
             },
             {
@@ -251,7 +251,7 @@
               "function": "mean",
               "column": "value",
               "series": "influxdb1.local.load.load.longterm",
-              "query": "select  mean(\"value\") as \"value_mean\" from \"influxdb1.local.load.load.longterm\" where  time > now() - 15m     group by time(0.1s)  order asc",
+              "query": "select  mean(\"value\") as \"value_mean\" from \"influxdb1.local.load.load.longterm\" where  time > now() - 1h     group by time(1s)  order asc",
               "alias": "influxdb1 load long"
             },
             {
@@ -259,7 +259,7 @@
               "function": "mean",
               "column": "value",
               "series": "grafana1.local.load.load.shortterm",
-              "query": "select  mean(\"value\") as \"value_mean\" from \"grafana1.local.load.load.shortterm\" where  time > now() - 15m     group by time(0.1s)  order asc",
+              "query": "select  mean(\"value\") as \"value_mean\" from \"grafana1.local.load.load.shortterm\" where  time > now() - 1h     group by time(1s)  order asc",
               "alias": "grafana1 load short"
             },
             {
@@ -268,7 +268,7 @@
               "column": "value",
               "alias": "grafana1 load long",
               "series": "grafana1.local.load.load.longterm",
-              "query": "select  mean(\"value\") as \"value_mean\" from \"grafana1.local.load.load.longterm\" where  time > now() - 15m     group by time(0.1s)  order asc"
+              "query": "select  mean(\"value\") as \"value_mean\" from \"grafana1.local.load.load.longterm\" where  time > now() - 1h     group by time(1s)  order asc"
             }
           ],
           "aliasColors": {
@@ -341,7 +341,7 @@
               "function": "mean",
               "column": "value",
               "series": "riemann1.local.memory.memory-used",
-              "query": "select  mean(\"value\") as \"value_mean\" from \"riemann1.local.memory.memory-used\" where  time > now() - 15m     group by time(0.1s)  order asc",
+              "query": "select  mean(\"value\") as \"value_mean\" from \"riemann1.local.memory.memory-used\" where  time > now() - 1h     group by time(1s)  order asc",
               "alias": "riemann1 RAM used"
             },
             {
@@ -349,7 +349,7 @@
               "function": "mean",
               "column": "value",
               "series": "influxdb1.local.memory.memory-used",
-              "query": "select  mean(\"value\") as \"value_mean\" from \"influxdb1.local.memory.memory-used\" where  time > now() - 15m     group by time(0.1s)  order asc",
+              "query": "select  mean(\"value\") as \"value_mean\" from \"influxdb1.local.memory.memory-used\" where  time > now() - 1h     group by time(1s)  order asc",
               "alias": "influxdb1 RAM used"
             },
             {
@@ -357,7 +357,7 @@
               "function": "mean",
               "column": "value",
               "series": "collectd1.local.memory.memory-used",
-              "query": "select  mean(\"value\") as \"value_mean\" from \"collectd1.local.memory.memory-used\" where  time > now() - 15m     group by time(0.1s)  order asc",
+              "query": "select  mean(\"value\") as \"value_mean\" from \"collectd1.local.memory.memory-used\" where  time > now() - 1h     group by time(1s)  order asc",
               "alias": "collectd 1 RAM used"
             },
             {
@@ -365,7 +365,7 @@
               "function": "mean",
               "column": "value",
               "series": "collectd2.local.memory.memory-used",
-              "query": "select  mean(\"value\") as \"value_mean\" from \"collectd2.local.memory.memory-used\" where  time > now() - 15m     group by time(0.1s)  order asc",
+              "query": "select  mean(\"value\") as \"value_mean\" from \"collectd2.local.memory.memory-used\" where  time > now() - 1h     group by time(1s)  order asc",
               "alias": "collectd2 RAM used"
             },
             {
@@ -373,8 +373,16 @@
               "function": "mean",
               "column": "value",
               "series": "grafana1.local.memory.memory-used",
-              "query": "select  mean(\"value\") as \"value_mean\" from \"grafana1.local.memory.memory-used\" where  time > now() - 15m     group by time(0.1s)  order asc",
+              "query": "select  mean(\"value\") as \"value_mean\" from \"grafana1.local.memory.memory-used\" where  time > now() - 1h     group by time(1s)  order asc",
               "alias": "grafana1 RAM used"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "series": "riemannmaster.local.memory.memory-used",
+              "query": "select  mean(\"value\") as \"value_mean\" from \"riemannmaster.local.memory.memory-used\" where  time > now() - 1h     group by time(1s)  order asc",
+              "alias": "riemannmaster RAM used"
             }
           ],
           "aliasColors": {},
