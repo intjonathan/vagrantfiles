@@ -151,6 +151,22 @@
               "series": "grafana1.local.cpu-0.cpu-user",
               "query": "select  mean(\"value\") as \"value_mean\" from \"grafana1.local.cpu-0.cpu-user\" where  time > now() - 1h     group by time(1s)  order asc",
               "alias": "grafana1 CPU user"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "series": "riemannmaster.local.cpu-0.cpu-system",
+              "query": "select  mean(\"value\") as \"value_mean\" from \"riemannmaster.local.cpu-0.cpu-system\" where  time > now() - 1h     group by time(1s)  order asc",
+              "alias": "riemannmaster CPU system"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "alias": "riemannmaster CPU user",
+              "series": "riemannmaster.local.cpu-0.cpu-user",
+              "query": "select  mean(\"value\") as \"value_mean\" from \"riemannmaster.local.cpu-0.cpu-user\" where  time > now() - 1h     group by time(1s)  order asc"
             }
           ],
           "aliasColors": {},
