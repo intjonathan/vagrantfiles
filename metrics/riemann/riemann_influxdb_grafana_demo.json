@@ -285,6 +285,22 @@
               "alias": "grafana1 load long",
               "series": "grafana1.local.load.load.longterm",
               "query": "select  mean(\"value\") as \"value_mean\" from \"grafana1.local.load.load.longterm\" where  time > now() - 1h     group by time(1s)  order asc"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "series": "riemannmaster.local.load.load.shortterm",
+              "query": "select  mean(\"value\") as \"value_mean\" from \"riemannmaster.local.load.load.shortterm\" where  time > now() - 1h     group by time(1s)  order asc",
+              "alias": "riemannmaster load short"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "alias": "riemannmaster load long",
+              "series": "riemannmaster.local.load.load.longterm",
+              "query": "select  mean(\"value\") as \"value_mean\" from \"riemannmaster.local.load.load.longterm\" where  time > now() - 1h     group by time(1s)  order asc"
             }
           ],
           "aliasColors": {
