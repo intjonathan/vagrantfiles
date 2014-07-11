@@ -531,7 +531,7 @@ node 'icinga2client1.local' {
   @@icinga2::objects::host { $::fqdn:
     display_name => $::fqdn,
     ipv4_address => $::ipaddress_eth1,
-    groups => ['linux_servers', 'mysqlservers', 'clients'],
+    groups => ['linux-servers', 'mysqlservers', 'clients'],
     target_dir => '/etc/icinga2/conf.d/hosts',
     target_file_name => "${fqdn}.conf"
   }
@@ -699,7 +699,7 @@ node 'icinga2client2.local' {
   @@icinga2::objects::host { $::fqdn:
     display_name => $::fqdn,
     ipv4_address => $::ipaddress_eth1,
-    groups => ['linux_servers', 'mysqlservers', 'clients'],
+    groups => ['linux-servers', 'mysqlservers', 'clients'],
     target_dir => '/etc/icinga2/conf.d/hosts',
     target_file_name => "${fqdn}.conf"
   }
@@ -846,7 +846,7 @@ node 'icinga2client3.local' {
   @@icinga2::objects::host { $::fqdn:
     display_name => $::fqdn,
     ipv4_address => $::ipaddress_eth1,
-    groups => ['linux_servers', 'mysqlservers', 'clients'],
+    groups => ['linux-servers', 'mysqlservers', 'clients'],
     target_dir => '/etc/icinga2/conf.d/hosts',
     target_file_name => "${fqdn}.conf"
   }
@@ -992,7 +992,7 @@ node 'icinga2client4.local' {
   @@icinga2::objects::host { $::fqdn:
     display_name => $::fqdn,
     ipv4_address => $::ipaddress_eth1,
-    groups => ['linux_servers', 'mysqlservers', 'clients'],
+    groups => ['linux-servers', 'mysqlservers', 'clients'],
     target_dir => '/etc/icinga2/conf.d/hosts',
     target_file_name => "${fqdn}.conf"
   }
@@ -1141,7 +1141,7 @@ node 'icinga2mail.local' {
   @@icinga2::objects::host { $::fqdn:
     display_name => $::fqdn,
     ipv4_address => $::ipaddress_eth1,
-    groups => ['linux_servers', 'mysqlservers', 'clients'],
+    groups => ['linux-servers', 'mysqlservers', 'clients'],
     target_dir => '/etc/icinga2/conf.d/hosts',
     target_file_name => "${fqdn}.conf"
   }
@@ -1307,7 +1307,7 @@ node 'usermail.local' {
   @@icinga2::objects::host { $::fqdn:
     display_name => $::fqdn,
     ipv4_address => $::ipaddress_eth1,
-    groups => ['linux_servers', 'mysqlservers', 'clients'],
+    groups => ['linux-servers', 'mysqlservers', 'clients'],
     target_dir => '/etc/icinga2/conf.d/hosts',
     target_file_name => "${fqdn}.conf"
   }
