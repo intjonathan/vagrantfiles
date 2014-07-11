@@ -173,7 +173,7 @@ node 'trustyicinga2.local' {
     server_db_type => 'pgsql',
   }
 
-  #Collect all @@nagios_host resources from PuppetDB that were exported by other machines:
+  #Collect all @@icinga2::objects::host resources from PuppetDB that were exported by other machines:
   Icinga2::Objects::Host <<| |>> { }
 
   #Install Postfix so we can monitor SMTP services and send out email alerts:
@@ -510,7 +510,7 @@ node 'icinga2client1.local' {
     nrpe_plugin_name => 'check_procs',
     nrpe_plugin_args => '-w 1000 -c 1500',
   }
- 
+  
   #check_zombie_procs
   icinga2::client::command { 'check_zombie_procs':
     nrpe_plugin_name => 'check_procs',
@@ -531,6 +531,7 @@ node 'icinga2client1.local' {
   @@icinga2::objects::host { $::fqdn:
     display_name => $::fqdn,
     ipv4_address => $::ipaddress_eth1,
+    groups => ['linux_servers', 'mysqlservers', 'clients'],
     target_dir => '/etc/icinga2/conf.d/hosts',
     target_file_name => "${fqdn}.conf"
   }
@@ -695,6 +696,14 @@ node 'icinga2client2.local' {
     nrpe_plugin_args => '-H 127.0.0.1 -u root -p horsebatterystaple',
   }
 
+  @@icinga2::objects::host { $::fqdn:
+    display_name => $::fqdn,
+    ipv4_address => $::ipaddress_eth1,
+    groups => ['linux_servers', 'mysqlservers', 'clients'],
+    target_dir => '/etc/icinga2/conf.d/hosts',
+    target_file_name => "${fqdn}.conf"
+  }
+
 }
 
 node 'icinga2client3.local' {
@@ -834,6 +843,14 @@ node 'icinga2client3.local' {
     nrpe_plugin_args => '-H 127.0.0.1 -u root -p horsebatterystaple',
   }
 
+  @@icinga2::objects::host { $::fqdn:
+    display_name => $::fqdn,
+    ipv4_address => $::ipaddress_eth1,
+    groups => ['linux_servers', 'mysqlservers', 'clients'],
+    target_dir => '/etc/icinga2/conf.d/hosts',
+    target_file_name => "${fqdn}.conf"
+  }
+
 }
 
 node 'icinga2client4.local' {
@@ -970,6 +987,14 @@ node 'icinga2client4.local' {
   icinga2::client::command { 'check_mysql_service':
     nrpe_plugin_name => 'check_mysql',
     nrpe_plugin_args => '-H 127.0.0.1 -u root -p horsebatterystaple',
+  }
+
+  @@icinga2::objects::host { $::fqdn:
+    display_name => $::fqdn,
+    ipv4_address => $::ipaddress_eth1,
+    groups => ['linux_servers', 'mysqlservers', 'clients'],
+    target_dir => '/etc/icinga2/conf.d/hosts',
+    target_file_name => "${fqdn}.conf"
   }
 
 }
@@ -1111,6 +1136,14 @@ node 'icinga2mail.local' {
   icinga2::client::command { 'check_mysql_service':
     nrpe_plugin_name => 'check_mysql',
     nrpe_plugin_args => '-H 127.0.0.1 -u root -p horsebatterystaple',
+  }
+
+  @@icinga2::objects::host { $::fqdn:
+    display_name => $::fqdn,
+    ipv4_address => $::ipaddress_eth1,
+    groups => ['linux_servers', 'mysqlservers', 'clients'],
+    target_dir => '/etc/icinga2/conf.d/hosts',
+    target_file_name => "${fqdn}.conf"
   }
 
 }
@@ -1269,6 +1302,14 @@ node 'usermail.local' {
   icinga2::client::command { 'check_mysql_service':
     nrpe_plugin_name => 'check_mysql',
     nrpe_plugin_args => '-H 127.0.0.1 -u root -p horsebatterystaple',
+  }
+
+  @@icinga2::objects::host { $::fqdn:
+    display_name => $::fqdn,
+    ipv4_address => $::ipaddress_eth1,
+    groups => ['linux_servers', 'mysqlservers', 'clients'],
+    target_dir => '/etc/icinga2/conf.d/hosts',
+    target_file_name => "${fqdn}.conf"
   }
 
 }
