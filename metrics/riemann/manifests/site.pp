@@ -124,6 +124,7 @@ node 'riemannmaster.local' {
   collectd::plugin { 'cpu': }
   collectd::plugin { 'cpufreq': }
   collectd::plugin { 'contextswitch': }
+  collectd::plugin { 'processes': }
   class { 'collectd::plugin::load':}
   
   #Gather NTP stats:
@@ -241,6 +242,7 @@ node 'riemann1.local' {
   collectd::plugin { 'cpu': }
   collectd::plugin { 'cpufreq': }
   collectd::plugin { 'contextswitch': }
+  collectd::plugin { 'processes': }
   class { 'collectd::plugin::load':}
   
   #Gather NTP stats:
@@ -356,6 +358,7 @@ node 'riemann2.local' {
   collectd::plugin { 'cpu': }
   collectd::plugin { 'cpufreq': }
   collectd::plugin { 'contextswitch': }
+  collectd::plugin { 'processes': }
   class { 'collectd::plugin::load':}
   
   #Gather NTP stats:
@@ -506,6 +509,7 @@ node 'collectd1.local' {
   collectd::plugin { 'cpu': }
   collectd::plugin { 'cpufreq': }
   collectd::plugin { 'contextswitch': }
+  collectd::plugin { 'processes': }
   class { 'collectd::plugin::load':}
   
   #Gather NTP stats:
@@ -657,6 +661,7 @@ node 'collectd2.local' {
   collectd::plugin { 'cpu': }
   collectd::plugin { 'cpufreq': }
   collectd::plugin { 'contextswitch': }
+  collectd::plugin { 'processes': }
   class { 'collectd::plugin::load':}
   
   #Gather NTP stats:
@@ -761,6 +766,7 @@ node 'influxdb1.local' {
   collectd::plugin { 'cpu': }
   collectd::plugin { 'cpufreq': }
   collectd::plugin { 'contextswitch': }
+  collectd::plugin { 'processes': }
   class { 'collectd::plugin::load':}
   
   #Gather NTP stats:
@@ -913,6 +919,7 @@ node 'grafana1.local' {
   collectd::plugin { 'cpu': }
   collectd::plugin { 'cpufreq': }
   collectd::plugin { 'contextswitch': }
+  collectd::plugin { 'processes': }
   class { 'collectd::plugin::load':}
   
   #Gather NTP stats:
