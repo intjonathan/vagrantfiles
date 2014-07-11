@@ -391,6 +391,228 @@
         }
       ],
       "notice": false
+    },
+    {
+      "title": "New row",
+      "height": "600px",
+      "editable": true,
+      "collapse": false,
+      "collapsable": true,
+      "panels": [
+        {
+          "span": 6,
+          "editable": true,
+          "type": "graph",
+          "datasource": null,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "scale": 1,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "grid": {
+            "max": null,
+            "min": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "annotate": {
+            "enable": false
+          },
+          "resolution": 100,
+          "lines": true,
+          "fill": 1,
+          "linewidth": 1,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "legend": {
+            "show": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "percentage": false,
+          "zerofill": true,
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "query_as_alias": true
+          },
+          "targets": [
+            {
+              "function": "mean",
+              "column": "value",
+              "series": "riemann1.local.processes.ps_state-sleeping",
+              "query": "select  mean(\"value\") as \"value_mean\" from \"riemann1.local.processes.ps_state-sleeping\" where  time > now() - 1h     group by time(1s)  order asc",
+              "alias": "riemann1 procs sleeping",
+              "interval": "1s"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "series": "riemannmaster.local.processes.ps_state-sleeping",
+              "query": "select  mean(\"value\") as \"value_mean\" from \"riemannmaster.local.processes.ps_state-sleeping\" where  time > now() - 1h     group by time(1s)  order asc",
+              "alias": "riemannmaster procs sleeping",
+              "interval": "1s"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "series": "collectd1.local.processes.ps_state-sleeping",
+              "query": "select  mean(\"value\") as \"value_mean\" from \"collectd1.local.processes.ps_state-sleeping\" where  time > now() - 1h     group by time(1s)  order asc",
+              "alias": "collectd1 procs sleeping",
+              "interval": "1s"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "alias": "collectd2 procs sleeping",
+              "series": "collectd2.local.processes.ps_state-sleeping",
+              "query": "select  mean(\"value\") as \"value_mean\" from \"collectd2.local.processes.ps_state-sleeping\" where  time > now() - 1h     group by time(1s)  order asc",
+              "interval": "1s"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "series": "influxdb1.local.processes.ps_state-sleeping",
+              "query": "select  mean(\"value\") as \"value_mean\" from \"influxdb1.local.processes.ps_state-sleeping\" where  time > now() - 1h     group by time(1s)  order asc",
+              "alias": "influxdb1 procs sleeping",
+              "interval": "1s"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "series": "grafana1.local.processes.ps_state-sleeping",
+              "query": "select  mean(\"value\") as \"value_mean\" from \"grafana1.local.processes.ps_state-sleeping\" where  time > now() - 1h     group by time(1s)  order asc",
+              "interval": "1s",
+              "alias": "grafana1 procs sleeping",
+              "condition_filter": false,
+              "condition_key": "state"
+            }
+          ],
+          "aliasColors": {},
+          "aliasYAxis": {},
+          "title": "Process sleep stats"
+        },
+        {
+          "span": 6,
+          "editable": true,
+          "type": "graph",
+          "datasource": null,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "scale": 1,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "grid": {
+            "max": null,
+            "min": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "annotate": {
+            "enable": false
+          },
+          "resolution": 100,
+          "lines": true,
+          "fill": 1,
+          "linewidth": 1,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "legend": {
+            "show": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "percentage": false,
+          "zerofill": true,
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "query_as_alias": true
+          },
+          "targets": [
+            {
+              "function": "mean",
+              "column": "value",
+              "series": "riemannmaster.local.processes.fork_rate",
+              "query": "select  mean(\"value\") as \"value_mean\" from \"riemannmaster.local.processes.fork_rate\" where  time > now() - 1h     group by time(1s)  order asc",
+              "alias": "riemannmaster fork rate"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "series": "riemann1.local.processes.fork_rate",
+              "query": "select  mean(\"value\") as \"value_mean\" from \"riemann1.local.processes.fork_rate\" where  time > now() - 1h     group by time(1s)  order asc",
+              "alias": "riemann1 fork rate"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "series": "collectd1.local.processes.fork_rate",
+              "query": "select  mean(\"value\") as \"value_mean\" from \"collectd1.local.processes.fork_rate\" where  time > now() - 1h     group by time(1s)  order asc",
+              "alias": "collectd1 fork rate"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "alias": "collectd2 fork rate",
+              "series": "collectd2.local.processes.fork_rate",
+              "query": "select  mean(\"value\") as \"value_mean\" from \"collectd2.local.processes.fork_rate\" where  time > now() - 1h     group by time(1s)  order asc"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "series": "influxdb1.local.processes.fork_rate",
+              "query": "select  mean(\"value\") as \"value_mean\" from \"influxdb1.local.processes.fork_rate\" where  time > now() - 1h     group by time(1s)  order asc",
+              "alias": "influxdb1 fork rate"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "series": "grafana1.local.processes.fork_rate",
+              "query": "select  mean(\"value\") as \"value_mean\" from \"grafana1.local.processes.fork_rate\" where  time > now() - 1h     group by time(1s)  order asc",
+              "alias": "grafana1 fork rate"
+            }
+          ],
+          "aliasColors": {},
+          "aliasYAxis": {},
+          "title": "Fork rate stats"
+        }
+      ],
+      "notice": false
     }
   ],
   "editable": true,
