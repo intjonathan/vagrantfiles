@@ -80,4 +80,20 @@ Vagrant.configure("2") do |config|
     docker3_config.vm.synced_folder "/Users/nick/virtual_machines/dockerfiles", "/dockerfiles", :nfs => true
     docker3_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
   end
+
+  #Icinga 2 monitoring server
+  config.vm.define "dockermonitor".to_sym do |dockermonitor_config|
+    dockermonitor_config.vm.box = "ubuntu-14.04-server-amd64"
+    dockermonitor_config.vm.hostname = "dockermonitor.local"
+    dockermonitor_config.hostmanager.enabled = true
+    dockermonitor_config.vm.network :private_network, ip: "10.0.1.54"
+    #set some machine-specific options	
+    dockermonitor_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "2048"]
+    end
+    dockermonitor_config.vm.synced_folder "/Users/nick/virtual_machines/dockerfiles", "/dockerfiles", :nfs => true
+    dockermonitor_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+  end
+
 end
