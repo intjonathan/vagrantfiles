@@ -18,7 +18,7 @@ Vagrant.configure("2") do |config|
     centos7_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "1024"]
-      v.gui = true
+      v.gui = false
     end
   end
 end
