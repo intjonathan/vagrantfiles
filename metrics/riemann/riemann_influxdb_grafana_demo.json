@@ -683,6 +683,97 @@
         }
       ],
       "notice": false
+    },
+    {
+      "title": "New row",
+      "height": "700px",
+      "editable": true,
+      "collapse": false,
+      "collapsable": true,
+      "panels": [
+        {
+          "span": 12,
+          "editable": true,
+          "type": "graph",
+          "datasource": null,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "scale": 1,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "grid": {
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "annotate": {
+            "enable": false
+          },
+          "resolution": 100,
+          "lines": true,
+          "fill": 1,
+          "linewidth": 1,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "legend": {
+            "show": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "percentage": false,
+          "zerofill": true,
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "query_as_alias": true
+          },
+          "targets": [
+            {
+              "function": "mean",
+              "column": "value",
+              "series": "influxdb1.local.disk-sda5.disk_ops.write",
+              "query": "select  mean(value) from \"influxdb1.local.disk-sda5.disk_ops.write\" where  time > now() - 1h     group by time(1s)  order asc",
+              "alias": "influxdb1 disk write ops/sec"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "series": "riemannmaster.local.disk-sda5.disk_ops.write",
+              "query": "select  mean(value) from \"riemannmaster.local.disk-sda5.disk_ops.write\" where  time > now() - 1h     group by time(1s)  order asc",
+              "interval": "",
+              "alias": "riemannmaster disk write ops/sec"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "series": "grafana1.local.disk-sda5.disk_ops.write",
+              "query": "select  mean(value) from \"grafana1.local.disk-sda5.disk_ops.write\" where  time > now() - 1h     group by time(1s)  order asc",
+              "alias": "grafana1 disk write ops/sec"
+            }
+          ],
+          "aliasColors": {},
+          "aliasYAxis": {},
+          "title": "Disk write ops"
+        }
+      ],
+      "notice": false
     }
   ],
   "editable": true,
