@@ -190,7 +190,9 @@
             }
           ],
           "aliasColors": {
-            "riemannmaster CPU user": "#C15C17"
+            "riemannmaster CPU user": "#C15C17",
+            "influxdb1 CPU user": "#9AC48A",
+            "influxdb1 CPU system": "#F9E2D2"
           },
           "aliasYAxis": {},
           "title": "CPU usage",
