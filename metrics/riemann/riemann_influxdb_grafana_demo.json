@@ -171,6 +171,22 @@
               "alias": "riemannmaster CPU user",
               "series": "riemannmaster.local.cpu-0.cpu-user",
               "query": "select  mean(value) from \"riemannmaster.local.cpu-0.cpu-user\" where  time > now() - 1h     group by time(1s)  order asc"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "series": "influxdb1.local.cpu-0.cpu-system",
+              "query": "select  mean(value) from \"influxdb1.local.cpu-0.cpu-system\" where  time > now() - 1h     group by time(1s)  order asc",
+              "alias": "influxdb1 CPU system"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "series": "influxdb1.local.cpu-0.cpu-user",
+              "query": "select  mean(value) from \"influxdb1.local.cpu-0.cpu-user\" where  time > now() - 1h     group by time(1s)  order asc",
+              "alias": "influxdb1 CPU user"
             }
           ],
           "aliasColors": {
