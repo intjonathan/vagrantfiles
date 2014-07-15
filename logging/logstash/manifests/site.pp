@@ -67,7 +67,6 @@ node 'logstashmaster.local' {
     log_local      => true,
     log_auth_local => true,
     custom_config  => undef,
-    preserve_fqdn  => true,
   }
 
 }
@@ -188,7 +187,6 @@ node 'kibanathree.local' {
     log_local      => true,
     log_auth_local => true,
     custom_config  => undef,
-    preserve_fqdn  => true,
   }
 
   #A non-SSL virtual host that just redirects to the SSL one below:
@@ -314,7 +312,6 @@ node 'elasticsearch1.local' {
     log_local      => true,
     log_auth_local => true,
     custom_config  => undef,
-    preserve_fqdn  => true,
   }
   
 }
@@ -367,7 +364,6 @@ node 'elasticsearch2.local', 'elasticsearch3.local', 'elasticsearch4.local' {
     log_local      => true,
     log_auth_local => true,
     custom_config  => undef,
-    preserve_fqdn  => true,
   }
 
   class { 'elasticsearch':
@@ -440,7 +436,6 @@ node 'rsyslog1.local', 'rsyslog2.local' {
     log_local      => true,
     log_auth_local => true,
     custom_config  => undef,
-    preserve_fqdn  => true,
   }
 
 }
