@@ -25,7 +25,7 @@ Vagrant.configure("2") do |config|
 
   #Logstash Puppet master
   config.vm.define "logstashmaster".to_sym do |logstashmaster_config|
-    logstashmaster_config.vm.box = "ubuntu-13.10-server-amd64"
+    logstashmaster_config.vm.box = "ubuntu-14.04-server-amd64"
     logstashmaster_config.vm.hostname = "logstashmaster.local"
     logstashmaster_config.hostmanager.enabled = true
     logstashmaster_config.hostmanager.aliases = %w(logstashmaster.local logstashmaster puppet puppet.local puppetboard.logstashmaster.local)
@@ -42,7 +42,7 @@ Vagrant.configure("2") do |config|
 
   #A Logstash server
   config.vm.define "logstash".to_sym do |logstash_config|
-    logstash_config.vm.box = "ubuntu-13.10-server-amd64"
+    logstash_config.vm.box = "ubuntu-14.04-server-amd64"
     logstash_config.vm.hostname = "logstash.local"
     logstash_config.hostmanager.aliases = %w(dashboard.logstash.local)
     logstash_config.hostmanager.enabled = true
@@ -58,7 +58,7 @@ Vagrant.configure("2") do |config|
 
   #A web server for Kibana 3
   config.vm.define "kibanathree".to_sym do |kibanathree_config|
-    kibanathree_config.vm.box = "ubuntu-13.10-server-amd64"
+    kibanathree_config.vm.box = "ubuntu-14.04-server-amd64"
     kibanathree_config.vm.hostname = "kibanathree.local"
     kibanathree_config.hostmanager.aliases = %w(dashboard.kibanathree.local)
     kibanathree_config.hostmanager.enabled = true
@@ -73,7 +73,7 @@ Vagrant.configure("2") do |config|
 
   #An Elasticsearch node
   config.vm.define "elasticsearch1".to_sym do |elasticsearch1_config|
-    elasticsearch1_config.vm.box = "ubuntu-13.10-server-amd64"
+    elasticsearch1_config.vm.box = "ubuntu-14.04-server-amd64"
     elasticsearch1_config.vm.hostname = "elasticsearch1.local"
     elasticsearch1_config.hostmanager.enabled = true
     elasticsearch1_config.vm.network :private_network, ip: "10.0.1.141"
@@ -87,7 +87,7 @@ Vagrant.configure("2") do |config|
 
   #An Elasticsearch node
   config.vm.define "elasticsearch2".to_sym do |elasticsearch2_config|
-    elasticsearch2_config.vm.box = "ubuntu-13.10-server-amd64"
+    elasticsearch2_config.vm.box = "ubuntu-14.04-server-amd64"
     elasticsearch2_config.vm.hostname = "elasticsearch2.local"
     elasticsearch2_config.hostmanager.enabled = true
     elasticsearch2_config.vm.network :private_network, ip: "10.0.1.142"
@@ -101,7 +101,7 @@ Vagrant.configure("2") do |config|
 
   #ElasticSearch node
   config.vm.define "elasticsearch3".to_sym do |elasticsearch3_config|
-    elasticsearch3_config.vm.box = "ubuntu-13.10-server-amd64"
+    elasticsearch3_config.vm.box = "ubuntu-14.04-server-amd64"
     elasticsearch3_config.vm.hostname = "elasticsearch3.local"
     elasticsearch3_config.hostmanager.enabled = true
     elasticsearch3_config.vm.network :private_network, ip: "10.0.1.143"
@@ -115,7 +115,7 @@ Vagrant.configure("2") do |config|
   
   #ElasticSearch node
   config.vm.define "elasticsearch4".to_sym do |elasticsearch4_config|
-    elasticsearch4_config.vm.box = "ubuntu-13.10-server-amd64"
+    elasticsearch4_config.vm.box = "ubuntu-14.04-server-amd64"
     elasticsearch4_config.vm.hostname = "elasticsearch4.local"
     elasticsearch4_config.hostmanager.enabled = true
     elasticsearch4_config.vm.network :private_network, ip: "10.0.1.144"
@@ -129,7 +129,7 @@ Vagrant.configure("2") do |config|
 
   #An rsyslog client to generate log data:
   config.vm.define "rsyslog1".to_sym do |rsyslog1_config|
-    rsyslog1_config.vm.box = "ubuntu-13.10-server-amd64"
+    rsyslog1_config.vm.box = "ubuntu-14.04-server-amd64"
     rsyslog1_config.vm.hostname = "rsyslog1.local"
     rsyslog1_config.hostmanager.aliases = %w(rsyslog1.local)
     rsyslog1_config.hostmanager.enabled = true
@@ -144,7 +144,7 @@ Vagrant.configure("2") do |config|
 
   #Another rsyslog client to generate log data:
   config.vm.define "rsyslog2".to_sym do |rsyslog2_config|
-    rsyslog2_config.vm.box = "ubuntu-13.10-server-amd64"
+    rsyslog2_config.vm.box = "ubuntu-14.04-server-amd64"
     rsyslog2_config.vm.hostname = "rsyslog2.local"
     rsyslog2_config.hostmanager.aliases = %w(rsyslog2.local)
     rsyslog2_config.hostmanager.enabled = true
