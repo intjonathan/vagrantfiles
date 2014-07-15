@@ -235,43 +235,9 @@ node 'kibanathree.local' {
 node 'elasticsearch1.local' {
 
   #This module is: https://github.com/nickchappell/puppetlabs-denyhosts
-  
-  
   class { 'elasticsearch':
-    java_install => true,
-    package_url => 'https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.0.1.deb',
-    config => {
-
-      'index' => {
-        'number_of_replicas' => '1',
-        'number_of_shards'   => '4'
-      },
-      'network' => {
-        'host' => $ipaddress_eth1
-      },
-      'cluster' => {
-        'name' => 'logstash',
-      }
-    }
-  }
-
-  elasticsearch::instance { $fqnd:
-    config => { 'node.name' => $fqdn },
-  }
-
-  elasticsearch::plugin{'mobz/elasticsearch-head':
-    module_dir => 'head',
-    instances  => $fqdn,
-  }
-
-  elasticsearch::plugin{'karmi/elasticsearch-paramedic':
-    module_dir => 'paramedic',
-    instances  => $fqdn,
-  }
-
-  elasticsearch::plugin{'lmenezes/elasticsearch-kopf':
-    module_dir => 'kopf',
-    instances  => $fqdn,
+    version => '1.2.2',
+    config => { 'cluster.name' => 'logstash' },
   }
   
   #This module is from: https://github.com/saz/puppet-ssh
