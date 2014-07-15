@@ -75,7 +75,7 @@ Vagrant.configure("2") do |config|
     #set some machine-specific options	
     collectd1_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
-      v.customize ["modifyvm", :id, "--memory", "512"]
+      v.customize ["modifyvm", :id, "--memory", "256"]
     end
     #Puppet agent provisioning script
 	  collectd1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
@@ -89,7 +89,7 @@ Vagrant.configure("2") do |config|
     #set some machine-specific options	
     collectd2_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
-      v.customize ["modifyvm", :id, "--memory", "512"]
+      v.customize ["modifyvm", :id, "--memory", "256"]
     end
     #Puppet agent provisioning script
 	  collectd2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
@@ -117,7 +117,7 @@ Vagrant.configure("2") do |config|
     #set some machine-specific options	
     grafana1_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
-      v.customize ["modifyvm", :id, "--memory", "512"]
+      v.customize ["modifyvm", :id, "--memory", "256"]
     end
     #Puppet agent provisioning script
 	  grafana1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
