@@ -241,9 +241,7 @@ node 'elasticsearch1.local' {
     java_install => true,
     package_url => 'https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.0.1.deb',
     config => {
-      'node'    => {
-        'name' => $fqdn
-      },
+
       'index' => {
         'number_of_replicas' => '1',
         'number_of_shards'   => '4'
@@ -257,16 +255,23 @@ node 'elasticsearch1.local' {
     }
   }
 
+  elasticsearch::instance { $fqnd:
+    config => { 'node.name' => $fqdn },
+  }
+
   elasticsearch::plugin{'mobz/elasticsearch-head':
-    module_dir => 'head'
+    module_dir => 'head',
+    instances  => $fqdn,
   }
 
   elasticsearch::plugin{'karmi/elasticsearch-paramedic':
-    module_dir => 'paramedic'
+    module_dir => 'paramedic',
+    instances  => $fqdn,
   }
 
   elasticsearch::plugin{'lmenezes/elasticsearch-kopf':
-    module_dir => 'kopf'
+    module_dir => 'kopf',
+    instances  => $fqdn,
   }
   
   #This module is from: https://github.com/saz/puppet-ssh
@@ -370,9 +375,7 @@ node 'elasticsearch2.local', 'elasticsearch3.local', 'elasticsearch4.local' {
     java_install => true,
     package_url => 'https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.0.1.deb',
     config => {
-      'node'    => {
-        'name' => $fqdn
-      },
+
       'index' => {
         'number_of_replicas' => '1',
         'number_of_shards'   => '4'
@@ -384,6 +387,10 @@ node 'elasticsearch2.local', 'elasticsearch3.local', 'elasticsearch4.local' {
         'name' => 'logstash',
       }
     }
+  }
+
+  elasticsearch::instance { $fqdn:
+    config => { 'node.name' => $fqdn },
   }
   
 }
