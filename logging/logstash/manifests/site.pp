@@ -197,6 +197,10 @@ node 'kibanathree.local' {
     port            => 80,
     docroot         => '/sites/apps/kibana3',
     servername      => "dashboard.${fqdn}",
+    access_log => true,
+    access_log_syslog=> 'syslog:local1',
+    error_log => true,
+    error_log_syslog=> 'syslog:local1',
     custom_fragment => '
       #Redirect to the HTTPS virtualhost
       RewriteEngine on
@@ -209,6 +213,10 @@ node 'kibanathree.local' {
     port                 => 443,
     docroot              => '/sites/apps/kibana3',
     servername           => "dashboard.${fqdn}",
+    access_log => true,
+    access_log_syslog=> 'syslog:local1',
+    error_log => true,
+    error_log_syslog=> 'syslog:local1',
     ssl                  => true,
     ssl_cert             => '/etc/apache2/ssl/kibanathree.local.pem',
     ssl_key              => '/etc/apache2/ssl/kibanathree.local.key',
