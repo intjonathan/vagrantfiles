@@ -4,7 +4,7 @@
     "query": {
       "list": {
         "0": {
-          "query": "*",
+          "query": "",
           "alias": "",
           "color": "#7EB26D",
           "id": 0,
@@ -22,7 +22,7 @@
         "0": {
           "type": "time",
           "field": "@timestamp",
-          "from": "now-24h",
+          "from": "now-1h",
           "to": "now",
           "mandate": "must",
           "active": true,
@@ -55,7 +55,7 @@
           "value_field": null,
           "auto_int": true,
           "resolution": 100,
-          "interval": "10m",
+          "interval": "30s",
           "fill": 3,
           "linewidth": 3,
           "timezone": "browser",
@@ -138,11 +138,11 @@
             "default"
           ],
           "type": "table",
-          "size": 100,
-          "pages": 5,
+          "size": 1000,
+          "pages": 10,
           "offset": 0,
           "sort": [
-            "@timestamp",
+            "@host",
             "desc"
           ],
           "style": {
@@ -195,14 +195,17 @@
       "notice": false,
       "query": "*",
       "pinned": true,
-      "history": [],
+      "history": [
+        "puppet-agent",
+        "puppet"
+      ],
       "remember": 10,
       "enable": true
     },
     {
       "type": "filtering",
       "collapse": true,
-      "notice": false,
+      "notice": true,
       "enable": true
     }
   ],
