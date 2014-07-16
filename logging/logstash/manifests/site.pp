@@ -234,7 +234,6 @@ node 'kibanathree.local' {
 
 node 'elasticsearch1.local' {
 
-  #This module is: https://github.com/nickchappell/puppetlabs-denyhosts
   class { 'elasticsearch':
     version => '1.2.2',
     config => { 'cluster.name' => 'logstash' },
