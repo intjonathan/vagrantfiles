@@ -133,6 +133,19 @@ node 'logstash.local' {
     order   => 10
   }
 
+  #Install Postfix so we can test out processing SMTP logs with ELK:
+  class { '::postfix::server':
+    inet_interfaces => 'all', #Listen on all interfaces
+    inet_protocols => 'all', #Use both IPv4 and IPv6
+    mydomain       => 'local',
+    mynetworks => '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 10.0.0.0/16',
+    extra_main_parameters => {
+      'home_mailbox' => 'Maildir/',
+      'mailbox_command' => '',
+      'disable_dns_lookups' => 'yes' #Don't do DNS lookups for MX records since we're just using /etc/hosts for all host lookups
+    }  
+  }
+
 }
 
 node 'kibanathree.local' {
@@ -241,6 +254,19 @@ node 'kibanathree.local' {
     mode => '600',
   }
 
+  #Install Postfix so we can test out processing SMTP logs with ELK:
+  class { '::postfix::server':
+    inet_interfaces => 'all', #Listen on all interfaces
+    inet_protocols => 'all', #Use both IPv4 and IPv6
+    mydomain       => 'local',
+    mynetworks => '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 10.0.0.0/16',
+    extra_main_parameters => {
+      'home_mailbox' => 'Maildir/',
+      'mailbox_command' => '',
+      'disable_dns_lookups' => 'yes' #Don't do DNS lookups for MX records since we're just using /etc/hosts for all host lookups
+    }  
+  }
+
 }
 
 node 'elasticsearch1.local' {
@@ -318,7 +344,20 @@ node 'elasticsearch1.local' {
     log_auth_local => true,
     custom_config  => undef,
   }
-  
+
+  #Install Postfix so we can test out processing SMTP logs with ELK:
+  class { '::postfix::server':
+    inet_interfaces => 'all', #Listen on all interfaces
+    inet_protocols => 'all', #Use both IPv4 and IPv6
+    mydomain       => 'local',
+    mynetworks => '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 10.0.0.0/16',
+    extra_main_parameters => {
+      'home_mailbox' => 'Maildir/',
+      'mailbox_command' => '',
+      'disable_dns_lookups' => 'yes' #Don't do DNS lookups for MX records since we're just using /etc/hosts for all host lookups
+    }  
+  }
+
 }
 
 node 'elasticsearch2.local', 'elasticsearch3.local', 'elasticsearch4.local' {
@@ -384,6 +423,19 @@ node 'elasticsearch2.local', 'elasticsearch3.local', 'elasticsearch4.local' {
   elasticsearch::instance { $fqdn:
     config => { 'node.name' => $fqdn }
   }
+
+  #Install Postfix so we can test out processing SMTP logs with ELK:
+  class { '::postfix::server':
+    inet_interfaces => 'all', #Listen on all interfaces
+    inet_protocols => 'all', #Use both IPv4 and IPv6
+    mydomain       => 'local',
+    mynetworks => '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 10.0.0.0/16',
+    extra_main_parameters => {
+      'home_mailbox' => 'Maildir/',
+      'mailbox_command' => '',
+      'disable_dns_lookups' => 'yes' #Don't do DNS lookups for MX records since we're just using /etc/hosts for all host lookups
+    }  
+  }
   
 }
 
@@ -435,6 +487,19 @@ node 'rsyslog1.local', 'rsyslog2.local' {
     log_local      => true,
     log_auth_local => true,
     custom_config  => undef,
+  }
+
+  #Install Postfix so we can test out processing SMTP logs with ELK:
+  class { '::postfix::server':
+    inet_interfaces => 'all', #Listen on all interfaces
+    inet_protocols => 'all', #Use both IPv4 and IPv6
+    mydomain       => 'local',
+    mynetworks => '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 10.0.0.0/16',
+    extra_main_parameters => {
+      'home_mailbox' => 'Maildir/',
+      'mailbox_command' => '',
+      'disable_dns_lookups' => 'yes' #Don't do DNS lookups for MX records since we're just using /etc/hosts for all host lookups
+    }  
   }
 
 }
