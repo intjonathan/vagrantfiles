@@ -235,8 +235,17 @@ node 'kibanathree.local' {
 node 'elasticsearch1.local' {
 
   class { 'elasticsearch':
-    version => '1.2.2',
-    config => { 'cluster.name' => 'logstash' },
+    java_install => true,
+    package_url => 'https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.2.2.deb',
+    config => { 'cluster.name'             => 'logstash',
+                'network.host'             => $ipaddress_eth1,
+                'index.number_of_replicas' => '1',
+                'index.number_of_shards'   => '4',
+    },
+  }
+
+  elasticsearch::instance { $fqdn:
+    config => { 'node.name' => $fqdn }
   }
   
   #This module is from: https://github.com/saz/puppet-ssh
@@ -338,24 +347,16 @@ node 'elasticsearch2.local', 'elasticsearch3.local', 'elasticsearch4.local' {
 
   class { 'elasticsearch':
     java_install => true,
-    package_url => 'https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.0.1.deb',
-    config => {
-
-      'index' => {
-        'number_of_replicas' => '1',
-        'number_of_shards'   => '4'
-      },
-      'network' => {
-        'host' => $ipaddress_eth1
-      },
-      'cluster' => {
-        'name' => 'logstash',
-      }
-    }
+    package_url => 'https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.2.2.deb',
+    config => { 'cluster.name'             => 'logstash',
+                'network.host'             => $ipaddress_eth1,
+                'index.number_of_replicas' => '1',
+                'index.number_of_shards'   => '4',
+    },
   }
 
   elasticsearch::instance { $fqdn:
-    config => { 'node.name' => $fqdn },
+    config => { 'node.name' => $fqdn }
   }
   
 }
