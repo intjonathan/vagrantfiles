@@ -247,7 +247,22 @@ node 'elasticsearch1.local' {
   elasticsearch::instance { $fqdn:
     config => { 'node.name' => $fqdn }
   }
-  
+
+  elasticsearch::plugin{'mobz/elasticsearch-head':
+    module_dir => 'head',
+    instances  => $fqdn,
+  }
+
+  elasticsearch::plugin{'karmi/elasticsearch-paramedic':
+    module_dir => 'paramedic',
+    instances  => $fqdn,
+  }
+
+  elasticsearch::plugin{'lmenezes/elasticsearch-kopf':
+    module_dir => 'kopf',
+    instances  => $fqdn,
+  }
+
   #This module is from: https://github.com/saz/puppet-ssh
   class { 'ssh':
     #Export host keys to PuppetDB:
