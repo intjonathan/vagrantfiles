@@ -138,11 +138,11 @@
             "default"
           ],
           "type": "table",
-          "size": 1000,
+          "size": 200,
           "pages": 10,
           "offset": 0,
           "sort": [
-            "@host",
+            "@timestamp",
             "desc"
           ],
           "style": {
@@ -153,7 +153,8 @@
             "@host",
             "@message",
             "syslog_program",
-            "client_ip"
+            "client_ip",
+            "@timestamp"
           ],
           "localTime": true,
           "timeField": "@timestamp",
@@ -196,6 +197,10 @@
       "query": "*",
       "pinned": true,
       "history": [
+        "",
+        "*",
+        "postfix",
+        "postfi",
         "puppet-agent",
         "puppet"
       ],
