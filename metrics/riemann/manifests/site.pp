@@ -146,7 +146,12 @@ node 'riemannmaster.local' {
 node 'riemann1.local' {
 
   #class {'riemann':}
-  
+
+  #Install Java so we can run ElasticSearch:
+  package {'openjdk-7-jdk':
+    ensure => installed,
+  }
+
   class { 'riemann': 
     version => '0.2.5',
   }
