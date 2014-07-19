@@ -802,37 +802,33 @@ node 'grafana1.local' {
     ensure => installed,
   }
 
-  #Install Elasticsearch so we can store Grafana dashboards:
   class { 'elasticsearch':
-    package_url => 'https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.0.0.deb',
-    config => {
-      'node'    => {
-        'name' => $fqdn
-      },
-      'index' => {
-        'number_of_replicas' => '1',
-        'number_of_shards'   => '8'
-      },
-      'network' => {
-        'host' => $ipaddress_eth1
-      },
-      'cluster' => {
-        'name' => 'grafana',
-      }
-    }
+    java_install => false,
+    package_url => 'https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.2.2.deb',
+    config => { 'cluster.name'             => 'grafana',
+                'network.host'             => $ipaddress_eth1,
+                'index.number_of_replicas' => '1',
+                'index.number_of_shards'   => '4',
+    },
   }
 
-  #Install some Elasticsearch plugins
+  elasticsearch::instance { $fqdn:
+    config => { 'node.name' => $fqdn }
+  }
+
   elasticsearch::plugin{'mobz/elasticsearch-head':
-    module_dir => 'head'
+    module_dir => 'head',
+    instances  => $fqdn,
   }
 
   elasticsearch::plugin{'karmi/elasticsearch-paramedic':
-    module_dir => 'paramedic'
+    module_dir => 'paramedic',
+    instances  => $fqdn,
   }
 
   elasticsearch::plugin{'lmenezes/elasticsearch-kopf':
-    module_dir => 'kopf'
+    module_dir => 'kopf',
+    instances  => $fqdn,
   }
   
   ::apache::mod { 'ssl': } #Install/enable the SSL module
