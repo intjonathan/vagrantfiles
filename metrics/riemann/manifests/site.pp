@@ -139,6 +139,8 @@ node 'riemannmaster.local' {
   #Write the collectd status to the Riemann VM in the Graphite format:
   class { 'collectd::plugin::write_graphite':
     graphitehost => 'riemann1.local',
+    protocol => 'tcp',
+    graphiteport => 2003,
   }
 
 }
@@ -263,6 +265,8 @@ node 'riemann1.local' {
   #Write the collectd status to the Riemann VM in the Graphite format:
   class { 'collectd::plugin::write_graphite':
     graphitehost => 'riemann1.local',
+    protocol => 'tcp',
+    graphiteport => 2003,
   }
 
 }
@@ -380,6 +384,8 @@ node 'riemann2.local' {
   #Write the collectd status to the Riemann VM in the Graphite format:
   class { 'collectd::plugin::write_graphite':
     graphitehost => 'riemann1.local',
+    protocol => 'tcp',
+    graphiteport => 2003,
   }
 
 }
@@ -532,6 +538,8 @@ node 'collectd1.local' {
   #Write the collectd status to the Riemann VM in the Graphite format:
   class { 'collectd::plugin::write_graphite':
     graphitehost => 'riemann1.local',
+    protocol => 'tcp',
+    graphiteport => 2003,
   }
 
 }
@@ -685,6 +693,8 @@ node 'collectd2.local' {
   #Write the collectd status to the Riemann VM in the Graphite format:
   class { 'collectd::plugin::write_graphite':
     graphitehost => 'riemann1.local',
+    protocol => 'tcp',
+    graphiteport => 2003,
   }
 
 }
@@ -791,6 +801,8 @@ node 'influxdb1.local' {
   #Write the collectd status to the Riemann VM in the Graphite format:
   class { 'collectd::plugin::write_graphite':
     graphitehost => 'riemann1.local',
+    protocol => 'tcp',
+    graphiteport => 2003,
   }
 
 }
@@ -941,6 +953,8 @@ node 'grafana1.local' {
   #Write the collectd status to the Riemann VM in the Graphite format:
   class { 'collectd::plugin::write_graphite':
     graphitehost => 'riemann1.local',
+    protocol => 'tcp',
+    graphiteport => 2003,
   }
 
 }
