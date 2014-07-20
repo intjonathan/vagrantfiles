@@ -156,8 +156,9 @@ node 'riemann1.local' {
 
   class { 'riemann': 
     version => '0.2.6',
+    riemann_config_source => 'puppet:///riemann/configs/riemann.config',
   }
-
+  
   class { 'fail2ban':
     log_level => '3',
   }
@@ -275,6 +276,7 @@ node 'riemann2.local' {
 
   class { 'riemann': 
     version => '0.2.6',
+    riemann_config_source => 'puppet:///riemann/configs/riemann.config',
   }
 
   class { 'fail2ban':
