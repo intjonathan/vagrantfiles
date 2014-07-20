@@ -140,22 +140,22 @@ node 'ubuntuicinga.local' {
   class { 'icinga::server':
     server_db_password => 'password',
     server_users => ['icingaadmin', 'nick2', 'nick', 'nick3'],
-  }
+  } ->
   
   #An Icinga web user:
   icinga::server::user { 'nick':
     password => 'password',
-  }
+  } ->
 
   #Another Icinga web user:
   icinga::server::user { 'nick2':
     password => 'password1', 
-  }
+  } ->
 
   #Another Icinga web user:
   icinga::server::user { 'nick3':
     password => 'password2', 
-  }
+  } ->
 
   #Collect all @@nagios_host resources from PuppetDB that were exported by other machines:
   Nagios_host <<||>> { }
