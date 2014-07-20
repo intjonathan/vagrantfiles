@@ -810,7 +810,7 @@ node 'influxdb1.local' {
   #Install Java so we can run ElasticSearch:
   package {'openjdk-7-jdk':
     ensure => installed,
-  }
+  } ->
 
   class { 'elasticsearch':
     java_install => false,
@@ -839,7 +839,7 @@ node 'grafana1.local' {
   #Install Java so we can run ElasticSearch:
   package {'openjdk-7-jdk':
     ensure => installed,
-  }
+  } ->
 
   class { 'elasticsearch':
     java_install => false,
