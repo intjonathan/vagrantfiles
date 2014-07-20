@@ -807,6 +807,26 @@ node 'influxdb1.local' {
     graphiteport => 2003,
   }
 
+  #Install Java so we can run ElasticSearch:
+  package {'openjdk-7-jdk':
+    ensure => installed,
+  }
+
+  class { 'elasticsearch':
+    java_install => false,
+    package_url => 'https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.2.2.deb',
+    config => { 'cluster.name'             => 'grafana',
+                'network.host'             => $ipaddress_eth1,
+                'index.number_of_replicas' => '1',
+                'index.number_of_shards'   => '4',
+    },
+  }
+
+  elasticsearch::instance { $fqdn:
+    config => { 'node.name' => $fqdn }
+  }
+
+
 }
 
 node 'grafana1.local' {
