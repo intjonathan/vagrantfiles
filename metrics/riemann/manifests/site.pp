@@ -149,10 +149,10 @@ node 'riemann1.local' {
 
   #class {'riemann':}
 
-  #Install Java so we can run ElasticSearch:
+  #Install Java so we can run Riemann; use the -> arrow so that it gets instaleld:
   package {'openjdk-7-jdk':
     ensure => installed,
-  }
+  } ->
 
   class { 'riemann': 
     version => '0.2.5',
