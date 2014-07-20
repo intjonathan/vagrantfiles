@@ -155,7 +155,7 @@ node 'riemann1.local' {
   } ->
 
   class { 'riemann': 
-    version => '0.2.5',
+    version => '0.2.6',
   }
 
   class { 'fail2ban':
@@ -274,7 +274,7 @@ node 'riemann1.local' {
 node 'riemann2.local' {
 
   class { 'riemann': 
-    version => '0.2.5',
+    version => '0.2.6',
   }
 
   class { 'fail2ban':
