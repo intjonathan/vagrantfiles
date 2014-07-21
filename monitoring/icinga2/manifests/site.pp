@@ -344,6 +344,25 @@ node 'preciseicinga2.local' {
   #Collect all @@icinga2::objects::host resources from PuppetDB that were exported by other machines:
   Icinga2::Objects::Host <<| |>> { }
 
+  #Create a linux_servers hostgroup:
+  icinga2::objects::hostgroup { 'linux_servers':
+    display_name => 'Linux servers',
+    groups => ['mysql_servers', 'clients'],
+    target_dir => '/etc/icinga2/objects/hostgroups',
+  }
+
+  #Create a mysql_servers hostgroup:
+  icinga2::objects::hostgroup { 'mysql_servers':
+    display_name => 'MySQL servers',
+    target_dir => '/etc/icinga2/objects/hostgroups',
+  }
+
+  #Create a clients hostgroup:
+  icinga2::objects::hostgroup { 'clients':
+    display_name => 'Client machines',
+    target_dir => '/etc/icinga2/objects/hostgroups',
+  }
+
   #Install Postfix so we can monitor SMTP services and send out email alerts:
   class { '::postfix::server':
     inet_interfaces => 'all', #Listen on all interfaces
@@ -494,10 +513,21 @@ node 'centosicinga2.local' {
 
   #Create a linux_servers hostgroup:
   icinga2::objects::hostgroup { 'linux_servers':
-    #display_name => $::fqdn,
-    groups => ['linux_servers', 'mysql_servers', 'clients'],
-    target_dir => '/etc/icinga2/conf.d/hostgroups',
-    target_file_name => "linux_servers.conf"
+    display_name => 'Linux servers',
+    groups => ['mysql_servers', 'clients'],
+    target_dir => '/etc/icinga2/objects/hostgroups',
+  }
+
+  #Create a mysql_servers hostgroup:
+  icinga2::objects::hostgroup { 'mysql_servers':
+    display_name => 'MySQL servers',
+    target_dir => '/etc/icinga2/objects/hostgroups',
+  }
+
+  #Create a clients hostgroup:
+  icinga2::objects::hostgroup { 'clients':
+    display_name => 'Client machines',
+    target_dir => '/etc/icinga2/objects/hostgroups',
   }
 
   #Install Postfix so we can monitor SMTP services and send out email alerts:
