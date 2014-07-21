@@ -23,7 +23,7 @@ Vagrant.configure("2") do |config|
 
   #Puppet master and PuppetDB server
   config.vm.define "suricatamaster".to_sym do |suricatamaster_config|
-    suricatamaster_config.vm.box = "ubuntu-13.10-server-amd64"
+    suricatamaster_config.vm.box = "ubuntu-14.04-server-amd64"
     suricatamaster_config.vm.hostname = "suricatamaster.local"
     suricatamaster_config.hostmanager.enabled = true
     suricatamaster_config.hostmanager.aliases = %w(puppetboard.suricatamaster.local suricatamaster puppet master)
@@ -43,7 +43,7 @@ Vagrant.configure("2") do |config|
 
   #ubuntusuricata server
   config.vm.define "ubuntusuricata".to_sym do |ubuntusuricata_config|
-    ubuntusuricata_config.vm.box = "ubuntu-13.10-server-amd64"
+    ubuntusuricata_config.vm.box = "ubuntu-14.04-server-amd64"
     ubuntusuricata_config.vm.hostname = "ubuntusuricata.local"
     ubuntusuricata_config.hostmanager.enabled = true
     ubuntusuricata_config.hostmanager.aliases = %w(ubuntusuricata)
@@ -75,7 +75,7 @@ Vagrant.configure("2") do |config|
 
   #an icingaserver client
   config.vm.define "sensor1".to_sym do |sensor1_config|
-    sensor1_config.vm.box = "ubuntu-13.10-server-amd64"
+    sensor1_config.vm.box = "ubuntu-14.04-server-amd64"
     sensor1_config.vm.hostname = "sensor1.local"
     sensor1_config.hostmanager.enabled = true
     sensor1_config.vm.network :private_network, ip: "10.0.1.81"
@@ -104,7 +104,7 @@ Vagrant.configure("2") do |config|
 
   #an icingaserver client
   config.vm.define "sensor3".to_sym do |sensor1_config|
-    sensor1_config.vm.box = "ubuntu-13.10-server-amd64"
+    sensor1_config.vm.box = "ubuntu-14.04-server-amd64"
     sensor1_config.vm.hostname = "sensor3.local"
     sensor1_config.hostmanager.enabled = true
     sensor1_config.vm.network :private_network, ip: "10.0.1.83"

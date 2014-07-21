@@ -30,7 +30,7 @@ Vagrant.configure("2") do |config|
   #An Ubuntu ReviewBoard server
   config.vm.define "reviewboardubuntu".to_sym do |reviewboardubuntu_config|
     #the base box we're using
-    reviewboardubuntu_config.vm.box = "ubuntu-13.10-server-amd64"
+    reviewboardubuntu_config.vm.box = "ubuntu-14.04-server-amd64"
     #the box's hostname
     reviewboardubuntu_config.vm.hostname = "reviewboardubuntu.local"
     #enable the hostmanager Vagrant plugin for this VM

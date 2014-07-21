@@ -22,7 +22,7 @@ Vagrant.configure("2") do |config|
 
   #gitlabmaster Puppet master
   config.vm.define "gitlabmaster".to_sym do |gitlabmaster_config|
-    gitlabmaster_config.vm.box = "ubuntu-13.10-server-amd64"
+    gitlabmaster_config.vm.box = "ubuntu-14.04-server-amd64"
     gitlabmaster_config.vm.hostname = "gitlabmaster.local"
     gitlabmaster_config.hostmanager.enabled = true
     gitlabmaster_config.hostmanager.aliases = %w(gitlabmaster.local puppet puppetboard.gitlabmaster.local)
@@ -42,7 +42,7 @@ Vagrant.configure("2") do |config|
 
   #GitLab server
   config.vm.define "gitlab".to_sym do |gitlab_config|
-    gitlab_config.vm.box = "ubuntu-13.10-server-amd64"
+    gitlab_config.vm.box = "ubuntu-14.04-server-amd64"
     gitlab_config.vm.hostname = "gitlab.local"
     gitlab_config.hostmanager.enabled = true
     gitlab_config.hostmanager.aliases = %w(gitlab.local)
@@ -58,7 +58,7 @@ Vagrant.configure("2") do |config|
 
   #Gerrit server
   config.vm.define "gerrit".to_sym do |gerrit_config|
-    gerrit_config.vm.box = "ubuntu-13.10-server-amd64"
+    gerrit_config.vm.box = "ubuntu-14.04-server-amd64"
     gerrit_config.vm.hostname = "gerrit.local"
     gerrit_config.hostmanager.enabled = true
     gerrit_config.vm.network :private_network, ip: "10.0.1.51"

@@ -27,7 +27,7 @@ Vagrant.configure("2") do |config|
 
   #An SNMP server (running net-snmp and Observium: http://www.observium.org/wiki/Main_Page)
   config.vm.define "snmpserver".to_sym do |snmpserver_config|
-    snmpserver_config.vm.box = "ubuntu-13.10-server-amd64"
+    snmpserver_config.vm.box = "ubuntu-14.04-server-amd64"
     snmpserver_config.vm.hostname = "snmpserver.local"
     snmpserver_config.hostmanager.enabled = true
     #giving it 'puppet' as an alias so that the agents can connect to it with their default settings
@@ -43,7 +43,7 @@ Vagrant.configure("2") do |config|
 
   #An SNMP client node
   config.vm.define "snmpclient1".to_sym do |snmpclient1_config|
-    snmpclient1_config.vm.box = "ubuntu-13.10-server-amd64"
+    snmpclient1_config.vm.box = "ubuntu-14.04-server-amd64"
     snmpclient1_config.vm.hostname = "snmpclient1.local"
     snmpclient1_config.hostmanager.enabled = true
     snmpclient1_config.vm.network :private_network, ip: "10.0.1.191"

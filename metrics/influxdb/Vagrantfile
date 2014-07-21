@@ -21,7 +21,7 @@ Vagrant.configure("2") do |config|
   
   #Puppet master
   config.vm.define "influxdbmaster".to_sym do |influxdbmaster_config|
-    influxdbmaster_config.vm.box = "ubuntu-13.10-server-amd64"
+    influxdbmaster_config.vm.box = "ubuntu-14.04-server-amd64"
     influxdbmaster_config.vm.hostname = "influxdbmaster.local"
     influxdbmaster_config.hostmanager.aliases = %w(master puppet master.local puppetboard.influxdbmaster.local)
     influxdbmaster_config.vm.network :private_network, ip: "10.0.1.170"
@@ -40,7 +40,7 @@ Vagrant.configure("2") do |config|
 
   #A machine running InfluxDB
   config.vm.define "influxdb1".to_sym do |influxdb1_config|
-    influxdb1_config.vm.box = "ubuntu-13.10-server-amd64"
+    influxdb1_config.vm.box = "ubuntu-14.04-server-amd64"
     influxdb1_config.vm.hostname = "influxdb1.local"
     influxdb1_config.vm.network :private_network, ip: "10.0.1.171"
     #set some machine-specific options	
@@ -54,7 +54,7 @@ Vagrant.configure("2") do |config|
 
   #A machine running InfluxDB
   config.vm.define "influxdb2".to_sym do |influxdb2_config|
-    influxdb2_config.vm.box = "ubuntu-13.10-server-amd64"
+    influxdb2_config.vm.box = "ubuntu-14.04-server-amd64"
     influxdb2_config.vm.hostname = "influxdb2.local"
     influxdb2_config.vm.network :private_network, ip: "10.0.1.172"
     #set some machine-specific options	

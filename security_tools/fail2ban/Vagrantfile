@@ -21,7 +21,7 @@ Vagrant.configure("2") do |config|
   
   #Puppet master and fail2ban machine
   config.vm.define "failmaster".to_sym do |failmaster_config|
-    failmaster_config.vm.box = "ubuntu-13.10-server-amd64"
+    failmaster_config.vm.box = "ubuntu-14.04-server-amd64"
     failmaster_config.vm.hostname = "failmaster.local"
     failmaster_config.hostmanager.aliases = %w(master puppet master.local puppetboard.failmaster.local)
     failmaster_config.vm.network :private_network, ip: "10.0.1.70"
@@ -54,7 +54,7 @@ Vagrant.configure("2") do |config|
 
   #A fail2ban client
   config.vm.define "failclient2".to_sym do |failclient2_config|
-    failclient2_config.vm.box = "ubuntu-13.10-server-amd64"
+    failclient2_config.vm.box = "ubuntu-14.04-server-amd64"
     failclient2_config.vm.hostname = "failclient2.local"
     failclient2_config.vm.network :private_network, ip: "10.0.1.72"
     #set some machine-specific options	
@@ -82,7 +82,7 @@ Vagrant.configure("2") do |config|
 
   #A fail2ban client
   config.vm.define "failclient4".to_sym do |failclient4_config|
-    failclient4_config.vm.box = "ubuntu-13.10-server-amd64"
+    failclient4_config.vm.box = "ubuntu-14.04-server-amd64"
     failclient4_config.vm.hostname = "failclient4.local"
     failclient4_config.vm.network :private_network, ip: "10.0.1.74"
     #set some machine-specific options	

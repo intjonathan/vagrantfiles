@@ -13,7 +13,7 @@ Vagrant.configure("2") do |config|
   
   #puppet master
   config.vm.define "netflowmaster".to_sym do |netflowmaster_config|
-    netflowmaster_config.vm.box = "ubuntu-13.10-server-amd64"
+    netflowmaster_config.vm.box = "ubuntu-14.04-server-amd64"
     netflowmaster_config.vm.hostname = "netflowmaster.local"
     netflowmaster_config.hostmanager.aliases = %w(puppetboard.netflowmaster.local netflowmaster puppet master netflow.netflowmaster.local)
     netflowmaster_config.hostmanager.enabled = true
@@ -32,7 +32,7 @@ Vagrant.configure("2") do |config|
 
   #An Ubuntu NetFlow collector
   config.vm.define "netflow1".to_sym do |netflow1_config|
-    netflow1_config.vm.box = "ubuntu-13.10-server-amd64"
+    netflow1_config.vm.box = "ubuntu-14.04-server-amd64"
     netflow1_config.vm.hostname = "netflow1.local"
     netflow1_config.hostmanager.enabled = true
     netflow1_config.vm.network :private_network, ip: "10.0.1.78"
@@ -60,7 +60,7 @@ Vagrant.configure("2") do |config|
 
   #A NetFlow sender; this machine sends data to one of the NetFlow collector machines:
   config.vm.define "flow1".to_sym do |flow1_config|
-    flow1_config.vm.box = "ubuntu-13.10-server-amd64"
+    flow1_config.vm.box = "ubuntu-14.04-server-amd64"
     flow1_config.vm.hostname = "flow1.local"
     flow1_config.hostmanager.enabled = true
     flow1_config.vm.network :private_network, ip: "10.0.1.81"
@@ -74,7 +74,7 @@ Vagrant.configure("2") do |config|
 
   #another flow sender
   config.vm.define "flow2".to_sym do |flow2_config|
-    flow2_config.vm.box = "ubuntu-13.10-server-amd64"
+    flow2_config.vm.box = "ubuntu-14.04-server-amd64"
     flow2_config.vm.hostname = "flow2.local"
     flow2_config.hostmanager.enabled = true
     flow2_config.vm.network :private_network, ip: "10.0.1.82"
@@ -116,7 +116,7 @@ Vagrant.configure("2") do |config|
 
   #another flow sender
   config.vm.define "flow5".to_sym do |flow5_config|
-    flow5_config.vm.box = "ubuntu-13.10-server-amd64"
+    flow5_config.vm.box = "ubuntu-14.04-server-amd64"
     flow5_config.vm.hostname = "flow5.local"
     flow5_config.hostmanager.enabled = true
     flow5_config.vm.network :private_network, ip: "10.0.1.85"

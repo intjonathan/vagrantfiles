@@ -24,7 +24,7 @@ Vagrant.configure("2") do |config|
 
   #Ubuntu Puppet master
   config.vm.define "serfmaster".to_sym do |serfmaster_config|
-    serfmaster_config.vm.box = "ubuntu-13.10-server-amd64"
+    serfmaster_config.vm.box = "ubuntu-14.04-server-amd64"
     serfmaster_config.vm.hostname = "serfmaster.local"
     serfmaster_config.hostmanager.enabled = true
     serfmaster_config.hostmanager.aliases = %w(serfmaster serfmaster.local puppet puppet.local serfpuppetboard.puppet.local serfpuppetdb.puppet.local)
@@ -39,7 +39,7 @@ Vagrant.configure("2") do |config|
 
   #Ubuntu Serf agent VM
   config.vm.define "ubuntuserf".to_sym do |ubuntuserf_config|
-    ubuntuserf_config.vm.box = "ubuntu-13.10-server-amd64"
+    ubuntuserf_config.vm.box = "ubuntu-14.04-server-amd64"
     ubuntuserf_config.vm.hostname = "ubuntuserf.local"
     ubuntuserf_config.hostmanager.enabled = true
     ubuntuserf_config.hostmanager.aliases = %w(ubuntuserf ubuntuserf.local)

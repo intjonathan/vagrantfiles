@@ -21,7 +21,7 @@ Vagrant.configure("2") do |config|
   
   #Puppet master
   config.vm.define "backuppcmaster".to_sym do |backuppcmaster_config|
-    backuppcmaster_config.vm.box = "ubuntu-13.10-server-amd64"
+    backuppcmaster_config.vm.box = "ubuntu-14.04-server-amd64"
     backuppcmaster_config.vm.hostname = "backuppcmaster.local"
     backuppcmaster_config.hostmanager.aliases = %w(master puppet master.local puppetboard.backuppcmaster.local)
     backuppcmaster_config.vm.network :private_network, ip: "10.0.1.189"
@@ -40,7 +40,7 @@ Vagrant.configure("2") do |config|
 
   #A machine running BackupPC
   config.vm.define "backupserver".to_sym do |backupserver_config|
-    backupserver_config.vm.box = "ubuntu-13.10-server-amd64"
+    backupserver_config.vm.box = "ubuntu-14.04-server-amd64"
     backupserver_config.vm.hostname = "backupserver.local"
     backupserver_config.vm.network :private_network, ip: "10.0.1.190"
     #set some machine-specific options	
@@ -54,7 +54,7 @@ Vagrant.configure("2") do |config|
 
   #A machine BackupPC will back things up from
   config.vm.define "backupclient1".to_sym do |backupclient1_config|
-    backupclient1_config.vm.box = "ubuntu-13.10-server-amd64"
+    backupclient1_config.vm.box = "ubuntu-14.04-server-amd64"
     backupclient1_config.vm.hostname = "backupclient1.local"
     backupclient1_config.vm.network :private_network, ip: "10.0.1.191"
     #set some machine-specific options	

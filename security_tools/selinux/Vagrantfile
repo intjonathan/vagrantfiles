@@ -20,7 +20,7 @@ Vagrant.configure("2") do |config|
 
   #Ubuntu SeLinux Puppet master
   config.vm.define "selinuxmaster".to_sym do |selinuxmaster_config|
-    selinuxmaster_config.vm.box = "ubuntu-13.10-server-amd64"
+    selinuxmaster_config.vm.box = "ubuntu-14.04-server-amd64"
     selinuxmaster_config.vm.hostname = "selinuxmaster.local"
     selinuxmaster_config.hostmanager.enabled = true
     selinuxmaster_config.hostmanager.aliases = %w(puppetboard.selinuxmaster.local selinuxmaster puppet master)

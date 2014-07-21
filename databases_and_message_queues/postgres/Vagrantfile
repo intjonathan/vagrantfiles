@@ -21,7 +21,7 @@ Vagrant.configure("2") do |config|
   
   #Puppet master
   config.vm.define "postgresmaster".to_sym do |master_config|
-    master_config.vm.box = "ubuntu-13.10-server-amd64"
+    master_config.vm.box = "ubuntu-14.04-server-amd64"
     master_config.vm.hostname = "postgresmaster.local"
     master_config.hostmanager.aliases = %w(master puppet master.local puppetboard.postgresmaster.local)
     master_config.vm.network :private_network, ip: "10.0.1.180"
@@ -41,7 +41,7 @@ Vagrant.configure("2") do |config|
 
   #An Ubuntu postgres master server
   config.vm.define "postgresserver1".to_sym do |postgresserver1_config|
-    postgresserver1_config.vm.box = "ubuntu-13.10-server-amd64"
+    postgresserver1_config.vm.box = "ubuntu-14.04-server-amd64"
     postgresserver1_config.vm.hostname = "postgresserver1.local"
     postgresserver1_config.vm.network :private_network, ip: "10.0.1.181"
     #set some machine-specific options	
@@ -69,7 +69,7 @@ Vagrant.configure("2") do |config|
 
   #An Ubuntu postgres slave server for replication
   config.vm.define "postgresslave1".to_sym do |postgresslave1_config|
-    postgresslave1_config.vm.box = "ubuntu-13.10-server-amd64"
+    postgresslave1_config.vm.box = "ubuntu-14.04-server-amd64"
     postgresslave1_config.vm.hostname = "postgresslave1.local"
     postgresslave1_config.vm.network :private_network, ip: "10.0.1.183"
     #set some machine-specific options	
@@ -97,7 +97,7 @@ Vagrant.configure("2") do |config|
 
   #An Ubuntu BIND DNS client
   config.vm.define "postgresclient1".to_sym do |postgresclient1_config|
-    postgresclient1_config.vm.box = "ubuntu-13.10-server-amd64"
+    postgresclient1_config.vm.box = "ubuntu-14.04-server-amd64"
     postgresclient1_config.vm.hostname = "postgresclient1.local"
     postgresclient1_config.vm.network :private_network, ip: "10.0.1.185"
     #set some machine-specific options	

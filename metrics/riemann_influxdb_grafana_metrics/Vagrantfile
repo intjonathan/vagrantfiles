@@ -21,7 +21,7 @@ Vagrant.configure("2") do |config|
   
   #Puppet master
   config.vm.define "newmetricmaster".to_sym do |newmetricmaster_config|
-    newmetricmaster_config.vm.box = "ubuntu-13.10-server-amd64"
+    newmetricmaster_config.vm.box = "ubuntu-14.04-server-amd64"
     newmetricmaster_config.vm.hostname = "newmetricmaster.local"
     newmetricmaster_config.hostmanager.aliases = %w(master puppet master.local puppetboard.newmetricmaster.local)
     newmetricmaster_config.vm.network :private_network, ip: "10.0.1.200"
@@ -40,7 +40,7 @@ Vagrant.configure("2") do |config|
 
   #A machine running Riemann
   config.vm.define "riemann".to_sym do |riemann_config|
-    riemann_config.vm.box = "ubuntu-13.10-server-amd64"
+    riemann_config.vm.box = "ubuntu-14.04-server-amd64"
     riemann_config.vm.hostname = "riemann.local"
     riemann_config.vm.network :private_network, ip: "10.0.1.201"
     #set some machine-specific options	
@@ -54,7 +54,7 @@ Vagrant.configure("2") do |config|
 
   #A machine running InfluxDB
   config.vm.define "influxdb".to_sym do |influxdb_config|
-    influxdb_config.vm.box = "ubuntu-13.10-server-amd64"
+    influxdb_config.vm.box = "ubuntu-14.04-server-amd64"
     influxdb_config.vm.hostname = "influxdb.local"
     influxdb_config.vm.network :private_network, ip: "10.0.1.202"
     #set some machine-specific options	
@@ -68,7 +68,7 @@ Vagrant.configure("2") do |config|
 
   #A machine running Grafana
   config.vm.define "grafana".to_sym do |grafana_config|
-    grafana_config.vm.box = "ubuntu-13.10-server-amd64"
+    grafana_config.vm.box = "ubuntu-14.04-server-amd64"
     grafana_config.vm.hostname = "grafana.local"
     grafana_config.vm.network :private_network, ip: "10.0.1.203"
     #set some machine-specific options	

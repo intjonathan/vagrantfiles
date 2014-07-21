@@ -33,7 +33,7 @@ end
 
 #Ubuntu Snort server
 config.vm.define "ubuntusnort".to_sym do |ubuntusnort_config|
-	ubuntusnort_config.vm.box = "ubuntu-13.10-server-amd64"
+	ubuntusnort_config.vm.box = "ubuntu-14.04-server-amd64"
 	ubuntusnort_config.vm.hostname = "ubuntusnort.local"
 	ubuntusnort_config.hostmanager.enabled = true
 	#giving it 'puppet' as an alias so that the agents can connect to it with their default settings

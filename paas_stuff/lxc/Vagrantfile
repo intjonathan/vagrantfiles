@@ -26,7 +26,7 @@ Vagrant.configure("2") do |config|
 
   #lxc Puppet master
   config.vm.define "lxcmaster".to_sym do |lxcmaster_config|
-    lxcmaster_config.vm.box = "ubuntu-13.10-server-amd64"
+    lxcmaster_config.vm.box = "ubuntu-14.04-server-amd64"
     lxcmaster_config.vm.hostname = "lxcmaster.local"
     lxcmaster_config.hostmanager.enabled = true
     lxcmaster_config.hostmanager.aliases = %w(lxcmaster puppet puppet.local lxcpuppetboard.puppet.local lxcpuppetdb.puppet.local)
@@ -41,7 +41,7 @@ Vagrant.configure("2") do |config|
 
   #Ubuntu lxc VM
   config.vm.define "ubuntulxc".to_sym do |ubuntulxc_config|
-    ubuntulxc_config.vm.box = "ubuntu-13.10-server-amd64"
+    ubuntulxc_config.vm.box = "ubuntu-14.04-server-amd64"
     ubuntulxc_config.vm.hostname = "ubuntulxc.local"
     ubuntulxc_config.hostmanager.enabled = true
     ubuntulxc_config.vm.network :private_network, ip: "10.0.1.155"

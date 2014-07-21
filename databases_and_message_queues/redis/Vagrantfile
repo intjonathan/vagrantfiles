@@ -23,7 +23,7 @@ Vagrant.configure("2") do |config|
 
   #redis instance
   config.vm.define "redis1".to_sym do |redis1_config|
-    redis1_config.vm.box = "ubuntu-13.10-server-amd64"
+    redis1_config.vm.box = "ubuntu-14.04-server-amd64"
     redis1_config.vm.hostname = "redis1.local"
     redis1_config.hostmanager.enabled = true
     redis1_config.hostmanager.aliases = %w(redis1.local puppet puppet.local)
@@ -38,7 +38,7 @@ Vagrant.configure("2") do |config|
 
   #redis instance
   config.vm.define "redis2".to_sym do |redis2_config|
-    redis2_config.vm.box = "ubuntu-13.10-server-amd64"
+    redis2_config.vm.box = "ubuntu-14.04-server-amd64"
     redis2_config.vm.hostname = "redis2.local"
     redis2_config.hostmanager.enabled = true
     redis2_config.hostmanager.aliases = %w(redis2.local)
@@ -53,7 +53,7 @@ Vagrant.configure("2") do |config|
 
   #redis instance
   config.vm.define "redis3".to_sym do |redis3_config|
-    redis3_config.vm.box = "ubuntu-13.10-server-amd64"
+    redis3_config.vm.box = "ubuntu-14.04-server-amd64"
     redis3_config.vm.hostname = "redis3.local"
     redis3_config.hostmanager.enabled = true
     redis3_config.hostmanager.aliases = %w(redis3.local)
@@ -68,7 +68,7 @@ Vagrant.configure("2") do |config|
 
   #redis instance
   config.vm.define "redis4".to_sym do |redis4_config|
-    redis4_config.vm.box = "ubuntu-13.10-server-amd64"
+    redis4_config.vm.box = "ubuntu-14.04-server-amd64"
     redis4_config.vm.hostname = "redis4.local"
     redis4_config.hostmanager.enabled = true
     redis4_config.hostmanager.aliases = %w(redis4.local)

@@ -20,7 +20,7 @@ Vagrant.configure("2") do |config|
 
   #Ubuntu elasticsearch master server and Puppet master
   config.vm.define "elasticsearchmaster".to_sym do |elasticsearchmaster_config|
-    elasticsearchmaster_config.vm.box = "ubuntu-13.10-server-amd64"
+    elasticsearchmaster_config.vm.box = "ubuntu-14.04-server-amd64"
     elasticsearchmaster_config.vm.hostname = "elasticsearchmaster.local"
     elasticsearchmaster_config.hostmanager.enabled = true
     elasticsearchmaster_config.hostmanager.aliases = %w(puppetboard.elasticsearchmaster.local elasticsearchmaster puppet master)
@@ -39,7 +39,7 @@ Vagrant.configure("2") do |config|
   
   #ElasticSearch node
   config.vm.define "elasticsearch1".to_sym do |elasticsearch1_config|
-    elasticsearch1_config.vm.box = "ubuntu-13.10-server-amd64"
+    elasticsearch1_config.vm.box = "ubuntu-14.04-server-amd64"
     elasticsearch1_config.vm.hostname = "elasticsearch1.local"
     elasticsearch1_config.hostmanager.enabled = true
     elasticsearch1_config.vm.network :private_network, ip: "10.0.1.49"
@@ -53,7 +53,7 @@ Vagrant.configure("2") do |config|
   
   #ElasticSearch node
   config.vm.define "elasticsearch2".to_sym do |elasticsearch2_config|
-    elasticsearch2_config.vm.box = "ubuntu-13.10-server-amd64"
+    elasticsearch2_config.vm.box = "ubuntu-14.04-server-amd64"
     elasticsearch2_config.vm.hostname = "elasticsearch2.local"
     elasticsearch2_config.hostmanager.enabled = true
     elasticsearch2_config.vm.network :private_network, ip: "10.0.1.50"
@@ -67,7 +67,7 @@ Vagrant.configure("2") do |config|
 
   #ElasticSearch node
   config.vm.define "elasticsearch3".to_sym do |elasticsearch3_config|
-    elasticsearch3_config.vm.box = "ubuntu-13.10-server-amd64"
+    elasticsearch3_config.vm.box = "ubuntu-14.04-server-amd64"
     elasticsearch3_config.vm.hostname = "elasticsearch3.local"
     elasticsearch3_config.hostmanager.enabled = true
     elasticsearch3_config.vm.network :private_network, ip: "10.0.1.47"
@@ -81,7 +81,7 @@ Vagrant.configure("2") do |config|
 
   #ElasticSearch node
   config.vm.define "elasticsearch4".to_sym do |elasticsearch4_config|
-    elasticsearch4_config.vm.box = "ubuntu-13.10-server-amd64"
+    elasticsearch4_config.vm.box = "ubuntu-14.04-server-amd64"
     elasticsearch4_config.vm.hostname = "elasticsearch4.local"
     elasticsearch4_config.hostmanager.enabled = true
     elasticsearch4_config.vm.network :private_network, ip: "10.0.1.51"
@@ -95,7 +95,7 @@ Vagrant.configure("2") do |config|
 
   #ElasticSearch node
   config.vm.define "elasticsearch5".to_sym do |elasticsearch5_config|
-    elasticsearch5_config.vm.box = "ubuntu-13.10-server-amd64"
+    elasticsearch5_config.vm.box = "ubuntu-14.04-server-amd64"
     elasticsearch5_config.vm.hostname = "elasticsearch5.local"
     elasticsearch5_config.hostmanager.enabled = true
     elasticsearch5_config.vm.network :private_network, ip: "10.0.1.52"
@@ -109,7 +109,7 @@ Vagrant.configure("2") do |config|
 
   #ElasticSearch node
   config.vm.define "elasticsearch6".to_sym do |elasticsearch6_config|
-    elasticsearch6_config.vm.box = "ubuntu-13.10-server-amd64"
+    elasticsearch6_config.vm.box = "ubuntu-14.04-server-amd64"
     elasticsearch6_config.vm.hostname = "elasticsearch6.local"
     elasticsearch6_config.hostmanager.enabled = true
     elasticsearch6_config.vm.network :private_network, ip: "10.0.1.53"
