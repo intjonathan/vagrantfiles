@@ -695,7 +695,7 @@ node 'icinga2client1.local' {
     display_name => $::fqdn,
     ipv4_address => $::ipaddress_eth1,
     groups => ['linux_servers', 'mysql_servers', 'clients'],
-    target_dir => '/etc/icinga2/conf.d/hosts',
+    target_dir => '/etc/icinga2/objects/hosts',
     target_file_name => "${fqdn}.conf"
   }
 
@@ -855,7 +855,7 @@ node 'icinga2client2.local' {
     display_name => $::fqdn,
     ipv4_address => $::ipaddress_eth1,
     groups => ['linux_servers', 'mysql_servers', 'clients'],
-    target_dir => '/etc/icinga2/conf.d/hosts',
+    target_dir => '/etc/icinga2/objects/hosts',
     target_file_name => "${fqdn}.conf"
   }
 
@@ -994,7 +994,7 @@ node 'icinga2client3.local' {
     display_name => $::fqdn,
     ipv4_address => $::ipaddress_eth1,
     groups => ['linux_servers', 'mysql_servers', 'clients'],
-    target_dir => '/etc/icinga2/conf.d/hosts',
+    target_dir => '/etc/icinga2/objects/hosts',
     target_file_name => "${fqdn}.conf"
   }
 
@@ -1132,7 +1132,7 @@ node 'icinga2client4.local' {
     display_name => $::fqdn,
     ipv4_address => $::ipaddress_eth1,
     groups => ['linux_servers', 'mysql_servers', 'clients'],
-    target_dir => '/etc/icinga2/conf.d/hosts',
+    target_dir => '/etc/icinga2/objects/hosts',
     target_file_name => "${fqdn}.conf"
   }
 
@@ -1273,7 +1273,7 @@ node 'icinga2mail.local' {
     display_name => $::fqdn,
     ipv4_address => $::ipaddress_eth1,
     groups => ['linux_servers', 'mysql_servers', 'clients'],
-    target_dir => '/etc/icinga2/conf.d/hosts',
+    target_dir => '/etc/icinga2/objects/hosts',
     target_file_name => "${fqdn}.conf"
   }
 
@@ -1431,7 +1431,7 @@ node 'usermail.local' {
     display_name => $::fqdn,
     ipv4_address => $::ipaddress_eth1,
     groups => ['linux_servers', 'mysql_servers', 'clients'],
-    target_dir => '/etc/icinga2/conf.d/hosts',
+    target_dir => '/etc/icinga2/objects/hosts',
     target_file_name => "${fqdn}.conf"
   }
 
