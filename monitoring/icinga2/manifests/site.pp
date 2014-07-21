@@ -168,9 +168,10 @@ node 'trustyicinga2.local' {
     grant    => ['ALL'],
   }
 
- #Install Icinga 2:
+  #Install Icinga 2:
   class { 'icinga2::server': 
     server_db_type => 'pgsql',
+    server_install_nagios_plugins => false,
   } ->
 
   #Collect all @@icinga2::objects::host resources from PuppetDB that were exported by other machines:
@@ -273,6 +274,7 @@ node 'preciseicinga2.local' {
  #Install Icinga 2:
   class { 'icinga2::server': 
     server_db_type => 'pgsql',
+    server_install_nagios_plugins => false,
   } ->
 
   #Collect all @@icinga2::objects::host resources from PuppetDB that were exported by other machines:
@@ -375,6 +377,7 @@ node 'centosicinga2.local' {
  #Install Icinga 2:
   class { 'icinga2::server': 
     server_db_type => 'pgsql',
+    server_install_nagios_plugins => false,
   } ->
 
   #Collect all @@icinga2::objects::host resources from PuppetDB that were exported by other machines:
