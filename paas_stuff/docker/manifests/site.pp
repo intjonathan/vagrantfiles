@@ -237,9 +237,9 @@ node 'dockermonitor.local' {
   }
 
   #Install Icinga 2:
-  #class { 'icinga2::server': 
-  #  server_db_type => 'pgsql',
-  #}
+  class { 'icinga2::server': 
+    server_db_type => 'pgsql',
+  }
 
   #Collect all @@icinga2::objects::host resources from PuppetDB that were exported by other machines:
   #Icinga2::Objects::Host <<| |>> { }
