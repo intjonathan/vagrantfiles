@@ -45,7 +45,7 @@ Vagrant.configure("2") do |config|
     #set some machine-specific options	
     docker1_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
-      v.customize ["modifyvm", :id, "--memory", "2048"]
+      v.customize ["modifyvm", :id, "--memory", "1024"]
     end
     docker1_config.vm.synced_folder "/Users/nick/virtual_machines/dockerfiles", "/dockerfiles", :nfs => true
     docker1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
@@ -60,7 +60,7 @@ Vagrant.configure("2") do |config|
     #set some machine-specific options	
     docker2_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
-      v.customize ["modifyvm", :id, "--memory", "2048"]
+      v.customize ["modifyvm", :id, "--memory", "1024"]
     end
     docker2_config.vm.synced_folder "/Users/nick/virtual_machines/dockerfiles", "/dockerfiles", :nfs => true
     docker2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
@@ -75,7 +75,7 @@ Vagrant.configure("2") do |config|
     #set some machine-specific options	
     docker3_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
-      v.customize ["modifyvm", :id, "--memory", "2048"]
+      v.customize ["modifyvm", :id, "--memory", "1024"]
     end
     docker3_config.vm.synced_folder "/Users/nick/virtual_machines/dockerfiles", "/dockerfiles", :nfs => true
     docker3_config.vm.provision :shell, :path => "../provisioning_scripts/el7_puppet_agent.sh"
@@ -105,7 +105,7 @@ Vagrant.configure("2") do |config|
     #set some machine-specific options	
     dockermonitor_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
-      v.customize ["modifyvm", :id, "--memory", "2048"]
+      v.customize ["modifyvm", :id, "--memory", "1024"]
     end
     dockermonitor_config.vm.synced_folder "/Users/nick/virtual_machines/dockerfiles", "/dockerfiles", :nfs => true
     dockermonitor_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
