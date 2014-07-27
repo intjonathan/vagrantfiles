@@ -66,9 +66,9 @@ Vagrant.configure("2") do |config|
     docker2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
   end
 
-  #Ubuntu Docker container server
+  #CentOS 7 Docker container server
   config.vm.define "docker3".to_sym do |docker3_config|
-    docker3_config.vm.box = "ubuntu-14.04-server-amd64"
+    docker3_config.vm.box = "centos-7.0-amd64"
     docker3_config.vm.hostname = "docker3.local"
     docker3_config.hostmanager.enabled = true
     docker3_config.vm.network :private_network, ip: "10.0.1.53"
@@ -78,7 +78,7 @@ Vagrant.configure("2") do |config|
       v.customize ["modifyvm", :id, "--memory", "2048"]
     end
     docker3_config.vm.synced_folder "/Users/nick/virtual_machines/dockerfiles", "/dockerfiles", :nfs => true
-    docker3_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+    docker3_config.vm.provision :shell, :path => "../provisioning_scripts/el7_puppet_agent.sh"
   end
 
   #Icinga 2 monitoring server
