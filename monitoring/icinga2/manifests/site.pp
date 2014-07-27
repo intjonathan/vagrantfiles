@@ -175,7 +175,7 @@ node 'trustyicinga2.local' {
   } ->
 
   #Collect all @@icinga2::object::host resources from PuppetDB that were exported by other machines:
-  icinga2::object::Host <<| |>> { }
+  Icinga2::Object::Host <<| |>> { }
 
   #Create a linux_servers hostgroup:
   icinga2::object::hostgroup { 'linux_servers':
@@ -342,7 +342,7 @@ node 'preciseicinga2.local' {
   } ->
 
   #Collect all @@icinga2::object::host resources from PuppetDB that were exported by other machines:
-  icinga2::object::Host <<| |>> { }
+  Icinga2::Object::Host <<| |>> { }
 
   #Create a linux_servers hostgroup:
   icinga2::object::hostgroup { 'linux_servers':
@@ -509,7 +509,7 @@ node 'centosicinga2.local' {
   } ->
 
   #Collect all @@icinga2::object::host resources from PuppetDB that were exported by other machines:
-  icinga2::object::Host <<| |>> { }
+  Icinga2::Object::Host <<| |>> { }
 
   #Create a linux_servers hostgroup:
   icinga2::object::hostgroup { 'linux_servers':
