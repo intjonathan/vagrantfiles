@@ -155,6 +155,35 @@ node 'docker3.local' {
 
 }
 
+#CentOS 7 Docker machine
+node 'docker4.local' {
+
+  include ::ssh
+
+  #This module is: https://github.com/puppetlabs/puppetlabs-ntp
+  class { '::ntp':
+    servers  => [ '0.ubuntu.pool.ntp.org', '1.ubuntu.pool.ntp.org', '2.ubuntu.pool.ntp.org', '3.ubuntu.pool.ntp.org' ],
+    restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
+    disable_monitor => true,
+  }
+
+  #Install Docker:
+  include '::docker'
+  
+  #Grab the base Ubuntu and CentOS Docker images:
+  #docker::image { 'ubuntu': }
+  #docker::image { 'centos': }
+
+  #Install Apache and some Apache modules so that we can use it as a proxy front-end for sites
+  #hosted in Docker containers:
+  class{ '::apache':}
+  ::apache::mod { 'ssl': } #Install/enable the SSL module
+  ::apache::mod { 'proxy': } #Install/enable the proxy module
+  ::apache::mod { 'proxy_http': } #Install/enable the HTTP proxy module
+  ::apache::mod { 'rewrite': } #Install/enable the rewrite module
+
+}
+
 #A VM to monitor Docker services with Icinga 2
 node 'dockermonitor.local' {
 
