@@ -174,24 +174,24 @@ node 'trustyicinga2.local' {
     server_install_nagios_plugins => false,
   } ->
 
-  #Collect all @@icinga2::objects::host resources from PuppetDB that were exported by other machines:
-  Icinga2::Objects::Host <<| |>> { }
+  #Collect all @@icinga2::object::host resources from PuppetDB that were exported by other machines:
+  icinga2::object::Host <<| |>> { }
 
   #Create a linux_servers hostgroup:
-  icinga2::objects::hostgroup { 'linux_servers':
+  icinga2::object::hostgroup { 'linux_servers':
     display_name => 'Linux servers',
     groups => ['mysql_servers', 'clients'],
     target_dir => '/etc/icinga2/objects/hostgroups',
   }
 
   #Create a mysql_servers hostgroup:
-  icinga2::objects::hostgroup { 'mysql_servers':
+  icinga2::object::hostgroup { 'mysql_servers':
     display_name => 'MySQL servers',
     target_dir => '/etc/icinga2/objects/hostgroups',
   }
 
   #Create a clients hostgroup:
-  icinga2::objects::hostgroup { 'clients':
+  icinga2::object::hostgroup { 'clients':
     display_name => 'Client machines',
     target_dir => '/etc/icinga2/objects/hostgroups',
   }
@@ -341,24 +341,24 @@ node 'preciseicinga2.local' {
     server_install_nagios_plugins => false,
   } ->
 
-  #Collect all @@icinga2::objects::host resources from PuppetDB that were exported by other machines:
-  Icinga2::Objects::Host <<| |>> { }
+  #Collect all @@icinga2::object::host resources from PuppetDB that were exported by other machines:
+  icinga2::object::Host <<| |>> { }
 
   #Create a linux_servers hostgroup:
-  icinga2::objects::hostgroup { 'linux_servers':
+  icinga2::object::hostgroup { 'linux_servers':
     display_name => 'Linux servers',
     groups => ['mysql_servers', 'clients'],
     target_dir => '/etc/icinga2/objects/hostgroups',
   }
 
   #Create a mysql_servers hostgroup:
-  icinga2::objects::hostgroup { 'mysql_servers':
+  icinga2::object::hostgroup { 'mysql_servers':
     display_name => 'MySQL servers',
     target_dir => '/etc/icinga2/objects/hostgroups',
   }
 
   #Create a clients hostgroup:
-  icinga2::objects::hostgroup { 'clients':
+  icinga2::object::hostgroup { 'clients':
     display_name => 'Client machines',
     target_dir => '/etc/icinga2/objects/hostgroups',
   }
@@ -508,24 +508,24 @@ node 'centosicinga2.local' {
     server_install_nagios_plugins => false,
   } ->
 
-  #Collect all @@icinga2::objects::host resources from PuppetDB that were exported by other machines:
-  Icinga2::Objects::Host <<| |>> { }
+  #Collect all @@icinga2::object::host resources from PuppetDB that were exported by other machines:
+  icinga2::object::Host <<| |>> { }
 
   #Create a linux_servers hostgroup:
-  icinga2::objects::hostgroup { 'linux_servers':
+  icinga2::object::hostgroup { 'linux_servers':
     display_name => 'Linux servers',
     groups => ['mysql_servers', 'clients'],
     target_dir => '/etc/icinga2/objects/hostgroups',
   }
 
   #Create a mysql_servers hostgroup:
-  icinga2::objects::hostgroup { 'mysql_servers':
+  icinga2::object::hostgroup { 'mysql_servers':
     display_name => 'MySQL servers',
     target_dir => '/etc/icinga2/objects/hostgroups',
   }
 
   #Create a clients hostgroup:
-  icinga2::objects::hostgroup { 'clients':
+  icinga2::object::hostgroup { 'clients':
     display_name => 'Client machines',
     target_dir => '/etc/icinga2/objects/hostgroups',
   }
@@ -721,7 +721,7 @@ node 'icinga2client1.local' {
     nrpe_plugin_args => '-H 127.0.0.1 -u root -p horsebatterystaple',
   }
 
-  @@icinga2::objects::host { $::fqdn:
+  @@icinga2::object::host { $::fqdn:
     display_name => $::fqdn,
     ipv4_address => $::ipaddress_eth1,
     groups => ['linux_servers', 'mysql_servers', 'clients'],
@@ -881,7 +881,7 @@ node 'icinga2client2.local' {
     nrpe_plugin_args => '-H 127.0.0.1 -u root -p horsebatterystaple',
   }
 
-  @@icinga2::objects::host { $::fqdn:
+  @@icinga2::object::host { $::fqdn:
     display_name => $::fqdn,
     ipv4_address => $::ipaddress_eth1,
     groups => ['linux_servers', 'mysql_servers', 'clients'],
@@ -1020,7 +1020,7 @@ node 'icinga2client3.local' {
     nrpe_plugin_args => '-H 127.0.0.1 -u root -p horsebatterystaple',
   }
 
-  @@icinga2::objects::host { $::fqdn:
+  @@icinga2::object::host { $::fqdn:
     display_name => $::fqdn,
     ipv4_address => $::ipaddress_eth1,
     groups => ['linux_servers', 'mysql_servers', 'clients'],
@@ -1158,7 +1158,7 @@ node 'icinga2client4.local' {
     nrpe_plugin_args => '-H 127.0.0.1 -u root -p horsebatterystaple',
   }
 
-  @@icinga2::objects::host { $::fqdn:
+  @@icinga2::object::host { $::fqdn:
     display_name => $::fqdn,
     ipv4_address => $::ipaddress_eth1,
     groups => ['linux_servers', 'mysql_servers', 'clients'],
@@ -1299,7 +1299,7 @@ node 'icinga2mail.local' {
     nrpe_plugin_args => '-H 127.0.0.1 -u root -p horsebatterystaple',
   }
 
-  @@icinga2::objects::host { $::fqdn:
+  @@icinga2::object::host { $::fqdn:
     display_name => $::fqdn,
     ipv4_address => $::ipaddress_eth1,
     groups => ['linux_servers', 'mysql_servers', 'clients'],
@@ -1457,7 +1457,7 @@ node 'usermail.local' {
     nrpe_plugin_args => '-H 127.0.0.1 -u root -p horsebatterystaple',
   }
 
-  @@icinga2::objects::host { $::fqdn:
+  @@icinga2::object::host { $::fqdn:
     display_name => $::fqdn,
     ipv4_address => $::ipaddress_eth1,
     groups => ['linux_servers', 'mysql_servers', 'clients'],

@@ -100,7 +100,7 @@
     nrpe_plugin_args => '-H 127.0.0.1 -u root -p horsebatterystaple',
   }
 
-  @@icinga2::objects::host { $::fqdn:
+  @@icinga2::object::host { $::fqdn:
     display_name => $::fqdn,
     ipv4_address => $::ipaddress_eth1,
     groups => ['linux-servers', 'mysqlservers', 'clients'],
