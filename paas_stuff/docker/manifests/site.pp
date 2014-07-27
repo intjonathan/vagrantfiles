@@ -68,7 +68,7 @@ node 'dockermaster.local' {
 
 }
 
-#Ubuntu Docker machine
+#Ubuntu 14.04 Docker machine
 node 'docker1.local' {
 
   include ::ssh
@@ -97,7 +97,7 @@ node 'docker1.local' {
 
 }
 
-#Ubuntu Docker machine
+#Ubuntu 14.04 Docker machine
 node 'docker2.local' {
 
   include ::ssh
@@ -126,7 +126,7 @@ node 'docker2.local' {
 
 }
 
-#Ubuntu Docker machine
+#CentOS 7 Docker machine
 node 'docker3.local' {
 
   include ::ssh
