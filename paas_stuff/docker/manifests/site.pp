@@ -233,21 +233,21 @@ node 'dockermonitor.local' {
   class { '::mysql::server':
     root_password    => 'horsebatterystaple',
     override_options => { 'mysqld' => { 'max_connections' => '1024' } }
-  }
+  } ->
 
   #Create a Postgres DB for Icinga 2:
   postgresql::server::db { 'icinga2_data':
     user     => 'icinga2',
     password => postgresql_password('icinga2', 'password'),
     grant => 'all',
-  }
+  } ->
 
   #Create a Postgres DB for Icinga Web 2:
   postgresql::server::db { 'icingaweb2_data':
     user     => 'icingaweb2',
     owner    => 'icinga2',
     password => postgresql_password('icingaweb2', 'password'),
-  }
+  } ->
 
   #Create a MySQL database for Icinga 2:
   mysql::db { 'icinga2_data':
@@ -255,7 +255,7 @@ node 'dockermonitor.local' {
     password => 'password',
     host     => 'localhost',
     grant    => ['ALL'],
-  }
+  } ->
 
   #Create a MySQL database for Icinga Web 2:
   mysql::db { 'icingaweb2_data':
@@ -263,7 +263,7 @@ node 'dockermonitor.local' {
     password => 'password',
     host     => 'localhost',
     grant    => ['ALL'],
-  }
+  } ->
 
   #Install Icinga 2:
   class { 'icinga2::server': 

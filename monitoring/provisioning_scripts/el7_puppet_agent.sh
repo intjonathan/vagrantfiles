@@ -13,7 +13,7 @@ fi
 echo "Checking to see if the Puppet agent package needs to be installed..."
 if [ ! -f /home/vagrant/puppet_agent_installed.txt ];
 then
-	sudo yum install puppet -y
+	sudo yum install --disablerepo=epel puppet -y
 	sudo systemctl enable puppet.service
 	sudo systemctl start puppet.service
 	sudo service iptables stop
