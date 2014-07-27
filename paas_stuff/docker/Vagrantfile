@@ -81,6 +81,21 @@ Vagrant.configure("2") do |config|
     docker3_config.vm.provision :shell, :path => "../provisioning_scripts/el7_puppet_agent.sh"
   end
 
+  #CentOS 7 Docker container server
+  config.vm.define "docker4".to_sym do |docker4_config|
+    docker4_config.vm.box = "centos-7.0-amd64"
+    docker4_config.vm.hostname = "docker4.local"
+    docker4_config.hostmanager.enabled = true
+    docker4_config.vm.network :private_network, ip: "10.0.1.54"
+    #set some machine-specific options	
+    docker4_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+    docker4_config.vm.synced_folder "/Users/nick/virtual_machines/dockerfiles", "/dockerfiles", :nfs => true
+    docker4_config.vm.provision :shell, :path => "../provisioning_scripts/el7_puppet_agent.sh"
+  end
+
   #Icinga 2 monitoring server
   config.vm.define "dockermonitor".to_sym do |dockermonitor_config|
     dockermonitor_config.vm.box = "ubuntu-14.04-server-amd64"
