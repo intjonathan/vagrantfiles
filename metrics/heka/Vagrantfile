@@ -1,0 +1,126 @@
+Vagrant.configure("2") do |config|
+  # All Vagrant configuration is done here. The most common configuration
+  # options are documented and commented below. For a complete reference,
+  # please see the online documentation at vagrantup.com.
+  
+  ####################
+  # Snippets to use
+  ####################
+  
+  #NFS folder sharing
+  #config.vm.synced_folder "modules", "/etc/puppet/modules", :nfs => true
+  
+  ####################
+  ####################
+  
+  #vagrant-hostmanager plugin options
+  config.hostmanager.enabled = true
+  config.hostmanager.ignore_private_ip = false
+  #update the /etc/hosts of the host OS
+  config.hostmanager.manage_host = true
+  
+  #Puppet master
+  config.vm.define "hekamaster".to_sym do |hekamaster_config|
+    hekamaster_config.vm.box = "ubuntu-14.04-server-amd64"
+    hekamaster_config.vm.hostname = "hekamaster.local"
+    hekamaster_config.hostmanager.aliases = %w(master puppet master.local puppetboard.hekamaster.local)
+    hekamaster_config.vm.network :private_network, ip: "10.0.1.110"
+    #set some machine-specific options	
+    hekamaster_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    #NFS folder sharing for Puppet modules and manifests
+    hekamaster_config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/environments/production/modules", :nfs => true
+    hekamaster_config.vm.synced_folder "manifests/", "/etc/puppet/environments/production/manifests", :nfs => true
+    hekamaster_config.vm.synced_folder "hieradata/", "/etc/puppet/environments/production/hieradata", :nfs => true
+    hekamaster_config.vm.synced_folder "files/", "/etc/puppet/files", :nfs => true
+    #Puppet master provisioning script
+    hekamaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_master.sh"
+  end
+
+  #A machine running heka
+  config.vm.define "heka1".to_sym do |heka1_config|
+    heka1_config.vm.box = "ubuntu-14.04-server-amd64"
+    heka1_config.vm.hostname = "heka1.local"
+    heka1_config.vm.network :private_network, ip: "10.0.1.111"
+    #set some machine-specific options	
+    heka1_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    #Puppet agent provisioning script
+	  heka1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+  end
+
+  #A machine running heka
+  config.vm.define "heka2".to_sym do |heka2_config|
+    heka2_config.vm.box = "centos-6.5-amd64"
+    heka2_config.vm.hostname = "heka2.local"
+    heka2_config.vm.network :private_network, ip: "10.0.1.112"
+    #set some machine-specific options	
+    heka2_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    #Puppet agent provisioning script
+    heka2_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
+  end
+
+  #A machine running collectd that will send metrics to the heka machines
+  config.vm.define "collectd1".to_sym do |collectd1_config|
+    collectd1_config.vm.box = "ubuntu-14.04-server-amd64"
+    collectd1_config.vm.hostname = "collectd1.local"
+    collectd1_config.vm.network :private_network, ip: "10.0.1.113"
+    #set some machine-specific options	
+    collectd1_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "256"]
+    end
+    #Puppet agent provisioning script
+	  collectd1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+  end
+
+  #A machine running collectd that will send metrics to the heka machines
+  config.vm.define "collectd2".to_sym do |collectd2_config|
+    collectd2_config.vm.box = "ubuntu-14.04-server-amd64"
+    collectd2_config.vm.hostname = "collectd2.local"
+    collectd2_config.vm.network :private_network, ip: "10.0.1.114"
+    #set some machine-specific options	
+    collectd2_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "256"]
+    end
+    #Puppet agent provisioning script
+	  collectd2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+  end
+  
+  #A machine running InfluxDB
+  config.vm.define "influxdb1".to_sym do |influxdb1_config|
+    influxdb1_config.vm.box = "ubuntu-14.04-server-amd64"
+    influxdb1_config.vm.hostname = "influxdb1.local"
+    influxdb1_config.vm.network :private_network, ip: "10.0.1.115"
+    #set some machine-specific options	
+    influxdb1_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    #Puppet agent provisioning script
+	  influxdb1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+  end
+
+  #A machine running grafana
+  config.vm.define "grafana1".to_sym do |grafana1_config|
+    grafana1_config.vm.box = "ubuntu-14.04-server-amd64"
+    grafana1_config.vm.hostname = "grafana1.local"
+    grafana1_config.vm.network :private_network, ip: "10.0.1.116"
+    #set some machine-specific options	
+    grafana1_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "256"]
+    end
+    #Puppet agent provisioning script
+	  grafana1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+  end
+
+end
