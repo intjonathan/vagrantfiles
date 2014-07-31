@@ -196,6 +196,78 @@ node 'trustyicinga2.local' {
     target_dir => '/etc/icinga2/objects/hostgroups',
   }
 
+  #Create an apply that checks load average:
+  icinga2::object::apply_service_to_host { 'load_average':
+    display_name => 'Load average',
+    check_command => 'nrpe',
+    vars => {
+      nrpe_command => 'check_load',
+    },
+    assign_where => '"linux_servers" in host.groups',
+    ignore_where => 'host.name == "localhost"',
+    target_dir => '/etc/icinga2/objects/applys'
+  }
+
+  #Create an apply that checks the number of users:
+  icinga2::object::apply_service_to_host { 'check_users':
+    display_name => 'Logged in users',
+    check_command => 'nrpe',
+    vars => {
+      nrpe_command => 'check_users',
+    },
+    assign_where => '"linux_servers" in host.groups',
+    ignore_where => 'host.name == "localhost"',
+    target_dir => '/etc/icinga2/objects/applys'
+  }
+
+  #Create an apply that checks disk space on /:
+  icinga2::object::apply_service_to_host { 'check_disk':
+    display_name => 'Disk space on /',
+    check_command => 'nrpe',
+    vars => {
+      nrpe_command => 'check_disk',
+    },
+    assign_where => '"linux_servers" in host.groups',
+    ignore_where => 'host.name == "localhost"',
+    target_dir => '/etc/icinga2/objects/applys'
+  }
+
+  #Create an apply that checks the number of total processes:
+  icinga2::object::apply_service_to_host { 'check_total_procs':
+    display_name => 'Total procs',
+    check_command => 'nrpe',
+    vars => {
+      nrpe_command => 'check_total_procs',
+    },
+    assign_where => '"linux_servers" in host.groups',
+    ignore_where => 'host.name == "localhost"',
+    target_dir => '/etc/icinga2/objects/applys'
+  }
+
+  #Create an apply that checks the number of zombie processes:
+  icinga2::object::apply_service_to_host { 'check_zombie_procs':
+    display_name => 'Zombie procs',
+    check_command => 'nrpe',
+    vars => {
+      nrpe_command => 'check_zombie_procs',
+    },
+    assign_where => '"linux_servers" in host.groups',
+    ignore_where => 'host.name == "localhost"',
+    target_dir => '/etc/icinga2/objects/applys'
+  }
+
+  #Create an apply that checks MySQL:
+  icinga2::object::apply_service_to_host { 'check_mysql_service':
+    display_name => 'MySQL',
+    check_command => 'nrpe',
+    vars => {
+      nrpe_command => 'check_mysql_service',
+    },
+    assign_where => '"linux_servers" in host.groups',
+    ignore_where => 'host.name == "localhost"',
+    target_dir => '/etc/icinga2/objects/applys'
+  }
+
   #Install Postfix so we can monitor SMTP services and send out email alerts:
   class { '::postfix::server':
     inet_interfaces => 'all', #Listen on all interfaces
