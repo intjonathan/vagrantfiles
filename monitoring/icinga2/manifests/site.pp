@@ -190,6 +190,12 @@ node 'trustyicinga2.local' {
     target_dir => '/etc/icinga2/objects/hostgroups',
   }
 
+  #Create a postgres_servers hostgroup:
+  icinga2::object::hostgroup { 'postgres_servers':
+    display_name => 'Postgres servers',
+    target_dir => '/etc/icinga2/objects/hostgroups',
+  }
+
   #Create a clients hostgroup:
   icinga2::object::hostgroup { 'clients':
     display_name => 'Client machines',
