@@ -202,6 +202,12 @@ node 'trustyicinga2.local' {
     target_dir => '/etc/icinga2/objects/hostgroups',
   }
 
+  #Create an HTTP servers hostgroup:
+  icinga2::object::hostgroup { 'http_servers':
+    display_name => 'HTTP servers',
+    target_dir => '/etc/icinga2/objects/hostgroups',
+  }
+
   #Create a clients hostgroup:
   icinga2::object::hostgroup { 'clients':
     display_name => 'Client machines',
