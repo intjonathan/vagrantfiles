@@ -196,10 +196,25 @@ node 'trustyicinga2.local' {
     target_dir => '/etc/icinga2/objects/hostgroups',
   }
 
+  #Create an SMTP servers hostgroup
+  icinga2::object::hostgroup { 'smtp_servers':
+    display_name => 'SMTP servers',
+    target_dir => '/etc/icinga2/objects/hostgroups',
+  }
+
   #Create an apply that checks SSH:
   icinga2::object::apply_service_to_host { 'check_ssh':
     display_name => 'SSH',
     check_command => 'ssh',
+    assign_where => '"linux_servers" in host.groups',
+    ignore_where => 'host.name == "localhost"',
+    target_dir => '/etc/icinga2/objects/applys'
+  }
+
+  #Create an apply that checks SMTP:
+  icinga2::object::apply_service_to_host { 'check_smtp':
+    display_name => 'SMTP',
+    check_command => 'smtp',
     assign_where => '"linux_servers" in host.groups',
     ignore_where => 'host.name == "localhost"',
     target_dir => '/etc/icinga2/objects/applys'
@@ -877,7 +892,7 @@ node 'icinga2client1.local' {
   @@icinga2::object::host { $::fqdn:
     display_name => $::fqdn,
     ipv4_address => $::ipaddress_eth1,
-    groups => ['linux_servers', 'mysql_servers', 'clients'],
+    groups => ['linux_servers', 'mysql_servers', 'clients', 'smtp_servers'],
     vars => {
       os              => 'linux',
       virtual_machine => 'true',
@@ -1042,7 +1057,7 @@ node 'icinga2client2.local' {
   @@icinga2::object::host { $::fqdn:
     display_name => $::fqdn,
     ipv4_address => $::ipaddress_eth1,
-    groups => ['linux_servers', 'mysql_servers', 'clients'],
+    groups => ['linux_servers', 'mysql_servers', 'clients', 'smtp_servers'],
     vars => {
       os              => 'linux',
       virtual_machine => 'true',
@@ -1186,7 +1201,7 @@ node 'icinga2client3.local' {
   @@icinga2::object::host { $::fqdn:
     display_name => $::fqdn,
     ipv4_address => $::ipaddress_eth1,
-    groups => ['linux_servers', 'mysql_servers', 'clients'],
+    groups => ['linux_servers', 'mysql_servers', 'clients', 'smtp_servers'],
     vars => {
       os              => 'linux',
       virtual_machine => 'true',
@@ -1329,7 +1344,7 @@ node 'icinga2client4.local' {
   @@icinga2::object::host { $::fqdn:
     display_name => $::fqdn,
     ipv4_address => $::ipaddress_eth1,
-    groups => ['linux_servers', 'mysql_servers', 'clients'],
+    groups => ['linux_servers', 'mysql_servers', 'clients', 'smtp_servers'],
     vars => {
       os              => 'linux',
       virtual_machine => 'true',
@@ -1475,7 +1490,7 @@ node 'icinga2mail.local' {
   @@icinga2::object::host { $::fqdn:
     display_name => $::fqdn,
     ipv4_address => $::ipaddress_eth1,
-    groups => ['linux_servers', 'mysql_servers', 'clients'],
+    groups => ['linux_servers', 'mysql_servers', 'clients', 'smtp_servers'],
     vars => {
       os              => 'linux',
       virtual_machine => 'true',
@@ -1638,7 +1653,7 @@ node 'usermail.local' {
   @@icinga2::object::host { $::fqdn:
     display_name => $::fqdn,
     ipv4_address => $::ipaddress_eth1,
-    groups => ['linux_servers', 'mysql_servers', 'clients'],
+    groups => ['linux_servers', 'mysql_servers', 'clients', 'smtp_servers'],
     vars => {
       os              => 'linux',
       virtual_machine => 'true',
