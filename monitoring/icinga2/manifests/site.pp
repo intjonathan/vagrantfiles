@@ -196,6 +196,12 @@ node 'trustyicinga2.local' {
     target_dir => '/etc/icinga2/objects/hostgroups',
   }
 
+  #Create an IMAP servers hostgroup:
+  icinga2::object::hostgroup { 'imap_servers':
+    display_name => 'IMAP servers',
+    target_dir => '/etc/icinga2/objects/hostgroups',
+  }
+
   #Create a clients hostgroup:
   icinga2::object::hostgroup { 'clients':
     display_name => 'Client machines',
