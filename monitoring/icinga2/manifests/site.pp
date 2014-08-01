@@ -230,7 +230,7 @@ node 'trustyicinga2.local' {
   icinga2::object::apply_service_to_host { 'check_ssh':
     display_name => 'SSH',
     check_command => 'ssh',
-    assign_where => '"linux_servers" in host.groups',
+    assign_where => '"ssh_servers" in host.groups',
     ignore_where => 'host.name == "localhost"',
     target_dir => '/etc/icinga2/objects/applys'
   }
