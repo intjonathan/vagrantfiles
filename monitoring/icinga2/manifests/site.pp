@@ -455,7 +455,7 @@ node 'preciseicinga2.local' {
     grant    => ['ALL'],
   }
 
- #Install Icinga 2:
+  #Install Icinga 2:
   class { 'icinga2::server': 
     server_db_type => 'pgsql',
     server_install_nagios_plugins => false,
@@ -477,10 +477,130 @@ node 'preciseicinga2.local' {
     target_dir => '/etc/icinga2/objects/hostgroups',
   }
 
+  #Create a postgres_servers hostgroup:
+  icinga2::object::hostgroup { 'postgres_servers':
+    display_name => 'Postgres servers',
+    target_dir => '/etc/icinga2/objects/hostgroups',
+  }
+
+  #Create an IMAP servers hostgroup:
+  icinga2::object::hostgroup { 'imap_servers':
+    display_name => 'IMAP servers',
+    target_dir => '/etc/icinga2/objects/hostgroups',
+  }
+
+  #Create an HTTP servers hostgroup:
+  icinga2::object::hostgroup { 'http_servers':
+    display_name => 'HTTP servers',
+    target_dir => '/etc/icinga2/objects/hostgroups',
+  }
+
+  #Create an SSH servers hostgroup:
+  icinga2::object::hostgroup { 'ssh_servers':
+    display_name => 'SSH servers',
+    target_dir => '/etc/icinga2/objects/hostgroups',
+  }
+
   #Create a clients hostgroup:
   icinga2::object::hostgroup { 'clients':
     display_name => 'Client machines',
     target_dir => '/etc/icinga2/objects/hostgroups',
+  }
+
+  #Create an SMTP servers hostgroup
+  icinga2::object::hostgroup { 'smtp_servers':
+    display_name => 'SMTP servers',
+    target_dir => '/etc/icinga2/objects/hostgroups',
+  }
+
+  #Create an apply that checks SSH:
+  icinga2::object::apply_service_to_host { 'check_ssh':
+    display_name => 'SSH',
+    check_command => 'ssh',
+    assign_where => '"ssh_servers" in host.groups',
+    ignore_where => 'host.name == "localhost"',
+    target_dir => '/etc/icinga2/objects/applys'
+  }
+
+  #Create an apply that checks SMTP:
+  icinga2::object::apply_service_to_host { 'check_smtp':
+    display_name => 'SMTP',
+    check_command => 'smtp',
+    assign_where => '"linux_servers" in host.groups',
+    ignore_where => 'host.name == "localhost"',
+    target_dir => '/etc/icinga2/objects/applys'
+  }
+
+  #Create an apply that checks load average:
+  icinga2::object::apply_service_to_host { 'load_average':
+    display_name => 'Load average',
+    check_command => 'nrpe',
+    vars => {
+      nrpe_command => 'check_load',
+    },
+    assign_where => '"linux_servers" in host.groups',
+    ignore_where => 'host.name == "localhost"',
+    target_dir => '/etc/icinga2/objects/applys'
+  }
+
+  #Create an apply that checks the number of users:
+  icinga2::object::apply_service_to_host { 'check_users':
+    display_name => 'Logged in users',
+    check_command => 'nrpe',
+    vars => {
+      nrpe_command => 'check_users',
+    },
+    assign_where => '"linux_servers" in host.groups',
+    ignore_where => 'host.name == "localhost"',
+    target_dir => '/etc/icinga2/objects/applys'
+  }
+
+  #Create an apply that checks disk space on /:
+  icinga2::object::apply_service_to_host { 'check_disk':
+    display_name => 'Disk space on /',
+    check_command => 'nrpe',
+    vars => {
+      nrpe_command => 'check_disk',
+    },
+    assign_where => '"linux_servers" in host.groups',
+    ignore_where => 'host.name == "localhost"',
+    target_dir => '/etc/icinga2/objects/applys'
+  }
+
+  #Create an apply that checks the number of total processes:
+  icinga2::object::apply_service_to_host { 'check_total_procs':
+    display_name => 'Total procs',
+    check_command => 'nrpe',
+    vars => {
+      nrpe_command => 'check_total_procs',
+    },
+    assign_where => '"linux_servers" in host.groups',
+    ignore_where => 'host.name == "localhost"',
+    target_dir => '/etc/icinga2/objects/applys'
+  }
+
+  #Create an apply that checks the number of zombie processes:
+  icinga2::object::apply_service_to_host { 'check_zombie_procs':
+    display_name => 'Zombie procs',
+    check_command => 'nrpe',
+    vars => {
+      nrpe_command => 'check_zombie_procs',
+    },
+    assign_where => '"linux_servers" in host.groups',
+    ignore_where => 'host.name == "localhost"',
+    target_dir => '/etc/icinga2/objects/applys'
+  }
+
+  #Create an apply that checks MySQL:
+  icinga2::object::apply_service_to_host { 'check_mysql_service':
+    display_name => 'MySQL',
+    check_command => 'nrpe',
+    vars => {
+      nrpe_command => 'check_mysql_service',
+    },
+    assign_where => '"mysql_servers" in host.groups',
+    ignore_where => 'host.name == "localhost"',
+    target_dir => '/etc/icinga2/objects/applys'
   }
 
   #Install Postfix so we can monitor SMTP services and send out email alerts:
@@ -622,7 +742,7 @@ node 'centosicinga2.local' {
     grant    => ['ALL'],
   }
 
- #Install Icinga 2:
+  #Install Icinga 2:
   class { 'icinga2::server': 
     server_db_type => 'pgsql',
     server_install_nagios_plugins => false,
@@ -644,10 +764,58 @@ node 'centosicinga2.local' {
     target_dir => '/etc/icinga2/objects/hostgroups',
   }
 
+  #Create a postgres_servers hostgroup:
+  icinga2::object::hostgroup { 'postgres_servers':
+    display_name => 'Postgres servers',
+    target_dir => '/etc/icinga2/objects/hostgroups',
+  }
+
+  #Create an IMAP servers hostgroup:
+  icinga2::object::hostgroup { 'imap_servers':
+    display_name => 'IMAP servers',
+    target_dir => '/etc/icinga2/objects/hostgroups',
+  }
+
+  #Create an HTTP servers hostgroup:
+  icinga2::object::hostgroup { 'http_servers':
+    display_name => 'HTTP servers',
+    target_dir => '/etc/icinga2/objects/hostgroups',
+  }
+
+  #Create an SSH servers hostgroup:
+  icinga2::object::hostgroup { 'ssh_servers':
+    display_name => 'SSH servers',
+    target_dir => '/etc/icinga2/objects/hostgroups',
+  }
+
   #Create a clients hostgroup:
   icinga2::object::hostgroup { 'clients':
     display_name => 'Client machines',
     target_dir => '/etc/icinga2/objects/hostgroups',
+  }
+
+  #Create an SMTP servers hostgroup
+  icinga2::object::hostgroup { 'smtp_servers':
+    display_name => 'SMTP servers',
+    target_dir => '/etc/icinga2/objects/hostgroups',
+  }
+
+  #Create an apply that checks SSH:
+  icinga2::object::apply_service_to_host { 'check_ssh':
+    display_name => 'SSH',
+    check_command => 'ssh',
+    assign_where => '"ssh_servers" in host.groups',
+    ignore_where => 'host.name == "localhost"',
+    target_dir => '/etc/icinga2/objects/applys'
+  }
+
+  #Create an apply that checks SMTP:
+  icinga2::object::apply_service_to_host { 'check_smtp':
+    display_name => 'SMTP',
+    check_command => 'smtp',
+    assign_where => '"linux_servers" in host.groups',
+    ignore_where => 'host.name == "localhost"',
+    target_dir => '/etc/icinga2/objects/applys'
   }
 
   #Create an apply that checks load average:
@@ -717,22 +885,9 @@ node 'centosicinga2.local' {
     vars => {
       nrpe_command => 'check_mysql_service',
     },
-    assign_where => '"linux_servers" in host.groups',
+    assign_where => '"mysql_servers" in host.groups',
     ignore_where => 'host.name == "localhost"',
     target_dir => '/etc/icinga2/objects/applys'
-  }
-
-  #Install Postfix so we can monitor SMTP services and send out email alerts:
-  class { '::postfix::server':
-    inet_interfaces => 'all', #Listen on all interfaces
-    inet_protocols => 'all', #Use both IPv4 and IPv6
-    mydomain       => 'local',
-    mynetworks => '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 10.0.0.0/16',
-    extra_main_parameters => {
-      'home_mailbox' => 'Maildir/',
-      'mailbox_command' => '',
-      'disable_dns_lookups' => 'yes' #Don't do DNS lookups for MX records since we're just using /etc/hosts for all host lookups
-    }  
   }
 
   class { 'icinga2::nrpe':
@@ -778,6 +933,19 @@ node 'centosicinga2.local' {
   icinga2::nrpe::command { 'check_mysql_service':
     nrpe_plugin_name => 'check_mysql',
     nrpe_plugin_args => '-H 127.0.0.1 -u root -p horsebatterystaple',
+  }
+
+  #Install Postfix so we can monitor SMTP services and send out email alerts:
+  class { '::postfix::server':
+    inet_interfaces => 'all', #Listen on all interfaces
+    inet_protocols => 'all', #Use both IPv4 and IPv6
+    mydomain       => 'local',
+    mynetworks => '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 10.0.0.0/16',
+    extra_main_parameters => {
+      'home_mailbox' => 'Maildir/',
+      'mailbox_command' => '',
+      'disable_dns_lookups' => 'yes' #Don't do DNS lookups for MX records since we're just using /etc/hosts for all host lookups
+    }  
   }
 
 }
