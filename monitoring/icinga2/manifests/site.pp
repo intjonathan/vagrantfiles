@@ -287,7 +287,7 @@ node 'trustyicinga2.local' {
     vars => {
       nrpe_command => 'check_mysql_service',
     },
-    assign_where => '"linux_servers" in host.groups',
+    assign_where => '"mysql_servers" in host.groups',
     ignore_where => 'host.name == "localhost"',
     target_dir => '/etc/icinga2/objects/applys'
   }
