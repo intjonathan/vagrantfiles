@@ -1,31 +1,72 @@
 Vagrant.configure("2") do |config|
-# All Vagrant configuration is done here. The most common configuration
-# options are documented and commented below. For a complete reference,
-# please see the online documentation at vagrantup.com.
+  # All Vagrant configuration is done here. The most common configuration
+  # options are documented and commented below. For a complete reference,
+  # please see the online documentation at vagrantup.com.
 
-####################
-# Snippets to use
-####################
+  ####################
+  # Snippets to use
+  ####################
 
-#NFS folder sharing
-#config.vm.synced_folder "modules", "/etc/puppet/modules", :nfs => true
+  #NFS folder sharing for Puppet modules and manifests
+  #config.vm.synced_folder "modules", "/etc/puppet/modules", :nfs => true
 
-####################
-####################
-config.vm.box = "ubuntu-14.04-server-amd64"
-config.hostmanager.enabled = true
-config.hostmanager.ignore_private_ip = false
+  ####################
+  ####################
 
-    #Nginx web server
-    config.vm.define "nginx".to_sym do |nginx_config|
-        nginx_config.vm.box = "ubuntu-14.04-server-amd64"
-        nginx_config.vm.hostname = "nginx.local"
-        nginx_config.hostmanager.enabled = true
-        nginx_config.vm.network :private_network, ip: "10.0.1.6"
-        #set some machine-specific options	
-        nginx_config.vm.provider "virtualbox" do |v|
-           #change the amount of RAM
-            v.customize ["modifyvm", :id, "--memory", "1024"]
-        end
+  #vagrant-hostmanager plugin options
+  config.hostmanager.enabled = true
+  config.hostmanager.ignore_private_ip = false
+  #update the /etc/hosts of the host OS
+  config.hostmanager.manage_host = true
+  #incorporate offline box's IPs into the /etc/hosts of boxes that are up/being brought up
+  config.hostmanager.include_offline = true
+
+  #Puppet master and PuppetDB server
+  config.vm.define "nginxmaster".to_sym do |nginxmaster_config|
+    nginxmaster_config.vm.box = "ubuntu-14.04-server-amd64"
+    nginxmaster_config.vm.hostname = "nginxmaster.local"
+    nginxmaster_config.hostmanager.enabled = true
+    nginxmaster_config.hostmanager.aliases = %w(puppetboard.nginxmaster.local nginxmaster puppet master)
+    nginxmaster_config.vm.network :private_network, ip: "10.0.1.120"
+    #set some machine-specific options	
+    nginxmaster_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
     end
+    #NFS folder sharing for Puppet modules and manifests
+    nginxmaster_config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/environments/production/modules", :nfs => true
+    nginxmaster_config.vm.synced_folder "manifests/", "/etc/puppet/environments/production/manifests", :nfs => true
+    nginxmaster_config.vm.synced_folder "hieradata/", "/etc/puppet/environments/production/hieradata", :nfs => true
+    #Puppet nginxmaster provisioning script
+    nginxmaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_master.sh"
+  end
+
+  #An Ubuntu Nginx server
+  config.vm.define "nginx1".to_sym do |nginx1_config|
+    nginx1_config.vm.box = "ubuntu-14.04-server-amd64"
+    nginx1_config.vm.hostname = "nginx1.local"
+    nginx1_config.hostmanager.enabled = true
+    nginx1_config.vm.network :private_network, ip: "10.0.1.121"
+    #set some machine-specific options	
+    nginx1_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "256"]
+    end
+    #Puppet agent provisioning script
+    nginx1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+  end
+
+  #A CentOS Nginx server
+  config.vm.define "nginx2".to_sym do |nginx2_config|
+    nginx2_config.vm.box = "centos-6.5-amd64"
+    nginx2_config.vm.hostname = "nginx2.local"
+    nginx2_config.hostmanager.enabled = true
+    nginx2_config.vm.network :private_network, ip: "10.0.1.122"
+    nginx2_config.vm.provider "virtualbox" do |v| 	
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "256"]
+    end
+    #Puppet agent provisioning script
+    nginx2_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
+  end
 end
