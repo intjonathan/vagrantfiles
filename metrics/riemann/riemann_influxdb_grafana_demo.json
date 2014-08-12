@@ -1,5 +1,5 @@
 {
-  "title": "Riemann + InfluxDB + Grafana cluster stats",
+  "title": "Riemann cluster stats",
   "services": {
     "filter": {
       "list": [],
