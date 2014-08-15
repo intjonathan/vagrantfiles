@@ -135,6 +135,11 @@ node 'riemannmaster.local' {
     graphiteport => 2003,
   }
 
+  #Get network interface data:
+  class { 'collectd::plugin::interface':
+    interfaces     => ['lo', 'eth0', 'eth1'],
+  }
+
 }
 
 node 'riemann1.local' {
@@ -254,6 +259,11 @@ node 'riemann1.local' {
     graphiteport => 2003,
   }
 
+  #Get network interface data:
+  class { 'collectd::plugin::interface':
+    interfaces     => ['lo', 'eth0', 'eth1'],
+  }
+
 }
 
 node 'riemann2.local' {
@@ -364,6 +374,11 @@ node 'riemann2.local' {
     graphitehost => 'riemann1.local',
     protocol => 'tcp',
     graphiteport => 2003,
+  }
+
+  #Get network interface data:
+  class { 'collectd::plugin::interface':
+    interfaces     => ['lo', 'eth0', 'eth1'],
   }
 
 }
@@ -510,6 +525,11 @@ node 'collectd1.local' {
     graphitehost => 'riemann1.local',
     protocol => 'tcp',
     graphiteport => 2003,
+  }
+
+  #Get network interface data:
+  class { 'collectd::plugin::interface':
+    interfaces     => ['lo', 'eth0', 'eth1'],
   }
 
 }
@@ -659,6 +679,11 @@ node 'collectd2.local' {
     graphiteport => 2003,
   }
 
+  #Get network interface data:
+  class { 'collectd::plugin::interface':
+    interfaces     => ['lo', 'eth0', 'eth1'],
+  }
+
 }
 
 node 'influxdb1.local' {
@@ -757,6 +782,11 @@ node 'influxdb1.local' {
     graphitehost => 'riemann1.local',
     protocol => 'tcp',
     graphiteport => 2003,
+  }
+
+  #Get network interface data:
+  class { 'collectd::plugin::interface':
+    interfaces     => ['lo', 'eth0', 'eth1'],
   }
 
   #Install Java so we can run ElasticSearch:
@@ -921,6 +951,11 @@ node 'grafana1.local' {
     graphitehost => 'riemann1.local',
     protocol => 'tcp',
     graphiteport => 2003,
+  }
+
+  #Get network interface data:
+  class { 'collectd::plugin::interface':
+    interfaces     => ['lo', 'eth0', 'eth1'],
   }
 
 }
