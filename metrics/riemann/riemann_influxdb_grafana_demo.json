@@ -1,14 +1,9 @@
 {
   "title": "Riemann cluster stats",
-  "services": {
-    "filter": {
-      "list": [],
-      "time": {
-        "from": "now-1h",
-        "to": "now"
-      }
-    }
-  },
+  "tags": [],
+  "style": "dark",
+  "timezone": "browser",
+  "editable": true,
   "rows": [
     {
       "title": "Welcome to Grafana",
@@ -97,7 +92,7 @@
               "function": "mean",
               "column": "value",
               "series": "collectd1.local.cpu-0.cpu-system",
-              "query": "select  mean(value) from \"collectd1.local.cpu-0.cpu-system\" where  time > now() - 1h     group by time(1s)  order asc",
+              "query": "select  mean(value) from \"collectd1.local.cpu-0.cpu-system\" where  time > now() - 4h     group by time(10s)  order asc",
               "alias": "collectd1 CPU system"
             },
             {
@@ -105,7 +100,7 @@
               "function": "mean",
               "column": "value",
               "series": "collectd1.local.cpu-0.cpu-user",
-              "query": "select  mean(value) from \"collectd1.local.cpu-0.cpu-user\" where  time > now() - 1h     group by time(1s)  order asc",
+              "query": "select  mean(value) from \"collectd1.local.cpu-0.cpu-user\" where  time > now() - 4h     group by time(10s)  order asc",
               "alias": "collectd1 CPU user"
             },
             {
@@ -113,7 +108,7 @@
               "function": "mean",
               "column": "value",
               "series": "riemann1.local.cpu-0.cpu-system",
-              "query": "select  mean(value) from \"riemann1.local.cpu-0.cpu-system\" where  time > now() - 1h     group by time(1s)  order asc",
+              "query": "select  mean(value) from \"riemann1.local.cpu-0.cpu-system\" where  time > now() - 4h     group by time(10s)  order asc",
               "alias": "riemann1 CPU system"
             },
             {
@@ -121,7 +116,7 @@
               "function": "mean",
               "column": "value",
               "series": "riemann1.local.cpu-0.cpu-user",
-              "query": "select  mean(value) from \"riemann1.local.cpu-0.cpu-user\" where  time > now() - 1h     group by time(1s)  order asc",
+              "query": "select  mean(value) from \"riemann1.local.cpu-0.cpu-user\" where  time > now() - 4h     group by time(10s)  order asc",
               "alias": "riemann1 CPU user"
             },
             {
@@ -129,7 +124,7 @@
               "function": "mean",
               "column": "value",
               "series": "collectd2.local.cpu-0.cpu-system",
-              "query": "select  mean(value) from \"collectd2.local.cpu-0.cpu-system\" where  time > now() - 1h     group by time(1s)  order asc",
+              "query": "select  mean(value) from \"collectd2.local.cpu-0.cpu-system\" where  time > now() - 4h     group by time(10s)  order asc",
               "alias": "collectd2 CPU system"
             },
             {
@@ -138,14 +133,14 @@
               "column": "value",
               "alias": "collectd2 CPU user",
               "series": "collectd2.local.cpu-0.cpu-user",
-              "query": "select  mean(value) from \"collectd2.local.cpu-0.cpu-user\" where  time > now() - 1h     group by time(1s)  order asc"
+              "query": "select  mean(value) from \"collectd2.local.cpu-0.cpu-user\" where  time > now() - 4h     group by time(10s)  order asc"
             },
             {
               "target": "",
               "function": "mean",
               "column": "value",
               "series": "grafana1.local.cpu-0.cpu-system",
-              "query": "select  mean(value) from \"grafana1.local.cpu-0.cpu-system\" where  time > now() - 1h     group by time(1s)  order asc",
+              "query": "select  mean(value) from \"grafana1.local.cpu-0.cpu-system\" where  time > now() - 4h     group by time(10s)  order asc",
               "alias": "grafana1 CPU system"
             },
             {
@@ -153,7 +148,7 @@
               "function": "mean",
               "column": "value",
               "series": "grafana1.local.cpu-0.cpu-user",
-              "query": "select  mean(value) from \"grafana1.local.cpu-0.cpu-user\" where  time > now() - 1h     group by time(1s)  order asc",
+              "query": "select  mean(value) from \"grafana1.local.cpu-0.cpu-user\" where  time > now() - 4h     group by time(10s)  order asc",
               "alias": "grafana1 CPU user"
             },
             {
@@ -161,7 +156,7 @@
               "function": "mean",
               "column": "value",
               "series": "riemannmaster.local.cpu-0.cpu-system",
-              "query": "select  mean(value) from \"riemannmaster.local.cpu-0.cpu-system\" where  time > now() - 1h     group by time(1s)  order asc",
+              "query": "select  mean(value) from \"riemannmaster.local.cpu-0.cpu-system\" where  time > now() - 4h     group by time(10s)  order asc",
               "alias": "riemannmaster CPU system"
             },
             {
@@ -170,14 +165,14 @@
               "column": "value",
               "alias": "riemannmaster CPU user",
               "series": "riemannmaster.local.cpu-0.cpu-user",
-              "query": "select  mean(value) from \"riemannmaster.local.cpu-0.cpu-user\" where  time > now() - 1h     group by time(1s)  order asc"
+              "query": "select  mean(value) from \"riemannmaster.local.cpu-0.cpu-user\" where  time > now() - 4h     group by time(10s)  order asc"
             },
             {
               "target": "",
               "function": "mean",
               "column": "value",
               "series": "influxdb1.local.cpu-0.cpu-system",
-              "query": "select  mean(value) from \"influxdb1.local.cpu-0.cpu-system\" where  time > now() - 1h     group by time(1s)  order asc",
+              "query": "select  mean(value) from \"influxdb1.local.cpu-0.cpu-system\" where  time > now() - 4h     group by time(10s)  order asc",
               "alias": "influxdb1 CPU system"
             },
             {
@@ -185,7 +180,7 @@
               "function": "mean",
               "column": "value",
               "series": "influxdb1.local.cpu-0.cpu-user",
-              "query": "select  mean(value) from \"influxdb1.local.cpu-0.cpu-user\" where  time > now() - 1h     group by time(1s)  order asc",
+              "query": "select  mean(value) from \"influxdb1.local.cpu-0.cpu-user\" where  time > now() - 4h     group by time(10s)  order asc",
               "alias": "influxdb1 CPU user"
             }
           ],
@@ -270,7 +265,7 @@
               "function": "mean",
               "column": "value",
               "series": "riemann1.local.load.load.shortterm",
-              "query": "select  mean(value) from \"riemann1.local.load.load.shortterm\" where  time > now() - 1h     group by time(1s)  order asc",
+              "query": "select  mean(value) from \"riemann1.local.load.load.shortterm\" where  time > now() - 4h     group by time(10s)  order asc",
               "alias": "riemann1 load short"
             },
             {
@@ -278,7 +273,7 @@
               "function": "mean",
               "column": "value",
               "series": "riemann1.local.load.load.longterm",
-              "query": "select  mean(value) from \"riemann1.local.load.load.longterm\" where  time > now() - 1h     group by time(1s)  order asc",
+              "query": "select  mean(value) from \"riemann1.local.load.load.longterm\" where  time > now() - 4h     group by time(10s)  order asc",
               "interval": "",
               "alias": "riemann1 load long"
             },
@@ -287,7 +282,7 @@
               "function": "mean",
               "column": "value",
               "series": "influxdb1.local.load.load.shortterm",
-              "query": "select  mean(value) from \"influxdb1.local.load.load.shortterm\" where  time > now() - 1h     group by time(1s)  order asc",
+              "query": "select  mean(value) from \"influxdb1.local.load.load.shortterm\" where  time > now() - 4h     group by time(10s)  order asc",
               "alias": "influxdb1 load short"
             },
             {
@@ -295,7 +290,7 @@
               "function": "mean",
               "column": "value",
               "series": "influxdb1.local.load.load.longterm",
-              "query": "select  mean(value) from \"influxdb1.local.load.load.longterm\" where  time > now() - 1h     group by time(1s)  order asc",
+              "query": "select  mean(value) from \"influxdb1.local.load.load.longterm\" where  time > now() - 4h     group by time(10s)  order asc",
               "alias": "influxdb1 load long"
             },
             {
@@ -303,7 +298,7 @@
               "function": "mean",
               "column": "value",
               "series": "grafana1.local.load.load.shortterm",
-              "query": "select  mean(value) from \"grafana1.local.load.load.shortterm\" where  time > now() - 1h     group by time(1s)  order asc",
+              "query": "select  mean(value) from \"grafana1.local.load.load.shortterm\" where  time > now() - 4h     group by time(10s)  order asc",
               "alias": "grafana1 load short"
             },
             {
@@ -312,14 +307,14 @@
               "column": "value",
               "alias": "grafana1 load long",
               "series": "grafana1.local.load.load.longterm",
-              "query": "select  mean(value) from \"grafana1.local.load.load.longterm\" where  time > now() - 1h     group by time(1s)  order asc"
+              "query": "select  mean(value) from \"grafana1.local.load.load.longterm\" where  time > now() - 4h     group by time(10s)  order asc"
             },
             {
               "target": "",
               "function": "mean",
               "column": "value",
               "series": "riemannmaster.local.load.load.shortterm",
-              "query": "select  mean(value) from \"riemannmaster.local.load.load.shortterm\" where  time > now() - 1h     group by time(1s)  order asc",
+              "query": "select  mean(value) from \"riemannmaster.local.load.load.shortterm\" where  time > now() - 4h     group by time(10s)  order asc",
               "alias": "riemannmaster load short"
             },
             {
@@ -328,7 +323,7 @@
               "column": "value",
               "alias": "riemannmaster load long",
               "series": "riemannmaster.local.load.load.longterm",
-              "query": "select  mean(value) from \"riemannmaster.local.load.load.longterm\" where  time > now() - 1h     group by time(1s)  order asc"
+              "query": "select  mean(value) from \"riemannmaster.local.load.load.longterm\" where  time > now() - 4h     group by time(10s)  order asc"
             }
           ],
           "aliasColors": {
@@ -357,7 +352,7 @@
           "y-axis": true,
           "scale": 1,
           "y_formats": [
-            "short",
+            "bytes",
             "short"
           ],
           "grid": {
@@ -385,12 +380,14 @@
           "stack": false,
           "legend": {
             "show": true,
-            "values": false,
+            "values": true,
             "min": false,
             "max": false,
             "current": false,
             "total": false,
-            "avg": false
+            "avg": true,
+            "alignAsTable": true,
+            "rightSide": false
           },
           "percentage": false,
           "zerofill": true,
@@ -405,7 +402,7 @@
               "function": "mean",
               "column": "value",
               "series": "riemann1.local.memory.memory-used",
-              "query": "select  mean(value) from \"riemann1.local.memory.memory-used\" where  time > now() - 1h     group by time(1s)  order asc",
+              "query": "select  mean(value) from \"riemann1.local.memory.memory-used\" where  time > now() - 4h     group by time(10s)  order asc",
               "alias": "riemann1 RAM used"
             },
             {
@@ -413,7 +410,7 @@
               "function": "mean",
               "column": "value",
               "series": "influxdb1.local.memory.memory-used",
-              "query": "select  mean(value) from \"influxdb1.local.memory.memory-used\" where  time > now() - 1h     group by time(1s)  order asc",
+              "query": "select  mean(value) from \"influxdb1.local.memory.memory-used\" where  time > now() - 4h     group by time(10s)  order asc",
               "alias": "influxdb1 RAM used"
             },
             {
@@ -421,7 +418,7 @@
               "function": "mean",
               "column": "value",
               "series": "collectd1.local.memory.memory-used",
-              "query": "select  mean(value) from \"collectd1.local.memory.memory-used\" where  time > now() - 1h     group by time(1s)  order asc",
+              "query": "select  mean(value) from \"collectd1.local.memory.memory-used\" where  time > now() - 4h     group by time(10s)  order asc",
               "alias": "collectd 1 RAM used"
             },
             {
@@ -429,7 +426,7 @@
               "function": "mean",
               "column": "value",
               "series": "collectd2.local.memory.memory-used",
-              "query": "select  mean(value) from \"collectd2.local.memory.memory-used\" where  time > now() - 1h     group by time(1s)  order asc",
+              "query": "select  mean(value) from \"collectd2.local.memory.memory-used\" where  time > now() - 4h     group by time(10s)  order asc",
               "alias": "collectd2 RAM used"
             },
             {
@@ -437,7 +434,7 @@
               "function": "mean",
               "column": "value",
               "series": "grafana1.local.memory.memory-used",
-              "query": "select  mean(value) from \"grafana1.local.memory.memory-used\" where  time > now() - 1h     group by time(1s)  order asc",
+              "query": "select  mean(value) from \"grafana1.local.memory.memory-used\" where  time > now() - 4h     group by time(10s)  order asc",
               "alias": "grafana1 RAM used"
             },
             {
@@ -445,13 +442,14 @@
               "function": "mean",
               "column": "value",
               "series": "riemannmaster.local.memory.memory-used",
-              "query": "select  mean(value) from \"riemannmaster.local.memory.memory-used\" where  time > now() - 1h     group by time(1s)  order asc",
+              "query": "select  mean(value) from \"riemannmaster.local.memory.memory-used\" where  time > now() - 4h     group by time(10s)  order asc",
               "alias": "riemannmaster RAM used"
             }
           ],
           "aliasColors": {},
           "aliasYAxis": {},
-          "title": "RAM usage"
+          "title": "RAM usage",
+          "leftYAxisLabel": "RAM used"
         }
       ],
       "notice": false
@@ -521,7 +519,7 @@
               "function": "mean",
               "column": "value",
               "series": "riemann1.local.processes.ps_state-sleeping",
-              "query": "select  mean(value) from \"riemann1.local.processes.ps_state-sleeping\" where  time > now() - 1h     group by time(1s)  order asc",
+              "query": "select  mean(value) from \"riemann1.local.processes.ps_state-sleeping\" where  time > now() - 4h     group by time(1s)  order asc",
               "alias": "riemann1 procs sleeping",
               "interval": "1s"
             },
@@ -530,7 +528,7 @@
               "function": "mean",
               "column": "value",
               "series": "riemannmaster.local.processes.ps_state-sleeping",
-              "query": "select  mean(value) from \"riemannmaster.local.processes.ps_state-sleeping\" where  time > now() - 1h     group by time(1s)  order asc",
+              "query": "select  mean(value) from \"riemannmaster.local.processes.ps_state-sleeping\" where  time > now() - 4h     group by time(1s)  order asc",
               "alias": "riemannmaster procs sleeping",
               "interval": "1s"
             },
@@ -539,7 +537,7 @@
               "function": "mean",
               "column": "value",
               "series": "collectd1.local.processes.ps_state-sleeping",
-              "query": "select  mean(value) from \"collectd1.local.processes.ps_state-sleeping\" where  time > now() - 1h     group by time(1s)  order asc",
+              "query": "select  mean(value) from \"collectd1.local.processes.ps_state-sleeping\" where  time > now() - 4h     group by time(1s)  order asc",
               "alias": "collectd1 procs sleeping",
               "interval": "1s"
             },
@@ -549,7 +547,7 @@
               "column": "value",
               "alias": "collectd2 procs sleeping",
               "series": "collectd2.local.processes.ps_state-sleeping",
-              "query": "select  mean(value) from \"collectd2.local.processes.ps_state-sleeping\" where  time > now() - 1h     group by time(1s)  order asc",
+              "query": "select  mean(value) from \"collectd2.local.processes.ps_state-sleeping\" where  time > now() - 4h     group by time(1s)  order asc",
               "interval": "1s"
             },
             {
@@ -557,7 +555,7 @@
               "function": "mean",
               "column": "value",
               "series": "influxdb1.local.processes.ps_state-sleeping",
-              "query": "select  mean(value) from \"influxdb1.local.processes.ps_state-sleeping\" where  time > now() - 1h     group by time(1s)  order asc",
+              "query": "select  mean(value) from \"influxdb1.local.processes.ps_state-sleeping\" where  time > now() - 4h     group by time(1s)  order asc",
               "alias": "influxdb1 procs sleeping",
               "interval": "1s"
             },
@@ -566,7 +564,7 @@
               "function": "mean",
               "column": "value",
               "series": "grafana1.local.processes.ps_state-sleeping",
-              "query": "select  mean(value) from \"grafana1.local.processes.ps_state-sleeping\" where  time > now() - 1h     group by time(1s)  order asc",
+              "query": "select  mean(value) from \"grafana1.local.processes.ps_state-sleeping\" where  time > now() - 4h     group by time(1s)  order asc",
               "interval": "1s",
               "alias": "grafana1 procs sleeping",
               "condition_filter": false,
@@ -635,7 +633,7 @@
               "function": "mean",
               "column": "value",
               "series": "riemannmaster.local.processes.fork_rate",
-              "query": "select  mean(value) from \"riemannmaster.local.processes.fork_rate\" where  time > now() - 1h     group by time(1s)  order asc",
+              "query": "select  mean(value) from \"riemannmaster.local.processes.fork_rate\" where  time > now() - 4h     group by time(30s)  order asc",
               "alias": "riemannmaster fork rate"
             },
             {
@@ -643,7 +641,7 @@
               "function": "mean",
               "column": "value",
               "series": "riemann1.local.processes.fork_rate",
-              "query": "select  mean(value) from \"riemann1.local.processes.fork_rate\" where  time > now() - 1h     group by time(1s)  order asc",
+              "query": "select  mean(value) from \"riemann1.local.processes.fork_rate\" where  time > now() - 4h     group by time(30s)  order asc",
               "alias": "riemann1 fork rate"
             },
             {
@@ -651,7 +649,7 @@
               "function": "mean",
               "column": "value",
               "series": "collectd1.local.processes.fork_rate",
-              "query": "select  mean(value) from \"collectd1.local.processes.fork_rate\" where  time > now() - 1h     group by time(1s)  order asc",
+              "query": "select  mean(value) from \"collectd1.local.processes.fork_rate\" where  time > now() - 4h     group by time(30s)  order asc",
               "alias": "collectd1 fork rate"
             },
             {
@@ -660,14 +658,14 @@
               "column": "value",
               "alias": "collectd2 fork rate",
               "series": "collectd2.local.processes.fork_rate",
-              "query": "select  mean(value) from \"collectd2.local.processes.fork_rate\" where  time > now() - 1h     group by time(1s)  order asc"
+              "query": "select  mean(value) from \"collectd2.local.processes.fork_rate\" where  time > now() - 4h     group by time(30s)  order asc"
             },
             {
               "target": "",
               "function": "mean",
               "column": "value",
               "series": "influxdb1.local.processes.fork_rate",
-              "query": "select  mean(value) from \"influxdb1.local.processes.fork_rate\" where  time > now() - 1h     group by time(1s)  order asc",
+              "query": "select  mean(value) from \"influxdb1.local.processes.fork_rate\" where  time > now() - 4h     group by time(30s)  order asc",
               "alias": "influxdb1 fork rate"
             },
             {
@@ -675,7 +673,7 @@
               "function": "mean",
               "column": "value",
               "series": "grafana1.local.processes.fork_rate",
-              "query": "select  mean(value) from \"grafana1.local.processes.fork_rate\" where  time > now() - 1h     group by time(1s)  order asc",
+              "query": "select  mean(value) from \"grafana1.local.processes.fork_rate\" where  time > now() - 4h     group by time(30s)  order asc",
               "alias": "grafana1 fork rate"
             }
           ],
@@ -749,7 +747,7 @@
               "function": "mean",
               "column": "value",
               "series": "influxdb1.local.disk-sda5.disk_ops.write",
-              "query": "select  mean(value) from \"influxdb1.local.disk-sda5.disk_ops.write\" where  time > now() - 1h     group by time(1s)  order asc",
+              "query": "select  mean(value) from \"influxdb1.local.disk-sda5.disk_ops.write\" where  time > now() - 4h     group by time(10s)  order asc",
               "alias": "influxdb1 disk write ops/sec"
             },
             {
@@ -757,7 +755,7 @@
               "function": "mean",
               "column": "value",
               "series": "riemannmaster.local.disk-sda5.disk_ops.write",
-              "query": "select  mean(value) from \"riemannmaster.local.disk-sda5.disk_ops.write\" where  time > now() - 1h     group by time(1s)  order asc",
+              "query": "select  mean(value) from \"riemannmaster.local.disk-sda5.disk_ops.write\" where  time > now() - 4h     group by time(10s)  order asc",
               "interval": "",
               "alias": "riemannmaster disk write ops/sec"
             },
@@ -766,7 +764,7 @@
               "function": "mean",
               "column": "value",
               "series": "grafana1.local.disk-sda5.disk_ops.write",
-              "query": "select  mean(value) from \"grafana1.local.disk-sda5.disk_ops.write\" where  time > now() - 1h     group by time(1s)  order asc",
+              "query": "select  mean(value) from \"grafana1.local.disk-sda5.disk_ops.write\" where  time > now() - 4h     group by time(10s)  order asc",
               "alias": "grafana1 disk write ops/sec"
             }
           ],
@@ -776,12 +774,82 @@
         }
       ],
       "notice": false
+    },
+    {
+      "title": "New row",
+      "height": "450px",
+      "editable": true,
+      "collapse": false,
+      "panels": [
+        {
+          "span": 12,
+          "editable": true,
+          "type": "graph",
+          "datasource": null,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "scale": 1,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "grid": {
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "annotate": {
+            "enable": false
+          },
+          "resolution": 100,
+          "lines": true,
+          "fill": 1,
+          "linewidth": 1,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "legend": {
+            "show": true,
+            "values": false,
+            "min": true,
+            "max": true,
+            "current": true,
+            "total": true,
+            "avg": true,
+            "alignAsTable": false,
+            "rightSide": false
+          },
+          "percentage": false,
+          "zerofill": true,
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "query_as_alias": true
+          },
+          "targets": [
+            {
+              "function": "mean",
+              "column": "value",
+              "series": "riemann1.riemann streams rate",
+              "query": "select  mean(value) from \"riemann1.riemann streams rate\" where  time > now() - 4h     group by time(10s)  order asc",
+              "alias": "Riemann streams rate"
+            }
+          ],
+          "aliasColors": {},
+          "aliasYAxis": {},
+          "title": "Riemann stats"
+        }
+      ]
     }
   ],
-  "editable": true,
-  "failover": false,
-  "panel_hints": true,
-  "style": "dark",
   "pulldowns": [
     {
       "type": "filtering",
@@ -811,6 +879,7 @@
         "2h",
         "3h",
         "4h",
+        "5h",
         "6h",
         "12h",
         "18h",
@@ -834,22 +903,13 @@
       "now": true
     }
   ],
-  "loader": {
-    "save_gist": false,
-    "save_elasticsearch": true,
-    "save_local": true,
-    "save_default": true,
-    "save_temp": true,
-    "save_temp_ttl_enable": true,
-    "save_temp_ttl": "30d",
-    "load_gist": false,
-    "load_elasticsearch": true,
-    "load_elasticsearch_size": 20,
-    "load_local": false,
-    "hide": false
+  "time": {
+    "from": "now-4h",
+    "to": "now"
+  },
+  "templating": {
+    "list": []
   },
   "refresh": false,
-  "tags": [],
-  "timezone": "browser",
-  "hideControls": false
+  "version": 2
 }
