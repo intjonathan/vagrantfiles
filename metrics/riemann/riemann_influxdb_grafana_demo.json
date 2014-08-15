@@ -186,8 +186,9 @@
           ],
           "aliasColors": {
             "riemannmaster CPU user": "#C15C17",
-            "influxdb1 CPU user": "#9AC48A",
-            "influxdb1 CPU system": "#F9E2D2"
+            "influxdb1 CPU user": "#0A50A1",
+            "influxdb1 CPU system": "#F9E2D2",
+            "collectd2 CPU user": "#EA6460"
           },
           "aliasYAxis": {},
           "title": "CPU usage",
@@ -847,7 +848,9 @@
           "aliasYAxis": {},
           "title": "Riemann stats"
         }
-      ]
+      ],
+      "collapsable": true,
+      "notice": false
     }
   ],
   "pulldowns": [
