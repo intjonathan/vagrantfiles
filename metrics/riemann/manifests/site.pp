@@ -128,14 +128,6 @@ node 'riemannmaster.local' {
   collectd::plugin { 'vmem': }
   class { 'collectd::plugin::load':}
   
-  #Gather NTP stats:
-  class { 'collectd::plugin::ntpd':
-    host           => 'localhost',
-    port           => 123,
-    reverselookups => false,
-    includeunitid  => false,
-  }
-  
   #Write the collectd status to the Riemann VM in the Graphite format:
   class { 'collectd::plugin::write_graphite':
     graphitehost => 'riemann1.local',
@@ -255,14 +247,6 @@ node 'riemann1.local' {
   collectd::plugin { 'vmem': }
   class { 'collectd::plugin::load':}
   
-  #Gather NTP stats:
-  class { 'collectd::plugin::ntpd':
-    host           => 'localhost',
-    port           => 123,
-    reverselookups => false,
-    includeunitid  => false,
-  }
-  
   #Write the collectd status to the Riemann VM in the Graphite format:
   class { 'collectd::plugin::write_graphite':
     graphitehost => 'riemann1.local',
@@ -374,14 +358,6 @@ node 'riemann2.local' {
   collectd::plugin { 'processes': }
   collectd::plugin { 'vmem': }
   class { 'collectd::plugin::load':}
-  
-  #Gather NTP stats:
-  class { 'collectd::plugin::ntpd':
-    host           => 'localhost',
-    port           => 123,
-    reverselookups => false,
-    includeunitid  => false,
-  }
   
   #Write the collectd status to the Riemann VM in the Graphite format:
   class { 'collectd::plugin::write_graphite':
@@ -528,14 +504,6 @@ node 'collectd1.local' {
   collectd::plugin { 'processes': }
   collectd::plugin { 'vmem': }
   class { 'collectd::plugin::load':}
-  
-  #Gather NTP stats:
-  class { 'collectd::plugin::ntpd':
-    host           => 'localhost',
-    port           => 123,
-    reverselookups => false,
-    includeunitid  => false,
-  }
   
   #Write the collectd status to the Riemann VM in the Graphite format:
   class { 'collectd::plugin::write_graphite':
@@ -684,14 +652,6 @@ node 'collectd2.local' {
   collectd::plugin { 'vmem': }
   class { 'collectd::plugin::load':}
   
-  #Gather NTP stats:
-  class { 'collectd::plugin::ntpd':
-    host           => 'localhost',
-    port           => 123,
-    reverselookups => false,
-    includeunitid  => false,
-  }
-  
   #Write the collectd status to the Riemann VM in the Graphite format:
   class { 'collectd::plugin::write_graphite':
     graphitehost => 'riemann1.local',
@@ -791,14 +751,6 @@ node 'influxdb1.local' {
   collectd::plugin { 'processes': }
   collectd::plugin { 'vmem': }
   class { 'collectd::plugin::load':}
-  
-  #Gather NTP stats:
-  class { 'collectd::plugin::ntpd':
-    host           => 'localhost',
-    port           => 123,
-    reverselookups => false,
-    includeunitid  => false,
-  }
   
   #Write the collectd status to the Riemann VM in the Graphite format:
   class { 'collectd::plugin::write_graphite':
@@ -963,14 +915,6 @@ node 'grafana1.local' {
   collectd::plugin { 'processes': }
   collectd::plugin { 'vmem': }
   class { 'collectd::plugin::load':}
-  
-  #Gather NTP stats:
-  class { 'collectd::plugin::ntpd':
-    host           => 'localhost',
-    port           => 123,
-    reverselookups => false,
-    includeunitid  => false,
-  }
   
   #Write the collectd status to the Riemann VM in the Graphite format:
   class { 'collectd::plugin::write_graphite':
