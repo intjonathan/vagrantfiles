@@ -321,7 +321,7 @@ node 'trustyicinga2.local' {
     inet_interfaces => 'all', #Listen on all interfaces
     inet_protocols => 'all', #Use both IPv4 and IPv6
     mydomain       => 'local',
-    mynetworks => '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 10.0.0.0/16',
+    mynetworks => '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 10.0.1.0/24',
     extra_main_parameters => {
       'home_mailbox' => 'Maildir/',
       'mailbox_command' => '',
@@ -608,7 +608,7 @@ node 'preciseicinga2.local' {
     inet_interfaces => 'all', #Listen on all interfaces
     inet_protocols => 'all', #Use both IPv4 and IPv6
     mydomain       => 'local',
-    mynetworks => '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 10.0.0.0/16',
+    mynetworks => '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 10.0.1.0/24',
     extra_main_parameters => {
       'home_mailbox' => 'Maildir/',
       'mailbox_command' => '',
@@ -940,7 +940,7 @@ node 'centosicinga2.local' {
     inet_interfaces => 'all', #Listen on all interfaces
     inet_protocols => 'all', #Use both IPv4 and IPv6
     mydomain       => 'local',
-    mynetworks => '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 10.0.0.0/16',
+    mynetworks => '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 10.0.1.0/24',
     extra_main_parameters => {
       'home_mailbox' => 'Maildir/',
       'mailbox_command' => '',
@@ -1028,7 +1028,7 @@ node 'icinga2client1.local' {
     inet_interfaces => 'all', #Listen on all interfaces
     inet_protocols => 'all', #Use both IPv4 and IPv6
     mydomain       => 'local',
-    mynetworks => '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 10.0.0.0/16',
+    mynetworks => '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 10.0.1.0/24',
     extra_main_parameters => {
       'home_mailbox' => 'Maildir/',
       'mailbox_command' => '',
@@ -1173,7 +1173,7 @@ node 'icinga2client2.local' {
     inet_interfaces => 'all', #Listen on all interfaces
     inet_protocols => 'all', #Use both IPv4 and IPv6
     mydomain       => 'local',
-    mynetworks => '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 10.0.0.0/16',
+    mynetworks => '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 10.0.1.0/24',
     extra_main_parameters => {
       'home_mailbox' => 'Maildir/',
       'mailbox_command' => '',
@@ -1337,7 +1337,7 @@ node 'icinga2client3.local' {
     inet_interfaces => 'all', #Listen on all interfaces
     inet_protocols => 'all', #Use both IPv4 and IPv6
     mydomain       => 'local',
-    mynetworks => '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 10.0.0.0/16',
+    mynetworks => '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 10.0.1.0/24',
     extra_main_parameters => {
       'home_mailbox' => 'Maildir/',
       'mailbox_command' => '',
@@ -1480,7 +1480,7 @@ node 'icinga2client4.local' {
     inet_interfaces => 'all', #Listen on all interfaces
     inet_protocols => 'all', #Use both IPv4 and IPv6
     mydomain       => 'local',
-    mynetworks => '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 10.0.0.0/16',
+    mynetworks => '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 10.0.1.0/24',
     extra_main_parameters => {
       'home_mailbox' => 'Maildir/',
       'mailbox_command' => '',
@@ -1626,7 +1626,7 @@ node 'icinga2mail.local' {
     inet_interfaces => 'all', #Listen on all interfaces
     inet_protocols => 'all', #Use both IPv4 and IPv6
     mydomain       => 'local',
-    mynetworks => '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 10.0.0.0/16',
+    mynetworks => '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 10.0.1.0/24',
     extra_main_parameters => {
       'home_mailbox' => 'Maildir/',
       'mailbox_command' => '',
@@ -1772,7 +1772,7 @@ node 'usermail.local' {
     inet_interfaces => 'all', #Listen on all interfaces
     inet_protocols => 'all', #Use both IPv4 and IPv6
     mydomain       => 'local',
-    mynetworks => '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 10.0.0.0/16',
+    mynetworks => '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 10.0.1.0/24',
     extra_main_parameters => {
       'home_mailbox' => 'Maildir/',
       'mailbox_command' => '',
@@ -1845,7 +1845,7 @@ node 'usermail.local' {
   @@icinga2::object::host { $::fqdn:
     display_name => $::fqdn,
     ipv4_address => $::ipaddress_eth1,
-    groups => ['linux_servers', 'mysql_servers', 'postgres_servers', 'clients', 'smtp_servers', 'ssh_servers', 'http_servers', 'imap_servers'],
+    groups => ["linux_servers", 'mysql_servers', 'postgres_servers', 'clients', 'smtp_servers', 'ssh_servers', 'http_servers', 'imap_servers'],
     vars => {
       os              => 'linux',
       virtual_machine => 'true',
