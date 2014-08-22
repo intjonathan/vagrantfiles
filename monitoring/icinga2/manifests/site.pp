@@ -148,8 +148,8 @@ node 'trustyicinga2.local' {
   #Create a Postgres DB for Icinga Web 2:
   postgresql::server::db { 'icingaweb2_data':
     user     => 'icingaweb2',
-    owner    => 'icinga2',
     password => postgresql_password('icingaweb2', 'password'),
+    grant => 'all',
   }
 
   #Create a MySQL database for Icinga 2:
@@ -437,6 +437,7 @@ node 'preciseicinga2.local' {
   postgresql::server::db { 'icingaweb2_data':
     user     => 'icingaweb2',
     password => postgresql_password('icingaweb2', 'password'),
+    grant => 'all',
   }
 
   #Create a MySQL database for Icinga 2:
@@ -724,6 +725,7 @@ node 'centosicinga2.local' {
   postgresql::server::db { 'icingaweb2_data':
     user     => 'icingaweb2',
     password => postgresql_password('icingaweb2', 'password'),
+    grant => 'all',
   }
 
   #Create a MySQL database for Icinga 2:
