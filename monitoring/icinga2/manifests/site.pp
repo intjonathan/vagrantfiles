@@ -431,6 +431,7 @@ node 'preciseicinga2.local' {
   postgresql::server::db { 'icinga2_data':
     user     => 'icinga2',
     password => postgresql_password('icinga2', 'password'),
+    grant => 'all',
   }
 
   #Create a Postgres DB for Icinga Web 2:
@@ -719,6 +720,7 @@ node 'centosicinga2.local' {
   postgresql::server::db { 'icinga2_data':
     user     => 'icinga2',
     password => postgresql_password('icinga2', 'password'),
+    grant => 'all',
   }
 
   #Create a Postgres DB for Icinga Web 2:
