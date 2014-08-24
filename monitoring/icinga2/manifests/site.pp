@@ -1564,7 +1564,7 @@ node 'preciseicinga2client.local' {
 
 }
 
-#A CentOS 6 Icinga 2 client node 
+#A CentOS 6 Icinga 2 client node
 node 'centos6icinga2client.local' {
 
   #This module is from: https://github.com/saz/puppet-ssh
@@ -1730,7 +1730,8 @@ node 'centos6icinga2client.local' {
 
 }
 
-node 'icinga2client4.local' {
+#A CentOS 7 Icinga 2 client node
+node 'centos7icinga2client.local' {
 
   #This module is from: https://github.com/saz/puppet-ssh
   class { 'ssh':
