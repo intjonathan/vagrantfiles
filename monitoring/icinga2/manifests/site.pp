@@ -170,7 +170,7 @@ node 'trustyicinga2.local' {
 
   #Install Icinga 2:
   class { 'icinga2::server': 
-    server_db_type => 'pgslq',
+    server_db_type => 'pgsql',
     db_user        => 'icinga2',
     db_name        => 'icinga2_data',
     db_password    => 'password',
