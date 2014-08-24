@@ -359,7 +359,7 @@ node 'trustyicinga2.local' {
   }
 
   class { 'icinga2::nrpe':
-    nrpe_allowed_hosts => ['10.0.1.79', '10.0.1.80', '10.0.1.85', '127.0.0.1'],
+    nrpe_allowed_hosts => ['10.0.1.81', '10.0.1.82', '10.0.1.83', '10.0.1.84', '127.0.0.1'],
   }
 
   #Some basic box health stuff
@@ -448,27 +448,27 @@ node 'preciseicinga2.local' {
   }
 
   #Install Postgres for use as a database with Icinga 2...
-  class { 'postgresql::server': }
+  class { 'postgresql::server': } ->
 
   #...and install MySQL as well:
   class { '::mysql::server':
     root_password    => 'horsebatterystaple',
     override_options => { 'mysqld' => { 'max_connections' => '1024' } }
-  }
+  } ->
 
   #Create a Postgres DB for Icinga 2:
   postgresql::server::db { 'icinga2_data':
     user     => 'icinga2',
     password => postgresql_password('icinga2', 'password'),
     grant => 'all',
-  }
+  } ->
 
   #Create a Postgres DB for Icinga Web 2:
   postgresql::server::db { 'icingaweb2_data':
     user     => 'icingaweb2',
     password => postgresql_password('icingaweb2', 'password'),
     grant => 'all',
-  }
+  } ->
 
   #Create a MySQL database for Icinga 2:
   mysql::db { 'icinga2_data':
@@ -476,7 +476,7 @@ node 'preciseicinga2.local' {
     password => 'password',
     host     => 'localhost',
     grant    => ['ALL'],
-  }
+  } ->
 
   #Create a MySQL database for Icinga Web 2:
   mysql::db { 'icingaweb2_data':
@@ -484,11 +484,16 @@ node 'preciseicinga2.local' {
     password => 'password',
     host     => 'localhost',
     grant    => ['ALL'],
-  }
+  } ->
 
   #Install Icinga 2:
   class { 'icinga2::server': 
     server_db_type => 'pgsql',
+    db_user        => 'icinga2',
+    db_name        => 'icinga2_data',
+    db_password    => 'password',
+    db_host        => '127.0.0.1',
+    db_port        => '5432',
     server_install_nagios_plugins => false,
   } ->
 
@@ -507,6 +512,30 @@ node 'preciseicinga2.local' {
     display_name => 'MySQL servers',
     target_dir => '/etc/icinga2/objects/hostgroups',
   }
+
+  #Postgres IDO connection object:
+  icinga2::object::idopgsqlconnection { 'testing_postgres':
+     host             => '127.0.0.1',
+     port             => 5432,
+     user             => 'icinga2',
+     password         => 'password',
+     database         => 'icinga2_data',
+     target_file_name => 'ido-pgsql.conf',
+     target_dir       => '/etc/icinga2/features-enabled',
+     categories       => ['DbCatConfig', 'DbCatState', 'DbCatAcknowledgement', 'DbCatComment', 'DbCatDowntime', 'DbCatEventHandler' ],
+  }
+
+#  #MySQL IDO connection object
+#  icinga2::object::idomysqlconnection { 'testing_mysql':
+#     host             => '127.0.0.1',
+#     port             => 3306,
+#     user             => 'icinga2',
+#     password         => 'password',
+#     database         => 'icinga2_data',
+#     target_file_name => 'ido-mysql.conf',
+#     target_dir       => '/etc/icinga2/features-enabled',
+#     categories       => ['DbCatConfig', 'DbCatState', 'DbCatAcknowledgement', 'DbCatComment', 'DbCatDowntime', 'DbCatEventHandler' ],
+#  }
 
   #Create a postgres_servers hostgroup:
   icinga2::object::hostgroup { 'postgres_servers':
@@ -648,7 +677,7 @@ node 'preciseicinga2.local' {
   }
 
   class { 'icinga2::nrpe':
-    nrpe_allowed_hosts => ['10.0.1.79', '10.0.1.80', '10.0.1.85', '127.0.0.1'],
+    nrpe_allowed_hosts => ['10.0.1.81', '10.0.1.82', '10.0.1.83', '10.0.1.84', '127.0.0.1'],
   }
 
   #Some basic box health stuff
@@ -737,27 +766,27 @@ node 'centos6icinga2.local' {
   }
 
   #Install Postgres for use as a database with Icinga 2...
-  class { 'postgresql::server': }
+  class { 'postgresql::server': } ->
 
   #...and install MySQL as well:
   class { '::mysql::server':
     root_password    => 'horsebatterystaple',
     override_options => { 'mysqld' => { 'max_connections' => '1024' } }
-  }
+  } ->
 
   #Create a Postgres DB for Icinga 2:
   postgresql::server::db { 'icinga2_data':
     user     => 'icinga2',
     password => postgresql_password('icinga2', 'password'),
     grant => 'all',
-  }
+  } ->
 
   #Create a Postgres DB for Icinga Web 2:
   postgresql::server::db { 'icingaweb2_data':
     user     => 'icingaweb2',
     password => postgresql_password('icingaweb2', 'password'),
     grant => 'all',
-  }
+  } ->
 
   #Create a MySQL database for Icinga 2:
   mysql::db { 'icinga2_data':
@@ -765,7 +794,7 @@ node 'centos6icinga2.local' {
     password => 'password',
     host     => 'localhost',
     grant    => ['ALL'],
-  }
+  } ->
 
   #Create a MySQL database for Icinga Web 2:
   mysql::db { 'icingaweb2_data':
@@ -773,11 +802,16 @@ node 'centos6icinga2.local' {
     password => 'password',
     host     => 'localhost',
     grant    => ['ALL'],
-  }
+  } ->
 
   #Install Icinga 2:
   class { 'icinga2::server': 
     server_db_type => 'pgsql',
+    db_user        => 'icinga2',
+    db_name        => 'icinga2_data',
+    db_password    => 'password',
+    db_host        => '127.0.0.1',
+    db_port        => '5432',
     server_install_nagios_plugins => false,
   } ->
 
@@ -796,6 +830,30 @@ node 'centos6icinga2.local' {
     display_name => 'MySQL servers',
     target_dir => '/etc/icinga2/objects/hostgroups',
   }
+
+  #Postgres IDO connection object:
+  icinga2::object::idopgsqlconnection { 'testing_postgres':
+     host             => '127.0.0.1',
+     port             => 5432,
+     user             => 'icinga2',
+     password         => 'password',
+     database         => 'icinga2_data',
+     target_file_name => 'ido-pgsql.conf',
+     target_dir       => '/etc/icinga2/features-enabled',
+     categories       => ['DbCatConfig', 'DbCatState', 'DbCatAcknowledgement', 'DbCatComment', 'DbCatDowntime', 'DbCatEventHandler' ],
+  }
+
+#  #MySQL IDO connection object
+#  icinga2::object::idomysqlconnection { 'testing_mysql':
+#     host             => '127.0.0.1',
+#     port             => 3306,
+#     user             => 'icinga2',
+#     password         => 'password',
+#     database         => 'icinga2_data',
+#     target_file_name => 'ido-mysql.conf',
+#     target_dir       => '/etc/icinga2/features-enabled',
+#     categories       => ['DbCatConfig', 'DbCatState', 'DbCatAcknowledgement', 'DbCatComment', 'DbCatDowntime', 'DbCatEventHandler' ],
+#  }
 
   #Create a postgres_servers hostgroup:
   icinga2::object::hostgroup { 'postgres_servers':
@@ -923,8 +981,21 @@ node 'centos6icinga2.local' {
     target_dir => '/etc/icinga2/objects/applys'
   }
 
+  #Install Postfix so we can monitor SMTP services and send out email alerts:
+  class { '::postfix::server':
+    inet_interfaces => 'all', #Listen on all interfaces
+    inet_protocols => 'all', #Use both IPv4 and IPv6
+    mydomain       => 'local',
+    mynetworks => '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 10.0.1.0/24',
+    extra_main_parameters => {
+      'home_mailbox' => 'Maildir/',
+      'mailbox_command' => '',
+      'disable_dns_lookups' => 'yes' #Don't do DNS lookups for MX records since we're just using /etc/hosts for all host lookups
+    }  
+  }
+
   class { 'icinga2::nrpe':
-    nrpe_allowed_hosts => ['10.0.1.79', '10.0.1.80', '10.0.1.85', '127.0.0.1'],
+    nrpe_allowed_hosts => ['10.0.1.81', '10.0.1.82', '10.0.1.83', '10.0.1.84', '127.0.0.1'],
   }
 
   #Some basic box health stuff
@@ -966,19 +1037,6 @@ node 'centos6icinga2.local' {
   icinga2::nrpe::command { 'check_mysql_service':
     nrpe_plugin_name => 'check_mysql',
     nrpe_plugin_args => '-H 127.0.0.1 -u root -p horsebatterystaple',
-  }
-
-  #Install Postfix so we can monitor SMTP services and send out email alerts:
-  class { '::postfix::server':
-    inet_interfaces => 'all', #Listen on all interfaces
-    inet_protocols => 'all', #Use both IPv4 and IPv6
-    mydomain       => 'local',
-    mynetworks => '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 10.0.1.0/24',
-    extra_main_parameters => {
-      'home_mailbox' => 'Maildir/',
-      'mailbox_command' => '',
-      'disable_dns_lookups' => 'yes' #Don't do DNS lookups for MX records since we're just using /etc/hosts for all host lookups
-    }  
   }
 
 }
@@ -1026,27 +1084,27 @@ node 'centos7icinga2.local' {
   }
 
   #Install Postgres for use as a database with Icinga 2...
-  class { 'postgresql::server': }
+  class { 'postgresql::server': } ->
 
   #...and install MySQL as well:
   class { '::mysql::server':
     root_password    => 'horsebatterystaple',
     override_options => { 'mysqld' => { 'max_connections' => '1024' } }
-  }
+  } ->
 
   #Create a Postgres DB for Icinga 2:
   postgresql::server::db { 'icinga2_data':
     user     => 'icinga2',
     password => postgresql_password('icinga2', 'password'),
     grant => 'all',
-  }
+  } ->
 
   #Create a Postgres DB for Icinga Web 2:
   postgresql::server::db { 'icingaweb2_data':
     user     => 'icingaweb2',
     password => postgresql_password('icingaweb2', 'password'),
     grant => 'all',
-  }
+  } ->
 
   #Create a MySQL database for Icinga 2:
   mysql::db { 'icinga2_data':
@@ -1054,7 +1112,7 @@ node 'centos7icinga2.local' {
     password => 'password',
     host     => 'localhost',
     grant    => ['ALL'],
-  }
+  } ->
 
   #Create a MySQL database for Icinga Web 2:
   mysql::db { 'icingaweb2_data':
@@ -1062,11 +1120,16 @@ node 'centos7icinga2.local' {
     password => 'password',
     host     => 'localhost',
     grant    => ['ALL'],
-  }
+  } ->
 
   #Install Icinga 2:
   class { 'icinga2::server': 
     server_db_type => 'pgsql',
+    db_user        => 'icinga2',
+    db_name        => 'icinga2_data',
+    db_password    => 'password',
+    db_host        => '127.0.0.1',
+    db_port        => '5432',
     server_install_nagios_plugins => false,
   } ->
 
@@ -1085,6 +1148,30 @@ node 'centos7icinga2.local' {
     display_name => 'MySQL servers',
     target_dir => '/etc/icinga2/objects/hostgroups',
   }
+
+  #Postgres IDO connection object:
+  icinga2::object::idopgsqlconnection { 'testing_postgres':
+     host             => '127.0.0.1',
+     port             => 5432,
+     user             => 'icinga2',
+     password         => 'password',
+     database         => 'icinga2_data',
+     target_file_name => 'ido-pgsql.conf',
+     target_dir       => '/etc/icinga2/features-enabled',
+     categories       => ['DbCatConfig', 'DbCatState', 'DbCatAcknowledgement', 'DbCatComment', 'DbCatDowntime', 'DbCatEventHandler' ],
+  }
+
+#  #MySQL IDO connection object
+#  icinga2::object::idomysqlconnection { 'testing_mysql':
+#     host             => '127.0.0.1',
+#     port             => 3306,
+#     user             => 'icinga2',
+#     password         => 'password',
+#     database         => 'icinga2_data',
+#     target_file_name => 'ido-mysql.conf',
+#     target_dir       => '/etc/icinga2/features-enabled',
+#     categories       => ['DbCatConfig', 'DbCatState', 'DbCatAcknowledgement', 'DbCatComment', 'DbCatDowntime', 'DbCatEventHandler' ],
+#  }
 
   #Create a postgres_servers hostgroup:
   icinga2::object::hostgroup { 'postgres_servers':
@@ -1212,8 +1299,21 @@ node 'centos7icinga2.local' {
     target_dir => '/etc/icinga2/objects/applys'
   }
 
+  #Install Postfix so we can monitor SMTP services and send out email alerts:
+  class { '::postfix::server':
+    inet_interfaces => 'all', #Listen on all interfaces
+    inet_protocols => 'all', #Use both IPv4 and IPv6
+    mydomain       => 'local',
+    mynetworks => '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 10.0.1.0/24',
+    extra_main_parameters => {
+      'home_mailbox' => 'Maildir/',
+      'mailbox_command' => '',
+      'disable_dns_lookups' => 'yes' #Don't do DNS lookups for MX records since we're just using /etc/hosts for all host lookups
+    }  
+  }
+
   class { 'icinga2::nrpe':
-    nrpe_allowed_hosts => ['10.0.1.79', '10.0.1.80', '10.0.1.85', '127.0.0.1'],
+    nrpe_allowed_hosts => ['10.0.1.81', '10.0.1.82', '10.0.1.83', '10.0.1.84', '127.0.0.1'],
   }
 
   #Some basic box health stuff
@@ -1255,19 +1355,6 @@ node 'centos7icinga2.local' {
   icinga2::nrpe::command { 'check_mysql_service':
     nrpe_plugin_name => 'check_mysql',
     nrpe_plugin_args => '-H 127.0.0.1 -u root -p horsebatterystaple',
-  }
-
-  #Install Postfix so we can monitor SMTP services and send out email alerts:
-  class { '::postfix::server':
-    inet_interfaces => 'all', #Listen on all interfaces
-    inet_protocols => 'all', #Use both IPv4 and IPv6
-    mydomain       => 'local',
-    mynetworks => '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 10.0.1.0/24',
-    extra_main_parameters => {
-      'home_mailbox' => 'Maildir/',
-      'mailbox_command' => '',
-      'disable_dns_lookups' => 'yes' #Don't do DNS lookups for MX records since we're just using /etc/hosts for all host lookups
-    }  
   }
 
 }
@@ -1360,7 +1447,7 @@ node 'trustyicinga2client.local' {
   }
 
   class { 'icinga2::nrpe':
-    nrpe_allowed_hosts => ['10.0.1.79', '10.0.1.80', '10.0.1.85', '127.0.0.1'],
+    nrpe_allowed_hosts => ['10.0.1.81', '10.0.1.82', '10.0.1.83', '10.0.1.84', '127.0.0.1'],
   }
 
   #Some basic box health stuff
@@ -1505,7 +1592,7 @@ node 'preciseicinga2client.local' {
   }
 
   class { 'icinga2::nrpe':
-    nrpe_allowed_hosts => ['10.0.1.79', '10.0.1.80', '10.0.1.85', '127.0.0.1'],
+    nrpe_allowed_hosts => ['10.0.1.81', '10.0.1.82', '10.0.1.83', '10.0.1.84', '127.0.0.1'],
   }
 
   #Some basic box health stuff
@@ -1671,7 +1758,7 @@ node 'centos6icinga2client.local' {
   }
 
   class { 'icinga2::nrpe':
-    nrpe_allowed_hosts => ['10.0.1.79', '10.0.1.80', '10.0.1.85', '127.0.0.1'],
+    nrpe_allowed_hosts => ['10.0.1.81', '10.0.1.82', '10.0.1.83', '10.0.1.84', '127.0.0.1'],
   }
 
   #Some basic box health stuff
@@ -1815,7 +1902,7 @@ node 'centos7icinga2client.local' {
   }
 
   class { 'icinga2::nrpe':
-    nrpe_allowed_hosts => ['10.0.1.79', '10.0.1.80', '10.0.1.85', '127.0.0.1'],
+    nrpe_allowed_hosts => ['10.0.1.81', '10.0.1.82', '10.0.1.83', '10.0.1.84', '127.0.0.1'],
   }
 
   #Some basic box health stuff
@@ -1961,7 +2048,7 @@ node 'icinga2mail.local' {
   }
 
   class { 'icinga2::nrpe':
-    nrpe_allowed_hosts => ['10.0.1.79', '10.0.1.80', '10.0.1.85', '127.0.0.1'],
+    nrpe_allowed_hosts => ['10.0.1.81', '10.0.1.82', '10.0.1.83', '10.0.1.84', '127.0.0.1'],
   }
 
   #Some basic box health stuff
@@ -2124,7 +2211,7 @@ node 'usermail.local' {
   }
 
   class { 'icinga2::nrpe':
-    nrpe_allowed_hosts => ['10.0.1.79', '10.0.1.80', '10.0.1.85', '127.0.0.1'],
+    nrpe_allowed_hosts => ['10.0.1.81', '10.0.1.82', '10.0.1.83', '10.0.1.84', '127.0.0.1'],
   }
 
   #Some basic box health stuff
