@@ -87,7 +87,7 @@ node 'icinga2master.local' {
 
 }
 
-#Ubuntu Trusty Icinga2 server node
+#An Ubuntu 14.04 Icinga2 server node
 node 'trustyicinga2.local' {
 
   #This module is from: https://github.com/saz/puppet-ssh
@@ -405,7 +405,7 @@ node 'trustyicinga2.local' {
 
 }
 
-#Ubuntu Precise Icinga2 server node
+#An Ubuntu 12.04 Icinga2 server node
 node 'preciseicinga2.local' {
 
   #This module is from: https://github.com/saz/puppet-ssh
@@ -1272,6 +1272,7 @@ node 'centos7icinga2.local' {
 
 }
 
+#An Ubuntu 14.04 Icinga 2 client node
 node 'trustyicinga2client.local' {
 
   #This module is from: https://github.com/saz/puppet-ssh
