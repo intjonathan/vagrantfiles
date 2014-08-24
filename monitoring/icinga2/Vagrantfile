@@ -163,20 +163,6 @@ Vagrant.configure("2") do |config|
     centos7icinga2client_config.vm.provision :shell, :path => "../provisioning_scripts/el7_puppet_agent.sh"
   end
 
-  #an icinga2server client
-  config.vm.define "icinga2client4".to_sym do |icinga2client2_config|
-    icinga2client2_config.vm.box = "centos-6.5-amd64"
-    icinga2client2_config.vm.hostname = "icinga2client4.local"
-    icinga2client2_config.hostmanager.enabled = true
-    icinga2client2_config.vm.network :private_network, ip: "10.0.1.84"
-    icinga2client2_config.vm.provider "virtualbox" do |v| 	
-      #change the amount of RAM 
-      v.customize ["modifyvm", :id, "--memory", "256"]
-    end
-    #Puppet agent provisioning script
-    icinga2client2_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
-  end
-
   #Mail server VM for Icinga 2 to use as a relay
   config.vm.define "icinga2mail".to_sym do |icinga2mail_config|
     icinga2mail_config.vm.box = "ubuntu-14.04-server-amd64"
