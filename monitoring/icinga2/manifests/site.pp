@@ -694,8 +694,8 @@ node 'preciseicinga2.local' {
 
 }
 
-#CentOS Icinga 2 server node
-node 'centosicinga2.local' {
+#CentOS 6 Icinga 2 server node
+node 'centos6icinga2.local' {
 
   #This module is from: https://github.com/saz/puppet-ssh
   class { 'ssh':
