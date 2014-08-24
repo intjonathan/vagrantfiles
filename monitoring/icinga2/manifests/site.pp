@@ -1272,7 +1272,7 @@ node 'centos7icinga2.local' {
 
 }
 
-node 'icinga2client1.local' {
+node 'trustyicinga2client.local' {
 
   #This module is from: https://github.com/saz/puppet-ssh
   class { 'ssh':
