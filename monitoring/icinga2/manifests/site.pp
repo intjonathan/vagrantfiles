@@ -170,7 +170,12 @@ node 'trustyicinga2.local' {
 
   #Install Icinga 2:
   class { 'icinga2::server': 
-    server_db_type => 'mysql',
+    server_db_type => 'pgslq',
+    db_user        => 'icinga2',
+    db_name        => 'icinga2_data',
+    db_password    => 'password',
+    db_host        => '127.0.0.1',
+    db_port        => '5432',
     server_install_nagios_plugins => false,
   } ->
 
@@ -190,29 +195,29 @@ node 'trustyicinga2.local' {
     target_dir => '/etc/icinga2/objects/hostgroups',
   }
 
-#  #Postgres IDO connection object:
-#  icinga2::object::idopgsqlconnection { 'testing_postgres':
-#     target_dir => '/etc/icinga2/features-enabled',
-#     host => '127.0.0.1',
-#     port => 5432,
-#     user => 'icinga2',
-#     password => 'password',
-#     database => 'icinga2_data',
-#     target_file_name => 'ido-pgsql.conf',
-#     categories => ['DbCatConfig', 'DbCatState', 'DbCatAcknowledgement', 'DbCatComment', 'DbCatDowntime', 'DbCatEventHandler' ],
-#  }
-
-  #MySQL IDO connection object
-  icinga2::object::idomysqlconnection { 'testing_mysql':
-     target_dir => '/etc/icinga2/features-enabled',
-     host => '127.0.0.1',
-     port => 3306,
-     user => 'icinga2',
-     password => 'password',
-     database => 'icinga2_data',
-     target_file_name => 'ido-mysql.conf',
-     categories => ['DbCatConfig', 'DbCatState', 'DbCatAcknowledgement', 'DbCatComment', 'DbCatDowntime', 'DbCatEventHandler' ],
+  #Postgres IDO connection object:
+  icinga2::object::idopgsqlconnection { 'testing_postgres':
+     host             => '127.0.0.1',
+     port             => 5432,
+     user             => 'icinga2',
+     password         => 'password',
+     database         => 'icinga2_data',
+     target_file_name => 'ido-pgsql.conf',
+     target_dir       => '/etc/icinga2/features-enabled',
+     categories       => ['DbCatConfig', 'DbCatState', 'DbCatAcknowledgement', 'DbCatComment', 'DbCatDowntime', 'DbCatEventHandler' ],
   }
+
+#  #MySQL IDO connection object
+#  icinga2::object::idomysqlconnection { 'testing_mysql':
+#     host             => '127.0.0.1',
+#     port             => 3306,
+#     user             => 'icinga2',
+#     password         => 'password',
+#     database         => 'icinga2_data',
+#     target_file_name => 'ido-mysql.conf',
+#     target_dir       => '/etc/icinga2/features-enabled',
+#     categories       => ['DbCatConfig', 'DbCatState', 'DbCatAcknowledgement', 'DbCatComment', 'DbCatDowntime', 'DbCatEventHandler' ],
+#  }
 
   #Create a postgres_servers hostgroup:
   icinga2::object::hostgroup { 'postgres_servers':
