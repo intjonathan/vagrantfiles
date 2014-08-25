@@ -231,6 +231,12 @@ node 'trustyicinga2.local' {
     target_dir => '/etc/icinga2/objects/users',
   }
 
+  #Create an admins user group:
+  icinga2::object::usergroup { 'admins':
+    display_name => 'admins',
+    target_dir => '/etc/icinga2/objects/usergroups',
+  }
+
   #Create a postgres_servers hostgroup:
   icinga2::object::hostgroup { 'postgres_servers':
     display_name => 'Postgres servers',
