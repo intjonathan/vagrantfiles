@@ -296,6 +296,7 @@ node 'trustyicinga2.local' {
     display_name => 'Load average',
     check_command => 'nrpe',
     vars => {
+      service_type => 'production',
       nrpe_command => 'check_load',
     },
     assign_where => '"linux_servers" in host.groups',
@@ -308,6 +309,7 @@ node 'trustyicinga2.local' {
     display_name => 'Logged in users',
     check_command => 'nrpe',
     vars => {
+      service_type => 'production',
       nrpe_command => 'check_users',
     },
     assign_where => '"linux_servers" in host.groups',
@@ -320,6 +322,7 @@ node 'trustyicinga2.local' {
     display_name => 'Disk space on /',
     check_command => 'nrpe',
     vars => {
+      service_type => 'production',
       nrpe_command => 'check_disk',
     },
     assign_where => '"linux_servers" in host.groups',
@@ -332,6 +335,7 @@ node 'trustyicinga2.local' {
     display_name => 'Total procs',
     check_command => 'nrpe',
     vars => {
+      service_type => 'production',
       nrpe_command => 'check_total_procs',
     },
     assign_where => '"linux_servers" in host.groups',
@@ -344,6 +348,7 @@ node 'trustyicinga2.local' {
     display_name => 'Zombie procs',
     check_command => 'nrpe',
     vars => {
+      service_type => 'production',
       nrpe_command => 'check_zombie_procs',
     },
     assign_where => '"linux_servers" in host.groups',
@@ -356,6 +361,7 @@ node 'trustyicinga2.local' {
     display_name => 'MySQL',
     check_command => 'nrpe',
     vars => {
+      service_type => 'production',
       nrpe_command => 'check_mysql_service',
     },
     assign_where => '"mysql_servers" in host.groups',
@@ -632,6 +638,7 @@ node 'preciseicinga2.local' {
     display_name => 'Load average',
     check_command => 'nrpe',
     vars => {
+      service_type => 'production',
       nrpe_command => 'check_load',
     },
     assign_where => '"linux_servers" in host.groups',
@@ -644,6 +651,7 @@ node 'preciseicinga2.local' {
     display_name => 'Logged in users',
     check_command => 'nrpe',
     vars => {
+      service_type => 'production',
       nrpe_command => 'check_users',
     },
     assign_where => '"linux_servers" in host.groups',
@@ -656,6 +664,7 @@ node 'preciseicinga2.local' {
     display_name => 'Disk space on /',
     check_command => 'nrpe',
     vars => {
+      service_type => 'production',
       nrpe_command => 'check_disk',
     },
     assign_where => '"linux_servers" in host.groups',
@@ -668,6 +677,7 @@ node 'preciseicinga2.local' {
     display_name => 'Total procs',
     check_command => 'nrpe',
     vars => {
+      service_type => 'production',
       nrpe_command => 'check_total_procs',
     },
     assign_where => '"linux_servers" in host.groups',
@@ -680,6 +690,7 @@ node 'preciseicinga2.local' {
     display_name => 'Zombie procs',
     check_command => 'nrpe',
     vars => {
+      service_type => 'production',
       nrpe_command => 'check_zombie_procs',
     },
     assign_where => '"linux_servers" in host.groups',
@@ -692,6 +703,7 @@ node 'preciseicinga2.local' {
     display_name => 'MySQL',
     check_command => 'nrpe',
     vars => {
+      service_type => 'production',
       nrpe_command => 'check_mysql_service',
     },
     assign_where => '"mysql_servers" in host.groups',
@@ -968,6 +980,7 @@ node 'centos6icinga2.local' {
     display_name => 'Load average',
     check_command => 'nrpe',
     vars => {
+      service_type => 'production',
       nrpe_command => 'check_load',
     },
     assign_where => '"linux_servers" in host.groups',
@@ -980,6 +993,7 @@ node 'centos6icinga2.local' {
     display_name => 'Logged in users',
     check_command => 'nrpe',
     vars => {
+      service_type => 'production',
       nrpe_command => 'check_users',
     },
     assign_where => '"linux_servers" in host.groups',
@@ -992,6 +1006,7 @@ node 'centos6icinga2.local' {
     display_name => 'Disk space on /',
     check_command => 'nrpe',
     vars => {
+      service_type => 'production',
       nrpe_command => 'check_disk',
     },
     assign_where => '"linux_servers" in host.groups',
@@ -1004,6 +1019,7 @@ node 'centos6icinga2.local' {
     display_name => 'Total procs',
     check_command => 'nrpe',
     vars => {
+      service_type => 'production',
       nrpe_command => 'check_total_procs',
     },
     assign_where => '"linux_servers" in host.groups',
@@ -1016,6 +1032,7 @@ node 'centos6icinga2.local' {
     display_name => 'Zombie procs',
     check_command => 'nrpe',
     vars => {
+      service_type => 'production',
       nrpe_command => 'check_zombie_procs',
     },
     assign_where => '"linux_servers" in host.groups',
@@ -1028,6 +1045,7 @@ node 'centos6icinga2.local' {
     display_name => 'MySQL',
     check_command => 'nrpe',
     vars => {
+      service_type => 'production',
       nrpe_command => 'check_mysql_service',
     },
     assign_where => '"mysql_servers" in host.groups',
@@ -1304,6 +1322,7 @@ node 'centos7icinga2.local' {
     display_name => 'Load average',
     check_command => 'nrpe',
     vars => {
+      service_type => 'production',
       nrpe_command => 'check_load',
     },
     assign_where => '"linux_servers" in host.groups',
@@ -1316,6 +1335,7 @@ node 'centos7icinga2.local' {
     display_name => 'Logged in users',
     check_command => 'nrpe',
     vars => {
+      service_type => 'production',
       nrpe_command => 'check_users',
     },
     assign_where => '"linux_servers" in host.groups',
@@ -1328,6 +1348,7 @@ node 'centos7icinga2.local' {
     display_name => 'Disk space on /',
     check_command => 'nrpe',
     vars => {
+      service_type => 'production',
       nrpe_command => 'check_disk',
     },
     assign_where => '"linux_servers" in host.groups',
@@ -1340,6 +1361,7 @@ node 'centos7icinga2.local' {
     display_name => 'Total procs',
     check_command => 'nrpe',
     vars => {
+      service_type => 'production',
       nrpe_command => 'check_total_procs',
     },
     assign_where => '"linux_servers" in host.groups',
@@ -1352,6 +1374,7 @@ node 'centos7icinga2.local' {
     display_name => 'Zombie procs',
     check_command => 'nrpe',
     vars => {
+      service_type => 'production',
       nrpe_command => 'check_zombie_procs',
     },
     assign_where => '"linux_servers" in host.groups',
@@ -1364,6 +1387,7 @@ node 'centos7icinga2.local' {
     display_name => 'MySQL',
     check_command => 'nrpe',
     vars => {
+      service_type => 'production',
       nrpe_command => 'check_mysql_service',
     },
     assign_where => '"mysql_servers" in host.groups',
