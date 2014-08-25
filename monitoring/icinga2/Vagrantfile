@@ -51,7 +51,7 @@ Vagrant.configure("2") do |config|
     #set some machine-specific options	
     trustyicinga2_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
-      v.customize ["modifyvm", :id, "--memory", "512"]
+      v.customize ["modifyvm", :id, "--memory", "256"]
     end
     #Puppet agent provisioning script
     trustyicinga2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
@@ -67,7 +67,7 @@ Vagrant.configure("2") do |config|
     #set some machine-specific options	
     preciseicinga2_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
-      v.customize ["modifyvm", :id, "--memory", "512"]
+      v.customize ["modifyvm", :id, "--memory", "256"]
     end
     #Puppet agent provisioning script
     preciseicinga2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
@@ -83,7 +83,7 @@ Vagrant.configure("2") do |config|
     #set some machine-specific options	
     centos6icinga2_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
-      v.customize ["modifyvm", :id, "--memory", "512"]
+      v.customize ["modifyvm", :id, "--memory", "256"]
     end
     #Puppet agent provisioning script
     centos6icinga2_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
@@ -99,7 +99,7 @@ Vagrant.configure("2") do |config|
     #set some machine-specific options	
     centos7icinga2_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
-      v.customize ["modifyvm", :id, "--memory", "512"]
+      v.customize ["modifyvm", :id, "--memory", "256"]
     end
     #Puppet agent provisioning script
     centos7icinga2_config.vm.provision :shell, :path => "../provisioning_scripts/el7_puppet_agent.sh"
