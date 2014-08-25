@@ -277,6 +277,9 @@ node 'trustyicinga2.local' {
   icinga2::object::apply_service_to_host { 'check_ssh':
     display_name => 'SSH',
     check_command => 'ssh',
+    vars => {
+      service_type => 'production',
+    },
     assign_where => '"ssh_servers" in host.groups',
     ignore_where => 'host.name == "localhost"',
     target_dir => '/etc/icinga2/objects/applys'
@@ -619,6 +622,9 @@ node 'preciseicinga2.local' {
   icinga2::object::apply_service_to_host { 'check_ssh':
     display_name => 'SSH',
     check_command => 'ssh',
+    vars => {
+      service_type => 'production',
+    },
     assign_where => '"ssh_servers" in host.groups',
     ignore_where => 'host.name == "localhost"',
     target_dir => '/etc/icinga2/objects/applys'
@@ -961,6 +967,9 @@ node 'centos6icinga2.local' {
   icinga2::object::apply_service_to_host { 'check_ssh':
     display_name => 'SSH',
     check_command => 'ssh',
+    vars => {
+      service_type => 'production',
+    },
     assign_where => '"ssh_servers" in host.groups',
     ignore_where => 'host.name == "localhost"',
     target_dir => '/etc/icinga2/objects/applys'
@@ -1303,6 +1312,9 @@ node 'centos7icinga2.local' {
   icinga2::object::apply_service_to_host { 'check_ssh':
     display_name => 'SSH',
     check_command => 'ssh',
+    vars => {
+      service_type => 'production',
+    },
     assign_where => '"ssh_servers" in host.groups',
     ignore_where => 'host.name == "localhost"',
     target_dir => '/etc/icinga2/objects/applys'
