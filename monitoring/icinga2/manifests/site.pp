@@ -219,6 +219,18 @@ node 'trustyicinga2.local' {
 #     categories       => ['DbCatConfig', 'DbCatState', 'DbCatAcknowledgement', 'DbCatComment', 'DbCatDowntime', 'DbCatEventHandler' ],
 #  }
 
+  #Create a user definition:
+  icinga2::object::user { 'nick':
+    display_name => 'Nick',
+    email => 'nick@usermail.local',
+    period => '24x7',
+    enable_notifications => 'true',
+    groups => [ 'admins' ],
+    states => [ 'OK', 'Warning', 'Critical', 'Unknown', 'Up', 'Down' ],
+    types => [ 'Problem', 'Recovery', 'Acknowledgement', 'Custom', 'DowntimeStart', 'DowntimeEnd', 'DowntimeRemoved', 'FlappingStart', 'FlappingEnd' ],
+    target_dir => '/etc/icinga2/objects/users',
+  }
+
   #Create a postgres_servers hostgroup:
   icinga2::object::hostgroup { 'postgres_servers':
     display_name => 'Postgres servers',
