@@ -37,6 +37,7 @@ Vagrant.configure("2") do |config|
     icinga2master_config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/environments/production/modules", :nfs => true
     icinga2master_config.vm.synced_folder "manifests/", "/etc/puppet/environments/production/manifests", :nfs => true
     icinga2master_config.vm.synced_folder "hieradata/", "/etc/puppet/environments/production/hieradata", :nfs => true
+    icinga2master_config.vm.synced_folder "files/", "/etc/puppet/files", :nfs => true
     #Puppet icinga2master provisioning script
     icinga2master_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_master.sh"
   end  
