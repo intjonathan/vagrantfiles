@@ -2389,3 +2389,227 @@ node 'usermail.local' {
   }
 
 }
+
+node 'icinga2logging.local' {
+
+  #This module is from: https://github.com/saz/puppet-ssh
+  class { 'ssh':
+    #Export host keys to PuppetDB:
+    storeconfigs_enabled => true,
+    server_options => {
+      #Whether to allow password auth; if set to 'no', only SSH keys can be used:
+      #'PasswordAuthentication' => 'no',
+      #How many authentication attempts to allow before disconnecting:
+      'MaxAuthTries'         => '10',
+      'PermitEmptyPasswords' => 'no', 
+      'PermitRootLogin'      => 'no',
+      'Port'                 => [22],
+      'PubkeyAuthentication' => 'yes',
+      #Whether to be strict about the permissions on a user's .ssh/ folder and public keys:
+      'StrictModes'          => 'yes',
+      'TCPKeepAlive'         => 'yes',
+      #Whether to do reverse DNS lookups of client IP addresses when they connect:
+      'UseDNS'               => 'no',
+    },
+  }
+
+  #This module is: https://github.com/puppetlabs/puppetlabs-ntp
+  class { '::ntp':
+    servers  => [ '0.ubuntu.pool.ntp.org', '1.ubuntu.pool.ntp.org', '2.ubuntu.pool.ntp.org', '3.ubuntu.pool.ntp.org' ],
+    restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
+    disable_monitor => true,
+  }
+
+  #Install some stuff to monitor like...
+  
+  #...Apache:
+  class{ '::apache':}
+  ::apache::mod { 'ssl': } #Install/enable the SSL module
+  ::apache::mod { 'proxy': } #Install/enable the proxy module
+  ::apache::mod { 'proxy_http': } #Install/enable the HTTP proxy module
+  ::apache::mod { 'rewrite': } #Install/enable the rewrite module
+  
+  #Install Postgres so we can monitor it with Icinga 2...
+  class { 'postgresql::server': }
+
+  #...and install MySQL as well:
+  class { '::mysql::server':
+    root_password    => 'horsebatterystaple',
+    override_options => { 'mysqld' => { 'max_connections' => '1024' } }
+  }
+
+  #Create a Postgres test DB for Icinga 2 to monitor:
+  postgresql::server::db { 'test_data':
+    user     => 'tester',
+    password => postgresql_password('tester', 'password'),
+  }
+
+  #Create a MySQL test database for Icinga 2 to monitor:
+  mysql::db { 'test_data':
+    user     => 'test',
+    password => 'password',
+    host     => 'localhost',
+    grant    => ['ALL'],
+  }
+
+  #Install Postfix so we can monitor SMTP services and send out email alerts:
+  class { '::postfix::server':
+    inet_interfaces => 'all', #Listen on all interfaces
+    inet_protocols => 'all', #Use both IPv4 and IPv6
+    mydomain       => 'local',
+    mynetworks => '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 10.0.1.0/24',
+    extra_main_parameters => {
+      'home_mailbox' => 'Maildir/',
+      'mailbox_command' => '',
+      'disable_dns_lookups' => 'yes' #Don't do DNS lookups for MX records since we're just using /etc/hosts for all host lookups
+    }  
+  }
+
+  #Create a user account so we can test receiving mail:
+  user { 'nick':
+    ensure => present,
+    home => '/home/nick',
+    groups => ['sudo', 'admin'],
+    #This is 'password', in salted SHA-512 form:
+    password => '$6$IPYwCTfWyO$bIVTSw4ai/BGtZpfI4HtC8XE7bmb8b3kdZ6gRz4DF4hm7WmD35azXoFxN90TRrSYQdKo011YnBl7p3UXR2osQ1',
+    shell => '/bin/bash',
+  }
+
+  file { '/home/nick' :
+    ensure => directory,
+    owner => 'nick',
+    group => 'nick',
+    mode =>  '755',
+  }
+
+  class { 'icinga2::nrpe':
+    nrpe_allowed_hosts => ['10.0.1.81', '10.0.1.82', '10.0.1.83', '10.0.1.84', '127.0.0.1'],
+  }
+
+  #Some basic box health stuff
+  icinga2::nrpe::command { 'check_users':
+    nrpe_plugin_name => 'check_users',
+    nrpe_plugin_args => '-w 5 -c 10',
+  }
+  
+  #check_load
+  icinga2::nrpe::command { 'check_load':
+    nrpe_plugin_name => 'check_load',
+    nrpe_plugin_args => '-w 50,40,30 -c 60,50,40',
+  }
+  
+  #check_disk
+  icinga2::nrpe::command { 'check_disk':
+    nrpe_plugin_name => 'check_disk',
+    nrpe_plugin_args => '-w 20% -c 10% -p /',
+  }
+
+  #check_total_procs  
+  icinga2::nrpe::command { 'check_total_procs':
+    nrpe_plugin_name => 'check_procs',
+    nrpe_plugin_args => '-w 1000 -c 1500',
+  }
+ 
+  #check_zombie_procs
+  icinga2::nrpe::command { 'check_zombie_procs':
+    nrpe_plugin_name => 'check_procs',
+    nrpe_plugin_args => '-w 5 -c 10 -s Z',
+  }
+  
+  icinga2::nrpe::command { 'check_ntp_time':
+    nrpe_plugin_name => 'check_ntp_time',
+    nrpe_plugin_args => '-H 127.0.0.1',
+  }
+  
+  #Create an NRPE command to monitor MySQL:
+  icinga2::nrpe::command { 'check_mysql_service':
+    nrpe_plugin_name => 'check_mysql',
+    nrpe_plugin_args => '-H 127.0.0.1 -u root -p horsebatterystaple',
+  }
+
+  @@icinga2::object::host { $::fqdn:
+    display_name => $::fqdn,
+    ipv4_address => $::ipaddress_eth1,
+    groups => ["linux_servers", 'mysql_servers', 'postgres_servers', 'clients', 'smtp_servers', 'ssh_servers', 'http_servers', 'imap_servers'],
+    vars => {
+      os              => 'linux',
+      virtual_machine => 'true',
+      distro          => $::operatingsystem,
+    },
+    target_dir => '/etc/icinga2/objects/hosts',
+    target_file_name => "${fqdn}.conf"
+  }
+
+  #Install Logstash:  
+  class { 'logstash':
+    java_install => true,
+    java_package => 'openjdk-7-jre-headless',
+    package_url => 'https://download.elasticsearch.org/logstash/logstash/packages/debian/logstash_1.4.2-1-2c0f5a1_all.deb',
+    install_contrib => true,
+    contrib_package_url => 'https://download.elasticsearch.org/logstash/logstash/packages/debian/logstash-contrib_1.4.2-1-efd53ef_all.deb',
+  }
+
+  logstash::configfile { 'logstash_monolithic':
+    source => 'puppet:///logstash/configs/logstash.conf',
+    order   => 10
+  }
+
+  #Install Elasticsearch...
+  class { 'elasticsearch':
+    java_install => false,
+    package_url => 'https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.3.2.deb',
+    config => { 'cluster.name'             => 'logstash',
+                'network.host'             => $ipaddress_eth1,
+                'index.number_of_replicas' => '1',
+                'index.number_of_shards'   => '4',
+    },
+  }
+
+  #...and some plugins:
+  elasticsearch::instance { $fqdn:
+    config => { 'node.name' => $fqdn }
+  }
+
+  elasticsearch::plugin{'mobz/elasticsearch-head':
+    module_dir => 'head',
+    instances  => $fqdn,
+  }
+
+  elasticsearch::plugin{'karmi/elasticsearch-paramedic':
+    module_dir => 'paramedic',
+    instances  => $fqdn,
+  }
+
+  elasticsearch::plugin{'lmenezes/elasticsearch-kopf':
+    module_dir => 'kopf',
+    instances  => $fqdn,
+  }
+
+  #A non-SSL virtual host for Kibana:
+  ::apache::vhost { 'kibana.icinga2logging.local_non-ssl':
+    port            => 80,
+    docroot         => '/sites/apps/kibana3',
+    servername      => "kibana.${fqdn}",
+    access_log => true,
+    access_log_syslog=> 'syslog:local1',
+    error_log => true,
+    error_log_syslog=> 'syslog:local1',
+    custom_fragment => '
+      #Disable multiviews since they can have unpredictable results
+      <Directory "/sites/apps/kibana3">
+        AllowOverride All
+        Require all granted
+        Options -Multiviews
+      </Directory>
+    ',
+  }
+
+  #Create a folder where the SSL certificate and key will live:
+  file {'/etc/apache2/ssl': 
+    ensure => directory,
+    owner => 'root',
+    group => 'root',
+    mode => '600',
+  }
+
+}
