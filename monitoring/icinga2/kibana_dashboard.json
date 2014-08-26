@@ -1,5 +1,5 @@
 {
-  "title": "Logstash Search",
+  "title": "Icinga 2 environment logs",
   "services": {
     "query": {
       "list": {
@@ -138,7 +138,7 @@
             "default"
           ],
           "type": "table",
-          "size": 200,
+          "size": 100,
           "pages": 10,
           "offset": 0,
           "sort": [
@@ -177,6 +177,48 @@
         }
       ],
       "notice": false
+    },
+    {
+      "title": "Log events by machine",
+      "height": "500px",
+      "editable": true,
+      "collapse": false,
+      "collapsable": true,
+      "panels": [
+        {
+          "error": false,
+          "span": 6,
+          "editable": true,
+          "type": "terms",
+          "loadingEditor": false,
+          "field": "@source_host",
+          "exclude": [],
+          "missing": true,
+          "other": true,
+          "size": 10,
+          "order": "count",
+          "style": {
+            "font-size": "10pt"
+          },
+          "donut": false,
+          "tilt": false,
+          "labels": true,
+          "arrangement": "horizontal",
+          "chart": "pie",
+          "counter_pos": "above",
+          "spyable": true,
+          "queries": {
+            "mode": "all",
+            "ids": [
+              0
+            ]
+          },
+          "tmode": "terms",
+          "tstat": "total",
+          "valuefield": ""
+        }
+      ],
+      "notice": false
     }
   ],
   "editable": true,
@@ -199,6 +241,7 @@
       "history": [
         "",
         "*",
+        "xconsole",
         "postfix",
         "postfi",
         "puppet-agent",
