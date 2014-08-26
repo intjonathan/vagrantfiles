@@ -113,13 +113,18 @@ node 'trustyicinga2.local' {
 
   #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
+    #Write out logs in RFC3146 format so that they're more consistent when we send them to
+    #Logstash. Logstash is set up to understand this format of logs in its config:
+    log_templates => [
+      { name => 'RFC3164fmt', template => '<%PRI%>%TIMESTAMP% %HOSTNAME% %syslogtag%%msg%',},
+    ],
     log_remote     => true,
+    server         => 'icinga2logging.local',
+    port           => '5514',
     remote_type    => 'tcp',
     log_local      => true,
     log_auth_local => true,
     custom_config  => undef,
-    server         => 'icinga2master.local',
-    port           => '5514',
   }
 
   #This module is: https://github.com/puppetlabs/puppetlabs-ntp
@@ -461,13 +466,18 @@ node 'preciseicinga2.local' {
 
   #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
+    #Write out logs in RFC3146 format so that they're more consistent when we send them to
+    #Logstash. Logstash is set up to understand this format of logs in its config:
+    log_templates => [
+      { name => 'RFC3164fmt', template => '<%PRI%>%TIMESTAMP% %HOSTNAME% %syslogtag%%msg%',},
+    ],
     log_remote     => true,
+    server         => 'icinga2logging.local',
+    port           => '5514',
     remote_type    => 'tcp',
     log_local      => true,
     log_auth_local => true,
     custom_config  => undef,
-    server         => 'icinga2master.local',
-    port           => '5514',
   }
 
   #This module is: https://github.com/puppetlabs/puppetlabs-ntp
@@ -809,13 +819,18 @@ node 'centos6icinga2.local' {
 
   #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
+    #Write out logs in RFC3146 format so that they're more consistent when we send them to
+    #Logstash. Logstash is set up to understand this format of logs in its config:
+    log_templates => [
+      { name => 'RFC3164fmt', template => '<%PRI%>%TIMESTAMP% %HOSTNAME% %syslogtag%%msg%',},
+    ],
     log_remote     => true,
+    server         => 'icinga2logging.local',
+    port           => '5514',
     remote_type    => 'tcp',
     log_local      => true,
     log_auth_local => true,
     custom_config  => undef,
-    server         => 'icinga2master.local',
-    port           => '5514',
   }
 
   #This module is: https://github.com/puppetlabs/puppetlabs-ntp
@@ -1157,13 +1172,18 @@ node 'centos7icinga2.local' {
 
   #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
+    #Write out logs in RFC3146 format so that they're more consistent when we send them to
+    #Logstash. Logstash is set up to understand this format of logs in its config:
+    log_templates => [
+      { name => 'RFC3164fmt', template => '<%PRI%>%TIMESTAMP% %HOSTNAME% %syslogtag%%msg%',},
+    ],
     log_remote     => true,
+    server         => 'icinga2logging.local',
+    port           => '5514',
     remote_type    => 'tcp',
     log_local      => true,
     log_auth_local => true,
     custom_config  => undef,
-    server         => 'icinga2master.local',
-    port           => '5514',
   }
 
   #This module is: https://github.com/puppetlabs/puppetlabs-ntp
@@ -1505,13 +1525,18 @@ node 'trustyicinga2client.local' {
 
   #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
+    #Write out logs in RFC3146 format so that they're more consistent when we send them to
+    #Logstash. Logstash is set up to understand this format of logs in its config:
+    log_templates => [
+      { name => 'RFC3164fmt', template => '<%PRI%>%TIMESTAMP% %HOSTNAME% %syslogtag%%msg%',},
+    ],
     log_remote     => true,
+    server         => 'icinga2logging.local',
+    port           => '5514',
     remote_type    => 'tcp',
     log_local      => true,
     log_auth_local => true,
     custom_config  => undef,
-    server         => 'icinga2master.local',
-    port           => '5514',
   }
 
   #This module is: https://github.com/puppetlabs/puppetlabs-ntp
@@ -1652,13 +1677,18 @@ node 'preciseicinga2client.local' {
 
   #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
+    #Write out logs in RFC3146 format so that they're more consistent when we send them to
+    #Logstash. Logstash is set up to understand this format of logs in its config:
+    log_templates => [
+      { name => 'RFC3164fmt', template => '<%PRI%>%TIMESTAMP% %HOSTNAME% %syslogtag%%msg%',},
+    ],
     log_remote     => true,
+    server         => 'icinga2logging.local',
+    port           => '5514',
     remote_type    => 'tcp',
     log_local      => true,
     log_auth_local => true,
     custom_config  => undef,
-    server         => 'icinga2master.local',
-    port           => '5514',
   }
 
   #This module is: https://github.com/puppetlabs/puppetlabs-ntp
@@ -1797,13 +1827,18 @@ node 'centos6icinga2client.local' {
 
   #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
+    #Write out logs in RFC3146 format so that they're more consistent when we send them to
+    #Logstash. Logstash is set up to understand this format of logs in its config:
+    log_templates => [
+      { name => 'RFC3164fmt', template => '<%PRI%>%TIMESTAMP% %HOSTNAME% %syslogtag%%msg%',},
+    ],
     log_remote     => true,
+    server         => 'icinga2logging.local',
+    port           => '5514',
     remote_type    => 'tcp',
     log_local      => true,
     log_auth_local => true,
     custom_config  => undef,
-    server         => 'icinga2master.local',
-    port           => '5514',
   }
 
   #This module is: https://github.com/puppetlabs/puppetlabs-ntp
@@ -1963,13 +1998,18 @@ node 'centos7icinga2client.local' {
 
   #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
+    #Write out logs in RFC3146 format so that they're more consistent when we send them to
+    #Logstash. Logstash is set up to understand this format of logs in its config:
+    log_templates => [
+      { name => 'RFC3164fmt', template => '<%PRI%>%TIMESTAMP% %HOSTNAME% %syslogtag%%msg%',},
+    ],
     log_remote     => true,
+    server         => 'icinga2logging.local',
+    port           => '5514',
     remote_type    => 'tcp',
     log_local      => true,
     log_auth_local => true,
     custom_config  => undef,
-    server         => 'icinga2master.local',
-    port           => '5514',
   }
 
   #This module is: https://github.com/puppetlabs/puppetlabs-ntp
@@ -2106,13 +2146,18 @@ node 'icinga2mail.local' {
 
   #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
+    #Write out logs in RFC3146 format so that they're more consistent when we send them to
+    #Logstash. Logstash is set up to understand this format of logs in its config:
+    log_templates => [
+      { name => 'RFC3164fmt', template => '<%PRI%>%TIMESTAMP% %HOSTNAME% %syslogtag%%msg%',},
+    ],
     log_remote     => true,
+    server         => 'icinga2logging.local',
+    port           => '5514',
     remote_type    => 'tcp',
     log_local      => true,
     log_auth_local => true,
     custom_config  => undef,
-    server         => 'icinga2master.local',
-    port           => '5514',
   }
 
   #This module is: https://github.com/puppetlabs/puppetlabs-ntp
@@ -2252,13 +2297,18 @@ node 'usermail.local' {
 
   #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
+    #Write out logs in RFC3146 format so that they're more consistent when we send them to
+    #Logstash. Logstash is set up to understand this format of logs in its config:
+    log_templates => [
+      { name => 'RFC3164fmt', template => '<%PRI%>%TIMESTAMP% %HOSTNAME% %syslogtag%%msg%',},
+    ],
     log_remote     => true,
+    server         => 'icinga2logging.local',
+    port           => '5514',
     remote_type    => 'tcp',
     log_local      => true,
     log_auth_local => true,
     custom_config  => undef,
-    server         => 'icinga2master.local',
-    port           => '5514',
   }
 
   #This module is: https://github.com/puppetlabs/puppetlabs-ntp
