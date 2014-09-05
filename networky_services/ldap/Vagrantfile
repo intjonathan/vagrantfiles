@@ -1,0 +1,153 @@
+Vagrant.configure("2") do |config|
+  # All Vagrant configuration is done here. The most common configuration
+  # options are documented and commented below. For a complete reference,
+  # please see the online documentation at vagrantup.com.
+
+  ####################
+  # Snippets to use
+  ####################
+
+  #NFS folder sharing for Puppet modules and manifests
+  #config.vm.synced_folder "modules", "/etc/puppet/modules", :nfs => true
+
+  ####################
+  ####################
+
+  #vagrant-hostmanager plugin options
+  config.hostmanager.enabled = true
+  config.hostmanager.ignore_private_ip = false
+  #update the /etc/hosts of the host OS
+  config.hostmanager.manage_host = true
+  #incorporate offline box's IPs into the /etc/hosts of boxes that are up/being brought up
+  config.hostmanager.include_offline = true
+
+  #Puppet master and PuppetDB server
+  config.vm.define "freeipamaster".to_sym do |freeipamaster_config|
+    freeipamaster_config.vm.box = "ubuntu-14.04-server-amd64"
+    freeipamaster_config.vm.hostname = "freeipamaster.local"
+    freeipamaster_config.hostmanager.enabled = true
+    freeipamaster_config.hostmanager.aliases = %w(puppetboard.freeipamaster.local freeipamaster puppet master)
+    freeipamaster_config.vm.network :private_network, ip: "10.0.1.180"
+    #set some machine-specific options	
+    freeipamaster_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+    #NFS folder sharing for Puppet modules and manifests
+    freeipamaster_config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/environments/production/modules", :nfs => true
+    freeipamaster_config.vm.synced_folder "manifests/", "/etc/puppet/environments/production/manifests", :nfs => true
+    freeipamaster_config.vm.synced_folder "hieradata/", "/etc/puppet/environments/production/hieradata", :nfs => true
+    freeipamaster_config.vm.synced_folder "files/", "/etc/puppet/files", :nfs => true
+    #Puppet freeipamaster provisioning script
+    freeipamaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_master.sh"
+  end  
+
+  #A CentOS 6 FreeIPA server
+  config.vm.define "centos6freeipa".to_sym do |centos6freeipa_config|
+    centos6freeipa_config.vm.box = "centos-6.5-amd64"
+    centos6freeipa_config.vm.hostname = "centos6freeipa.local"
+    centos6freeipa_config.hostmanager.enabled = true
+    centos6freeipa_config.hostmanager.aliases = %w(centos6freeipa)
+    centos6freeipa_config.vm.network :private_network, ip: "10.0.1.183"
+    #set some machine-specific options	
+    centos6freeipa_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "256"]
+    end
+    #Puppet agent provisioning script
+    centos6freeipa_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
+  end
+
+  #A CentOS 7 FreeIPA server
+  config.vm.define "centos7freeipa".to_sym do |centos7freeipa_config|
+    centos7freeipa_config.vm.box = "centos-7.0-amd64"
+    centos7freeipa_config.vm.hostname = "centos7freeipa.local"
+    centos7freeipa_config.hostmanager.enabled = true
+    centos7freeipa_config.hostmanager.aliases = %w(centos7freeipa)
+    centos7freeipa_config.vm.network :private_network, ip: "10.0.1.184"
+    #set some machine-specific options	
+    centos7freeipa_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "256"]
+    end
+    #Puppet agent provisioning script
+    centos7freeipa_config.vm.provision :shell, :path => "../provisioning_scripts/el7_puppet_agent.sh"
+  end
+
+  #A CentOS 6 FreeIPA client
+  config.vm.define "centos6ldapclient".to_sym do |centos6ldapclient_config|
+    centos6ldapclient_config.vm.box = "centos-6.5-amd64"
+    centos6ldapclient_config.vm.hostname = "centos6ldapclient.local"
+    centos6ldapclient_config.hostmanager.enabled = true
+    centos6ldapclient_config.vm.network :private_network, ip: "10.0.1.187"
+    centos6ldapclient_config.vm.provider "virtualbox" do |v| 	
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "256"]
+    end
+    #Puppet agent provisioning script
+    centos6ldapclient_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
+  end
+
+  #A CentOS 7 FreeIPA client
+  config.vm.define "centos7freeldapclient".to_sym do |centos7freeldapclient_config|
+    centos7freeldapclient_config.vm.box = "centos-7.0-amd64"
+    centos7freeldapclient_config.vm.hostname = "centos7freeldapclient.local"
+    centos7freeldapclient_config.hostmanager.enabled = true
+    centos7freeldapclient_config.vm.network :private_network, ip: "10.0.1.188"
+    centos7freeldapclient_config.vm.provider "virtualbox" do |v| 	
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "256"]
+    end
+    #Puppet agent provisioning script
+    centos7freeldapclient_config.vm.provision :shell, :path => "../provisioning_scripts/el7_puppet_agent.sh"
+  end
+
+  #Mail server VM for FreeIPA to use as a relay
+  config.vm.define "ldapmail".to_sym do |ldapmail_config|
+    ldapmail_config.vm.box = "ubuntu-14.04-server-amd64"
+    ldapmail_config.vm.hostname = "ldapmail.local"
+    ldapmail_config.hostmanager.enabled = true
+    ldapmail_config.hostmanager.aliases = %w(ldapmail)
+    ldapmail_config.vm.network :private_network, ip: "10.0.1.189"
+    #set some machine-specific options	
+    ldapmail_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "256"]
+    end
+    #Puppet agent provisioning script
+    ldapmail_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+  end
+
+  #Mail server to hold user mail accounts that FreeIPA will send emails to
+  config.vm.define "ldapusermail".to_sym do |ldapusermail_config|
+    ldapusermail_config.vm.box = "ubuntu-14.04-server-amd64"
+    ldapusermail_config.vm.hostname = "ldapusermail.local"
+    ldapusermail_config.hostmanager.enabled = true
+    ldapusermail_config.hostmanager.aliases = %w(ldapusermail)
+    ldapusermail_config.vm.network :private_network, ip: "10.0.1.90"
+    #set some machine-specific options	
+    ldapusermail_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "256"]
+    end
+    #Puppet agent provisioning script
+    ldapusermail_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+  end
+
+  #Logstash/Elasitcsearch/Kibana VM for looking at logs that the LDAP servers and clients generate:
+  config.vm.define "ldaplogging".to_sym do |ldaplogging_config|
+    ldaplogging_config.vm.box = "ubuntu-14.04-server-amd64"
+    ldaplogging_config.vm.hostname = "ldaplogging.local"
+    ldaplogging_config.hostmanager.enabled = true
+    ldaplogging_config.hostmanager.aliases = %w(ldaplogging kibana.ldaplogging.local)
+    ldaplogging_config.vm.network :private_network, ip: "10.0.1.91"
+    #set some machine-specific options	
+    ldaplogging_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    #Puppet agent provisioning script
+    ldaplogging_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+  end
+
+end
