@@ -124,7 +124,7 @@ Vagrant.configure("2") do |config|
     ldapusermail_config.vm.hostname = "ldapusermail.local"
     ldapusermail_config.hostmanager.enabled = true
     ldapusermail_config.hostmanager.aliases = %w(ldapusermail)
-    ldapusermail_config.vm.network :private_network, ip: "10.0.1.90"
+    ldapusermail_config.vm.network :private_network, ip: "10.0.1.190"
     #set some machine-specific options	
     ldapusermail_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
@@ -140,7 +140,7 @@ Vagrant.configure("2") do |config|
     ldaplogging_config.vm.hostname = "ldaplogging.local"
     ldaplogging_config.hostmanager.enabled = true
     ldaplogging_config.hostmanager.aliases = %w(ldaplogging kibana.ldaplogging.local)
-    ldaplogging_config.vm.network :private_network, ip: "10.0.1.91"
+    ldaplogging_config.vm.network :private_network, ip: "10.0.1.191"
     #set some machine-specific options	
     ldaplogging_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
