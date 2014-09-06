@@ -72,27 +72,6 @@ node 'ldapmaster.local' {
 #A CentOS 6 FreeIPA server:
 node 'centos6freeipa.local' {
 
-  #This module is from: https://github.com/saz/puppet-ssh
-  class { 'ssh':
-    #Export host keys to PuppetDB:
-    storeconfigs_enabled => true,
-    server_options => {
-      #Whether to allow password auth; if set to 'no', only SSH keys can be used:
-      #'PasswordAuthentication' => 'no',
-      #How many authentication attempts to allow before disconnecting:
-      'MaxAuthTries'         => '10',
-      'PermitEmptyPasswords' => 'no', 
-      'PermitRootLogin'      => 'no',
-      'Port'                 => [22],
-      'PubkeyAuthentication' => 'yes',
-      #Whether to be strict about the permissions on a user's .ssh/ folder and public keys:
-      'StrictModes'          => 'yes',
-      'TCPKeepAlive'         => 'yes',
-      #Whether to do reverse DNS lookups of client IP addresses when they connect:
-      'UseDNS'               => 'no',
-    },
-  }
-
   #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
     #Write out logs in RFC3146 format so that they're more consistent when we send them to
@@ -107,13 +86,6 @@ node 'centos6freeipa.local' {
     log_local      => true,
     log_auth_local => true,
     custom_config  => undef,
-  }
-
-  #This module is: https://github.com/puppetlabs/puppetlabs-ntp
-  class { '::ntp':
-    servers  => [ '0.centos.pool.ntp.org', '1.centos.pool.ntp.org', '2.centos.pool.ntp.org', '3.centos.pool.ntp.org' ],
-    restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
-    disable_monitor => true,
   }
 
   #Install Postfix so we can monitor SMTP services and send out email alerts:
@@ -134,27 +106,6 @@ node 'centos6freeipa.local' {
 #A CentOS 7 FreeIPA server:
 node 'centos7freeipa.local' {
 
-  #This module is from: https://github.com/saz/puppet-ssh
-  class { 'ssh':
-    #Export host keys to PuppetDB:
-    storeconfigs_enabled => true,
-    server_options => {
-      #Whether to allow password auth; if set to 'no', only SSH keys can be used:
-      #'PasswordAuthentication' => 'no',
-      #How many authentication attempts to allow before disconnecting:
-      'MaxAuthTries'         => '10',
-      'PermitEmptyPasswords' => 'no', 
-      'PermitRootLogin'      => 'no',
-      'Port'                 => [22],
-      'PubkeyAuthentication' => 'yes',
-      #Whether to be strict about the permissions on a user's .ssh/ folder and public keys:
-      'StrictModes'          => 'yes',
-      'TCPKeepAlive'         => 'yes',
-      #Whether to do reverse DNS lookups of client IP addresses when they connect:
-      'UseDNS'               => 'no',
-    },
-  }
-
   #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
     #Write out logs in RFC3146 format so that they're more consistent when we send them to
@@ -169,13 +120,6 @@ node 'centos7freeipa.local' {
     log_local      => true,
     log_auth_local => true,
     custom_config  => undef,
-  }
-
-  #This module is: https://github.com/puppetlabs/puppetlabs-ntp
-  class { '::ntp':
-    servers  => [ '0.centos.pool.ntp.org', '1.centos.pool.ntp.org', '2.centos.pool.ntp.org', '3.centos.pool.ntp.org' ],
-    restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
-    disable_monitor => true,
   }
 
   #Install Postfix so we can monitor SMTP services and send out email alerts:
