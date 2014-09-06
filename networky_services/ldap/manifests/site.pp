@@ -1,5 +1,5 @@
 #puppet master node definition
-node 'freeipamaster.local' {
+node 'ldapmaster.local' {
 
   #This module is from: https://github.com/puppetlabs/puppetlabs-puppetdb/
   class { 'puppetdb':
