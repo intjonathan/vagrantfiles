@@ -1147,7 +1147,7 @@ node 'centos6icinga2server.local' {
 }
 
 #A CentOS 7 Icinga 2 server node
-node 'centos7icinga2.local' {
+node 'centos7icinga2server.local' {
 
   #This module is from: https://github.com/saz/puppet-ssh
   class { 'ssh':
