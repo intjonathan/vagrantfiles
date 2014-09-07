@@ -441,7 +441,7 @@ node 'trustyicinga2server.local' {
 }
 
 #An Ubuntu 12.04 Icinga2 server node
-node 'preciseicinga2.local' {
+node 'preciseicinga2server.local' {
 
   #This module is from: https://github.com/saz/puppet-ssh
   class { 'ssh':
