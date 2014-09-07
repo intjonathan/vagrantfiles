@@ -267,6 +267,9 @@
       "notice": false,
       "status": "Stable",
       "time_options": [
+        "30s",
+        "1m",
+        "90s",
         "2m",
         "5m",
         "10m",
