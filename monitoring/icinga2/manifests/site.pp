@@ -88,7 +88,7 @@ node 'icinga2master.local' {
 }
 
 #An Ubuntu 14.04 Icinga2 server node
-node 'trustyicinga2.local' {
+node 'trustyicinga2server.local' {
 
   #This module is from: https://github.com/saz/puppet-ssh
   class { 'ssh':
