@@ -434,4 +434,26 @@ node 'consullogging.local' {
     mode => '600',
   }
 
+  #Create the directory (and its containing directories) for Kibana 3:
+  file {'/sites/': 
+    ensure => directory,
+    owner => 'www-data',
+    group => 'www-data',
+    mode => '600',
+  }
+
+  file {'/sites/apps': 
+    ensure => directory,
+    owner => 'www-data',
+    group => 'www-data',
+    mode => '600',
+  }
+
+  file {'/sites/apps/kibana3': 
+    ensure => directory,
+    owner => 'www-data',
+    group => 'www-data',
+    mode => '600',
+  }
+
 }
