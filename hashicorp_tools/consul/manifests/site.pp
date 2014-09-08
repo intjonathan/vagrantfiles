@@ -58,7 +58,7 @@ node 'consulmaster.local' {
     log_auth_local => true,
     custom_config  => undef,
     server         => 'consullogging.local',
-    port           => '514',
+    port           => '5514',
   }
 
   #This module is: https://github.com/puppetlabs/puppetlabs-ntp
@@ -101,7 +101,7 @@ node 'consulserver1.local' {
     log_auth_local => true,
     custom_config  => undef,
     server         => 'consullogging.local',
-    port           => '514',
+    port           => '5514',
   }
 
   #This module is: https://github.com/puppetlabs/puppetlabs-ntp
@@ -128,7 +128,7 @@ node 'consulserver2.local' {
     log_auth_local => true,
     custom_config  => undef,
     server         => 'consullogging.local',
-    port           => '514',
+    port           => '5514',
   }
 
   #This module is: https://github.com/puppetlabs/puppetlabs-ntp
@@ -176,7 +176,7 @@ node 'consulserver3.local' {
     log_auth_local => true,
     custom_config  => undef,
     server         => 'consullogging.local',
-    port           => '514',
+    port           => '5514',
   }
 
   #This module is: https://github.com/puppetlabs/puppetlabs-ntp
@@ -203,7 +203,7 @@ node 'consulagent1.local' {
     log_auth_local => true,
     custom_config  => undef,
     server         => 'consullogging.local',
-    port           => '514',
+    port           => '5514',
   }
 
   #This module is: https://github.com/puppetlabs/puppetlabs-ntp
@@ -251,7 +251,7 @@ node 'consulagent2.local' {
     log_auth_local => true,
     custom_config  => undef,
     server         => 'consullogging.local',
-    port           => '514',
+    port           => '5514',
   }
 
   #This module is: https://github.com/puppetlabs/puppetlabs-ntp
@@ -299,7 +299,7 @@ node 'consulagent3.local' {
     log_auth_local => true,
     custom_config  => undef,
     server         => 'consullogging.local',
-    port           => '514',
+    port           => '5514',
   }
 
   #This module is: https://github.com/puppetlabs/puppetlabs-ntp
@@ -350,7 +350,7 @@ node 'consullogging.local' {
     log_auth_local => true,
     custom_config  => undef,
     server         => 'consullogging.local',
-    port           => '514',
+    port           => '5514',
   }
 
   #This module is: https://github.com/puppetlabs/puppetlabs-ntp
