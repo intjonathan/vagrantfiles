@@ -278,6 +278,30 @@ node 'trustyicinga2server.local' {
     target_dir => '/etc/icinga2/objects/hostgroups',
   }
 
+  #Create a web services servicegroup:
+  icinga2::object::servicegroup { 'web_services':
+    display_name => 'web services',
+    target_dir => '/etc/icinga2/objects/servicegroups',
+  }
+
+  #Create a database services servicegroup:
+  icinga2::object::servicegroup { 'database_services':
+    display_name => 'database services',
+    target_dir => '/etc/icinga2/objects/servicegroups',
+  }
+  
+  #Create an email services servicegroup:
+  icinga2::object::servicegroup { 'email_services':
+    display_name => 'email services',
+    target_dir => '/etc/icinga2/objects/servicegroups',
+  }
+
+  #Create a machine health services servicegroup:
+  icinga2::object::servicegroup { 'machine_health':
+    display_name => 'machine health',
+    target_dir => '/etc/icinga2/objects/servicegroups',
+  }
+
   #Create an apply that checks SSH:
   icinga2::object::apply_service_to_host { 'check_ssh':
     display_name => 'SSH',
@@ -629,6 +653,30 @@ node 'preciseicinga2server.local' {
   icinga2::object::hostgroup { 'smtp_servers':
     display_name => 'SMTP servers',
     target_dir => '/etc/icinga2/objects/hostgroups',
+  }
+
+  #Create a web services servicegroup:
+  icinga2::object::servicegroup { 'web_services':
+    display_name => 'web services',
+    target_dir => '/etc/icinga2/objects/servicegroups',
+  }
+
+  #Create a database services servicegroup:
+  icinga2::object::servicegroup { 'database_services':
+    display_name => 'database services',
+    target_dir => '/etc/icinga2/objects/servicegroups',
+  }
+  
+  #Create an email services servicegroup:
+  icinga2::object::servicegroup { 'email_services':
+    display_name => 'email services',
+    target_dir => '/etc/icinga2/objects/servicegroups',
+  }
+
+  #Create a machine health services servicegroup:
+  icinga2::object::servicegroup { 'machine_health':
+    display_name => 'machine health',
+    target_dir => '/etc/icinga2/objects/servicegroups',
   }
 
   #Create an apply that checks SSH:
@@ -984,6 +1032,30 @@ node 'centos6icinga2server.local' {
     target_dir => '/etc/icinga2/objects/hostgroups',
   }
 
+  #Create a web services servicegroup:
+  icinga2::object::servicegroup { 'web_services':
+    display_name => 'web services',
+    target_dir => '/etc/icinga2/objects/servicegroups',
+  }
+
+  #Create a database services servicegroup:
+  icinga2::object::servicegroup { 'database_services':
+    display_name => 'database services',
+    target_dir => '/etc/icinga2/objects/servicegroups',
+  }
+  
+  #Create an email services servicegroup:
+  icinga2::object::servicegroup { 'email_services':
+    display_name => 'email services',
+    target_dir => '/etc/icinga2/objects/servicegroups',
+  }
+
+  #Create a machine health services servicegroup:
+  icinga2::object::servicegroup { 'machine_health':
+    display_name => 'machine health',
+    target_dir => '/etc/icinga2/objects/servicegroups',
+  }
+
   #Create an apply that checks SSH:
   icinga2::object::apply_service_to_host { 'check_ssh':
     display_name => 'SSH',
@@ -1335,6 +1407,30 @@ node 'centos7icinga2server.local' {
   icinga2::object::hostgroup { 'smtp_servers':
     display_name => 'SMTP servers',
     target_dir => '/etc/icinga2/objects/hostgroups',
+  }
+
+  #Create a web services servicegroup:
+  icinga2::object::servicegroup { 'web_services':
+    display_name => 'web services',
+    target_dir => '/etc/icinga2/objects/servicegroups',
+  }
+
+  #Create a database services servicegroup:
+  icinga2::object::servicegroup { 'database_services':
+    display_name => 'database services',
+    target_dir => '/etc/icinga2/objects/servicegroups',
+  }
+  
+  #Create an email services servicegroup:
+  icinga2::object::servicegroup { 'email_services':
+    display_name => 'email services',
+    target_dir => '/etc/icinga2/objects/servicegroups',
+  }
+
+  #Create a machine health services servicegroup:
+  icinga2::object::servicegroup { 'machine_health':
+    display_name => 'machine health',
+    target_dir => '/etc/icinga2/objects/servicegroups',
   }
 
   #Create an apply that checks SSH:
