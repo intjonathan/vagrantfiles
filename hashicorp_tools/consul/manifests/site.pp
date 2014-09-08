@@ -57,7 +57,7 @@ node 'consulmaster.local' {
     log_local      => true,
     log_auth_local => true,
     custom_config  => undef,
-    server         => 'consulmaster.local',
+    server         => 'consullogging.local',
     port           => '514',
   }
 
@@ -100,7 +100,7 @@ node 'consulserver1.local' {
     log_local      => true,
     log_auth_local => true,
     custom_config  => undef,
-    server         => 'consulmaster.local',
+    server         => 'consullogging.local',
     port           => '514',
   }
 
@@ -127,7 +127,7 @@ node 'consulserver2.local' {
     log_local      => true,
     log_auth_local => true,
     custom_config  => undef,
-    server         => 'consulmaster.local',
+    server         => 'consullogging.local',
     port           => '514',
   }
 
@@ -175,7 +175,7 @@ node 'consulserver3.local' {
     log_local      => true,
     log_auth_local => true,
     custom_config  => undef,
-    server         => 'consulmaster.local',
+    server         => 'consullogging.local',
     port           => '514',
   }
 
@@ -202,7 +202,7 @@ node 'consulagent1.local' {
     log_local      => true,
     log_auth_local => true,
     custom_config  => undef,
-    server         => 'consulmaster.local',
+    server         => 'consullogging.local',
     port           => '514',
   }
 
@@ -250,7 +250,7 @@ node 'consulagent2.local' {
     log_local      => true,
     log_auth_local => true,
     custom_config  => undef,
-    server         => 'consulmaster.local',
+    server         => 'consullogging.local',
     port           => '514',
   }
 
@@ -298,7 +298,7 @@ node 'consulagent3.local' {
     log_local      => true,
     log_auth_local => true,
     custom_config  => undef,
-    server         => 'consulmaster.local',
+    server         => 'consullogging.local',
     port           => '514',
   }
 
@@ -349,7 +349,7 @@ node 'consullogging.local' {
     log_local      => true,
     log_auth_local => true,
     custom_config  => undef,
-    server         => 'consulmaster.local',
+    server         => 'consullogging.local',
     port           => '514',
   }
 
