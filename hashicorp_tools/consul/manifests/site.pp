@@ -116,6 +116,24 @@ node 'consulserver1.local' {
     purge_configs => 'true'
   }
 
+  class { 'consul':
+    version => '0.4.0',
+    config_hash => {
+      #The data center this Consul agent is running in:
+      'bind_addr'             => $ipaddress_eth1,
+      'bootstrap_expect'      => 5,
+      'check_update_interval' => '2m',
+      'client_addr'           => '0.0.0.0',
+      'config-dir'            => '/etc/consul.d/',
+      'data_dir'              => '/opt/consul',
+      'dc'                    => 'east-aws',
+      'enable_syslog'         => true,
+      'log_level'             => 'INFO',
+      'node_name'             => $fqdn,
+      'server'                => true
+    }
+  }
+
 }
 
 node 'consulserver2.local' {
@@ -141,6 +159,24 @@ node 'consulserver2.local' {
   #Install Apache so we can do a basic service check against HTTP port 80:
   class { 'apache': 
     purge_configs => 'true'
+  }
+
+  class { 'consul':
+    version => '0.4.0',
+    config_hash => {
+      #The data center this Consul agent is running in:
+      'bind_addr'             => $ipaddress_eth1,
+      'bootstrap_expect'      => 5,
+      'check_update_interval' => '2m',
+      'client_addr'           => '0.0.0.0',
+      'config-dir'            => '/etc/consul.d/',
+      'data_dir'              => '/opt/consul',
+      'dc'                    => 'east-aws',
+      'enable_syslog'         => true,
+      'log_level'             => 'INFO',
+      'node_name'             => $fqdn,
+      'server'                => true
+    }
   }
 
 }
@@ -191,6 +227,24 @@ node 'consulserver3.local' {
     purge_configs => 'true'
   }
 
+  class { 'consul':
+    version => '0.4.0',
+    config_hash => {
+      #The data center this Consul agent is running in:
+      'bind_addr'             => $ipaddress_eth1,
+      'bootstrap_expect'      => 5,
+      'check_update_interval' => '2m',
+      'client_addr'           => '0.0.0.0',
+      'config-dir'            => '/etc/consul.d/',
+      'data_dir'              => '/opt/consul',
+      'dc'                    => 'east-aws',
+      'enable_syslog'         => true,
+      'log_level'             => 'INFO',
+      'node_name'             => $fqdn,
+      'server'                => true
+    }
+  }
+
 }
 
 node 'consulagent1.local' {
@@ -216,6 +270,22 @@ node 'consulagent1.local' {
   #Install Apache so we can do a basic service check against HTTP port 80:
   class { 'apache': 
     purge_configs => 'true'
+  }
+
+  class { 'consul':
+    version => '0.4.0',
+    config_hash => {
+      #The data center this Consul agent is running in:
+      'bind_addr'             => $ipaddress_eth1,
+      'check_update_interval' => '2m',
+      'client_addr'           => '0.0.0.0',
+      'config-dir'            => '/etc/consul.d/',
+      'data_dir'              => '/opt/consul',
+      'dc'                    => 'east-aws',
+      'enable_syslog'         => true,
+      'log_level'             => 'INFO',
+      'node_name'             => $fqdn,
+    }
   }
 
 }
@@ -265,6 +335,23 @@ node 'consulagent2.local' {
   class { 'apache': 
     purge_configs => 'true'
   }
+
+  class { 'consul':
+    version => '0.4.0',
+    config_hash => {
+      #The data center this Consul agent is running in:
+      'bind_addr'             => $ipaddress_eth1,
+      'check_update_interval' => '2m',
+      'client_addr'           => '0.0.0.0',
+      'config-dir'            => '/etc/consul.d/',
+      'data_dir'              => '/opt/consul',
+      'dc'                    => 'east-aws',
+      'enable_syslog'         => true,
+      'log_level'             => 'INFO',
+      'node_name'             => $fqdn,
+    }
+  }
+
 
 }
 
@@ -316,6 +403,22 @@ node 'consulagent3.local' {
 
   #Apply this class so we can get the Nagios plugins packages installed:
   class { 'icinga::client': }
+  
+  class { 'consul':
+    version => '0.4.0',
+    config_hash => {
+      #The data center this Consul agent is running in:
+      'bind_addr'             => $ipaddress_eth1,
+      'check_update_interval' => '2m',
+      'client_addr'           => '0.0.0.0',
+      'config-dir'            => '/etc/consul.d/',
+      'data_dir'              => '/opt/consul',
+      'dc'                    => 'east-aws',
+      'enable_syslog'         => true,
+      'log_level'             => 'INFO',
+      'node_name'             => $fqdn,
+    }
+  }
 
 }
 
@@ -457,6 +560,22 @@ node 'consullogging.local' {
     owner => 'www-data',
     group => 'www-data',
     mode => '600',
+  }
+
+  class { 'consul':
+    version => '0.4.0',
+    config_hash => {
+      #The data center this Consul agent is running in:
+      'bind_addr'             => $ipaddress_eth1,
+      'check_update_interval' => '2m',
+      'client_addr'           => '0.0.0.0',
+      'config-dir'            => '/etc/consul.d/',
+      'data_dir'              => '/opt/consul',
+      'dc'                    => 'east-aws',
+      'enable_syslog'         => true,
+      'log_level'             => 'INFO',
+      'node_name'             => $fqdn,
+    }
   }
 
 }
