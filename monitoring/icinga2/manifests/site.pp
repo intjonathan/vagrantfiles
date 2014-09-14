@@ -2256,6 +2256,27 @@ node 'icinga2mail.local' {
     custom_config  => undef,
   }
 
+  #Install Java...
+  package { 'openjdk-7-jre-headless':
+    ensure => installed,
+  }
+
+  #...so that we can install Elasticsearch...
+  class { 'elasticsearch':
+    java_install => false,
+    package_url => 'https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.3.2.deb',
+    config => { 'cluster.name'             => 'logstash',
+                'network.host'             => $ipaddress_eth1,
+                'index.number_of_replicas' => '1',
+                'index.number_of_shards'   => '4',
+    },
+  }
+
+  #...and set up an Elasticsearch instance:
+  elasticsearch::instance { $fqdn:
+    config => { 'node.name' => $fqdn }
+  }
+
   #This module is: https://github.com/puppetlabs/puppetlabs-ntp
   class { '::ntp':
     servers  => [ '0.ubuntu.pool.ntp.org', '1.ubuntu.pool.ntp.org', '2.ubuntu.pool.ntp.org', '3.ubuntu.pool.ntp.org' ],
@@ -2405,6 +2426,27 @@ node 'usermail.local' {
     log_local      => true,
     log_auth_local => true,
     custom_config  => undef,
+  }
+
+  #Install Java...
+  package { 'openjdk-7-jre-headless':
+    ensure => installed,
+  }
+
+  #...so that we can install Elasticsearch...
+  class { 'elasticsearch':
+    java_install => false,
+    package_url => 'https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.3.2.deb',
+    config => { 'cluster.name'             => 'logstash',
+                'network.host'             => $ipaddress_eth1,
+                'index.number_of_replicas' => '1',
+                'index.number_of_shards'   => '4',
+    },
+  }
+
+  #...and set up an Elasticsearch instance:
+  elasticsearch::instance { $fqdn:
+    config => { 'node.name' => $fqdn }
   }
 
   #This module is: https://github.com/puppetlabs/puppetlabs-ntp
