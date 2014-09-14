@@ -207,6 +207,7 @@ Vagrant.configure("2") do |config|
     icinga2logging_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "1024"]
+      v.cpus = 2
     end
     #Puppet agent provisioning script
     icinga2logging_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
