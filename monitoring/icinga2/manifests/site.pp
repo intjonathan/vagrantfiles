@@ -182,6 +182,7 @@ node 'trustyicinga2server.local' {
     db_host        => '127.0.0.1',
     db_port        => '5432',
     server_install_nagios_plugins => false,
+    install_mail_utils_package => true,
   } ->
 
   #Collect all @@icinga2::object::host resources from PuppetDB that were exported by other machines:
@@ -559,6 +560,7 @@ node 'preciseicinga2server.local' {
     db_host        => '127.0.0.1',
     db_port        => '5432',
     server_install_nagios_plugins => false,
+    install_mail_utils_package => true,
   } ->
 
   #Collect all @@icinga2::object::host resources from PuppetDB that were exported by other machines:
@@ -936,6 +938,7 @@ node 'centos6icinga2server.local' {
     db_host        => '127.0.0.1',
     db_port        => '5432',
     server_install_nagios_plugins => false,
+    install_mail_utils_package => true,
   } ->
 
   #Collect all @@icinga2::object::host resources from PuppetDB that were exported by other machines:
@@ -1313,6 +1316,7 @@ node 'centos7icinga2server.local' {
     db_host        => '127.0.0.1',
     db_port        => '5432',
     server_install_nagios_plugins => false,
+    install_mail_utils_package => true,
   } ->
 
   #Collect all @@icinga2::object::host resources from PuppetDB that were exported by other machines:
