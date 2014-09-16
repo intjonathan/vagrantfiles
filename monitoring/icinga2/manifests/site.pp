@@ -225,6 +225,12 @@ node 'trustyicinga2server.local' {
 #     categories       => ['DbCatConfig', 'DbCatState', 'DbCatAcknowledgement', 'DbCatComment', 'DbCatDowntime', 'DbCatEventHandler' ],
 #  }
 
+  #Create a sysloglogger object:
+  icinga2::object::sysloglogger { 'syslog-warning':
+    severity => 'warning',
+    target_dir => '/etc/icinga2/features-enabled',
+  }
+
   #Create a user definition:
   icinga2::object::user { 'nick':
     display_name => 'Nick',
@@ -602,6 +608,12 @@ node 'preciseicinga2server.local' {
 #     target_dir       => '/etc/icinga2/features-enabled',
 #     categories       => ['DbCatConfig', 'DbCatState', 'DbCatAcknowledgement', 'DbCatComment', 'DbCatDowntime', 'DbCatEventHandler' ],
 #  }
+
+  #Create a sysloglogger object:
+  icinga2::object::sysloglogger { 'syslog-warning':
+    severity => 'warning',
+    target_dir => '/etc/icinga2/features-enabled',
+  }
 
   #Create a user definition:
   icinga2::object::user { 'nick':
@@ -981,6 +993,12 @@ node 'centos6icinga2server.local' {
 #     categories       => ['DbCatConfig', 'DbCatState', 'DbCatAcknowledgement', 'DbCatComment', 'DbCatDowntime', 'DbCatEventHandler' ],
 #  }
 
+  #Create a sysloglogger object:
+  icinga2::object::sysloglogger { 'syslog-warning':
+    severity => 'warning',
+    target_dir => '/etc/icinga2/features-enabled',
+  }
+
   #Create a user definition:
   icinga2::object::user { 'nick':
     display_name => 'Nick',
@@ -1358,6 +1376,12 @@ node 'centos7icinga2server.local' {
 #     target_dir       => '/etc/icinga2/features-enabled',
 #     categories       => ['DbCatConfig', 'DbCatState', 'DbCatAcknowledgement', 'DbCatComment', 'DbCatDowntime', 'DbCatEventHandler' ],
 #  }
+
+  #Create a sysloglogger object:
+  icinga2::object::sysloglogger { 'syslog-warning':
+    severity => 'warning',
+    target_dir => '/etc/icinga2/features-enabled',
+  }
 
   #Create a user definition:
   icinga2::object::user { 'nick':
