@@ -425,7 +425,7 @@ node 'trustyicinga2server.local' {
   }
 
   class { 'icinga2::nrpe':
-    nrpe_allowed_hosts => ['10.0.1.81', '10.0.1.82', '10.0.1.83', '10.0.1.84', '127.0.0.1'],
+    nrpe_allowed_hosts => ['10.0.1.81', '10.0.1.82', '10.0.1.83', '10.0.1.84', '10.0.1.92', '127.0.0.1'],
   }
 
   #Some basic box health stuff
@@ -809,7 +809,7 @@ node 'preciseicinga2server.local' {
   }
 
   class { 'icinga2::nrpe':
-    nrpe_allowed_hosts => ['10.0.1.81', '10.0.1.82', '10.0.1.83', '10.0.1.84', '127.0.0.1'],
+    nrpe_allowed_hosts => ['10.0.1.81', '10.0.1.82', '10.0.1.83', '10.0.1.84', '10.0.1.92', '127.0.0.1'],
   }
 
   #Some basic box health stuff
@@ -1193,7 +1193,7 @@ node 'centos6icinga2server.local' {
   }
 
   class { 'icinga2::nrpe':
-    nrpe_allowed_hosts => ['10.0.1.81', '10.0.1.82', '10.0.1.83', '10.0.1.84', '127.0.0.1'],
+    nrpe_allowed_hosts => ['10.0.1.81', '10.0.1.82', '10.0.1.83', '10.0.1.84', '10.0.1.92', '127.0.0.1'],
   }
 
   #Some basic box health stuff
@@ -1577,7 +1577,7 @@ node 'centos7icinga2server.local' {
   }
 
   class { 'icinga2::nrpe':
-    nrpe_allowed_hosts => ['10.0.1.81', '10.0.1.82', '10.0.1.83', '10.0.1.84', '127.0.0.1'],
+    nrpe_allowed_hosts => ['10.0.1.81', '10.0.1.82', '10.0.1.83', '10.0.1.84', '10.0.1.92', '127.0.0.1'],
   }
 
   #Some basic box health stuff
@@ -1961,7 +1961,7 @@ node 'debian7icinga2server.local' {
   }
 
   class { 'icinga2::nrpe':
-    nrpe_allowed_hosts => ['10.0.1.81', '10.0.1.82', '10.0.1.83', '10.0.1.84', '127.0.0.1'],
+    nrpe_allowed_hosts => ['10.0.1.81', '10.0.1.82', '10.0.1.83', '10.0.1.84', '10.0.1.92', '127.0.0.1'],
   }
 
   #Some basic box health stuff
@@ -2100,7 +2100,7 @@ node 'trustyicinga2client.local' {
   }
 
   class { 'icinga2::nrpe':
-    nrpe_allowed_hosts => ['10.0.1.81', '10.0.1.82', '10.0.1.83', '10.0.1.84', '127.0.0.1'],
+    nrpe_allowed_hosts => ['10.0.1.81', '10.0.1.82', '10.0.1.83', '10.0.1.84', '10.0.1.92', '127.0.0.1'],
   }
 
   #Some basic box health stuff
@@ -2250,7 +2250,7 @@ node 'preciseicinga2client.local' {
   }
 
   class { 'icinga2::nrpe':
-    nrpe_allowed_hosts => ['10.0.1.81', '10.0.1.82', '10.0.1.83', '10.0.1.84', '127.0.0.1'],
+    nrpe_allowed_hosts => ['10.0.1.81', '10.0.1.82', '10.0.1.83', '10.0.1.84', '10.0.1.92', '127.0.0.1'],
   }
 
   #Some basic box health stuff
@@ -2421,7 +2421,7 @@ node 'centos6icinga2client.local' {
   }
 
   class { 'icinga2::nrpe':
-    nrpe_allowed_hosts => ['10.0.1.81', '10.0.1.82', '10.0.1.83', '10.0.1.84', '127.0.0.1'],
+    nrpe_allowed_hosts => ['10.0.1.81', '10.0.1.82', '10.0.1.83', '10.0.1.84', '10.0.1.92', '127.0.0.1'],
   }
 
   #Some basic box health stuff
@@ -2570,7 +2570,7 @@ node 'centos7icinga2client.local' {
   }
 
   class { 'icinga2::nrpe':
-    nrpe_allowed_hosts => ['10.0.1.81', '10.0.1.82', '10.0.1.83', '10.0.1.84', '127.0.0.1'],
+    nrpe_allowed_hosts => ['10.0.1.81', '10.0.1.82', '10.0.1.83', '10.0.1.84', '10.0.1.92', '127.0.0.1'],
   }
 
   #Some basic box health stuff
@@ -2722,7 +2722,7 @@ node 'debian7icinga2client.local' {
   }
 
   class { 'icinga2::nrpe':
-    nrpe_allowed_hosts => ['10.0.1.81', '10.0.1.82', '10.0.1.83', '10.0.1.84', '127.0.0.1'],
+    nrpe_allowed_hosts => ['10.0.1.81', '10.0.1.82', '10.0.1.83', '10.0.1.84', '10.0.1.92', '127.0.0.1'],
   }
 
   #Some basic box health stuff
@@ -2894,7 +2894,7 @@ node 'icinga2mail.local' {
   }
 
   class { 'icinga2::nrpe':
-    nrpe_allowed_hosts => ['10.0.1.81', '10.0.1.82', '10.0.1.83', '10.0.1.84', '127.0.0.1'],
+    nrpe_allowed_hosts => ['10.0.1.81', '10.0.1.82', '10.0.1.83', '10.0.1.84', '10.0.1.92', '127.0.0.1'],
   }
 
   #Some basic box health stuff
@@ -3083,7 +3083,7 @@ node 'usermail.local' {
   }
 
   class { 'icinga2::nrpe':
-    nrpe_allowed_hosts => ['10.0.1.81', '10.0.1.82', '10.0.1.83', '10.0.1.84', '127.0.0.1'],
+    nrpe_allowed_hosts => ['10.0.1.81', '10.0.1.82', '10.0.1.83', '10.0.1.84', '10.0.1.92', '127.0.0.1'],
   }
 
   #Some basic box health stuff
@@ -3235,7 +3235,7 @@ node 'icinga2logging.local' {
   }
 
   class { 'icinga2::nrpe':
-    nrpe_allowed_hosts => ['10.0.1.81', '10.0.1.82', '10.0.1.83', '10.0.1.84', '127.0.0.1'],
+    nrpe_allowed_hosts => ['10.0.1.81', '10.0.1.82', '10.0.1.83', '10.0.1.84', '10.0.1.92', '127.0.0.1'],
     nrpe_listen_port => 5666,
   }
 
