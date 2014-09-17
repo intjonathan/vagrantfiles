@@ -106,6 +106,20 @@ Vagrant.configure("2") do |config|
     centos7icinga2server_config.vm.provision :shell, :path => "../provisioning_scripts/el7_puppet_agent.sh"
   end
 
+  #A Debian 7 Icinga 2 server
+  config.vm.define "debian7icinga2server".to_sym do |debian7icinga2server_config|
+    debian7icinga2server_config.vm.box = "debian-7.6-amd64"
+    debian7icinga2server_config.vm.hostname = "debian7icinga2server.local"
+    debian7icinga2server_config.hostmanager.enabled = true
+    debian7icinga2server_config.vm.network :private_network, ip: "10.0.1.92"
+    debian7icinga2server_config.vm.provider "virtualbox" do |v| 	
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "256"]
+    end
+    #Puppet agent provisioning script
+    debian7icinga2server_config.vm.provision :shell, :path => "../provisioning_scripts/debian_puppet_agent.sh"
+  end
+
   #An Ubuntu 14.04 Icinga 2 client
   config.vm.define "trustyicinga2client".to_sym do |trustyicinga2client_config|
     trustyicinga2client_config.vm.box = "ubuntu-14.04-server-amd64"
