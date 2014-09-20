@@ -1,0 +1,34 @@
+Vagrant.configure("2") do |config|
+  # All Vagrant configuration is done here. The most common configuration
+  # options are documented and commented below. For a complete reference,
+  # please see the online documentation at vagrantup.com.
+  
+  ####################
+  # Snippets to use
+  ####################
+  
+  #NFS folder sharing
+  #config.vm.synced_folder "modules", "/etc/puppet/modules", :nfs => true
+  
+  ####################
+  ####################
+  
+  #vagrant-hostmanager plugin options
+  config.hostmanager.enabled = true
+  config.hostmanager.ignore_private_ip = false
+  #update the /etc/hosts of the host OS
+  config.hostmanager.manage_host = true
+  
+  #A FreeBSD 10 VM
+  config.vm.define "freebsd10test".to_sym do |freebsd10test_config|
+    freebsd10test_config.vm.box = "freebsd-10.0-amd64"
+    freebsd10test_config.vm.hostname = "freebsd10test.local"
+    freebsd10test_config.hostmanager.aliases = %w(freebsd10test.local)
+    freebsd10test_config.vm.network :private_network, ip: "10.0.1.70"
+    #set some machine-specific options	
+    freebsd10test_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+  end
+end
