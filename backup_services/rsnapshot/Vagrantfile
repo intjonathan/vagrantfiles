@@ -1,0 +1,158 @@
+Vagrant.configure("2") do |config|
+  # All Vagrant configuration is done here. The most common configuration
+  # options are documented and commented below. For a complete reference,
+  # please see the online documentation at vagrantup.com.
+
+  ####################
+  # Snippets to use
+  ####################
+
+  #NFS folder sharing for Puppet modules and manifests
+  #config.vm.synced_folder "modules", "/etc/puppet/modules", :nfs => true
+
+  ####################
+  ####################
+
+  #vagrant-hostmanager plugin options
+  config.hostmanager.enabled = true
+  config.hostmanager.ignore_private_ip = false
+  #update the /etc/hosts of the host OS
+  config.hostmanager.manage_host = true
+  #incorporate offline box's IPs into the /etc/hosts of boxes that are up/being brought up
+  config.hostmanager.include_offline = true
+
+  #Puppet master and PuppetDB server
+  config.vm.define "rsnapshotmaster".to_sym do |rsnapshotmaster_config|
+    rsnapshotmaster_config.vm.box = "ubuntu-14.04-server-amd64"
+    rsnapshotmaster_config.vm.hostname = "rsnapshotmaster.local"
+    rsnapshotmaster_config.hostmanager.enabled = true
+    rsnapshotmaster_config.hostmanager.aliases = %w(puppetboard.rsnapshotmaster.local rsnapshotmaster puppet master)
+    rsnapshotmaster_config.vm.network :private_network, ip: "10.0.1.130"
+    #set some machine-specific options	
+    rsnapshotmaster_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+    #NFS folder sharing for Puppet modules and manifests
+    rsnapshotmaster_config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/environments/production/modules", :nfs => true
+    rsnapshotmaster_config.vm.synced_folder "manifests/", "/etc/puppet/environments/production/manifests", :nfs => true
+    rsnapshotmaster_config.vm.synced_folder "hieradata/", "/etc/puppet/environments/production/hieradata", :nfs => true
+    rsnapshotmaster_config.vm.synced_folder "files/", "/etc/puppet/files", :nfs => true
+    #Puppet rsnapshotmaster provisioning script
+    rsnapshotmaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_master.sh"
+  end  
+
+  #An Ubuntu 14.04 rsnapshot server
+  config.vm.define "rsnapshotserver1".to_sym do |rsnapshotserver1_config|
+    rsnapshotserver1_config.vm.box = "ubuntu-14.04-server-amd64"
+    rsnapshotserver1_config.vm.hostname = "rsnapshotserver1.local"
+    rsnapshotserver1_config.hostmanager.enabled = true
+    rsnapshotserver1_config.hostmanager.aliases = %w(rsnapshotserver1)
+    rsnapshotserver1_config.vm.network :private_network, ip: "10.0.1.131"
+    #set some machine-specific options	
+    rsnapshotserver1_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "256"]
+    end
+    #Puppet agent provisioning script
+    rsnapshotserver1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+  end
+
+  #A CentOS 6.5 rsnapshot server
+  config.vm.define "rsnapshotserver2".to_sym do |rsnapshotserver2_config|
+    rsnapshotserver2_config.vm.box = "centos-6.5-amd64"
+    rsnapshotserver2_config.vm.hostname = "rsnapshotserver2.local"
+    rsnapshotserver2_config.hostmanager.enabled = true
+    rsnapshotserver2_config.hostmanager.aliases = %w(rsnapshotserver2)
+    rsnapshotserver2_config.vm.network :private_network, ip: "10.0.1.132"
+    #set some machine-specific options	
+    rsnapshotserver2_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "256"]
+    end
+    #Puppet agent provisioning script
+    rsnapshotserver2_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
+  end
+
+  #A CentOS 7 rsnapshot server
+  config.vm.define "rsnapshotserver3".to_sym do |rsnapshotserver3_config|
+    rsnapshotserver3_config.vm.box = "centos-7.0-amd64"
+    rsnapshotserver3_config.vm.hostname = "rsnapshotserver3.local"
+    rsnapshotserver3_config.hostmanager.enabled = true
+    rsnapshotserver3_config.hostmanager.aliases = %w(rsnapshotserver3)
+    rsnapshotserver3_config.vm.network :private_network, ip: "10.0.1.133"
+    #set some machine-specific options	
+    rsnapshotserver3_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "256"]
+    end
+    #Puppet agent provisioning script
+    rsnapshotserver3_config.vm.provision :shell, :path => "../provisioning_scripts/el7_puppet_agent.sh"
+  end
+
+  #An Ubuntu 14.04 rsnapshot client
+  config.vm.define "rsnapshotclient1".to_sym do |rsnapshotclient1_config|
+    rsnapshotclient1_config.vm.box = "ubuntu-14.04-server-amd64"
+    rsnapshotclient1_config.vm.hostname = "rsnapshotclient1.local"
+    rsnapshotclient1_config.hostmanager.enabled = true
+    rsnapshotclient1_config.hostmanager.aliases = %w(rsnapshotclient1)
+    rsnapshotclient1_config.vm.network :private_network, ip: "10.0.1.134"
+    #set some machine-specific options	
+    rsnapshotclient1_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "256"]
+    end
+    #Puppet agent provisioning script
+    rsnapshotclient1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+  end
+
+  #An Ubuntu 14.04 Icinga 2 server that we can use to monitor rsnapshot backups
+  config.vm.define "rsnapshotmonitor".to_sym do |rsnapshotmonitor_config|
+    rsnapshotmonitor_config.vm.box = "ubuntu-14.04-server-amd64"
+    rsnapshotmonitor_config.vm.hostname = "rsnapshotmonitor.local"
+    rsnapshotmonitor_config.hostmanager.enabled = true
+    rsnapshotmonitor_config.hostmanager.aliases = %w(rsnapshotmonitor)
+    rsnapshotmonitor_config.vm.network :private_network, ip: "10.0.1.131"
+    #set some machine-specific options	
+    rsnapshotmonitor_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "256"]
+    end
+    #Puppet agent provisioning script
+    rsnapshotmonitor_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+  end
+
+  #Mail server to hold user mail accounts that Icinga 2 will send emails to
+  config.vm.define "rsnanshotmail".to_sym do |rsnanshotmail_config|
+    rsnanshotmail_config.vm.box = "ubuntu-14.04-server-amd64"
+    rsnanshotmail_config.vm.hostname = "rsnanshotmail.local"
+    rsnanshotmail_config.hostmanager.enabled = true
+    rsnanshotmail_config.hostmanager.aliases = %w(rsnanshotmail)
+    rsnanshotmail_config.vm.network :private_network, ip: "10.0.1.135"
+    #set some machine-specific options	
+    rsnanshotmail_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    #Puppet agent provisioning script
+    rsnanshotmail_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+  end
+
+  #Logstash/Elasitcsearch/Kibana VM for looking at logs that the rsnapshot machines generate:
+  config.vm.define "rsnapshotlogging".to_sym do |rsnapshotlogging_config|
+    rsnapshotlogging_config.vm.box = "ubuntu-14.04-server-amd64"
+    rsnapshotlogging_config.vm.hostname = "rsnapshotlogging.local"
+    rsnapshotlogging_config.hostmanager.enabled = true
+    rsnapshotlogging_config.hostmanager.aliases = %w(rsnapshotlogging kibana.rsnapshotlogging.local)
+    rsnapshotlogging_config.vm.network :private_network, ip: "10.0.1.136"
+    #set some machine-specific options	
+    rsnapshotlogging_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+      v.cpus = 2
+    end
+    #Puppet agent provisioning script
+    rsnapshotlogging_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+  end
+
+end
