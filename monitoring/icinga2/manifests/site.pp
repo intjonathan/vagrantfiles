@@ -3338,6 +3338,20 @@ node 'icinga2logging.local' {
     instances  => $fqdn,
   }
 
+  file {'/sites/': 
+      ensure => directory,
+      owner => 'www-data',
+      group => 'www-data',
+      mode => '755',
+    }
+
+  file {'/sites/apps/': 
+      ensure => directory,
+      owner => 'www-data',
+      group => 'www-data',
+      mode => '755',
+    }
+
   #A non-SSL virtual host for Kibana:
   ::apache::vhost { 'kibana.icinga2logging.local_non-ssl':
     port            => 80,
