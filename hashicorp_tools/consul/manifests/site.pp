@@ -121,7 +121,7 @@ node 'consulserver1.local' {
     config_hash => {
       #The data center this Consul agent is running in:
       'bind_addr'             => $ipaddress_eth1,
-      'bootstrap_expect'      => 5,
+      'bootstrap_expect'      => 3,
       'check_update_interval' => '2m',
       'client_addr'           => '0.0.0.0',
       'config-dir'            => '/etc/consul.d/',
@@ -166,7 +166,7 @@ node 'consulserver2.local' {
     config_hash => {
       #The data center this Consul agent is running in:
       'bind_addr'             => $ipaddress_eth1,
-      'bootstrap_expect'      => 5,
+      'bootstrap_expect'      => 3,
       'check_update_interval' => '2m',
       'client_addr'           => '0.0.0.0',
       'config-dir'            => '/etc/consul.d/',
@@ -232,7 +232,7 @@ node 'consulserver3.local' {
     config_hash => {
       #The data center this Consul agent is running in:
       'bind_addr'             => $ipaddress_eth1,
-      'bootstrap_expect'      => 5,
+      'bootstrap_expect'      => 3,
       'check_update_interval' => '2m',
       'client_addr'           => '0.0.0.0',
       'config-dir'            => '/etc/consul.d/',
