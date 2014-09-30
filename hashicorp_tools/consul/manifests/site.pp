@@ -126,6 +126,7 @@ node 'consulserver1.local' {
       'client_addr'           => '0.0.0.0',
       'config-dir'            => '/etc/consul.d/',
       'data_dir'              => '/opt/consul',
+      'ui_dir'                => '/opt/consul/ui',
       'dc'                    => 'east-aws',
       'enable_syslog'         => true,
       'log_level'             => 'INFO',
