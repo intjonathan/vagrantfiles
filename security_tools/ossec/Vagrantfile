@@ -1,0 +1,244 @@
+Vagrant.configure("2") do |config|
+  # All Vagrant configuration is done here. The most common configuration
+  # options are documented and commented below. For a complete reference,
+  # please see the online documentation at vagrantup.com.
+
+  ####################
+  # Snippets to use
+  ####################
+
+  #NFS folder sharing for Puppet modules and manifests
+  #config.vm.synced_folder "modules", "/etc/puppet/modules", :nfs => true
+
+  ####################
+  ####################
+
+  #vagrant-hostmanager plugin options
+  config.hostmanager.enabled = true
+  config.hostmanager.ignore_private_ip = false
+  #update the /etc/hosts of the host OS
+  config.hostmanager.manage_host = true
+  #incorporate offline box's IPs into the /etc/hosts of boxes that are up/being brought up
+  config.hostmanager.include_offline = true
+
+  #Puppet master and PuppetDB server
+  config.vm.define "ossecmaster".to_sym do |ossecmaster_config|
+    ossecmaster_config.vm.box = "ubuntu-14.04-server-amd64"
+    ossecmaster_config.vm.hostname = "ossecmaster.local"
+    ossecmaster_config.hostmanager.enabled = true
+    ossecmaster_config.hostmanager.aliases = %w(puppetboard.ossecmaster.local ossecmaster puppet master)
+    ossecmaster_config.vm.network :private_network, ip: "10.0.1.170"
+    #set some machine-specific options	
+    ossecmaster_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+    #NFS folder sharing for Puppet modules and manifests
+    ossecmaster_config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/environments/production/modules", :nfs => true
+    ossecmaster_config.vm.synced_folder "manifests/", "/etc/puppet/environments/production/manifests", :nfs => true
+    ossecmaster_config.vm.synced_folder "hieradata/", "/etc/puppet/environments/production/hieradata", :nfs => true
+    ossecmaster_config.vm.synced_folder "files/", "/etc/puppet/files", :nfs => true
+    #Puppet ossecmaster provisioning script
+    ossecmaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_master.sh"
+  end  
+
+  #An Ubuntu 14.04 Icinga 2 server
+  config.vm.define "trustyossecserver".to_sym do |trustyossecserver_config|
+    trustyossecserver_config.vm.box = "ubuntu-14.04-server-amd64"
+    trustyossecserver_config.vm.hostname = "trustyossecserver.local"
+    trustyossecserver_config.hostmanager.enabled = true
+    trustyossecserver_config.hostmanager.aliases = %w(trustyossecserver)
+    trustyossecserver_config.vm.network :private_network, ip: "10.0.1.171"
+    #set some machine-specific options	
+    trustyossecserver_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "256"]
+    end
+    #Puppet agent provisioning script
+    trustyossecserver_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+  end
+
+  #An Ubuntu 12.04 Icinga 2 server
+  config.vm.define "preciseossecserver".to_sym do |preciseossecserver_config|
+    preciseossecserver_config.vm.box = "ubuntu-12.04-server-amd64"
+    preciseossecserver_config.vm.hostname = "preciseossecserver.local"
+    preciseossecserver_config.hostmanager.enabled = true
+    preciseossecserver_config.hostmanager.aliases = %w(preciseossecserver)
+    preciseossecserver_config.vm.network :private_network, ip: "10.0.1.172"
+    #set some machine-specific options	
+    preciseossecserver_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "256"]
+    end
+    #Puppet agent provisioning script
+    preciseossecserver_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+  end
+
+  #A CentOS 6 Icinga 2 server
+  config.vm.define "centos6ossecserver".to_sym do |centos6ossecserver_config|
+    centos6ossecserver_config.vm.box = "centos-6.5-amd64"
+    centos6ossecserver_config.vm.hostname = "centos6ossecserver.local"
+    centos6ossecserver_config.hostmanager.enabled = true
+    centos6ossecserver_config.hostmanager.aliases = %w(centos6ossecserver)
+    centos6ossecserver_config.vm.network :private_network, ip: "10.0.1.173"
+    #set some machine-specific options	
+    centos6ossecserver_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "256"]
+    end
+    #Puppet agent provisioning script
+    centos6ossecserver_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
+  end
+
+  #A CentOS 7 Icinga 2 server
+  config.vm.define "centos7ossecserver".to_sym do |centos7ossecserver_config|
+    centos7ossecserver_config.vm.box = "centos-7.0-amd64"
+    centos7ossecserver_config.vm.hostname = "centos7ossecserver.local"
+    centos7ossecserver_config.hostmanager.enabled = true
+    centos7ossecserver_config.hostmanager.aliases = %w(centos7ossecserver)
+    centos7ossecserver_config.vm.network :private_network, ip: "10.0.1.174"
+    #set some machine-specific options	
+    centos7ossecserver_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "256"]
+    end
+    #Puppet agent provisioning script
+    centos7ossecserver_config.vm.provision :shell, :path => "../provisioning_scripts/el7_puppet_agent.sh"
+  end
+
+  #A Debian 7 Icinga 2 server
+  config.vm.define "debian7ossecserver".to_sym do |debian7ossecserver_config|
+    debian7ossecserver_config.vm.box = "debian-7.6-amd64"
+    debian7ossecserver_config.vm.hostname = "debian7ossecserver.local"
+    debian7ossecserver_config.hostmanager.enabled = true
+    debian7ossecserver_config.vm.network :private_network, ip: "10.0.1.92"
+    debian7ossecserver_config.vm.provider "virtualbox" do |v| 	
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "256"]
+    end
+    #Puppet agent provisioning script
+    debian7ossecserver_config.vm.provision :shell, :path => "../provisioning_scripts/debian_puppet_agent.sh"
+  end
+
+  #An Ubuntu 14.04 Icinga 2 client
+  config.vm.define "trustyossecclient".to_sym do |trustyossecclient_config|
+    trustyossecclient_config.vm.box = "ubuntu-14.04-server-amd64"
+    trustyossecclient_config.vm.hostname = "trustyossecclient.local"
+    trustyossecclient_config.hostmanager.enabled = true
+    trustyossecclient_config.vm.network :private_network, ip: "10.0.1.175"
+    #set some machine-specific options	
+    trustyossecclient_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "256"]
+    end
+    #Puppet agent provisioning script
+    trustyossecclient_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+  end
+
+  #An Ubuntu 12.04 Icinga 2 client
+  config.vm.define "preciseossecclient".to_sym do |preciseossecclient_config|
+    preciseossecclient_config.vm.box = "ubuntu-12.04-server-amd64"
+    preciseossecclient_config.vm.hostname = "preciseossecclient.local"
+    preciseossecclient_config.hostmanager.enabled = true
+    preciseossecclient_config.vm.network :private_network, ip: "10.0.1.176"
+    #set some machine-specific options	
+    preciseossecclient_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "256"]
+    end
+    #Puppet agent provisioning script
+    preciseossecclient_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+  end
+
+  #A CentOS 6 Icinga 2 client
+  config.vm.define "centos6ossecclient".to_sym do |centos6ossecclient_config|
+    centos6ossecclient_config.vm.box = "centos-6.5-amd64"
+    centos6ossecclient_config.vm.hostname = "centos6ossecclient.local"
+    centos6ossecclient_config.hostmanager.enabled = true
+    centos6ossecclient_config.vm.network :private_network, ip: "10.0.1.177"
+    centos6ossecclient_config.vm.provider "virtualbox" do |v| 	
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "256"]
+    end
+    #Puppet agent provisioning script
+    centos6ossecclient_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
+  end
+
+  #A CentOS 7 Icinga 2 client
+  config.vm.define "centos7ossecclient".to_sym do |centos7ossecclient_config|
+    centos7ossecclient_config.vm.box = "centos-7.0-amd64"
+    centos7ossecclient_config.vm.hostname = "centos7ossecclient.local"
+    centos7ossecclient_config.hostmanager.enabled = true
+    centos7ossecclient_config.vm.network :private_network, ip: "10.0.1.178"
+    centos7ossecclient_config.vm.provider "virtualbox" do |v| 	
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "256"]
+    end
+    #Puppet agent provisioning script
+    centos7ossecclient_config.vm.provision :shell, :path => "../provisioning_scripts/el7_puppet_agent.sh"
+  end
+
+  #A Debian 7 Icinga 2 client
+  config.vm.define "debian7ossecclient".to_sym do |debian7ossecclient_config|
+    debian7ossecclient_config.vm.box = "debian-7.6-amd64"
+    debian7ossecclient_config.vm.hostname = "debian7ossecclient.local"
+    debian7ossecclient_config.hostmanager.enabled = true
+    debian7ossecclient_config.vm.network :private_network, ip: "10.0.1.93"
+    debian7ossecclient_config.vm.provider "virtualbox" do |v| 	
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "256"]
+    end
+    #Puppet agent provisioning script
+    debian7ossecclient_config.vm.provision :shell, :path => "../provisioning_scripts/debian_puppet_agent.sh"
+  end
+
+  #Mail server VM for Icinga 2 to use as a relay
+  config.vm.define "ossecmail".to_sym do |ossecmail_config|
+    ossecmail_config.vm.box = "ubuntu-14.04-server-amd64"
+    ossecmail_config.vm.hostname = "ossecmail.local"
+    ossecmail_config.hostmanager.enabled = true
+    ossecmail_config.hostmanager.aliases = %w(ossecmail)
+    ossecmail_config.vm.network :private_network, ip: "10.0.1.179"
+    #set some machine-specific options	
+    ossecmail_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    #Puppet agent provisioning script
+    ossecmail_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+  end
+
+  #Mail server to hold user mail accounts that Icinga 2 will send emails to
+  config.vm.define "usermail".to_sym do |usermail_config|
+    usermail_config.vm.box = "ubuntu-14.04-server-amd64"
+    usermail_config.vm.hostname = "usermail.local"
+    usermail_config.hostmanager.enabled = true
+    usermail_config.hostmanager.aliases = %w(usermail)
+    usermail_config.vm.network :private_network, ip: "10.0.1.90"
+    #set some machine-specific options	
+    usermail_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    #Puppet agent provisioning script
+    usermail_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+  end
+
+  #Logstash/Elasitcsearch/Kibana VM for looking at logs that the Icinga machines generate:
+  config.vm.define "osseclogging".to_sym do |osseclogging_config|
+    osseclogging_config.vm.box = "ubuntu-14.04-server-amd64"
+    osseclogging_config.vm.hostname = "osseclogging.local"
+    osseclogging_config.hostmanager.enabled = true
+    osseclogging_config.hostmanager.aliases = %w(osseclogging kibana.osseclogging.local)
+    osseclogging_config.vm.network :private_network, ip: "10.0.1.91"
+    #set some machine-specific options	
+    osseclogging_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+      v.cpus = 2
+    end
+    #Puppet agent provisioning script
+    osseclogging_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+  end
+
+end
