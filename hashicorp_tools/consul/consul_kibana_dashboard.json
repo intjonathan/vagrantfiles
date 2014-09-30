@@ -22,7 +22,7 @@
         "0": {
           "type": "time",
           "field": "@timestamp",
-          "from": "now-2h",
+          "from": "now-5m",
           "to": "now",
           "mandate": "must",
           "active": true,
@@ -55,7 +55,7 @@
           "value_field": null,
           "auto_int": true,
           "resolution": 100,
-          "interval": "1m",
+          "interval": "1s",
           "fill": 3,
           "linewidth": 3,
           "timezone": "browser",

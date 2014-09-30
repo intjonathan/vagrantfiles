@@ -491,7 +491,7 @@ node 'consullogging.local' {
   #Install Elasticsearch...
   class { 'elasticsearch':
     java_install => false,
-    package_url => 'https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.3.2.deb',
+    package_url => 'https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.3.3.deb',
     config => { 'cluster.name'             => 'logstash',
                 'network.host'             => $ipaddress_eth1,
                 'index.number_of_replicas' => '1',
