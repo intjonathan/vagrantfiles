@@ -163,6 +163,7 @@ node 'consulserver2.local' {
 
   class { 'consul':
     version => '0.4.0',
+    join_cluster => 'consulserver1.local',
     config_hash => {
       #The data center this Consul agent is running in:
       'bind_addr'             => $ipaddress_eth1,
@@ -229,6 +230,7 @@ node 'consulserver3.local' {
 
   class { 'consul':
     version => '0.4.0',
+    join_cluster => 'consulserver1.local',
     config_hash => {
       #The data center this Consul agent is running in:
       'bind_addr'             => $ipaddress_eth1,
