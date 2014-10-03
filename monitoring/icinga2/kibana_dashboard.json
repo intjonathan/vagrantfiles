@@ -22,7 +22,7 @@
         "0": {
           "type": "time",
           "field": "@timestamp",
-          "from": "now-7m",
+          "from": "now-5m",
           "to": "now",
           "mandate": "must",
           "active": true,
@@ -151,9 +151,10 @@
           "overflow": "min-height",
           "fields": [
             "@host",
+            "client_ip",
             "@message",
             "syslog_program",
-            "client_ip",
+            "syslog_severity",
             "@timestamp"
           ],
           "localTime": true,
@@ -174,6 +175,82 @@
           "trimFactor": 300,
           "normTimes": true,
           "all_fields": false
+        }
+      ],
+      "notice": false
+    },
+    {
+      "title": "",
+      "height": "500px",
+      "editable": true,
+      "collapse": false,
+      "collapsable": true,
+      "panels": [
+        {
+          "error": false,
+          "span": 5,
+          "editable": true,
+          "type": "terms",
+          "loadingEditor": false,
+          "field": "@host",
+          "exclude": [],
+          "missing": true,
+          "other": true,
+          "size": 10,
+          "order": "count",
+          "style": {
+            "font-size": "10pt"
+          },
+          "donut": false,
+          "tilt": false,
+          "labels": true,
+          "arrangement": "horizontal",
+          "chart": "pie",
+          "counter_pos": "above",
+          "spyable": true,
+          "queries": {
+            "mode": "all",
+            "ids": [
+              0
+            ]
+          },
+          "tmode": "terms",
+          "tstat": "total",
+          "valuefield": "",
+          "title": "logs by host"
+        },
+        {
+          "error": false,
+          "span": 5,
+          "editable": true,
+          "type": "terms",
+          "loadingEditor": false,
+          "field": "syslog_program",
+          "exclude": [],
+          "missing": true,
+          "other": true,
+          "size": 10,
+          "order": "count",
+          "style": {
+            "font-size": "10pt"
+          },
+          "donut": false,
+          "tilt": false,
+          "labels": true,
+          "arrangement": "horizontal",
+          "chart": "bar",
+          "counter_pos": "above",
+          "spyable": true,
+          "queries": {
+            "mode": "all",
+            "ids": [
+              0
+            ]
+          },
+          "tmode": "terms",
+          "tstat": "total",
+          "valuefield": "",
+          "title": "Logs by program"
         }
       ],
       "notice": false
@@ -198,11 +275,15 @@
       "pinned": true,
       "history": [
         "",
+        "syslog_program:systemd",
+        "check_smtp.conf",
+        "check_smtp.conf]",
+        "check_smtp",
+        "\"centos7icinga2client.local!check_smtp\"",
+        "centos7icinga2client.local!check_smtp",
         "*",
-        "postfix",
-        "postfi",
-        "puppet-agent",
-        "puppet"
+        "syslog_program:sudo",
+        "\" session closed for user root\""
       ],
       "remember": 10,
       "enable": true
