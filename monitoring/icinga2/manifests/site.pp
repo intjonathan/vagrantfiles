@@ -135,6 +135,21 @@ node 'trustyicinga2server.local' {
     custom_config  => undef,
   }
 
+  #Make rsyslog watch the Apache log files:
+  rsyslog::imfile { 'apache-access':
+    file_name => '/var/log/apache2/access.log',
+    file_tag => 'apache-access',
+    file_facility => 'local7',
+    file_severity => 'info',
+  }
+
+  rsyslog::imfile { 'apache-error':
+    file_name => '/var/log/apache2/error.log',
+    file_tag => 'apache-errors',
+    file_facility => 'local7',
+    file_severity => 'error',
+  }
+
   #This module is: https://github.com/puppetlabs/puppetlabs-ntp
   class { '::ntp':
     servers  => [ '0.ubuntu.pool.ntp.org', '1.ubuntu.pool.ntp.org', '2.ubuntu.pool.ntp.org', '3.ubuntu.pool.ntp.org' ],
