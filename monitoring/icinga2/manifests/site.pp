@@ -206,6 +206,8 @@ node 'trustyicinga2server.local' {
     db_port        => '5432',
     server_install_nagios_plugins => false,
     install_mail_utils_package => true,
+    server_enabled_features  => ['checker','notification', 'livestatus', 'syslog'],
+    server_disabled_features => ['graphite', 'api'],
   } ->
 
   #Collect all @@icinga2::object::host resources from PuppetDB that were exported by other machines:
