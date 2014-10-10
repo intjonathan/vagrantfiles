@@ -1740,6 +1740,7 @@ node 'debian7icinga2server.local' {
     db_password    => 'password',
     db_host        => '127.0.0.1',
     db_port        => '5432',
+    use_debmon_repo => true,
     server_install_nagios_plugins => false,
     install_mail_utils_package => true,
   } ->
