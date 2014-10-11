@@ -218,6 +218,7 @@ node 'trustyicinga2server.local' {
     display_name => 'Linux servers',
     groups => ['mysql_servers', 'clients'],
     target_dir => '/etc/icinga2/objects/hostgroups',
+    assign_where => 'match("*redis*", host.name) || match("*elastic*", host.name) || match("*logstash*", host.name)',
   }
 
   #Create a mysql_servers hostgroup:
@@ -592,6 +593,8 @@ node 'preciseicinga2server.local' {
     db_port        => '5432',
     server_install_nagios_plugins => false,
     install_mail_utils_package => true,
+    server_enabled_features  => ['checker','notification', 'livestatus', 'syslog'],
+    server_disabled_features => ['graphite', 'api'],
   } ->
 
   #Collect all @@icinga2::object::host resources from PuppetDB that were exported by other machines:
@@ -976,6 +979,8 @@ node 'centos6icinga2server.local' {
     db_port        => '5432',
     server_install_nagios_plugins => false,
     install_mail_utils_package => true,
+    server_enabled_features  => ['checker','notification', 'livestatus', 'syslog'],
+    server_disabled_features => ['graphite', 'api'],
   } ->
 
   #Collect all @@icinga2::object::host resources from PuppetDB that were exported by other machines:
@@ -1360,6 +1365,8 @@ node 'centos7icinga2server.local' {
     db_port        => '5432',
     server_install_nagios_plugins => false,
     install_mail_utils_package => true,
+    server_enabled_features  => ['checker','notification', 'livestatus', 'syslog'],
+    server_disabled_features => ['graphite', 'api'],
   } ->
 
   #Collect all @@icinga2::object::host resources from PuppetDB that were exported by other machines:
@@ -1745,6 +1752,8 @@ node 'debian7icinga2server.local' {
     use_debmon_repo => true,
     server_install_nagios_plugins => false,
     install_mail_utils_package => true,
+    server_enabled_features  => ['checker','notification', 'livestatus', 'syslog'],
+    server_disabled_features => ['graphite', 'api'],
   } ->
 
   #Collect all @@icinga2::object::host resources from PuppetDB that were exported by other machines:
