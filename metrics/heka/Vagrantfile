@@ -117,10 +117,40 @@ Vagrant.configure("2") do |config|
     #set some machine-specific options	
     grafana1_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
-      v.customize ["modifyvm", :id, "--memory", "256"]
+      v.customize ["modifyvm", :id, "--memory", "1024"]
     end
     #Puppet agent provisioning script
 	  grafana1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+  end
+
+  #A machine running Logstash, Elasticsearch and Kibana for system logs:
+  config.vm.define "hekalogging".to_sym do |hekalogging_config|
+    hekalogging_config.vm.box = "ubuntu-14.04-server-amd64"
+    hekalogging_config.vm.hostname = "hekalogging.local"
+    hekalogging_config.hostmanager.aliases = %w(hekalogging kibana.hekalogging.local)
+    hekalogging_config.vm.network :private_network, ip: "10.0.1.117"
+    #set some machine-specific options	
+    hekalogging_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+    #Puppet agent provisioning script
+	  hekalogging_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+  end
+
+  #A machine running Elasticsearch and Kibana; this node is not running Logstash, since it's going to get logs sent to it by other heka instances elsewhere
+  config.vm.define "hekaelasticearch".to_sym do |hekaelasticearch_config|
+    hekaelasticearch_config.vm.box = "ubuntu-14.04-server-amd64"
+    hekaelasticearch_config.vm.hostname = "hekaelasticearch.local"
+    hekaelasticearch_config.hostmanager.aliases = %w(hekaelasticearch kibana.hekaelasticearch.local)
+    hekaelasticearch_config.vm.network :private_network, ip: "10.0.1.118"
+    #set some machine-specific options	
+    hekaelasticearch_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+    #Puppet agent provisioning script
+	  hekaelasticearch_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
   end
 
 end
