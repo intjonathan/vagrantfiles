@@ -311,6 +311,28 @@ node 'trustyicinga2server.local' {
     target_dir => '/etc/icinga2/objects/hostgroups',
   }
 
+  #Dependency object to test out this PR: https://github.com/Icinga/puppet-icinga2/pull/28
+  icinga2::object::dependency { "usermail to icinga2mail":
+    object_name => "usermail_dep_on_icinga2mail",
+    parent_host_name => 'icinga2mail.local',
+    child_host_name => 'usermail.local',
+    target_dir => '/etc/icinga2/objects/dependencies',
+    target_file_name => "usermail_to_icinga2mail.conf",
+  }
+
+  #Apply_dependency object to test out this PR: https://github.com/Icinga/puppet-icinga2/pull/28
+  icinga2::object::apply_dependency { 'usermail_dep_on_icinga2mail':
+    parent_host_name => 'icinga2mail.local',
+    assign_where => 'match("^usermail*", host.name)',
+  }
+
+  #Apply_dependency object to test out this PR: https://github.com/Icinga/puppet-icinga2/pull/28
+  icinga2::object::apply_dependency { 'imap_dep_on_smtp':
+    parent_service_name => 'check_ssh',
+    object_type => 'Service',
+    assign_where => 'match("^check_smtp*", service.name)',
+  }
+
   #Create a web services servicegroup:
   icinga2::object::servicegroup { 'web_services':
     display_name => 'web services',
