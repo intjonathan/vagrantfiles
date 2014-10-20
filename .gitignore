@@ -10,7 +10,12 @@
 #Track only this repo's README.md
 !./README.md
 
+
+#Make sure we track some Puppet-related files:
 !**/manifests/site.pp
+!**/manifests/profile
+!**/manifests/role
+!**/production/
 
 #some ignores to get around the derpiness of the .gitignore regex parsing bug in 1.8.3
 .vagrant
