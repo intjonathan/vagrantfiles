@@ -284,6 +284,26 @@ node 'trustyicinga2server.local' {
     }
   }
 
+  #Create a notification command object to test this PR: https://github.com/Icinga/puppet-icinga2/pull/32
+  icinga2::object::notificationcommand { 'mail-service-notification':
+    command   => ['"/icinga2/scripts/mail-notification.sh"'],
+    cmd_path  => 'SysconfDir',
+    env       => {
+      'NOTIFICATIONTYPE'  => '"$notification.type$"',
+      'SERVICEDESC' => '"$service.name$"',
+      'HOSTALIAS' => '"$host.display_name$"',
+      'HOSTADDRESS' => '"$address$"',
+      'SERVICESTATE' => '"$service.state$"',
+      'LONGDATETIME' => '"$icinga.long_date_time$"',
+      'SERVICEOUTPUT' => '"$service.output$"',
+      'NOTIFICATIONAUTHORNAME' => '"$notification.author$"',
+      'NOTIFICATIONCOMMENT' => '"$notification.comment$"',
+      'HOSTDISPLAYNAME' => '"$host.display_name$"',
+      'SERVICEDISPLAYNAME' => '"$service.display_name$"',
+      'USEREMAIL' => '"$user.email$"'
+    }
+  }
+
   #Create a sysloglogger object:
   icinga2::object::sysloglogger { 'syslog-warning':
     severity => 'warning',
