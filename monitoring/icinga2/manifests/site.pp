@@ -285,7 +285,7 @@ node 'trustyicinga2server.local' {
   }
 
   #Create a notification command object to test this PR: https://github.com/Icinga/puppet-icinga2/pull/32
-  icinga2::object::notificationcommand { 'mail-service-notification':
+  icinga2::object::notificationcommand { 'mail-service-notification2':
     command   => ['"/icinga2/scripts/mail-notification.sh"'],
     cmd_path  => 'SysconfDir',
     env       => {
