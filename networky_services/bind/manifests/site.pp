@@ -467,3 +467,7 @@ node 'dnsmetrics.local' {
 node 'dnslogging.local' {
 
 }
+
+node 'dnsmonitoring.local' {
+
+}
