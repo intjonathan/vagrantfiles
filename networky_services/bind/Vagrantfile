@@ -46,8 +46,8 @@ Vagrant.configure("2") do |config|
     dnsmaster1_config.vm.network :private_network, ip: "10.0.1.71"
     #set some machine-specific options	
     dnsmaster1_config.vm.provider "virtualbox" do |v|
-         #change the amount of RAM 
-          v.customize ["modifyvm", :id, "--memory", "256"]
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "256"]
     end
     #Puppet agent provisioning script
 	  dnsmaster1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
@@ -60,8 +60,8 @@ Vagrant.configure("2") do |config|
     dnsmaster2_config.vm.network :private_network, ip: "10.0.1.72"
     #set some machine-specific options	
     dnsmaster2_config.vm.provider "virtualbox" do |v|
-         #change the amount of RAM 
-          v.customize ["modifyvm", :id, "--memory", "256"]
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "256"]
     end
     #Puppet agent provisioning script
 	  dnsmaster2_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
@@ -74,8 +74,8 @@ Vagrant.configure("2") do |config|
     dnsslave1_config.vm.network :private_network, ip: "10.0.1.73"
     #set some machine-specific options	
     dnsslave1_config.vm.provider "virtualbox" do |v|
-         #change the amount of RAM 
-          v.customize ["modifyvm", :id, "--memory", "256"]
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "256"]
     end
     #Puppet agent provisioning script
 	  dnsslave1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
@@ -88,8 +88,8 @@ Vagrant.configure("2") do |config|
     dnsslave2_config.vm.network :private_network, ip: "10.0.1.74"
     #set some machine-specific options	
     dnsslave2_config.vm.provider "virtualbox" do |v|
-         #change the amount of RAM 
-          v.customize ["modifyvm", :id, "--memory", "256"]
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "256"]
     end
     #Puppet agent provisioning script
 	  dnsslave2_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
@@ -102,8 +102,8 @@ Vagrant.configure("2") do |config|
     dnsclient1_config.vm.network :private_network, ip: "10.0.1.75"
     #set some machine-specific options	
     dnsclient1_config.vm.provider "virtualbox" do |v|
-         #change the amount of RAM 
-          v.customize ["modifyvm", :id, "--memory", "256"]
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "256"]
     end
     #Puppet agent provisioning script
 	  dnsclient1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
@@ -116,8 +116,8 @@ Vagrant.configure("2") do |config|
     dnsclient2_config.vm.network :private_network, ip: "10.0.1.76"
     #set some machine-specific options	
     dnsclient2_config.vm.provider "virtualbox" do |v|
-         #change the amount of RAM 
-          v.customize ["modifyvm", :id, "--memory", "256"]
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "256"]
     end
     #Puppet agent provisioning script
 	  dnsclient2_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
@@ -130,8 +130,8 @@ Vagrant.configure("2") do |config|
     dnsmail_config.vm.network :private_network, ip: "10.0.1.77"
     #set some machine-specific options	
     dnsmail_config.vm.provider "virtualbox" do |v|
-         #change the amount of RAM 
-          v.customize ["modifyvm", :id, "--memory", "256"]
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "256"]
     end
     #Puppet agent provisioning script
 	  dnsmail_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
