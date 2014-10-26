@@ -1,0 +1,924 @@
+{
+  "title": "Riemann cluster stats",
+  "tags": [],
+  "style": "dark",
+  "timezone": "browser",
+  "editable": true,
+  "rows": [
+    {
+      "title": "Welcome to Grafana",
+      "height": "150px",
+      "editable": true,
+      "collapse": true,
+      "collapsable": true,
+      "panels": [
+        {
+          "error": false,
+          "span": 12,
+          "editable": true,
+          "type": "text",
+          "loadingEditor": false,
+          "mode": "markdown",
+          "content": "####Thank you for trying out Grafana! \n\nGeneral documentation is found in the readme and in the wiki section of the [Github Project](https://github.com/torkelo/grafana). If you encounter any problem or have an idea for an improvement do not hesitate to open a github issue. \n\nTips: \n\n- Ctrl+S saves the current dashboard\n- Ctrl+F Opens the dashboard finder (searches elastic search)\n- Ctrl+H Hide/show row controls \n- Click and drag graph title to move panel (only works when row controls are enabled)\n\nIf you do not see a graph in the panel bellow the browser cannot access your graphite installation. Please make sure that the graphiteUrl property in config.js is correctly set and accessible.",
+          "style": {},
+          "title": "Welcome to Grafana"
+        }
+      ],
+      "notice": false
+    },
+    {
+      "title": "test",
+      "height": "600px",
+      "editable": true,
+      "collapse": false,
+      "collapsable": true,
+      "panels": [
+        {
+          "span": 12,
+          "editable": true,
+          "type": "graph",
+          "x-axis": true,
+          "y-axis": true,
+          "scale": 1,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "grid": {
+            "max": null,
+            "min": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)",
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": null,
+            "rightMin": null
+          },
+          "resolution": 100,
+          "lines": true,
+          "fill": 1,
+          "linewidth": 1,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": true,
+          "spyable": true,
+          "options": false,
+          "legend": {
+            "show": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "interactive": true,
+          "legend_counts": true,
+          "timezone": "browser",
+          "percentage": false,
+          "zerofill": true,
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "query_as_alias": true
+          },
+          "targets": [
+            {
+              "target": "randomWalk('random walk')",
+              "function": "mean",
+              "column": "value",
+              "series": "collectd1.local.cpu-0.cpu-system",
+              "query": "select  mean(value) from \"collectd1.local.cpu-0.cpu-system\" where  time > now() - 4h     group by time(10s)  order asc",
+              "alias": "collectd1 CPU system"
+            },
+            {
+              "target": "randomWalk('random walk2')",
+              "function": "mean",
+              "column": "value",
+              "series": "collectd1.local.cpu-0.cpu-user",
+              "query": "select  mean(value) from \"collectd1.local.cpu-0.cpu-user\" where  time > now() - 4h     group by time(10s)  order asc",
+              "alias": "collectd1 CPU user"
+            },
+            {
+              "target": "randomWalk('random walk3')",
+              "function": "mean",
+              "column": "value",
+              "series": "riemann1.local.cpu-0.cpu-system",
+              "query": "select  mean(value) from \"riemann1.local.cpu-0.cpu-system\" where  time > now() - 4h     group by time(10s)  order asc",
+              "alias": "riemann1 CPU system"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "series": "riemann1.local.cpu-0.cpu-user",
+              "query": "select  mean(value) from \"riemann1.local.cpu-0.cpu-user\" where  time > now() - 4h     group by time(10s)  order asc",
+              "alias": "riemann1 CPU user"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "series": "collectd2.local.cpu-0.cpu-system",
+              "query": "select  mean(value) from \"collectd2.local.cpu-0.cpu-system\" where  time > now() - 4h     group by time(10s)  order asc",
+              "alias": "collectd2 CPU system"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "alias": "collectd2 CPU user",
+              "series": "collectd2.local.cpu-0.cpu-user",
+              "query": "select  mean(value) from \"collectd2.local.cpu-0.cpu-user\" where  time > now() - 4h     group by time(10s)  order asc"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "series": "grafana1.local.cpu-0.cpu-system",
+              "query": "select  mean(value) from \"grafana1.local.cpu-0.cpu-system\" where  time > now() - 4h     group by time(10s)  order asc",
+              "alias": "grafana1 CPU system"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "series": "grafana1.local.cpu-0.cpu-user",
+              "query": "select  mean(value) from \"grafana1.local.cpu-0.cpu-user\" where  time > now() - 4h     group by time(10s)  order asc",
+              "alias": "grafana1 CPU user"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "series": "riemannmaster.local.cpu-0.cpu-system",
+              "query": "select  mean(value) from \"riemannmaster.local.cpu-0.cpu-system\" where  time > now() - 4h     group by time(10s)  order asc",
+              "alias": "riemannmaster CPU system"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "alias": "riemannmaster CPU user",
+              "series": "riemannmaster.local.cpu-0.cpu-user",
+              "query": "select  mean(value) from \"riemannmaster.local.cpu-0.cpu-user\" where  time > now() - 4h     group by time(10s)  order asc"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "series": "influxdb1.local.cpu-0.cpu-system",
+              "query": "select  mean(value) from \"influxdb1.local.cpu-0.cpu-system\" where  time > now() - 4h     group by time(10s)  order asc",
+              "alias": "influxdb1 CPU system"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "series": "influxdb1.local.cpu-0.cpu-user",
+              "query": "select  mean(value) from \"influxdb1.local.cpu-0.cpu-user\" where  time > now() - 4h     group by time(10s)  order asc",
+              "alias": "influxdb1 CPU user"
+            }
+          ],
+          "aliasColors": {
+            "riemannmaster CPU user": "#C15C17",
+            "influxdb1 CPU user": "#0A50A1",
+            "influxdb1 CPU system": "#F9E2D2",
+            "collectd2 CPU user": "#EA6460"
+          },
+          "aliasYAxis": {},
+          "title": "CPU usage",
+          "datasource": null,
+          "renderer": "flot",
+          "annotate": {
+            "enable": false
+          }
+        }
+      ],
+      "notice": false
+    },
+    {
+      "title": "New row",
+      "height": "600px",
+      "editable": true,
+      "collapse": false,
+      "collapsable": true,
+      "panels": [
+        {
+          "span": 12,
+          "editable": true,
+          "type": "graph",
+          "datasource": null,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "scale": 1,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "grid": {
+            "max": null,
+            "min": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)",
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": null,
+            "rightMin": null
+          },
+          "annotate": {
+            "enable": false
+          },
+          "resolution": 100,
+          "lines": true,
+          "fill": 1,
+          "linewidth": 1,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "legend": {
+            "show": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "percentage": false,
+          "zerofill": true,
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "query_as_alias": true
+          },
+          "targets": [
+            {
+              "function": "mean",
+              "column": "value",
+              "series": "riemann1.local.load.load.shortterm",
+              "query": "select  mean(value) from \"riemann1.local.load.load.shortterm\" where  time > now() - 4h     group by time(10s)  order asc",
+              "alias": "riemann1 load short"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "series": "riemann1.local.load.load.longterm",
+              "query": "select  mean(value) from \"riemann1.local.load.load.longterm\" where  time > now() - 4h     group by time(10s)  order asc",
+              "interval": "",
+              "alias": "riemann1 load long"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "series": "influxdb1.local.load.load.shortterm",
+              "query": "select  mean(value) from \"influxdb1.local.load.load.shortterm\" where  time > now() - 4h     group by time(10s)  order asc",
+              "alias": "influxdb1 load short"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "series": "influxdb1.local.load.load.longterm",
+              "query": "select  mean(value) from \"influxdb1.local.load.load.longterm\" where  time > now() - 4h     group by time(10s)  order asc",
+              "alias": "influxdb1 load long"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "series": "grafana1.local.load.load.shortterm",
+              "query": "select  mean(value) from \"grafana1.local.load.load.shortterm\" where  time > now() - 4h     group by time(10s)  order asc",
+              "alias": "grafana1 load short"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "alias": "grafana1 load long",
+              "series": "grafana1.local.load.load.longterm",
+              "query": "select  mean(value) from \"grafana1.local.load.load.longterm\" where  time > now() - 4h     group by time(10s)  order asc"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "series": "riemannmaster.local.load.load.shortterm",
+              "query": "select  mean(value) from \"riemannmaster.local.load.load.shortterm\" where  time > now() - 4h     group by time(10s)  order asc",
+              "alias": "riemannmaster load short"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "alias": "riemannmaster load long",
+              "series": "riemannmaster.local.load.load.longterm",
+              "query": "select  mean(value) from \"riemannmaster.local.load.load.longterm\" where  time > now() - 4h     group by time(10s)  order asc"
+            }
+          ],
+          "aliasColors": {
+            "riemann1 load long": "#E24D42"
+          },
+          "aliasYAxis": {},
+          "title": "Load averages"
+        }
+      ],
+      "notice": false
+    },
+    {
+      "title": "New row",
+      "height": "600px",
+      "editable": true,
+      "collapse": false,
+      "collapsable": true,
+      "panels": [
+        {
+          "span": 12,
+          "editable": true,
+          "type": "graph",
+          "datasource": null,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "scale": 1,
+          "y_formats": [
+            "bytes",
+            "short"
+          ],
+          "grid": {
+            "max": null,
+            "min": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)",
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": null,
+            "rightMin": null
+          },
+          "annotate": {
+            "enable": false
+          },
+          "resolution": 100,
+          "lines": true,
+          "fill": 1,
+          "linewidth": 1,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "legend": {
+            "show": true,
+            "values": true,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": true,
+            "alignAsTable": true,
+            "rightSide": false
+          },
+          "percentage": false,
+          "zerofill": true,
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "query_as_alias": true
+          },
+          "targets": [
+            {
+              "function": "mean",
+              "column": "value",
+              "series": "riemann1.local.memory.memory-used",
+              "query": "select  mean(value) from \"riemann1.local.memory.memory-used\" where  time > now() - 4h     group by time(10s)  order asc",
+              "alias": "riemann1 RAM used"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "series": "influxdb1.local.memory.memory-used",
+              "query": "select  mean(value) from \"influxdb1.local.memory.memory-used\" where  time > now() - 4h     group by time(10s)  order asc",
+              "alias": "influxdb1 RAM used"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "series": "collectd1.local.memory.memory-used",
+              "query": "select  mean(value) from \"collectd1.local.memory.memory-used\" where  time > now() - 4h     group by time(10s)  order asc",
+              "alias": "collectd 1 RAM used"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "series": "collectd2.local.memory.memory-used",
+              "query": "select  mean(value) from \"collectd2.local.memory.memory-used\" where  time > now() - 4h     group by time(10s)  order asc",
+              "alias": "collectd2 RAM used"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "series": "grafana1.local.memory.memory-used",
+              "query": "select  mean(value) from \"grafana1.local.memory.memory-used\" where  time > now() - 4h     group by time(10s)  order asc",
+              "alias": "grafana1 RAM used"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "series": "riemannmaster.local.memory.memory-used",
+              "query": "select  mean(value) from \"riemannmaster.local.memory.memory-used\" where  time > now() - 4h     group by time(10s)  order asc",
+              "alias": "riemannmaster RAM used"
+            }
+          ],
+          "aliasColors": {},
+          "aliasYAxis": {},
+          "title": "RAM usage",
+          "leftYAxisLabel": "RAM used"
+        }
+      ],
+      "notice": false
+    },
+    {
+      "title": "New row",
+      "height": "600px",
+      "editable": true,
+      "collapse": false,
+      "collapsable": true,
+      "panels": [
+        {
+          "span": 6,
+          "editable": true,
+          "type": "graph",
+          "datasource": null,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "scale": 1,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "grid": {
+            "max": null,
+            "min": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)",
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": null,
+            "rightMin": null
+          },
+          "annotate": {
+            "enable": false
+          },
+          "resolution": 100,
+          "lines": true,
+          "fill": 1,
+          "linewidth": 1,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "legend": {
+            "show": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "percentage": false,
+          "zerofill": true,
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "query_as_alias": true
+          },
+          "targets": [
+            {
+              "function": "mean",
+              "column": "value",
+              "series": "riemann1.local.processes.ps_state-sleeping",
+              "query": "select  mean(value) from \"riemann1.local.processes.ps_state-sleeping\" where  time > now() - 4h     group by time(1s)  order asc",
+              "alias": "riemann1 procs sleeping",
+              "interval": "1s"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "series": "riemannmaster.local.processes.ps_state-sleeping",
+              "query": "select  mean(value) from \"riemannmaster.local.processes.ps_state-sleeping\" where  time > now() - 4h     group by time(1s)  order asc",
+              "alias": "riemannmaster procs sleeping",
+              "interval": "1s"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "series": "collectd1.local.processes.ps_state-sleeping",
+              "query": "select  mean(value) from \"collectd1.local.processes.ps_state-sleeping\" where  time > now() - 4h     group by time(1s)  order asc",
+              "alias": "collectd1 procs sleeping",
+              "interval": "1s"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "alias": "collectd2 procs sleeping",
+              "series": "collectd2.local.processes.ps_state-sleeping",
+              "query": "select  mean(value) from \"collectd2.local.processes.ps_state-sleeping\" where  time > now() - 4h     group by time(1s)  order asc",
+              "interval": "1s"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "series": "influxdb1.local.processes.ps_state-sleeping",
+              "query": "select  mean(value) from \"influxdb1.local.processes.ps_state-sleeping\" where  time > now() - 4h     group by time(1s)  order asc",
+              "alias": "influxdb1 procs sleeping",
+              "interval": "1s"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "series": "grafana1.local.processes.ps_state-sleeping",
+              "query": "select  mean(value) from \"grafana1.local.processes.ps_state-sleeping\" where  time > now() - 4h     group by time(1s)  order asc",
+              "interval": "1s",
+              "alias": "grafana1 procs sleeping",
+              "condition_filter": false,
+              "condition_key": "state"
+            }
+          ],
+          "aliasColors": {},
+          "aliasYAxis": {},
+          "title": "Process sleep stats"
+        },
+        {
+          "span": 6,
+          "editable": true,
+          "type": "graph",
+          "datasource": null,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "scale": 1,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "grid": {
+            "max": null,
+            "min": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)",
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": null,
+            "rightMin": null
+          },
+          "annotate": {
+            "enable": false
+          },
+          "resolution": 100,
+          "lines": true,
+          "fill": 1,
+          "linewidth": 1,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "legend": {
+            "show": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "percentage": false,
+          "zerofill": true,
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "query_as_alias": true
+          },
+          "targets": [
+            {
+              "function": "mean",
+              "column": "value",
+              "series": "riemannmaster.local.processes.fork_rate",
+              "query": "select  mean(value) from \"riemannmaster.local.processes.fork_rate\" where  time > now() - 4h     group by time(30s)  order asc",
+              "alias": "riemannmaster fork rate"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "series": "riemann1.local.processes.fork_rate",
+              "query": "select  mean(value) from \"riemann1.local.processes.fork_rate\" where  time > now() - 4h     group by time(30s)  order asc",
+              "alias": "riemann1 fork rate"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "series": "collectd1.local.processes.fork_rate",
+              "query": "select  mean(value) from \"collectd1.local.processes.fork_rate\" where  time > now() - 4h     group by time(30s)  order asc",
+              "alias": "collectd1 fork rate"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "alias": "collectd2 fork rate",
+              "series": "collectd2.local.processes.fork_rate",
+              "query": "select  mean(value) from \"collectd2.local.processes.fork_rate\" where  time > now() - 4h     group by time(30s)  order asc"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "series": "influxdb1.local.processes.fork_rate",
+              "query": "select  mean(value) from \"influxdb1.local.processes.fork_rate\" where  time > now() - 4h     group by time(30s)  order asc",
+              "alias": "influxdb1 fork rate"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "series": "grafana1.local.processes.fork_rate",
+              "query": "select  mean(value) from \"grafana1.local.processes.fork_rate\" where  time > now() - 4h     group by time(30s)  order asc",
+              "alias": "grafana1 fork rate"
+            }
+          ],
+          "aliasColors": {},
+          "aliasYAxis": {},
+          "title": "Fork rate stats"
+        }
+      ],
+      "notice": false
+    },
+    {
+      "title": "New row",
+      "height": "700px",
+      "editable": true,
+      "collapse": false,
+      "collapsable": true,
+      "panels": [
+        {
+          "span": 12,
+          "editable": true,
+          "type": "graph",
+          "datasource": null,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "scale": 1,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "grid": {
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "annotate": {
+            "enable": false
+          },
+          "resolution": 100,
+          "lines": true,
+          "fill": 1,
+          "linewidth": 1,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "legend": {
+            "show": true,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "percentage": false,
+          "zerofill": true,
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "query_as_alias": true
+          },
+          "targets": [
+            {
+              "function": "mean",
+              "column": "value",
+              "series": "influxdb1.local.disk-sda5.disk_ops.write",
+              "query": "select  mean(value) from \"influxdb1.local.disk-sda5.disk_ops.write\" where  time > now() - 4h     group by time(10s)  order asc",
+              "alias": "influxdb1 disk write ops/sec"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "series": "riemannmaster.local.disk-sda5.disk_ops.write",
+              "query": "select  mean(value) from \"riemannmaster.local.disk-sda5.disk_ops.write\" where  time > now() - 4h     group by time(10s)  order asc",
+              "interval": "",
+              "alias": "riemannmaster disk write ops/sec"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "series": "grafana1.local.disk-sda5.disk_ops.write",
+              "query": "select  mean(value) from \"grafana1.local.disk-sda5.disk_ops.write\" where  time > now() - 4h     group by time(10s)  order asc",
+              "alias": "grafana1 disk write ops/sec"
+            }
+          ],
+          "aliasColors": {},
+          "aliasYAxis": {},
+          "title": "Disk write ops"
+        }
+      ],
+      "notice": false
+    },
+    {
+      "title": "New row",
+      "height": "450px",
+      "editable": true,
+      "collapse": false,
+      "panels": [
+        {
+          "span": 12,
+          "editable": true,
+          "type": "graph",
+          "datasource": null,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "scale": 1,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "grid": {
+            "leftMax": null,
+            "rightMax": null,
+            "leftMin": null,
+            "rightMin": null,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "annotate": {
+            "enable": false
+          },
+          "resolution": 100,
+          "lines": true,
+          "fill": 1,
+          "linewidth": 1,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "legend": {
+            "show": true,
+            "values": false,
+            "min": true,
+            "max": true,
+            "current": true,
+            "total": true,
+            "avg": true,
+            "alignAsTable": false,
+            "rightSide": false
+          },
+          "percentage": false,
+          "zerofill": true,
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "query_as_alias": true
+          },
+          "targets": [
+            {
+              "function": "mean",
+              "column": "value",
+              "series": "riemann1.riemann streams rate",
+              "query": "select  mean(value) from \"riemann1.riemann streams rate\" where  time > now() - 4h     group by time(10s)  order asc",
+              "alias": "Riemann streams rate"
+            }
+          ],
+          "aliasColors": {},
+          "aliasYAxis": {},
+          "title": "Riemann stats"
+        }
+      ],
+      "collapsable": true,
+      "notice": false
+    }
+  ],
+  "pulldowns": [
+    {
+      "type": "filtering",
+      "collapse": false,
+      "notice": false,
+      "enable": false
+    },
+    {
+      "type": "annotations",
+      "enable": false
+    }
+  ],
+  "nav": [
+    {
+      "type": "timepicker",
+      "collapse": false,
+      "notice": false,
+      "enable": true,
+      "status": "Stable",
+      "time_options": [
+        "60s",
+        "2m",
+        "5m",
+        "7m",
+        "10m",
+        "15m",
+        "30m",
+        "45m",
+        "1h",
+        "90m",
+        "2h",
+        "3h",
+        "4h",
+        "5h",
+        "6h",
+        "8h",
+        "10h"
+        "12h",
+        "18h",
+        "24h",
+        "2d",
+        "7d",
+        "30d"
+      ],
+      "refresh_intervals": [
+        "5s",
+        "10s",
+        "30s",
+        "1m",
+        "5m",
+        "15m",
+        "30m",
+        "1h",
+        "2h",
+        "1d"
+      ],
+      "now": true
+    }
+  ],
+  "time": {
+    "from": "now-4h",
+    "to": "now"
+  },
+  "templating": {
+    "list": []
+  },
+  "refresh": false,
+  "version": 2
+}
