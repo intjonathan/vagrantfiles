@@ -29,7 +29,7 @@ function (Settings) {
      *  +elasticsearch: {server: "http://localhost:9200", withCredentials: true}+
      *
      */
-    elasticsearch: "http://icinga2logging.local:9200",
+    elasticsearch: "http://dnslogging.local:9200",
 
     /** @scratch /configuration/config.js/5
      *
