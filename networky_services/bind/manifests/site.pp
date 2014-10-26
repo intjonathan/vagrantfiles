@@ -98,7 +98,7 @@ node 'dnsmaster1.local' {
     log_local      => true,
     log_auth_local => true,
     custom_config  => undef,
-    server         => 'dnspuppetmaster.local',
+    server         => 'dnslogging.local',
     port           => '514',
   }
 
@@ -202,7 +202,7 @@ node 'dnsmaster2.local' {
     log_local      => true,
     log_auth_local => true,
     custom_config  => undef,
-    server         => 'dnspuppetmaster.local',
+    server         => 'dnslogging.local',
     port           => '514',
   }
 
@@ -306,7 +306,7 @@ node 'dnsslave1.local' {
     log_local      => true,
     log_auth_local => true,
     custom_config  => undef,
-    server         => 'dnspuppetmaster.local',
+    server         => 'dnslogging.local',
     port           => '514',
   }
 
@@ -353,7 +353,7 @@ node 'dnsslave2.local' {
     log_local      => true,
     log_auth_local => true,
     custom_config  => undef,
-    server         => 'dnspuppetmaster.local',
+    server         => 'dnslogging.local',
     port           => '514',
   }
 
@@ -400,7 +400,7 @@ node 'dnsclient1.local' {
     log_local      => true,
     log_auth_local => true,
     custom_config  => undef,
-    server         => 'dnspuppetmaster.local',
+    server         => 'dnslogging.local',
     port           => '514',
   }
 
@@ -443,7 +443,7 @@ node 'dnsclient2.local' {
     log_local      => true,
     log_auth_local => true,
     custom_config  => undef,
-    server         => 'dnspuppetmaster.local',
+    server         => 'dnslogging.local',
     port           => '514',
   }
 
@@ -495,7 +495,7 @@ node 'dnsmail.local' {
       { name => 'RFC3164fmt', template => '<%PRI%>%TIMESTAMP% %HOSTNAME% %syslogtag%%msg%',},
     ],
     log_remote     => true,
-    server         => 'hekalogging.local',
+    server         => 'dnslogging.local',
     port           => '5514',
     remote_type    => 'tcp',
     log_local      => true,
@@ -623,7 +623,7 @@ node 'dnsmetrics.local' {
     log_local      => true,
     log_auth_local => true,
     custom_config  => undef,
-    server         => 'riemannmaster.local',
+    server         => 'dnslogging.local',
     port           => '514',
   }
 
@@ -768,7 +768,7 @@ node 'dnslogging.local' {
       { name => 'RFC3164fmt', template => '<%PRI%>%TIMESTAMP% %HOSTNAME% %syslogtag%%msg%',},
     ],
     log_remote     => true,
-    server         => 'hekalogging.local',
+    server         => 'dnslogging.local',
     port           => '5514',
     remote_type    => 'tcp',
     log_local      => true,
@@ -1002,7 +1002,7 @@ node 'dnsmonitoring.local' {
       { name => 'RFC3164fmt', template => '<%PRI%>%TIMESTAMP% %HOSTNAME% %syslogtag%%msg%',},
     ],
     log_remote     => true,
-    server         => 'hekalogging.local',
+    server         => 'dnslogging.local',
     port           => '5514',
     remote_type    => 'tcp',
     log_local      => true,
