@@ -151,4 +151,18 @@ Vagrant.configure("2") do |config|
 	  dnsmetrics_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
   end
 
+  #An Elasticsearch/Logstash/Kibana VM 
+  config.vm.define "dnslogging".to_sym do |dnslogging_config|
+    dnslogging_config.vm.box = "ubuntu-14.04-server-amd64"
+    dnslogging_config.vm.hostname = "dnslogging.local"
+    dnslogging_config.vm.network :private_network, ip: "10.0.1.79"
+    #set some machine-specific options	
+    dnslogging_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    #Puppet agent provisioning script
+	  dnslogging_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+  end
+
 end
