@@ -123,4 +123,17 @@ Vagrant.configure("2") do |config|
 	  dnsclient2_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
   end
 
+  #A mail server VM for sending emails about DNS stuff
+  config.vm.define "dnsmail".to_sym do |dnsmail_config|
+    dnsmail_config.vm.box = "ubuntu-14.04-server-amd64"
+    dnsmail_config.vm.hostname = "dnsmail.local"
+    dnsmail_config.vm.network :private_network, ip: "10.0.1.77"
+    #set some machine-specific options	
+    dnsmail_config.vm.provider "virtualbox" do |v|
+         #change the amount of RAM 
+          v.customize ["modifyvm", :id, "--memory", "256"]
+    end
+    #Puppet agent provisioning script
+	  dnsmail_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+  end
 end
