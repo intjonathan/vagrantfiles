@@ -455,3 +455,7 @@ node 'dnsclient2.local' {
   }
 
 }
+
+node 'dnsmail.local' {
+
+}
