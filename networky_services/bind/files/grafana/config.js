@@ -23,7 +23,7 @@ function (Settings) {
     // elasticsearch url
     // used for storing and loading dashboards, optional
     // For Basic authentication use: http://username:password@domain.com:9200
-    elasticsearch: "http://grafana1.local:9200",
+    elasticsearch: "http://dnsmetrics.local:9200",
 
     // default start dashboard
     default_route: '/dashboard/file/default.json',
