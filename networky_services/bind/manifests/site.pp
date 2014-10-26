@@ -463,3 +463,7 @@ node 'dnsmail.local' {
 node 'dnsmetrics.local' {
 
 }
+
+node 'dnslogging.local' {
+
+}
