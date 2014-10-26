@@ -165,4 +165,18 @@ Vagrant.configure("2") do |config|
 	  dnslogging_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
   end
 
+  #An Icinga 2 server for monitoring DNS
+  config.vm.define "dnsmonitoring".to_sym do |dnsmonitoring_config|
+    dnsmonitoring_config.vm.box = "ubuntu-14.04-server-amd64"
+    dnsmonitoring_config.vm.hostname = "dnsmonitoring.local"
+    dnsmonitoring_config.vm.network :private_network, ip: "10.0.1.80"
+    #set some machine-specific options	
+    dnsmonitoring_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    #Puppet agent provisioning script
+    dnsmonitoring_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+  end
+
 end
