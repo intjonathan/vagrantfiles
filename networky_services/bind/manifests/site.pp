@@ -30,6 +30,10 @@ node 'dnspuppetmaster.local' {
     port => 80,
   }
 
+  ###############################
+  # SSH installation/setup
+  ###############################
+
   #This module is from: https://github.com/saz/puppet-ssh
   class { 'ssh':
     #Export host keys to PuppetDB:
@@ -104,6 +108,10 @@ node 'dnspuppetmaster.local' {
 }
 
 node 'dnsmaster1.local' {
+
+  ###############################
+  # SSH installation/setup
+  ###############################
 
   #This module is from: https://github.com/saz/puppet-ssh
   class { 'ssh':
@@ -244,6 +252,10 @@ node 'dnsmaster1.local' {
 
 node 'dnsmaster2.local' {
 
+  ###############################
+  # SSH installation/setup
+  ###############################
+
   #This module is from: https://github.com/saz/puppet-ssh
   class { 'ssh':
     #Export host keys to PuppetDB:
@@ -383,6 +395,10 @@ node 'dnsmaster2.local' {
 
 node 'dnsslave1.local' {
 
+  ###############################
+  # SSH installation/setup
+  ###############################
+
   #This module is from: https://github.com/saz/puppet-ssh
   class { 'ssh':
     #Export host keys to PuppetDB:
@@ -464,6 +480,10 @@ node 'dnsslave1.local' {
 }
 
 node 'dnsslave2.local' {
+
+  ###############################
+  # SSH installation/setup
+  ###############################
 
   #This module is from: https://github.com/saz/puppet-ssh
   class { 'ssh':
@@ -547,6 +567,10 @@ node 'dnsslave2.local' {
 
 node 'dnsclient1.local' {
 
+  ###############################
+  # SSH installation/setup
+  ###############################
+
   #This module is from: https://github.com/saz/puppet-ssh
   class { 'ssh':
     #Export host keys to PuppetDB:
@@ -624,6 +648,10 @@ node 'dnsclient1.local' {
 }
 
 node 'dnsclient2.local' {
+
+  ###############################
+  # SSH installation/setup
+  ###############################
 
   #This module is from: https://github.com/saz/puppet-ssh
   class { 'ssh':
@@ -1197,7 +1225,7 @@ node 'dnsmonitoring.local' {
   # SSH installation/setup
   ###############################
 
- #This module is from: https://github.com/saz/puppet-ssh
+  #This module is from: https://github.com/saz/puppet-ssh
   class { 'ssh':
     #Export host keys to PuppetDB:
     storeconfigs_enabled => true,
