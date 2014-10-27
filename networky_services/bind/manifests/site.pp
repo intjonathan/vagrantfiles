@@ -1383,7 +1383,7 @@ node 'dnsmail.local' {
   @@icinga2::object::host { $::fqdn:
     display_name => $::fqdn,
     ipv4_address => $::ipaddress_eth1,
-    groups => ['linux_servers', 'clients', 'ssh_servers', 'http_servers'],
+    groups => ['linux_servers', 'clients', 'ssh_servers', 'smtp_servers', 'http_servers'],
     vars => {
       os              => 'linux',
       virtual_machine => 'true',
@@ -1635,7 +1635,7 @@ node 'dnsmetrics.local' {
   @@icinga2::object::host { $::fqdn:
     display_name => $::fqdn,
     ipv4_address => $::ipaddress_eth1,
-    groups => ['linux_servers', 'clients', 'ssh_servers', 'http_servers'],
+    groups => ['linux_servers', 'clients', 'ssh_servers', 'smtp_servers', 'http_servers'],
     vars => {
       os              => 'linux',
       virtual_machine => 'true',
@@ -1919,7 +1919,7 @@ node 'dnslogging.local' {
   @@icinga2::object::host { $::fqdn:
     display_name => $::fqdn,
     ipv4_address => $::ipaddress_eth1,
-    groups => ['linux_servers', 'clients', 'ssh_servers', 'http_servers'],
+    groups => ['linux_servers', 'clients', 'ssh_servers', 'smtp_servers', 'http_servers'],
     vars => {
       os              => 'linux',
       virtual_machine => 'true',
@@ -2244,7 +2244,7 @@ node 'dnsmonitoring.local' {
     vars => {
       service_type => 'production',
     },
-    assign_where => '"linux_servers" in host.groups',
+    assign_where => '"smtp_servers" in host.groups',
     ignore_where => 'host.name == "localhost"',
     target_dir => '/etc/icinga2/objects/applys'
   }
@@ -2379,7 +2379,7 @@ node 'dnsmonitoring.local' {
   @@icinga2::object::host { $::fqdn:
     display_name => $::fqdn,
     ipv4_address => $::ipaddress_eth1,
-    groups => ['linux_servers', 'clients', 'ssh_servers', 'http_servers'],
+    groups => ['linux_servers', 'clients', 'ssh_servers', 'smtp_servers', 'http_servers'],
     vars => {
       os              => 'linux',
       virtual_machine => 'true',
