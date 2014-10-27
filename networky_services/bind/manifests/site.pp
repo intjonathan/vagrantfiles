@@ -66,6 +66,41 @@ node 'dnspuppetmaster.local' {
     disable_monitor => true,
   }
 
+  ###############################
+  # collectd installation/setup
+  ###############################
+
+  #Install Collectd so we can get metrics from this machine into Riemann/InfluxDB:
+  class { '::collectd':
+    purge        => true,
+    recurse      => true,
+    purge_config => true,
+  }
+  
+  collectd::plugin { 'df': }
+  collectd::plugin { 'disk': }
+  collectd::plugin { 'entropy': }
+  collectd::plugin { 'memory': }
+  collectd::plugin { 'swap': }
+  collectd::plugin { 'cpu': }
+  collectd::plugin { 'cpufreq': }
+  collectd::plugin { 'contextswitch': }
+  collectd::plugin { 'processes': }
+  collectd::plugin { 'vmem': }
+  class { 'collectd::plugin::load':}
+  
+  #Write the collectd status to the Riemann VM in the Graphite format:
+  class { 'collectd::plugin::write_graphite':
+    graphitehost => 'dnsmetrics.local',
+    protocol => 'tcp',
+    graphiteport => 2003,
+  }
+
+  #Get network interface data:
+  class { 'collectd::plugin::interface':
+    interfaces     => ['lo', 'eth0', 'eth1'],
+  }
+
 }
 
 node 'dnsmaster1.local' {
@@ -107,6 +142,41 @@ node 'dnsmaster1.local' {
     servers  => [ '0.ubuntu.pool.ntp.org', '1.ubuntu.pool.ntp.org', '2.ubuntu.pool.ntp.org', '3.ubuntu.pool.ntp.org' ],
     restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
     disable_monitor => true,
+  }
+ 
+  ###############################
+  # collectd installation/setup
+  ###############################
+
+  #Install Collectd so we can get metrics from this machine into Riemann/InfluxDB:
+  class { '::collectd':
+    purge        => true,
+    recurse      => true,
+    purge_config => true,
+  }
+  
+  collectd::plugin { 'df': }
+  collectd::plugin { 'disk': }
+  collectd::plugin { 'entropy': }
+  collectd::plugin { 'memory': }
+  collectd::plugin { 'swap': }
+  collectd::plugin { 'cpu': }
+  collectd::plugin { 'cpufreq': }
+  collectd::plugin { 'contextswitch': }
+  collectd::plugin { 'processes': }
+  collectd::plugin { 'vmem': }
+  class { 'collectd::plugin::load':}
+  
+  #Write the collectd status to the Riemann VM in the Graphite format:
+  class { 'collectd::plugin::write_graphite':
+    graphitehost => 'dnsmetrics.local',
+    protocol => 'tcp',
+    graphiteport => 2003,
+  }
+
+  #Get network interface data:
+  class { 'collectd::plugin::interface':
+    interfaces     => ['lo', 'eth0', 'eth1'],
   }
   
   #BIND module is from: https://github.com/thias/puppet-bind
@@ -211,6 +281,41 @@ node 'dnsmaster2.local' {
     servers  => [ '0.centos.pool.ntp.org', '1.centos.pool.ntp.org', '2.centos.pool.ntp.org', '3.centos.pool.ntp.org' ],
     restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
     disable_monitor => true,
+  }
+
+  ###############################
+  # collectd installation/setup
+  ###############################
+
+  #Install Collectd so we can get metrics from this machine into Riemann/InfluxDB:
+  class { '::collectd':
+    purge        => true,
+    recurse      => true,
+    purge_config => true,
+  }
+  
+  collectd::plugin { 'df': }
+  collectd::plugin { 'disk': }
+  collectd::plugin { 'entropy': }
+  collectd::plugin { 'memory': }
+  collectd::plugin { 'swap': }
+  collectd::plugin { 'cpu': }
+  collectd::plugin { 'cpufreq': }
+  collectd::plugin { 'contextswitch': }
+  collectd::plugin { 'processes': }
+  collectd::plugin { 'vmem': }
+  class { 'collectd::plugin::load':}
+  
+  #Write the collectd status to the Riemann VM in the Graphite format:
+  class { 'collectd::plugin::write_graphite':
+    graphitehost => 'dnsmetrics.local',
+    protocol => 'tcp',
+    graphiteport => 2003,
+  }
+
+  #Get network interface data:
+  class { 'collectd::plugin::interface':
+    interfaces     => ['lo', 'eth0', 'eth1'],
   }
 
   #BIND module is from: https://github.com/thias/puppet-bind
@@ -321,6 +426,41 @@ node 'dnsslave1.local' {
   #Just install the BIND package:
   include bind::package
 
+  ###############################
+  # collectd installation/setup
+  ###############################
+
+  #Install Collectd so we can get metrics from this machine into Riemann/InfluxDB:
+  class { '::collectd':
+    purge        => true,
+    recurse      => true,
+    purge_config => true,
+  }
+  
+  collectd::plugin { 'df': }
+  collectd::plugin { 'disk': }
+  collectd::plugin { 'entropy': }
+  collectd::plugin { 'memory': }
+  collectd::plugin { 'swap': }
+  collectd::plugin { 'cpu': }
+  collectd::plugin { 'cpufreq': }
+  collectd::plugin { 'contextswitch': }
+  collectd::plugin { 'processes': }
+  collectd::plugin { 'vmem': }
+  class { 'collectd::plugin::load':}
+  
+  #Write the collectd status to the Riemann VM in the Graphite format:
+  class { 'collectd::plugin::write_graphite':
+    graphitehost => 'dnsmetrics.local',
+    protocol => 'tcp',
+    graphiteport => 2003,
+  }
+
+  #Get network interface data:
+  class { 'collectd::plugin::interface':
+    interfaces     => ['lo', 'eth0', 'eth1'],
+  }
+
 }
 
 node 'dnsslave2.local' {
@@ -368,6 +508,41 @@ node 'dnsslave2.local' {
   #Just install the BIND package:
   include bind::package
 
+  ###############################
+  # collectd installation/setup
+  ###############################
+
+  #Install Collectd so we can get metrics from this machine into Riemann/InfluxDB:
+  class { '::collectd':
+    purge        => true,
+    recurse      => true,
+    purge_config => true,
+  }
+  
+  collectd::plugin { 'df': }
+  collectd::plugin { 'disk': }
+  collectd::plugin { 'entropy': }
+  collectd::plugin { 'memory': }
+  collectd::plugin { 'swap': }
+  collectd::plugin { 'cpu': }
+  collectd::plugin { 'cpufreq': }
+  collectd::plugin { 'contextswitch': }
+  collectd::plugin { 'processes': }
+  collectd::plugin { 'vmem': }
+  class { 'collectd::plugin::load':}
+  
+  #Write the collectd status to the Riemann VM in the Graphite format:
+  class { 'collectd::plugin::write_graphite':
+    graphitehost => 'dnsmetrics.local',
+    protocol => 'tcp',
+    graphiteport => 2003,
+  }
+
+  #Get network interface data:
+  class { 'collectd::plugin::interface':
+    interfaces     => ['lo', 'eth0', 'eth1'],
+  }
+
 }
 
 node 'dnsclient1.local' {
@@ -411,6 +586,41 @@ node 'dnsclient1.local' {
     disable_monitor => true,
   }
 
+  ###############################
+  # collectd installation/setup
+  ###############################
+
+  #Install Collectd so we can get metrics from this machine into Riemann/InfluxDB:
+  class { '::collectd':
+    purge        => true,
+    recurse      => true,
+    purge_config => true,
+  }
+  
+  collectd::plugin { 'df': }
+  collectd::plugin { 'disk': }
+  collectd::plugin { 'entropy': }
+  collectd::plugin { 'memory': }
+  collectd::plugin { 'swap': }
+  collectd::plugin { 'cpu': }
+  collectd::plugin { 'cpufreq': }
+  collectd::plugin { 'contextswitch': }
+  collectd::plugin { 'processes': }
+  collectd::plugin { 'vmem': }
+  class { 'collectd::plugin::load':}
+  
+  #Write the collectd status to the Riemann VM in the Graphite format:
+  class { 'collectd::plugin::write_graphite':
+    graphitehost => 'dnsmetrics.local',
+    protocol => 'tcp',
+    graphiteport => 2003,
+  }
+
+  #Get network interface data:
+  class { 'collectd::plugin::interface':
+    interfaces     => ['lo', 'eth0', 'eth1'],
+  }
+
 }
 
 node 'dnsclient2.local' {
@@ -452,6 +662,41 @@ node 'dnsclient2.local' {
     servers  => [ '0.centos.pool.ntp.org', '1.centos.pool.ntp.org', '2.centos.pool.ntp.org', '3.centos.pool.ntp.org' ],
     restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
     disable_monitor => true,
+  }
+
+  ###############################
+  # collectd installation/setup
+  ###############################
+
+  #Install Collectd so we can get metrics from this machine into Riemann/InfluxDB:
+  class { '::collectd':
+    purge        => true,
+    recurse      => true,
+    purge_config => true,
+  }
+  
+  collectd::plugin { 'df': }
+  collectd::plugin { 'disk': }
+  collectd::plugin { 'entropy': }
+  collectd::plugin { 'memory': }
+  collectd::plugin { 'swap': }
+  collectd::plugin { 'cpu': }
+  collectd::plugin { 'cpufreq': }
+  collectd::plugin { 'contextswitch': }
+  collectd::plugin { 'processes': }
+  collectd::plugin { 'vmem': }
+  class { 'collectd::plugin::load':}
+  
+  #Write the collectd status to the Riemann VM in the Graphite format:
+  class { 'collectd::plugin::write_graphite':
+    graphitehost => 'dnsmetrics.local',
+    protocol => 'tcp',
+    graphiteport => 2003,
+  }
+
+  #Get network interface data:
+  class { 'collectd::plugin::interface':
+    interfaces     => ['lo', 'eth0', 'eth1'],
   }
 
 }
