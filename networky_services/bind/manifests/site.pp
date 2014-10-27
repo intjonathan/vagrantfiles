@@ -115,7 +115,7 @@ node 'dnspuppetmaster.local' {
   @@icinga2::object::host { $::fqdn:
     display_name => $::fqdn,
     ipv4_address => $::ipaddress_eth1,
-    groups => ['linux_servers', 'clients', 'ssh_servers', 'http_servers'],
+    groups => ['linux_servers', 'clients', 'ssh_servers', 'http_servers', 'dns_servers'],
     vars => {
       os              => 'linux',
       virtual_machine => 'true',
@@ -333,7 +333,7 @@ node 'dnsmaster1.local' {
   @@icinga2::object::host { $::fqdn:
     display_name => $::fqdn,
     ipv4_address => $::ipaddress_eth1,
-    groups => ['linux_servers', 'clients', 'ssh_servers', 'http_servers'],
+    groups => ['linux_servers', 'clients', 'ssh_servers', 'http_servers', 'dns_servers'],
     vars => {
       os              => 'linux',
       virtual_machine => 'true',
@@ -551,7 +551,7 @@ node 'dnsmaster2.local' {
   @@icinga2::object::host { $::fqdn:
     display_name => $::fqdn,
     ipv4_address => $::ipaddress_eth1,
-    groups => ['linux_servers', 'clients', 'ssh_servers', 'http_servers'],
+    groups => ['linux_servers', 'clients', 'ssh_servers', 'http_servers', 'dns_servers'],
     vars => {
       os              => 'linux',
       virtual_machine => 'true',
@@ -712,7 +712,7 @@ node 'dnsslave1.local' {
   @@icinga2::object::host { $::fqdn:
     display_name => $::fqdn,
     ipv4_address => $::ipaddress_eth1,
-    groups => ['linux_servers', 'clients', 'ssh_servers', 'http_servers'],
+    groups => ['linux_servers', 'clients', 'ssh_servers', 'http_servers', 'dns_servers'],
     vars => {
       os              => 'linux',
       virtual_machine => 'true',
@@ -873,7 +873,7 @@ node 'dnsslave2.local' {
   @@icinga2::object::host { $::fqdn:
     display_name => $::fqdn,
     ipv4_address => $::ipaddress_eth1,
-    groups => ['linux_servers', 'clients', 'ssh_servers', 'http_servers'],
+    groups => ['linux_servers', 'clients', 'ssh_servers', 'http_servers', 'dns_servers'],
     vars => {
       os              => 'linux',
       virtual_machine => 'true',
@@ -2157,6 +2157,12 @@ node 'dnsmonitoring.local' {
   icinga2::object::usergroup { 'admins':
     display_name => 'admins',
     target_dir => '/etc/icinga2/objects/usergroups',
+  }
+
+  #Create a DNS servers hostgroup:
+  icinga2::object::hostgroup { 'dns_servers':
+    display_name => 'DNS servers',
+    target_dir => '/etc/icinga2/objects/hostgroups',
   }
 
   #Create a postgres_servers hostgroup:
