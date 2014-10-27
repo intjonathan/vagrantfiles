@@ -130,7 +130,7 @@ node 'dnspuppetmaster.local' {
   ###############################
 
   class { 'icinga2::nrpe':
-    nrpe_allowed_hosts => ['10.0.1.78', '127.0.0.1'],
+    nrpe_allowed_hosts => ['10.0.1.80', '127.0.0.1'],
     nrpe_listen_port => 5666,
   }
 
@@ -348,7 +348,7 @@ node 'dnsmaster1.local' {
   ###############################
 
   class { 'icinga2::nrpe':
-    nrpe_allowed_hosts => ['10.0.1.78', '127.0.0.1'],
+    nrpe_allowed_hosts => ['10.0.1.80', '127.0.0.1'],
     nrpe_listen_port => 5666,
   }
 
@@ -566,7 +566,7 @@ node 'dnsmaster2.local' {
   ###############################
 
   class { 'icinga2::nrpe':
-    nrpe_allowed_hosts => ['10.0.1.78', '127.0.0.1'],
+    nrpe_allowed_hosts => ['10.0.1.80', '127.0.0.1'],
     nrpe_listen_port => 5666,
   }
 
@@ -727,7 +727,7 @@ node 'dnsslave1.local' {
   ###############################
 
   class { 'icinga2::nrpe':
-    nrpe_allowed_hosts => ['10.0.1.78', '127.0.0.1'],
+    nrpe_allowed_hosts => ['10.0.1.80', '127.0.0.1'],
     nrpe_listen_port => 5666,
   }
 
@@ -888,7 +888,7 @@ node 'dnsslave2.local' {
   ###############################
 
   class { 'icinga2::nrpe':
-    nrpe_allowed_hosts => ['10.0.1.78', '127.0.0.1'],
+    nrpe_allowed_hosts => ['10.0.1.80', '127.0.0.1'],
     nrpe_listen_port => 5666,
   }
 
@@ -1045,7 +1045,7 @@ node 'dnsclient1.local' {
   ###############################
 
   class { 'icinga2::nrpe':
-    nrpe_allowed_hosts => ['10.0.1.78', '127.0.0.1'],
+    nrpe_allowed_hosts => ['10.0.1.80', '127.0.0.1'],
     nrpe_listen_port => 5666,
   }
 
@@ -1202,7 +1202,7 @@ node 'dnsclient2.local' {
   ###############################
 
   class { 'icinga2::nrpe':
-    nrpe_allowed_hosts => ['10.0.1.78', '127.0.0.1'],
+    nrpe_allowed_hosts => ['10.0.1.80', '127.0.0.1'],
     nrpe_listen_port => 5666,
   }
 
@@ -1398,7 +1398,7 @@ node 'dnsmail.local' {
   ###############################
 
   class { 'icinga2::nrpe':
-    nrpe_allowed_hosts => ['10.0.1.78', '127.0.0.1'],
+    nrpe_allowed_hosts => ['10.0.1.80', '127.0.0.1'],
     nrpe_listen_port => 5666,
   }
 
@@ -1609,7 +1609,7 @@ node 'dnsmetrics.local' {
   ###############################
 
   class { 'icinga2::nrpe':
-    nrpe_allowed_hosts => ['10.0.1.78', '127.0.0.1'],
+    nrpe_allowed_hosts => ['10.0.1.80', '127.0.0.1'],
     nrpe_listen_port => 5666,
   }
 
@@ -1893,7 +1893,7 @@ node 'dnslogging.local' {
   ###############################
 
   class { 'icinga2::nrpe':
-    nrpe_allowed_hosts => ['10.0.1.78', '127.0.0.1'],
+    nrpe_allowed_hosts => ['10.0.1.80', '127.0.0.1'],
     nrpe_listen_port => 5666,
   }
 
@@ -2154,28 +2154,6 @@ node 'dnsmonitoring.local' {
     target_dir => '/etc/icinga2/objects/hostgroups',
   }
 
-  #Dependency object to test out this PR: https://github.com/Icinga/puppet-icinga2/pull/28
-  icinga2::object::dependency { "dnsmail to dnsmail":
-    object_name => "dnsmail_dep_on_dnsmail",
-    parent_host_name => 'dnsmail.local',
-    child_host_name => 'dnsmail.local',
-    target_dir => '/etc/icinga2/objects/dependencies',
-    target_file_name => "dnsmail_to_dnsmail.conf",
-  }
-
-  #Apply_dependency object to test out this PR: https://github.com/Icinga/puppet-icinga2/pull/28
-  icinga2::object::apply_dependency { 'dnsmail_dep_on_dnsmail':
-    parent_host_name => 'dnsmail.local',
-    assign_where => 'match("^dnsmail*", host.name)',
-  }
-
-  #Apply_dependency object to test out this PR: https://github.com/Icinga/puppet-icinga2/pull/28
-  icinga2::object::apply_dependency { 'imap_dep_on_smtp':
-    parent_service_name => 'check_ssh',
-    object_type => 'Service',
-    assign_where => 'match("^check_smtp*", service.name)',
-  }
-
   #Create a web services servicegroup:
   icinga2::object::servicegroup { 'web_services':
     display_name => 'web services',
@@ -2303,7 +2281,7 @@ node 'dnsmonitoring.local' {
   }
 
   class { 'icinga2::nrpe':
-    nrpe_allowed_hosts => ['10.0.1.81', '10.0.1.82', '10.0.1.83', '10.0.1.84', '10.0.1.92', '127.0.0.1'],
+    nrpe_allowed_hosts => ['10.0.1.80', '127.0.0.1'],
   }
 
   #Some basic box health stuff
