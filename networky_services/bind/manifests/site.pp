@@ -55,6 +55,10 @@ node 'dnspuppetmaster.local' {
     },
   }
  
+  ###############################
+  # rsyslog installation/setup
+  ###############################
+ 
   #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::server':
     enable_tcp => true,
@@ -133,6 +137,10 @@ node 'dnsmaster1.local' {
       'UseDNS'               => 'no',
     },
   }
+
+  ###############################
+  # rsyslog installation/setup
+  ###############################
 
   #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
@@ -277,6 +285,10 @@ node 'dnsmaster2.local' {
     },
   }
 
+  ###############################
+  # rsyslog installation/setup
+  ###############################
+
   #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
     log_remote     => true,
@@ -420,6 +432,10 @@ node 'dnsslave1.local' {
     },
   }
 
+  ###############################
+  # rsyslog installation/setup
+  ###############################
+
   #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
     log_remote     => true,
@@ -505,6 +521,10 @@ node 'dnsslave2.local' {
       'UseDNS'               => 'no',
     },
   }
+
+  ###############################
+  # rsyslog installation/setup
+  ###############################
 
   #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
@@ -592,6 +612,10 @@ node 'dnsclient1.local' {
     },
   }
 
+  ###############################
+  # rsyslog installation/setup
+  ###############################
+
   #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
     log_remote     => true,
@@ -673,6 +697,10 @@ node 'dnsclient2.local' {
       'UseDNS'               => 'no',
     },
   }
+
+  ###############################
+  # rsyslog installation/setup
+  ###############################
 
   #This module is from: https://github.com/saz/puppet-rsyslog
   class { 'rsyslog::client':
