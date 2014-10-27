@@ -108,6 +108,23 @@ node 'dnspuppetmaster.local' {
     interfaces     => ['lo', 'eth0', 'eth1'],
   }
 
+  ###############################
+  # Icinga 2 host export stuff
+  ###############################
+
+  @@icinga2::object::host { $::fqdn:
+    display_name => $::fqdn,
+    ipv4_address => $::ipaddress_eth1,
+    groups => ['linux_servers', 'clients', 'ssh_servers', 'http_servers'],
+    vars => {
+      os              => 'linux',
+      virtual_machine => 'true',
+      distro          => $::operatingsystem,
+    },
+    target_dir => '/etc/icinga2/objects/hosts',
+    target_file_name => "${fqdn}.conf"
+  }
+
 }
 
 node 'dnsmaster1.local' {
@@ -257,6 +274,23 @@ node 'dnsmaster1.local' {
       'allow-update { local; }',
       ],
     }
+  }
+
+  ###############################
+  # Icinga 2 host export stuff
+  ###############################
+
+  @@icinga2::object::host { $::fqdn:
+    display_name => $::fqdn,
+    ipv4_address => $::ipaddress_eth1,
+    groups => ['linux_servers', 'clients', 'ssh_servers', 'http_servers'],
+    vars => {
+      os              => 'linux',
+      virtual_machine => 'true',
+      distro          => $::operatingsystem,
+    },
+    target_dir => '/etc/icinga2/objects/hosts',
+    target_file_name => "${fqdn}.conf"
   }
 
 }
@@ -410,6 +444,23 @@ node 'dnsmaster2.local' {
     }
   }
 
+  ###############################
+  # Icinga 2 host export stuff
+  ###############################
+
+  @@icinga2::object::host { $::fqdn:
+    display_name => $::fqdn,
+    ipv4_address => $::ipaddress_eth1,
+    groups => ['linux_servers', 'clients', 'ssh_servers', 'http_servers'],
+    vars => {
+      os              => 'linux',
+      virtual_machine => 'true',
+      distro          => $::operatingsystem,
+    },
+    target_dir => '/etc/icinga2/objects/hosts',
+    target_file_name => "${fqdn}.conf"
+  }
+
 }
 
 node 'dnsslave1.local' {
@@ -502,6 +553,23 @@ node 'dnsslave1.local' {
   #Get network interface data:
   class { 'collectd::plugin::interface':
     interfaces     => ['lo', 'eth0', 'eth1'],
+  }
+
+  ###############################
+  # Icinga 2 host export stuff
+  ###############################
+
+  @@icinga2::object::host { $::fqdn:
+    display_name => $::fqdn,
+    ipv4_address => $::ipaddress_eth1,
+    groups => ['linux_servers', 'clients', 'ssh_servers', 'http_servers'],
+    vars => {
+      os              => 'linux',
+      virtual_machine => 'true',
+      distro          => $::operatingsystem,
+    },
+    target_dir => '/etc/icinga2/objects/hosts',
+    target_file_name => "${fqdn}.conf"
   }
 
 }
@@ -598,6 +666,23 @@ node 'dnsslave2.local' {
     interfaces     => ['lo', 'eth0', 'eth1'],
   }
 
+  ###############################
+  # Icinga 2 host export stuff
+  ###############################
+
+  @@icinga2::object::host { $::fqdn:
+    display_name => $::fqdn,
+    ipv4_address => $::ipaddress_eth1,
+    groups => ['linux_servers', 'clients', 'ssh_servers', 'http_servers'],
+    vars => {
+      os              => 'linux',
+      virtual_machine => 'true',
+      distro          => $::operatingsystem,
+    },
+    target_dir => '/etc/icinga2/objects/hosts',
+    target_file_name => "${fqdn}.conf"
+  }
+
 }
 
 node 'dnsclient1.local' {
@@ -688,6 +773,23 @@ node 'dnsclient1.local' {
     interfaces     => ['lo', 'eth0', 'eth1'],
   }
 
+  ###############################
+  # Icinga 2 host export stuff
+  ###############################
+
+  @@icinga2::object::host { $::fqdn:
+    display_name => $::fqdn,
+    ipv4_address => $::ipaddress_eth1,
+    groups => ['linux_servers', 'clients', 'ssh_servers', 'http_servers'],
+    vars => {
+      os              => 'linux',
+      virtual_machine => 'true',
+      distro          => $::operatingsystem,
+    },
+    target_dir => '/etc/icinga2/objects/hosts',
+    target_file_name => "${fqdn}.conf"
+  }
+
 }
 
 node 'dnsclient2.local' {
@@ -776,6 +878,23 @@ node 'dnsclient2.local' {
   #Get network interface data:
   class { 'collectd::plugin::interface':
     interfaces     => ['lo', 'eth0', 'eth1'],
+  }
+
+  ###############################
+  # Icinga 2 host export stuff
+  ###############################
+
+  @@icinga2::object::host { $::fqdn:
+    display_name => $::fqdn,
+    ipv4_address => $::ipaddress_eth1,
+    groups => ['linux_servers', 'clients', 'ssh_servers', 'http_servers'],
+    vars => {
+      os              => 'linux',
+      virtual_machine => 'true',
+      distro          => $::operatingsystem,
+    },
+    target_dir => '/etc/icinga2/objects/hosts',
+    target_file_name => "${fqdn}.conf"
   }
 
 }
@@ -905,6 +1024,23 @@ node 'dnsmail.local' {
   #Get network interface data:
   class { 'collectd::plugin::interface':
     interfaces     => ['lo', 'eth0', 'eth1'],
+  }
+
+  ###############################
+  # Icinga 2 host export stuff
+  ###############################
+
+  @@icinga2::object::host { $::fqdn:
+    display_name => $::fqdn,
+    ipv4_address => $::ipaddress_eth1,
+    groups => ['linux_servers', 'clients', 'ssh_servers', 'http_servers'],
+    vars => {
+      os              => 'linux',
+      virtual_machine => 'true',
+      distro          => $::operatingsystem,
+    },
+    target_dir => '/etc/icinga2/objects/hosts',
+    target_file_name => "${fqdn}.conf"
   }
 
 }
@@ -1049,6 +1185,23 @@ node 'dnsmetrics.local' {
   #Get network interface data:
   class { 'collectd::plugin::interface':
     interfaces     => ['lo', 'eth0', 'eth1'],
+  }
+
+  ###############################
+  # Icinga 2 host export stuff
+  ###############################
+
+  @@icinga2::object::host { $::fqdn:
+    display_name => $::fqdn,
+    ipv4_address => $::ipaddress_eth1,
+    groups => ['linux_servers', 'clients', 'ssh_servers', 'http_servers'],
+    vars => {
+      os              => 'linux',
+      virtual_machine => 'true',
+      distro          => $::operatingsystem,
+    },
+    target_dir => '/etc/icinga2/objects/hosts',
+    target_file_name => "${fqdn}.conf"
   }
 
 }
@@ -1266,6 +1419,23 @@ node 'dnslogging.local' {
   #Get network interface data:
   class { 'collectd::plugin::interface':
     interfaces     => ['lo', 'eth0', 'eth1'],
+  }
+
+  ###############################
+  # Icinga 2 host export stuff
+  ###############################
+
+  @@icinga2::object::host { $::fqdn:
+    display_name => $::fqdn,
+    ipv4_address => $::ipaddress_eth1,
+    groups => ['linux_servers', 'clients', 'ssh_servers', 'http_servers'],
+    vars => {
+      os              => 'linux',
+      virtual_machine => 'true',
+      distro          => $::operatingsystem,
+    },
+    target_dir => '/etc/icinga2/objects/hosts',
+    target_file_name => "${fqdn}.conf"
   }
 
 }
@@ -1675,6 +1845,23 @@ node 'dnsmonitoring.local' {
   icinga2::nrpe::command { 'check_mysql_service':
     nrpe_plugin_name => 'check_mysql',
     nrpe_plugin_args => '-H 127.0.0.1 -u root -p horsebatterystaple',
+  }
+
+  ###############################
+  # Icinga 2 host export stuff
+  ###############################
+
+  @@icinga2::object::host { $::fqdn:
+    display_name => $::fqdn,
+    ipv4_address => $::ipaddress_eth1,
+    groups => ['linux_servers', 'clients', 'ssh_servers', 'http_servers'],
+    vars => {
+      os              => 'linux',
+      virtual_machine => 'true',
+      distro          => $::operatingsystem,
+    },
+    target_dir => '/etc/icinga2/objects/hosts',
+    target_file_name => "${fqdn}.conf"
   }
 
   ###############################
