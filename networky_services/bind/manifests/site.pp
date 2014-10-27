@@ -67,6 +67,10 @@ node 'dnspuppetmaster.local' {
     server_dir => '/var/log/remote/',
   }
 
+  ###############################
+  # NTP installation/setup
+  ###############################
+
   #This module is: https://github.com/puppetlabs/puppetlabs-ntp
   class { '::ntp':
     servers  => [ '0.ubuntu.pool.ntp.org', '1.ubuntu.pool.ntp.org', '2.ubuntu.pool.ntp.org', '3.ubuntu.pool.ntp.org' ],
@@ -152,6 +156,10 @@ node 'dnsmaster1.local' {
     server         => 'dnslogging.local',
     port           => '514',
   }
+
+  ###############################
+  # NTP installation/setup
+  ###############################
 
   #This module is: https://github.com/puppetlabs/puppetlabs-ntp
   class { '::ntp':
@@ -300,6 +308,10 @@ node 'dnsmaster2.local' {
     port           => '514',
   }
 
+  ###############################
+  # NTP installation/setup
+  ###############################
+
   #This module is: https://github.com/puppetlabs/puppetlabs-ntp
   class { '::ntp':
     servers  => [ '0.centos.pool.ntp.org', '1.centos.pool.ntp.org', '2.centos.pool.ntp.org', '3.centos.pool.ntp.org' ],
@@ -447,6 +459,10 @@ node 'dnsslave1.local' {
     port           => '514',
   }
 
+  ###############################
+  # NTP installation/setup
+  ###############################
+
   #This module is: https://github.com/puppetlabs/puppetlabs-ntp
   class { '::ntp':
     servers  => [ '0.ubuntu.pool.ntp.org', '1.ubuntu.pool.ntp.org', '2.ubuntu.pool.ntp.org', '3.ubuntu.pool.ntp.org' ],
@@ -536,6 +552,10 @@ node 'dnsslave2.local' {
     server         => 'dnslogging.local',
     port           => '514',
   }
+
+  ###############################
+  # NTP installation/setup
+  ###############################
 
   #This module is: https://github.com/puppetlabs/puppetlabs-ntp
   class { '::ntp':
@@ -627,6 +647,10 @@ node 'dnsclient1.local' {
     port           => '514',
   }
 
+  ###############################
+  # NTP installation/setup
+  ###############################
+
   #This module is: https://github.com/puppetlabs/puppetlabs-ntp
   class { '::ntp':
     servers  => [ '0.ubuntu.pool.ntp.org', '1.ubuntu.pool.ntp.org', '2.ubuntu.pool.ntp.org', '3.ubuntu.pool.ntp.org' ],
@@ -712,6 +736,10 @@ node 'dnsclient2.local' {
     server         => 'dnslogging.local',
     port           => '514',
   }
+
+  ###############################
+  # NTP installation/setup
+  ###############################
 
   #This module is: https://github.com/puppetlabs/puppetlabs-ntp
   class { '::ntp':
