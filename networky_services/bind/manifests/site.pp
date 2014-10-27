@@ -1433,7 +1433,7 @@ node 'dnsmonitoring.local' {
   #Create a user definition:
   icinga2::object::user { 'nick':
     display_name => 'Nick',
-    email => 'nick@usermail.local',
+    email => 'nick@dnsmail.local',
     period => '24x7',
     enable_notifications => 'true',
     groups => [ 'admins' ],
@@ -1485,18 +1485,18 @@ node 'dnsmonitoring.local' {
   }
 
   #Dependency object to test out this PR: https://github.com/Icinga/puppet-icinga2/pull/28
-  icinga2::object::dependency { "usermail to icinga2mail":
-    object_name => "usermail_dep_on_icinga2mail",
-    parent_host_name => 'icinga2mail.local',
-    child_host_name => 'usermail.local',
+  icinga2::object::dependency { "dnsmail to dnsmail":
+    object_name => "dnsmail_dep_on_dnsmail",
+    parent_host_name => 'dnsmail.local',
+    child_host_name => 'dnsmail.local',
     target_dir => '/etc/icinga2/objects/dependencies',
-    target_file_name => "usermail_to_icinga2mail.conf",
+    target_file_name => "dnsmail_to_dnsmail.conf",
   }
 
   #Apply_dependency object to test out this PR: https://github.com/Icinga/puppet-icinga2/pull/28
-  icinga2::object::apply_dependency { 'usermail_dep_on_icinga2mail':
-    parent_host_name => 'icinga2mail.local',
-    assign_where => 'match("^usermail*", host.name)',
+  icinga2::object::apply_dependency { 'dnsmail_dep_on_dnsmail':
+    parent_host_name => 'dnsmail.local',
+    assign_where => 'match("^dnsmail*", host.name)',
   }
 
   #Apply_dependency object to test out this PR: https://github.com/Icinga/puppet-icinga2/pull/28
