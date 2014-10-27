@@ -1,8 +1,3 @@
-#default node defition
-node default {
-
-}
-
 #puppet master node definition
 node 'dnspuppetmaster.local' {
 
