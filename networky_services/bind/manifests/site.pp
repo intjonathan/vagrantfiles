@@ -216,7 +216,7 @@ node 'dnsmaster1.local' {
     log_auth_local => true,
     custom_config  => undef,
     server         => 'dnslogging.local',
-    port           => '514',
+    port           => '5514',
   }
 
   ###############################
@@ -434,7 +434,7 @@ node 'dnsmaster2.local' {
     log_auth_local => true,
     custom_config  => undef,
     server         => 'dnslogging.local',
-    port           => '514',
+    port           => '5514',
   }
 
   ###############################
@@ -652,7 +652,7 @@ node 'dnsslave1.local' {
     log_auth_local => true,
     custom_config  => undef,
     server         => 'dnslogging.local',
-    port           => '514',
+    port           => '5514',
   }
 
   ###############################
@@ -813,7 +813,7 @@ node 'dnsslave2.local' {
     log_auth_local => true,
     custom_config  => undef,
     server         => 'dnslogging.local',
-    port           => '514',
+    port           => '5514',
   }
 
   ###############################
@@ -974,7 +974,7 @@ node 'dnsclient1.local' {
     log_auth_local => true,
     custom_config  => undef,
     server         => 'dnslogging.local',
-    port           => '514',
+    port           => '5514',
   }
 
   ###############################
@@ -1131,7 +1131,7 @@ node 'dnsclient2.local' {
     log_auth_local => true,
     custom_config  => undef,
     server         => 'dnslogging.local',
-    port           => '514',
+    port           => '5514',
   }
 
   ###############################
@@ -1484,7 +1484,7 @@ node 'dnsmetrics.local' {
     log_auth_local => true,
     custom_config  => undef,
     server         => 'dnslogging.local',
-    port           => '514',
+    port           => '5514',
   }
 
   ###############################
