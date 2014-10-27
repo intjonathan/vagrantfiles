@@ -333,7 +333,7 @@ node 'dnsmaster1.local' {
   @@icinga2::object::host { $::fqdn:
     display_name => $::fqdn,
     ipv4_address => $::ipaddress_eth1,
-    groups => ['linux_servers', 'clients', 'ssh_servers', 'http_servers', 'dns_servers'],
+    groups => ['linux_servers', 'clients', 'ssh_servers', 'dns_servers'],
     vars => {
       os              => 'linux',
       virtual_machine => 'true',
@@ -551,7 +551,7 @@ node 'dnsmaster2.local' {
   @@icinga2::object::host { $::fqdn:
     display_name => $::fqdn,
     ipv4_address => $::ipaddress_eth1,
-    groups => ['linux_servers', 'clients', 'ssh_servers', 'http_servers', 'dns_servers'],
+    groups => ['linux_servers', 'clients', 'ssh_servers', 'dns_servers'],
     vars => {
       os              => 'linux',
       virtual_machine => 'true',
@@ -712,7 +712,7 @@ node 'dnsslave1.local' {
   @@icinga2::object::host { $::fqdn:
     display_name => $::fqdn,
     ipv4_address => $::ipaddress_eth1,
-    groups => ['linux_servers', 'clients', 'ssh_servers', 'http_servers', 'dns_servers'],
+    groups => ['linux_servers', 'clients', 'ssh_servers', 'dns_servers'],
     vars => {
       os              => 'linux',
       virtual_machine => 'true',
@@ -873,7 +873,7 @@ node 'dnsslave2.local' {
   @@icinga2::object::host { $::fqdn:
     display_name => $::fqdn,
     ipv4_address => $::ipaddress_eth1,
-    groups => ['linux_servers', 'clients', 'ssh_servers', 'http_servers', 'dns_servers'],
+    groups => ['linux_servers', 'clients', 'ssh_servers', 'dns_servers'],
     vars => {
       os              => 'linux',
       virtual_machine => 'true',
@@ -1030,7 +1030,7 @@ node 'dnsclient1.local' {
   @@icinga2::object::host { $::fqdn:
     display_name => $::fqdn,
     ipv4_address => $::ipaddress_eth1,
-    groups => ['linux_servers', 'clients', 'ssh_servers', 'http_servers'],
+    groups => ['linux_servers', 'clients', 'ssh_servers'],
     vars => {
       os              => 'linux',
       virtual_machine => 'true',
@@ -1187,7 +1187,7 @@ node 'dnsclient2.local' {
   @@icinga2::object::host { $::fqdn:
     display_name => $::fqdn,
     ipv4_address => $::ipaddress_eth1,
-    groups => ['linux_servers', 'clients', 'ssh_servers', 'http_servers'],
+    groups => ['linux_servers', 'clients', 'ssh_servers'],
     vars => {
       os              => 'linux',
       virtual_machine => 'true',
@@ -2112,7 +2112,7 @@ node 'dnsmonitoring.local' {
   #Create a linux_servers hostgroup:
   icinga2::object::hostgroup { 'linux_servers':
     display_name => 'Linux servers',
-    groups => ['mysql_servers', 'clients'],
+    #groups => ['mysql_servers', 'clients'],
     target_dir => '/etc/icinga2/objects/hostgroups',
     assign_where => 'match("*redis*", host.name) || match("*elastic*", host.name) || match("*logstash*", host.name)',
   }
