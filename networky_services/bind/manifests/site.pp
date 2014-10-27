@@ -1451,7 +1451,7 @@ node 'dnsmetrics.local' {
   # SSH installation/setup
   ###############################
 
- #This module is from: https://github.com/saz/puppet-ssh
+  #This module is from: https://github.com/saz/puppet-ssh
   class { 'ssh':
     #Export host keys to PuppetDB:
     storeconfigs_enabled => true,
@@ -1757,14 +1757,14 @@ node 'dnslogging.local' {
       owner => 'www-data',
       group => 'www-data',
       mode => '755',
-    }
+  }
 
   file {'/sites/apps/': 
       ensure => directory,
       owner => 'www-data',
       group => 'www-data',
       mode => '755',
-    }
+  }
 
   ###############################
   # Postfix installation/setup
