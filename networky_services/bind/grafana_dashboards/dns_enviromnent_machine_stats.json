@@ -1,7 +1,7 @@
 {
   "id": null,
   "title": "DNS environment machine stats",
-  "originalTitle": "DNS stats",
+  "originalTitle": "DNS environment machine stats",
   "tags": [],
   "style": "dark",
   "timezone": "browser",
@@ -146,7 +146,7 @@
           },
           "resolution": 100,
           "lines": true,
-          "fill": 0,
+          "fill": 1,
           "linewidth": 1,
           "points": false,
           "pointradius": 5,
@@ -172,7 +172,42 @@
           "targets": [
             {
               "function": "mean",
-              "column": "value"
+              "column": "value",
+              "series": "dnspuppetmaster.local.load.load.shortterm",
+              "query": "select mean(value) from \"dnspuppetmaster.local.load.load.shortterm\" where $timeFilter group by time($interval) order asc",
+              "alias": "dnspuppetmaster short load"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "series": "dnsmaster1.local.load.load.shortterm",
+              "query": "select mean(value) from \"dnsmaster1.local.load.load.shortterm\" where $timeFilter group by time($interval) order asc",
+              "alias": "dnsmaster1 short load"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "series": "dnsmaster2.local.load.load.shortterm",
+              "query": "select mean(value) from \"dnsmaster2.local.load.load.shortterm\" where $timeFilter group by time($interval) order asc",
+              "alias": "dnsmaster2 short load"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "series": "dnsslave1.local.load.load.shortterm",
+              "query": "select mean(value) from \"dnsslave1.local.load.load.shortterm\" where $timeFilter group by time($interval) order asc",
+              "alias": "dnsslave1 short load"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "series": "dnsslave2.local.load.load.shortterm",
+              "query": "select mean(value) from \"dnsslave2.local.load.load.shortterm\" where $timeFilter group by time($interval) order asc",
+              "alias": "dnsslave2 short load"
             }
           ],
           "aliasColors": {},
@@ -217,7 +252,7 @@
           },
           "resolution": 100,
           "lines": true,
-          "fill": 0,
+          "fill": 1,
           "linewidth": 1,
           "points": false,
           "pointradius": 5,
@@ -243,7 +278,26 @@
           "targets": [
             {
               "function": "mean",
-              "column": "value"
+              "column": "value",
+              "series": "dnspuppetmaster.local.memory.memory-used",
+              "query": "select mean(value) from \"dnspuppetmaster.local.memory.memory-used\" where $timeFilter group by time($interval) order asc",
+              "alias": "dnspuppetmaster RAM used"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "series": "dnsmaster1.local.memory.memory-used",
+              "query": "select mean(value) from \"dnsmaster1.local.memory.memory-used\" where $timeFilter group by time($interval) order asc",
+              "alias": "dnsmaster1 RAM used"
+            },
+            {
+              "target": "",
+              "function": "mean",
+              "column": "value",
+              "series": "dnsmaster2.local.memory.memory-used",
+              "query": "select mean(value) from \"dnsmaster2.local.memory.memory-used\" where $timeFilter group by time($interval) order asc",
+              "alias": "dnsmaster2 RAM used"
             }
           ],
           "aliasColors": {},
@@ -311,7 +365,7 @@
     }
   ],
   "time": {
-    "from": "now-1h",
+    "from": "now-4h",
     "to": "now"
   },
   "templating": {
