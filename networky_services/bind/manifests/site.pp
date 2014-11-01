@@ -504,7 +504,7 @@ node 'dnsmaster2.local' {
       #root hints zone
       '.' => [
         'type hint',
-        'file "/etc/bind/db.root"',
+        'file "/var/named/named.ca"',
       ],
     'zone1.local' => [
       'type master',
@@ -541,7 +541,7 @@ node 'dnsmaster2.local' {
       'allow-transfer { 10net; }',
       'allow-update { local; }',
       ],
-    }
+    },
   }
 
   ###############################
