@@ -1,7 +1,12 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; zone4.local zone data records
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;Set a default TTL of 1 hour for records in this zone data file
+$TTL 1h
+
 ; IN- An INternet record; this is one class of DNS data. In theory, there could be other data classes but they are never used.
 ; SOA- stands for Status Of Authority; this means that the hostname before the 'IN SOA' is authoritative for this zone
-
-$TTL 1h
 
 zone4.local. IN SOA dnsmaster2.local. root.zone4.local. (
   1   ; Serial
