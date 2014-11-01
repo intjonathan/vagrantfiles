@@ -1,0 +1,23 @@
+; IN- An INternet record; this is one class of DNS data. In theory, there could be other data classes but they are never used.
+; SOA- stands for Status Of Authority; this means that the hostname before the 'IN SOA' is authoritative for this zone
+
+$TTL 1h
+
+zone5.local. IN SOA dnsmaster2.local. root.zone5.local. (
+  1   ; Serial
+  3h  ; Refresh after 3 hours
+  1h  ; Retry after 1 hour
+  1w  ; Expire after 1 week
+  1h) ; Negative caching TTL of 1 hour
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Nameserver records
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+zone5.local. IN NS dnsmaster2.local.
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Hostname records
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+webserver.zone5.local. IN A 10.0.1.79
