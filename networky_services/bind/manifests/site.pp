@@ -544,6 +544,10 @@ node 'dnsmaster2.local' {
     },
   }
 
+  bind::server::file { 'zone1.local':
+    source => 'puppet:///bind/zone_files/zone1.local.zone',
+  }
+
   ###############################
   # Icinga 2 host export stuff
   ###############################
