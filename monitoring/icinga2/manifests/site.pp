@@ -459,6 +459,12 @@ node 'trustyicinga2server.local' {
     target_dir => '/etc/icinga2/objects/applys'
   }
 
+  #Create a notificationcommand to test out this PR: https://github.com/Icinga/puppet-icinga2/pull/32
+  icinga2::object::notificationcommand { 'mail-service-notification-2':
+    command   => ['"/icinga2/scripts/mail-notification.sh"'],
+    cmd_path  => 'SysconfDir',
+  }
+
   #Install Postfix so we can monitor SMTP services and send out email alerts:
   class { '::postfix::server':
     inet_interfaces => 'all', #Listen on all interfaces
