@@ -465,6 +465,11 @@ node 'trustyicinga2server.local' {
     cmd_path  => 'SysconfDir',
   }
 
+  #Create an eventcommand to test out this PR: https://github.com/Icinga/puppet-icinga2/pull/33
+  icinga2::object::eventcommand { 'restart-httpd-event':
+    command => [ '"/opt/bin/restart-httpd.sh"' ]
+  }
+
   #Install Postfix so we can monitor SMTP services and send out email alerts:
   class { '::postfix::server':
     inet_interfaces => 'all', #Listen on all interfaces
