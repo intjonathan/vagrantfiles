@@ -1383,7 +1383,8 @@ node 'dnsmonitoring.local' {
   # InfluxDB installation/setup
   ###############################
   
-  #Coming soon...
+  #Install InfluxDB with the default options:
+  class { 'influxdb': }
 
   ###############################
   # Grafana installation/setup
