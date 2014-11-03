@@ -1336,10 +1336,10 @@ node 'dnsmonitoring.local' {
 
   #Install Apache so we can run Kibana:
   class{ '::apache':}
-  ::apache::mod { 'ssl': } #Install/enable the SSL module
-  ::apache::mod { 'proxy': } #Install/enable the proxy module
+  ::apache::mod { 'ssl': }        #Install/enable the SSL module
+  ::apache::mod { 'proxy': }      #Install/enable the proxy module
   ::apache::mod { 'proxy_http': } #Install/enable the HTTP proxy module
-  ::apache::mod { 'rewrite': } #Install/enable the rewrite module
+  ::apache::mod { 'rewrite': }    #Install/enable the rewrite module
 
   ###############################
   # rsyslog installation/setup
