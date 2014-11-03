@@ -123,50 +123,6 @@ Vagrant.configure("2") do |config|
 	  dnsclient2_config.vm.provision :shell, :path => "../provisioning_scripts/el7_puppet_agent.sh"
   end
 
-  #A mail server VM for sending emails about DNS stuff
-  config.vm.define "dnsmail".to_sym do |dnsmail_config|
-    dnsmail_config.vm.box = "ubuntu-14.04-server-amd64"
-    dnsmail_config.vm.hostname = "dnsmail.local"
-    dnsmail_config.vm.network :private_network, ip: "10.0.1.77"
-    #set some machine-specific options	
-    dnsmail_config.vm.provider "virtualbox" do |v|
-      #change the amount of RAM 
-      v.customize ["modifyvm", :id, "--memory", "256"]
-    end
-    #Puppet agent provisioning script
-	  dnsmail_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
-  end
-
-  #A Riemann/InfluxDB/Grafana VM for gathering and graphing DNS metrics
-  config.vm.define "dnsmetrics".to_sym do |dnsmetrics_config|
-    dnsmetrics_config.vm.box = "ubuntu-14.04-server-amd64"
-    dnsmetrics_config.vm.hostname = "dnsmetrics.local"
-    dnsmetrics_config.hostmanager.aliases = %w(grafana.dnsmetrics.local)
-    dnsmetrics_config.vm.network :private_network, ip: "10.0.1.78"
-    #set some machine-specific options	
-    dnsmetrics_config.vm.provider "virtualbox" do |v|
-      #change the amount of RAM 
-      v.customize ["modifyvm", :id, "--memory", "1024"]
-    end
-    #Puppet agent provisioning script
-	  dnsmetrics_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
-  end
-
-  #An Elasticsearch/Logstash/Kibana VM 
-  config.vm.define "dnslogging".to_sym do |dnslogging_config|
-    dnslogging_config.vm.box = "ubuntu-14.04-server-amd64"
-    dnslogging_config.vm.hostname = "dnslogging.local"
-    dnslogging_config.hostmanager.aliases = %w(kibana.dnslogging.local)
-    dnslogging_config.vm.network :private_network, ip: "10.0.1.79"
-    #set some machine-specific options	
-    dnslogging_config.vm.provider "virtualbox" do |v|
-      #change the amount of RAM 
-      v.customize ["modifyvm", :id, "--memory", "1024"]
-    end
-    #Puppet agent provisioning script
-	  dnslogging_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
-  end
-
   #An Icinga 2 server for monitoring DNS
   config.vm.define "dnsmonitoring".to_sym do |dnsmonitoring_config|
     dnsmonitoring_config.vm.box = "ubuntu-14.04-server-amd64"
