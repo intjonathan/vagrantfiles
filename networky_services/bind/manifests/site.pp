@@ -98,7 +98,7 @@ node 'dnspuppetmaster.local' {
   
   #Write the collectd status to the Riemann VM in the Graphite format:
   class { 'collectd::plugin::write_graphite':
-    graphitehost => 'dnsmetrics.local',
+    graphitehost => 'dnsmonitoring.local',
     protocol => 'tcp',
     graphiteport => 2003,
   }
@@ -255,7 +255,7 @@ node 'dnsmaster1.local' {
   
   #Write the collectd status to the Riemann VM in the Graphite format:
   class { 'collectd::plugin::write_graphite':
-    graphitehost => 'dnsmetrics.local',
+    graphitehost => 'dnsmonitoring.local',
     protocol => 'tcp',
     graphiteport => 2003,
   }
@@ -473,7 +473,7 @@ node 'dnsmaster2.local' {
   
   #Write the collectd status to the Riemann VM in the Graphite format:
   class { 'collectd::plugin::write_graphite':
-    graphitehost => 'dnsmetrics.local',
+    graphitehost => 'dnsmonitoring.local',
     protocol => 'tcp',
     graphiteport => 2003,
   }
@@ -715,7 +715,7 @@ node 'dnsslave1.local' {
   
   #Write the collectd status to the Riemann VM in the Graphite format:
   class { 'collectd::plugin::write_graphite':
-    graphitehost => 'dnsmetrics.local',
+    graphitehost => 'dnsmonitoring.local',
     protocol => 'tcp',
     graphiteport => 2003,
   }
@@ -876,7 +876,7 @@ node 'dnsslave2.local' {
   
   #Write the collectd status to the Riemann VM in the Graphite format:
   class { 'collectd::plugin::write_graphite':
-    graphitehost => 'dnsmetrics.local',
+    graphitehost => 'dnsmonitoring.local',
     protocol => 'tcp',
     graphiteport => 2003,
   }
@@ -1033,7 +1033,7 @@ node 'dnsclient1.local' {
   
   #Write the collectd status to the Riemann VM in the Graphite format:
   class { 'collectd::plugin::write_graphite':
-    graphitehost => 'dnsmetrics.local',
+    graphitehost => 'dnsmonitoring.local',
     protocol => 'tcp',
     graphiteport => 2003,
   }
@@ -1190,7 +1190,7 @@ node 'dnsclient2.local' {
   
   #Write the collectd status to the Riemann VM in the Graphite format:
   class { 'collectd::plugin::write_graphite':
-    graphitehost => 'dnsmetrics.local',
+    graphitehost => 'dnsmonitoring.local',
     protocol => 'tcp',
     graphiteport => 2003,
   }
@@ -1390,7 +1390,7 @@ node 'dnsmonitoring.local' {
   ###############################
 
   #A non-SSL virtual host for grafana:
-  ::apache::vhost { 'grafana.dnsmetrics.local_non-ssl':
+  ::apache::vhost { 'grafana.dnsmonitoring.local_non-ssl':
     port            => 80,
     docroot         => '/sites/apps/grafana',
     servername      => "grafana.${fqdn}",
@@ -1873,7 +1873,7 @@ node 'dnsmonitoring.local' {
   
   #Write the collectd status to the Riemann VM in the Graphite format:
   class { 'collectd::plugin::write_graphite':
-    graphitehost => 'dnsmetrics.local',
+    graphitehost => 'dnsmonitoring.local',
     protocol => 'tcp',
     graphiteport => 2003,
   }
