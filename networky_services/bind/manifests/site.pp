@@ -1466,7 +1466,7 @@ node 'dnsmonitoring.local' {
   ###############################
 
   #A non-SSL virtual host for Kibana:
-  ::apache::vhost { 'kibana.icinga2logging.local_non-ssl':
+  ::apache::vhost { 'kibana.dnsmonitoring.local_non-ssl':
     port            => 80,
     docroot         => '/sites/apps/kibana3',
     servername      => "kibana.${fqdn}",
