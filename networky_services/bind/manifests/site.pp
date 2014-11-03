@@ -215,7 +215,7 @@ node 'dnsmaster1.local' {
     log_local      => true,
     log_auth_local => true,
     custom_config  => undef,
-    server         => 'dnslogging.local',
+    server         => 'dnsmonitoring.local',
     port           => '5514',
   }
 
@@ -433,7 +433,7 @@ node 'dnsmaster2.local' {
     log_local      => true,
     log_auth_local => true,
     custom_config  => undef,
-    server         => 'dnslogging.local',
+    server         => 'dnsmonitoring.local',
     port           => '5514',
   }
 
@@ -671,7 +671,7 @@ node 'dnsslave1.local' {
     log_local      => true,
     log_auth_local => true,
     custom_config  => undef,
-    server         => 'dnslogging.local',
+    server         => 'dnsmonitoring.local',
     port           => '5514',
   }
 
@@ -832,7 +832,7 @@ node 'dnsslave2.local' {
     log_local      => true,
     log_auth_local => true,
     custom_config  => undef,
-    server         => 'dnslogging.local',
+    server         => 'dnsmonitoring.local',
     port           => '5514',
   }
 
@@ -993,7 +993,7 @@ node 'dnsclient1.local' {
     log_local      => true,
     log_auth_local => true,
     custom_config  => undef,
-    server         => 'dnslogging.local',
+    server         => 'dnsmonitoring.local',
     port           => '5514',
   }
 
@@ -1150,7 +1150,7 @@ node 'dnsclient2.local' {
     log_local      => true,
     log_auth_local => true,
     custom_config  => undef,
-    server         => 'dnslogging.local',
+    server         => 'dnsmonitoring.local',
     port           => '5514',
   }
 
@@ -1496,7 +1496,7 @@ node 'dnsmonitoring.local' {
       { name => 'RFC3164fmt', template => '<%PRI%>%TIMESTAMP% %HOSTNAME% %syslogtag%%msg%',},
     ],
     log_remote     => true,
-    server         => 'dnslogging.local',
+    server         => 'dnsmonitoring.local',
     port           => '5514',
     remote_type    => 'tcp',
     log_local      => true,
