@@ -1341,30 +1341,6 @@ node 'dnsmonitoring.local' {
   ::apache::mod { 'proxy_http': } #Install/enable the HTTP proxy module
   ::apache::mod { 'rewrite': }    #Install/enable the rewrite module
 
-  ###############################
-  # Riemann installation/setup
-  ###############################
-
-  #Install Java so we can run Riemann; use the -> arrow so that it gets instaleld:
-  package {'openjdk-7-jdk':
-    ensure => installed,
-  } ->
-
-  class { 'riemann': 
-    version => '0.2.6',
-    riemann_config_source => 'puppet:///riemann/configs/riemann.config',
-  }
-
-  ###############################
-  # InfluxDB installation/setup
-  ###############################
-  
-  #Coming soon...
-
-  ###############################
-  # Grafana installation/setup
-  ###############################
-
   #Create a folder where the SSL certificate and key will live:
   file {'/etc/apache2/ssl': 
     ensure => directory,
@@ -1388,6 +1364,30 @@ node 'dnsmonitoring.local' {
       group => 'www-data',
       mode => '755',
   }
+
+  ###############################
+  # Riemann installation/setup
+  ###############################
+
+  #Install Java so we can run Riemann; use the -> arrow so that it gets instaleld:
+  package {'openjdk-7-jdk':
+    ensure => installed,
+  } ->
+
+  class { 'riemann': 
+    version => '0.2.6',
+    riemann_config_source => 'puppet:///riemann/configs/riemann.config',
+  }
+
+  ###############################
+  # InfluxDB installation/setup
+  ###############################
+  
+  #Coming soon...
+
+  ###############################
+  # Grafana installation/setup
+  ###############################
 
   #A non-SSL virtual host for grafana:
   ::apache::vhost { 'grafana.dnsmetrics.local_non-ssl':
