@@ -1414,7 +1414,7 @@ node 'dnsmonitoring.local' {
 
   #Install Logstash:  
   class { 'logstash':
-    java_install => true,
+    java_install => false,
     java_package => 'openjdk-7-jre-headless',
     package_url => 'https://download.elasticsearch.org/logstash/logstash/packages/debian/logstash_1.4.2-1-2c0f5a1_all.deb',
     install_contrib => true,
