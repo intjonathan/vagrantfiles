@@ -1342,6 +1342,20 @@ node 'dnsmonitoring.local' {
   ::apache::mod { 'rewrite': }    #Install/enable the rewrite module
 
   ###############################
+  # Riemann installation/setup
+  ###############################
+
+  #Install Java so we can run Riemann; use the -> arrow so that it gets instaleld:
+  package {'openjdk-7-jdk':
+    ensure => installed,
+  } ->
+
+  class { 'riemann': 
+    version => '0.2.6',
+    riemann_config_source => 'puppet:///riemann/configs/riemann.config',
+  }
+
+  ###############################
   # rsyslog installation/setup
   ###############################
 
