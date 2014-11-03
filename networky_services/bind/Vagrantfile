@@ -123,7 +123,8 @@ Vagrant.configure("2") do |config|
 	  dnsclient2_config.vm.provision :shell, :path => "../provisioning_scripts/el7_puppet_agent.sh"
   end
 
-  #An Icinga 2 server for monitoring DNS
+  #An Elasticsearch/Logstash/Kibana and Riemann/InfluxDB/Grafana and Icinga 2 monitoring VM;
+  #also has a mail server for sending email alerts
   config.vm.define "dnsmonitoring".to_sym do |dnsmonitoring_config|
     dnsmonitoring_config.vm.box = "ubuntu-14.04-server-amd64"
     dnsmonitoring_config.vm.hostname = "dnsmonitoring.local"
