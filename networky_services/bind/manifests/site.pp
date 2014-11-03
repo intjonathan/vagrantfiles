@@ -1356,6 +1356,12 @@ node 'dnsmonitoring.local' {
   }
 
   ###############################
+  # InfluxDB installation/setup
+  ###############################
+  
+  #Coming soon...
+
+  ###############################
   # rsyslog installation/setup
   ###############################
 
