@@ -1300,7 +1300,7 @@ node 'dnsmonitoring.local' {
   # Postfix installation/setup
   ###############################
 
-  #Install Postfix so we can send out email alerts:
+  #Install Postfix so we can monitor SMTP services and send out email alerts:
   class { '::postfix::server':
     inet_interfaces => 'all', #Listen on all interfaces
     inet_protocols => 'all', #Use both IPv4 and IPv6
@@ -1311,6 +1311,23 @@ node 'dnsmonitoring.local' {
       'mailbox_command' => '',
       'disable_dns_lookups' => 'yes' #Don't do DNS lookups for MX records since we're just using /etc/hosts for all host lookups
     }  
+  }
+
+  #Create a user account so we can test receiving mail:
+  user { 'nick':
+    ensure => present,
+    home => '/home/nick',
+    groups => ['sudo', 'admin'],
+    #This is 'password', in salted SHA-512 form:
+    password => '$6$IPYwCTfWyO$bIVTSw4ai/BGtZpfI4HtC8XE7bmb8b3kdZ6gRz4DF4hm7WmD35azXoFxN90TRrSYQdKo011YnBl7p3UXR2osQ1',
+    shell => '/bin/bash',
+  }
+
+  file { '/home/nick' :
+    ensure => directory,
+    owner => 'nick',
+    group => 'nick',
+    mode =>  '755',
   }
 
   ###############################
