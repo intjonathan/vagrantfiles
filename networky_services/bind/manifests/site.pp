@@ -1362,6 +1362,53 @@ node 'dnsmonitoring.local' {
   #Coming soon...
 
   ###############################
+  # Grafana installation/setup
+  ###############################
+
+  #Create a folder where the SSL certificate and key will live:
+  file {'/etc/apache2/ssl': 
+    ensure => directory,
+    owner => 'root',
+    group => 'root',
+    mode => '600',
+  }
+
+  #Create a sites/ folder for Apache to serve webapps out of:
+  file {'/sites/': 
+      ensure => directory,
+      owner => 'www-data',
+      group => 'www-data',
+      mode => '755',
+  }
+
+  #Create an apps/ in /sites:
+  file {'/sites/apps/': 
+      ensure => directory,
+      owner => 'www-data',
+      group => 'www-data',
+      mode => '755',
+  }
+
+  #A non-SSL virtual host for grafana:
+  ::apache::vhost { 'grafana.dnsmetrics.local_non-ssl':
+    port            => 80,
+    docroot         => '/sites/apps/grafana',
+    servername      => "grafana.${fqdn}",
+    access_log => true,
+    access_log_syslog=> 'syslog:local1',
+    error_log => true,
+    error_log_syslog=> 'syslog:local1',
+    custom_fragment => '
+      #Disable multiviews since they can have unpredictable results
+      <Directory "/sites/apps/grafana">
+        AllowOverride All
+        Require all granted
+        Options -Multiviews
+      </Directory>
+    ',
+  }
+
+  ###############################
   # rsyslog installation/setup
   ###############################
 
