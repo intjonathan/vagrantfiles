@@ -1334,7 +1334,7 @@ node 'dnsmonitoring.local' {
   # Apache installation/setup
   ###############################
 
-  #Install Apache so we can run Kibana:
+  #Install Apache so we can run Kibana and Grafana:
   class{ '::apache':}
   ::apache::mod { 'ssl': }        #Install/enable the SSL module
   ::apache::mod { 'proxy': }      #Install/enable the proxy module
