@@ -469,6 +469,18 @@ node 'trustyicinga2server.local' {
   icinga2::object::eventcommand { 'restart-httpd-event':
     command => [ '"/opt/bin/restart-httpd.sh"' ]
   }
+  
+  #Create a timeperiod object to test out this PR: https://github.com/Icinga/puppet-icinga2/pull/37
+  icinga2::object::timeperiod { 'bra-office-hrs':
+    timeperiod_display_name => 'Brazilian WorkTime Hours',
+    timeperiod_ranges       => {
+      'monday'    => '12:00-21:00',
+      'tuesday'   => '12:00-21:00',
+      'wednesday' => '12:00-21:00',
+      'thursday'  => '12:00-21:00',
+      'friday'    => '12:00-21:00'
+    }
+  }
 
   #Install Postfix so we can monitor SMTP services and send out email alerts:
   class { '::postfix::server':
