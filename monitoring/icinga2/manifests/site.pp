@@ -482,6 +482,14 @@ node 'trustyicinga2server.local' {
     }
   }
 
+  #Create a notification object to test this PR: https://github.com/Icinga/puppet-icinga2/pull/36
+  icinga2::object::notification { 'localhost-ping-notification':
+    host_name => "localhost",
+    service_name => "ping4",
+    command => "mail-service-notification",
+    types => [ 'Problem', 'Recovery' ]
+    }
+
   #Install Postfix so we can monitor SMTP services and send out email alerts:
   class { '::postfix::server':
     inet_interfaces => 'all', #Listen on all interfaces
