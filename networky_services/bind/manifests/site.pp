@@ -1334,7 +1334,7 @@ node 'dnsmonitoring.local' {
   # Apache installation/setup
   ###############################
 
-  #Install Apache so we can run Kibana:
+  #Install Apache so we can run Kibana and Grafana:
   class{ '::apache':}
   ::apache::mod { 'ssl': }        #Install/enable the SSL module
   ::apache::mod { 'proxy': }      #Install/enable the proxy module
@@ -1566,6 +1566,18 @@ node 'dnsmonitoring.local' {
     server_disabled_features => ['graphite', 'api'],
   } ->
 
+  #Postgres IDO connection object:
+  icinga2::object::idopgsqlconnection { 'testing_postgres':
+     host             => '127.0.0.1',
+     port             => 5432,
+     user             => 'icinga2',
+     password         => 'password',
+     database         => 'icinga2_data',
+     target_file_name => 'ido-pgsql.conf',
+     target_dir       => '/etc/icinga2/features-enabled',
+     categories       => ['DbCatConfig', 'DbCatState', 'DbCatAcknowledgement', 'DbCatComment', 'DbCatDowntime', 'DbCatEventHandler' ],
+  } ->
+
   #Collect all @@icinga2::object::host resources from PuppetDB that were exported by other machines:
   Icinga2::Object::Host <<| |>> { }
 
@@ -1581,18 +1593,6 @@ node 'dnsmonitoring.local' {
   icinga2::object::hostgroup { 'mysql_servers':
     display_name => 'MySQL servers',
     target_dir => '/etc/icinga2/objects/hostgroups',
-  }
-
-  #Postgres IDO connection object:
-  icinga2::object::idopgsqlconnection { 'testing_postgres':
-     host             => '127.0.0.1',
-     port             => 5432,
-     user             => 'icinga2',
-     password         => 'password',
-     database         => 'icinga2_data',
-     target_file_name => 'ido-pgsql.conf',
-     target_dir       => '/etc/icinga2/features-enabled',
-     categories       => ['DbCatConfig', 'DbCatState', 'DbCatAcknowledgement', 'DbCatComment', 'DbCatDowntime', 'DbCatEventHandler' ],
   }
 
   #Create a sysloglogger object:
