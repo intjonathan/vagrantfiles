@@ -482,6 +482,38 @@ node 'trustyicinga2server.local' {
     }
   }
 
+  #Create an HTTP check command:
+  icinga2::object::checkcommand { 'check_http':
+    command => ['"/check_http"'],
+    arguments     => {'"-H"'             => '"$http_vhost$"',
+      '"-I"'          => '"$http_address$"',
+      '"-u"'          => '"$http_uri$"',
+      '"-p"'          => '"$http_port$"',
+      '"-S"'          => {
+        'set_if' => '"$http_ssl$"'
+      },
+      '"--sni"'       => {
+        'set_if' => '"$http_sni$"'
+      },
+      '"-a"'          => {
+        'value'       => '"$http_auth_pair$"',
+        'description' => '"Username:password on sites with basic authentication"'
+      },
+      '"--no-body"'   => {
+        'set_if' => '"$http_ignore_body$"'
+      },
+      '"-r"' => '"$http_expect_body_regex$"',
+      '"-w"' => '"$http_warn_time$"',
+      '"-c"' => '"$http_critical_time$"',
+      '"-e"' => '"$http_expect$"'
+    },
+    vars => {
+      'vars.http_address' => '"$address$"',
+      'vars.http_ssl'     => 'false',
+      'vars.http_sni'     => 'false'
+    }
+  }
+
   #Create a scheduled downtime object to test this PR: https://github.com/Icinga/puppet-icinga2/pull/38
   icinga2::object::scheduleddowntime {'some-downtime':
     host_name    => 'localhost',
