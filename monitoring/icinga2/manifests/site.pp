@@ -473,13 +473,44 @@ node 'trustyicinga2server.local' {
   #Create a timeperiod object to test out this PR: https://github.com/Icinga/puppet-icinga2/pull/37
   icinga2::object::timeperiod { 'bra-office-hrs':
     timeperiod_display_name => 'Brazilian WorkTime Hours',
-    timeperiod_ranges       => {
+    ranges       => {
       'monday'    => '12:00-21:00',
       'tuesday'   => '12:00-21:00',
       'wednesday' => '12:00-21:00',
       'thursday'  => '12:00-21:00',
       'friday'    => '12:00-21:00'
     }
+  }
+
+  #Create an apply_notification_to_host object to test this PR: https://github.com/Icinga/puppet-icinga2/pull/43
+  icinga2::object::apply_notification_to_host { 'pagerduty-host':
+    assign_where => 'host.vars.enable_pagerduty == "true"',
+    command      => 'notify-host-by-pagerduty',
+    users        => [ 'pagerduty' ],
+    states       => [ 'Up', 'Down' ],
+    types        => [ 'Problem', 'Acknowledgement', 'Recovery', 'Custom' ],
+    period       => '24x7',
+  }
+
+  #Create an apply_notification_to_service object to test this PR: https://github.com/Icinga/puppet-icinga2/pull/44
+  icinga2::object::apply_notification_to_service { 'pagerduty-service':
+    assign_where => 'service.vars.enable_pagerduty == "true"',
+    command      => 'notify-service-by-pagerduty',
+    users        => [ 'pagerduty' ],
+    states       => [ 'OK', 'Warning', 'Critical', 'Unknown' ],
+    types        => [ 'Problem', 'Acknowledgement', 'Recovery', 'Custom' ],
+    period       => '24x7',
+  }
+
+  #Create a scheduled downtime object to test this PR: https://github.com/Icinga/puppet-icinga2/pull/38
+  icinga2::object::scheduleddowntime {'some-downtime':
+    host_name    => 'localhost',
+    service_name => 'ping4',
+    author       => 'icingaadmin',
+    comment      => 'Some comment',
+    fixed        => false,
+    duration     => '30m',
+    ranges       => { 'sunday' => '02:00-03:00' }
   }
 
   #Create an HTTP check command:
@@ -514,16 +545,7 @@ node 'trustyicinga2server.local' {
     }
   }
 
-  #Create a scheduled downtime object to test this PR: https://github.com/Icinga/puppet-icinga2/pull/38
-  icinga2::object::scheduleddowntime {'some-downtime':
-    host_name    => 'localhost',
-    service_name => 'ping4',
-    author       => 'icingaadmin',
-    comment      => 'Some comment',
-    fixed        => false,
-    duration     => '30m',
-    ranges       => { 'sunday' => '02:00-03:00' }
-  }
+
 
   #Create a notification object to test this PR: https://github.com/Icinga/puppet-icinga2/pull/36
   icinga2::object::notification { 'localhost-ping-notification':
