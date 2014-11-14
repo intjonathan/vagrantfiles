@@ -482,16 +482,6 @@ node 'trustyicinga2server.local' {
     }
   }
 
-  #Create an apply_notification_to_host object to test this PR: https://github.com/Icinga/puppet-icinga2/pull/43
-  icinga2::object::apply_notification_to_host { 'pagerduty-host':
-    assign_where => 'host.vars.enable_pagerduty == "true"',
-    command      => 'notify-host-by-pagerduty',
-    users        => [ 'pagerduty' ],
-    states       => [ 'Up', 'Down' ],
-    types        => [ 'Problem', 'Acknowledgement', 'Recovery', 'Custom' ],
-    period       => '24x7',
-  }
-
   #Create an apply_notification_to_service object to test this PR: https://github.com/Icinga/puppet-icinga2/pull/44
   icinga2::object::apply_notification_to_service { 'pagerduty-service':
     assign_where => 'service.vars.enable_pagerduty == "true"',
@@ -511,6 +501,25 @@ node 'trustyicinga2server.local' {
     fixed        => false,
     duration     => '30m',
     ranges       => { 'sunday' => '02:00-03:00' }
+  }
+
+  #Create an apply_notification_to_host object to test this PR: https://github.com/Icinga/puppet-icinga2/pull/43
+  icinga2::object::apply_notification_to_host { 'pagerduty-host':
+    assign_where => 'host.vars.enable_pagerduty == "true"',
+    command      => 'notify-host-by-pagerduty',
+    users        => [ 'pagerduty' ],
+    states       => [ 'Up', 'Down' ],
+    types        => [ 'Problem', 'Acknowledgement', 'Recovery', 'Custom' ],
+    period       => '24x7',
+  }
+  
+  #Create a PerfDataWriter object to test out this PR: https://github.com/Icinga/puppet-icinga2/pull/47
+  icinga2::object::perfdatawriter { 'pnp':
+    host_perfdata_path      => '/var/spool/icinga2/perfdata/host-perfdata',
+    service_perfdata_path   => '/var/spool/icinga2/perfdata/service-perfdata',
+    host_format_template    => 'DATATYPE::HOSTPERFDATA\tTIMET::$icinga.timet$\tHOSTNAME::$host.name$\tHOSTPERFDATA::$host.perfdata$\tHOSTCHECKCOMMAND::$host.check_command$\tHOSTSTATE::$host.state$\tHOSTSTATETYPE::$host.state_type$',
+    service_format_template => 'DATATYPE::SERVICEPERFDATA\tTIMET::$icinga.timet$\tHOSTNAME::$host.name$\tSERVICEDESC::$service.name$\tSERVICEPERFDATA::$service.perfdata$\tSERVICECHECKCOMMAND::$service.check_command$\tHOSTSTATE::$host.state$\tHOSTSTATETYPE::$host.state_type$\tSERVICESTATE::$service.state$\tSERVICESTATETYPE::$service.state_type$',
+    rotation_interval       => '15s'
   }
 
   #Create an HTTP check command:
