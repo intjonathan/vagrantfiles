@@ -497,7 +497,12 @@ node 'trustyicinga2server.local' {
     socket_type => 'unix',
     socket_path => '/var/run/icinga2/cmd/livestatus'
   }
-  
+
+  #Create an ExternalCommandListener object to test this PR: https://github.com/Icinga/puppet-icinga2/pull/50
+  icinga2::object::externalcommandlistener { 'external':
+    command_path => '/var/run/icinga2/cmd/icinga2.cmd'
+  }
+
   #Create a statusdatawriter object to test this PR: https://github.com/Icinga/puppet-icinga2/pull/49
   icinga2::object::statusdatawriter { 'status':
       status_path     => '/var/cache/icinga2/status.dat',
