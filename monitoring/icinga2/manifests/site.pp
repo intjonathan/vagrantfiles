@@ -492,6 +492,12 @@ node 'trustyicinga2server.local' {
     period       => '24x7',
   }
 
+  #Create a LiveStatusListener object to test this PR: https://github.com/Icinga/puppet-icinga2/pull/48
+  icinga2::object::livestatuslistener { 'livestatus-unix':
+    socket_type => 'unix',
+    socket_path => '/var/run/icinga2/cmd/livestatus'
+  }
+
   #Create a scheduled downtime object to test this PR: https://github.com/Icinga/puppet-icinga2/pull/38
   icinga2::object::scheduleddowntime {'some-downtime':
     host_name    => 'localhost',
