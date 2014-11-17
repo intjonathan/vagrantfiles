@@ -497,6 +497,13 @@ node 'trustyicinga2server.local' {
     socket_type => 'unix',
     socket_path => '/var/run/icinga2/cmd/livestatus'
   }
+  
+  #Create a statusdatawriter object to test this PR: https://github.com/Icinga/puppet-icinga2/pull/49
+  icinga2::object::statusdatawriter { 'status':
+      status_path     => '/var/cache/icinga2/status.dat',
+      objects_path    => '/var/cache/icinga2/objects.path',
+      update_interval => 30s
+  }
 
   #Create a scheduled downtime object to test this PR: https://github.com/Icinga/puppet-icinga2/pull/38
   icinga2::object::scheduleddowntime {'some-downtime':
