@@ -208,6 +208,7 @@ node 'trustyicinga2server.local' {
     install_mail_utils_package => true,
     server_enabled_features  => ['checker','notification', 'livestatus', 'syslog'],
     server_disabled_features => ['graphite', 'api'],
+    purge_unmanaged_object_files => false
   } ->
 
   #Collect all @@icinga2::object::host resources from PuppetDB that were exported by other machines:
