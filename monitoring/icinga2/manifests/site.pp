@@ -262,6 +262,11 @@ node 'trustyicinga2server.local' {
     log_dir         => '/var/log/icinga2/compat',
     rotation_method => 'DAILY'
   }
+  
+  #Create a CheckResultReader object to test out this PR: https://github.com/Icinga/puppet-icinga2/pull/55
+  icinga2::object::checkresultreader {'reader':
+    spool_dir => '/data/check-results'
+  }
 
   #Create a user definition:
   icinga2::object::user { 'nick':
