@@ -745,11 +745,12 @@ node 'preciseicinga2server.local' {
   #Collect all @@icinga2::object::host resources from PuppetDB that were exported by other machines:
   Icinga2::Object::Host <<| |>> { }
 
-  #Create a linux_servers hostgroup:
+ #Create a linux_servers hostgroup:
   icinga2::object::hostgroup { 'linux_servers':
     display_name => 'Linux servers',
     groups => ['mysql_servers', 'clients'],
     target_dir => '/etc/icinga2/objects/hostgroups',
+    assign_where => 'match("*redis*", host.name) || match("*elastic*", host.name) || match("*logstash*", host.name)',
   }
 
   #Create a mysql_servers hostgroup:
@@ -840,6 +841,28 @@ node 'preciseicinga2server.local' {
   icinga2::object::hostgroup { 'smtp_servers':
     display_name => 'SMTP servers',
     target_dir => '/etc/icinga2/objects/hostgroups',
+  }
+
+  #Dependency object to test out this PR: https://github.com/Icinga/puppet-icinga2/pull/28
+  icinga2::object::dependency { "usermail to icinga2mail":
+    object_name => "usermail_dep_on_icinga2mail",
+    parent_host_name => 'icinga2mail.local',
+    child_host_name => 'usermail.local',
+    target_dir => '/etc/icinga2/objects/dependencies',
+    target_file_name => "usermail_to_icinga2mail.conf",
+  }
+
+  #Apply_dependency object to test out this PR: https://github.com/Icinga/puppet-icinga2/pull/28
+  icinga2::object::apply_dependency { 'usermail_dep_on_icinga2mail':
+    parent_host_name => 'icinga2mail.local',
+    assign_where => 'match("^usermail*", host.name)',
+  }
+
+  #Apply_dependency object to test out this PR: https://github.com/Icinga/puppet-icinga2/pull/28
+  icinga2::object::apply_dependency { 'imap_dep_on_smtp':
+    parent_service_name => 'check_ssh',
+    object_type => 'Service',
+    assign_where => 'match("^check_smtp*", service.name)',
   }
 
   #Create a web services servicegroup:
@@ -968,6 +991,142 @@ node 'preciseicinga2server.local' {
     target_dir => '/etc/icinga2/objects/applys'
   }
 
+  #Create a notificationcommand to test out this PR: https://github.com/Icinga/puppet-icinga2/pull/32
+  icinga2::object::notificationcommand { 'mail-service-notification-2':
+    command   => ['"/icinga2/scripts/mail-notification.sh"'],
+    cmd_path  => 'SysconfDir',
+  }
+
+  #Create an eventcommand to test out this PR: https://github.com/Icinga/puppet-icinga2/pull/33
+  icinga2::object::eventcommand { 'restart-httpd-event':
+    command => [ '"/opt/bin/restart-httpd.sh"' ]
+  }
+  
+  #Create a timeperiod object to test out this PR: https://github.com/Icinga/puppet-icinga2/pull/37
+  icinga2::object::timeperiod { 'bra-office-hrs':
+    timeperiod_display_name => 'Brazilian WorkTime Hours',
+    ranges       => {
+      'monday'    => '12:00-21:00',
+      'tuesday'   => '12:00-21:00',
+      'wednesday' => '12:00-21:00',
+      'thursday'  => '12:00-21:00',
+      'friday'    => '12:00-21:00'
+    }
+  }
+
+  #Create an apply_notification_to_service object to test this PR: https://github.com/Icinga/puppet-icinga2/pull/44
+  icinga2::object::apply_notification_to_service { 'pagerduty-service':
+    assign_where => 'service.vars.enable_pagerduty == "true"',
+    command      => 'notify-service-by-pagerduty',
+    users        => [ 'pagerduty' ],
+    states       => [ 'OK', 'Warning', 'Critical', 'Unknown' ],
+    types        => [ 'Problem', 'Acknowledgement', 'Recovery', 'Custom' ],
+    period       => '24x7',
+  }
+
+  #Create a LiveStatusListener object to test this PR: https://github.com/Icinga/puppet-icinga2/pull/48
+  icinga2::object::livestatuslistener { 'livestatus-unix':
+    socket_type => 'unix',
+    socket_path => '/var/run/icinga2/cmd/livestatus'
+  }
+
+  #Create an ExternalCommandListener object to test this PR: https://github.com/Icinga/puppet-icinga2/pull/50
+  icinga2::object::externalcommandlistener { 'external':
+    command_path => '/var/run/icinga2/cmd/icinga2.cmd'
+  }
+
+  #Create a statusdatawriter object to test this PR: https://github.com/Icinga/puppet-icinga2/pull/49
+  icinga2::object::statusdatawriter { 'status':
+      status_path     => '/var/cache/icinga2/status.dat',
+      objects_path    => '/var/cache/icinga2/objects.path',
+      update_interval => 30s
+  }
+
+  #Create a scheduled downtime object to test this PR: https://github.com/Icinga/puppet-icinga2/pull/38
+  icinga2::object::scheduleddowntime {'some-downtime':
+    host_name    => 'localhost',
+    service_name => 'ping4',
+    author       => 'icingaadmin',
+    comment      => 'Some comment',
+    fixed        => false,
+    duration     => '30m',
+    ranges       => { 'sunday' => '02:00-03:00' }
+  }
+
+  #Create an apply_notification_to_host object to test this PR: https://github.com/Icinga/puppet-icinga2/pull/43
+  icinga2::object::apply_notification_to_host { 'pagerduty-host':
+    assign_where => 'host.vars.enable_pagerduty == "true"',
+    command      => 'notify-host-by-pagerduty',
+    users        => [ 'pagerduty' ],
+    states       => [ 'Up', 'Down' ],
+    types        => [ 'Problem', 'Acknowledgement', 'Recovery', 'Custom' ],
+    period       => '24x7',
+  }
+  
+  #Create a PerfDataWriter object to test out this PR: https://github.com/Icinga/puppet-icinga2/pull/47
+  icinga2::object::perfdatawriter { 'pnp':
+    host_perfdata_path      => '/var/spool/icinga2/perfdata/host-perfdata',
+    service_perfdata_path   => '/var/spool/icinga2/perfdata/service-perfdata',
+    host_format_template    => 'DATATYPE::HOSTPERFDATA\tTIMET::$icinga.timet$\tHOSTNAME::$host.name$\tHOSTPERFDATA::$host.perfdata$\tHOSTCHECKCOMMAND::$host.check_command$\tHOSTSTATE::$host.state$\tHOSTSTATETYPE::$host.state_type$',
+    service_format_template => 'DATATYPE::SERVICEPERFDATA\tTIMET::$icinga.timet$\tHOSTNAME::$host.name$\tSERVICEDESC::$service.name$\tSERVICEPERFDATA::$service.perfdata$\tSERVICECHECKCOMMAND::$service.check_command$\tHOSTSTATE::$host.state$\tHOSTSTATETYPE::$host.state_type$\tSERVICESTATE::$service.state$\tSERVICESTATETYPE::$service.state_type$',
+    rotation_interval       => '15s'
+  }
+
+  #Create an HTTP check command:
+  icinga2::object::checkcommand { 'check_http':
+    command => ['"/check_http"'],
+    arguments     => {'"-H"'             => '"$http_vhost$"',
+      '"-I"'          => '"$http_address$"',
+      '"-u"'          => '"$http_uri$"',
+      '"-p"'          => '"$http_port$"',
+      '"-S"'          => {
+        'set_if' => '"$http_ssl$"'
+      },
+      '"--sni"'       => {
+        'set_if' => '"$http_sni$"'
+      },
+      '"-a"'          => {
+        'value'       => '"$http_auth_pair$"',
+        'description' => '"Username:password on sites with basic authentication"'
+      },
+      '"--no-body"'   => {
+        'set_if' => '"$http_ignore_body$"'
+      },
+      '"-r"' => '"$http_expect_body_regex$"',
+      '"-w"' => '"$http_warn_time$"',
+      '"-c"' => '"$http_critical_time$"',
+      '"-e"' => '"$http_expect$"'
+    },
+    vars => {
+      'vars.http_address' => '"$address$"',
+      'vars.http_ssl'     => 'false',
+      'vars.http_sni'     => 'false'
+    }
+  }
+
+
+
+  #Create a notification object to test this PR: https://github.com/Icinga/puppet-icinga2/pull/36
+  icinga2::object::notification { 'localhost-ping-notification':
+    host_name => "localhost",
+    service_name => "ping4",
+    command => "mail-service-notification",
+    types => [ 'Problem', 'Recovery' ]
+    }
+
+  #Install Postfix so we can monitor SMTP services and send out email alerts:
+  class { '::postfix::server':
+    inet_interfaces => 'all', #Listen on all interfaces
+    inet_protocols => 'all', #Use both IPv4 and IPv6
+    mydomain       => 'local',
+    mynetworks => '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 10.0.1.0/24',
+    extra_main_parameters => {
+      'home_mailbox' => 'Maildir/',
+      'mailbox_command' => '',
+      'disable_dns_lookups' => 'yes' #Don't do DNS lookups for MX records since we're just using /etc/hosts for all host lookups
+    }  
+  }
+ 
   #Install Postfix so we can monitor SMTP services and send out email alerts:
   class { '::postfix::server':
     inet_interfaces => 'all', #Listen on all interfaces
@@ -1131,11 +1290,12 @@ node 'centos6icinga2server.local' {
   #Collect all @@icinga2::object::host resources from PuppetDB that were exported by other machines:
   Icinga2::Object::Host <<| |>> { }
 
-  #Create a linux_servers hostgroup:
+#Create a linux_servers hostgroup:
   icinga2::object::hostgroup { 'linux_servers':
     display_name => 'Linux servers',
     groups => ['mysql_servers', 'clients'],
     target_dir => '/etc/icinga2/objects/hostgroups',
+    assign_where => 'match("*redis*", host.name) || match("*elastic*", host.name) || match("*logstash*", host.name)',
   }
 
   #Create a mysql_servers hostgroup:
@@ -1226,6 +1386,28 @@ node 'centos6icinga2server.local' {
   icinga2::object::hostgroup { 'smtp_servers':
     display_name => 'SMTP servers',
     target_dir => '/etc/icinga2/objects/hostgroups',
+  }
+
+  #Dependency object to test out this PR: https://github.com/Icinga/puppet-icinga2/pull/28
+  icinga2::object::dependency { "usermail to icinga2mail":
+    object_name => "usermail_dep_on_icinga2mail",
+    parent_host_name => 'icinga2mail.local',
+    child_host_name => 'usermail.local',
+    target_dir => '/etc/icinga2/objects/dependencies',
+    target_file_name => "usermail_to_icinga2mail.conf",
+  }
+
+  #Apply_dependency object to test out this PR: https://github.com/Icinga/puppet-icinga2/pull/28
+  icinga2::object::apply_dependency { 'usermail_dep_on_icinga2mail':
+    parent_host_name => 'icinga2mail.local',
+    assign_where => 'match("^usermail*", host.name)',
+  }
+
+  #Apply_dependency object to test out this PR: https://github.com/Icinga/puppet-icinga2/pull/28
+  icinga2::object::apply_dependency { 'imap_dep_on_smtp':
+    parent_service_name => 'check_ssh',
+    object_type => 'Service',
+    assign_where => 'match("^check_smtp*", service.name)',
   }
 
   #Create a web services servicegroup:
@@ -1352,6 +1534,142 @@ node 'centos6icinga2server.local' {
     assign_where => '"mysql_servers" in host.groups',
     ignore_where => 'host.name == "localhost"',
     target_dir => '/etc/icinga2/objects/applys'
+  }
+
+  #Create a notificationcommand to test out this PR: https://github.com/Icinga/puppet-icinga2/pull/32
+  icinga2::object::notificationcommand { 'mail-service-notification-2':
+    command   => ['"/icinga2/scripts/mail-notification.sh"'],
+    cmd_path  => 'SysconfDir',
+  }
+
+  #Create an eventcommand to test out this PR: https://github.com/Icinga/puppet-icinga2/pull/33
+  icinga2::object::eventcommand { 'restart-httpd-event':
+    command => [ '"/opt/bin/restart-httpd.sh"' ]
+  }
+  
+  #Create a timeperiod object to test out this PR: https://github.com/Icinga/puppet-icinga2/pull/37
+  icinga2::object::timeperiod { 'bra-office-hrs':
+    timeperiod_display_name => 'Brazilian WorkTime Hours',
+    ranges       => {
+      'monday'    => '12:00-21:00',
+      'tuesday'   => '12:00-21:00',
+      'wednesday' => '12:00-21:00',
+      'thursday'  => '12:00-21:00',
+      'friday'    => '12:00-21:00'
+    }
+  }
+
+  #Create an apply_notification_to_service object to test this PR: https://github.com/Icinga/puppet-icinga2/pull/44
+  icinga2::object::apply_notification_to_service { 'pagerduty-service':
+    assign_where => 'service.vars.enable_pagerduty == "true"',
+    command      => 'notify-service-by-pagerduty',
+    users        => [ 'pagerduty' ],
+    states       => [ 'OK', 'Warning', 'Critical', 'Unknown' ],
+    types        => [ 'Problem', 'Acknowledgement', 'Recovery', 'Custom' ],
+    period       => '24x7',
+  }
+
+  #Create a LiveStatusListener object to test this PR: https://github.com/Icinga/puppet-icinga2/pull/48
+  icinga2::object::livestatuslistener { 'livestatus-unix':
+    socket_type => 'unix',
+    socket_path => '/var/run/icinga2/cmd/livestatus'
+  }
+
+  #Create an ExternalCommandListener object to test this PR: https://github.com/Icinga/puppet-icinga2/pull/50
+  icinga2::object::externalcommandlistener { 'external':
+    command_path => '/var/run/icinga2/cmd/icinga2.cmd'
+  }
+
+  #Create a statusdatawriter object to test this PR: https://github.com/Icinga/puppet-icinga2/pull/49
+  icinga2::object::statusdatawriter { 'status':
+      status_path     => '/var/cache/icinga2/status.dat',
+      objects_path    => '/var/cache/icinga2/objects.path',
+      update_interval => 30s
+  }
+
+  #Create a scheduled downtime object to test this PR: https://github.com/Icinga/puppet-icinga2/pull/38
+  icinga2::object::scheduleddowntime {'some-downtime':
+    host_name    => 'localhost',
+    service_name => 'ping4',
+    author       => 'icingaadmin',
+    comment      => 'Some comment',
+    fixed        => false,
+    duration     => '30m',
+    ranges       => { 'sunday' => '02:00-03:00' }
+  }
+
+  #Create an apply_notification_to_host object to test this PR: https://github.com/Icinga/puppet-icinga2/pull/43
+  icinga2::object::apply_notification_to_host { 'pagerduty-host':
+    assign_where => 'host.vars.enable_pagerduty == "true"',
+    command      => 'notify-host-by-pagerduty',
+    users        => [ 'pagerduty' ],
+    states       => [ 'Up', 'Down' ],
+    types        => [ 'Problem', 'Acknowledgement', 'Recovery', 'Custom' ],
+    period       => '24x7',
+  }
+  
+  #Create a PerfDataWriter object to test out this PR: https://github.com/Icinga/puppet-icinga2/pull/47
+  icinga2::object::perfdatawriter { 'pnp':
+    host_perfdata_path      => '/var/spool/icinga2/perfdata/host-perfdata',
+    service_perfdata_path   => '/var/spool/icinga2/perfdata/service-perfdata',
+    host_format_template    => 'DATATYPE::HOSTPERFDATA\tTIMET::$icinga.timet$\tHOSTNAME::$host.name$\tHOSTPERFDATA::$host.perfdata$\tHOSTCHECKCOMMAND::$host.check_command$\tHOSTSTATE::$host.state$\tHOSTSTATETYPE::$host.state_type$',
+    service_format_template => 'DATATYPE::SERVICEPERFDATA\tTIMET::$icinga.timet$\tHOSTNAME::$host.name$\tSERVICEDESC::$service.name$\tSERVICEPERFDATA::$service.perfdata$\tSERVICECHECKCOMMAND::$service.check_command$\tHOSTSTATE::$host.state$\tHOSTSTATETYPE::$host.state_type$\tSERVICESTATE::$service.state$\tSERVICESTATETYPE::$service.state_type$',
+    rotation_interval       => '15s'
+  }
+
+  #Create an HTTP check command:
+  icinga2::object::checkcommand { 'check_http':
+    command => ['"/check_http"'],
+    arguments     => {'"-H"'             => '"$http_vhost$"',
+      '"-I"'          => '"$http_address$"',
+      '"-u"'          => '"$http_uri$"',
+      '"-p"'          => '"$http_port$"',
+      '"-S"'          => {
+        'set_if' => '"$http_ssl$"'
+      },
+      '"--sni"'       => {
+        'set_if' => '"$http_sni$"'
+      },
+      '"-a"'          => {
+        'value'       => '"$http_auth_pair$"',
+        'description' => '"Username:password on sites with basic authentication"'
+      },
+      '"--no-body"'   => {
+        'set_if' => '"$http_ignore_body$"'
+      },
+      '"-r"' => '"$http_expect_body_regex$"',
+      '"-w"' => '"$http_warn_time$"',
+      '"-c"' => '"$http_critical_time$"',
+      '"-e"' => '"$http_expect$"'
+    },
+    vars => {
+      'vars.http_address' => '"$address$"',
+      'vars.http_ssl'     => 'false',
+      'vars.http_sni'     => 'false'
+    }
+  }
+
+
+
+  #Create a notification object to test this PR: https://github.com/Icinga/puppet-icinga2/pull/36
+  icinga2::object::notification { 'localhost-ping-notification':
+    host_name => "localhost",
+    service_name => "ping4",
+    command => "mail-service-notification",
+    types => [ 'Problem', 'Recovery' ]
+    }
+
+  #Install Postfix so we can monitor SMTP services and send out email alerts:
+  class { '::postfix::server':
+    inet_interfaces => 'all', #Listen on all interfaces
+    inet_protocols => 'all', #Use both IPv4 and IPv6
+    mydomain       => 'local',
+    mynetworks => '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 10.0.1.0/24',
+    extra_main_parameters => {
+      'home_mailbox' => 'Maildir/',
+      'mailbox_command' => '',
+      'disable_dns_lookups' => 'yes' #Don't do DNS lookups for MX records since we're just using /etc/hosts for all host lookups
+    }  
   }
 
   #Install Postfix so we can monitor SMTP services and send out email alerts:
@@ -1517,11 +1835,12 @@ node 'centos7icinga2server.local' {
   #Collect all @@icinga2::object::host resources from PuppetDB that were exported by other machines:
   Icinga2::Object::Host <<| |>> { }
 
-  #Create a linux_servers hostgroup:
+#Create a linux_servers hostgroup:
   icinga2::object::hostgroup { 'linux_servers':
     display_name => 'Linux servers',
     groups => ['mysql_servers', 'clients'],
     target_dir => '/etc/icinga2/objects/hostgroups',
+    assign_where => 'match("*redis*", host.name) || match("*elastic*", host.name) || match("*logstash*", host.name)',
   }
 
   #Create a mysql_servers hostgroup:
@@ -1612,6 +1931,28 @@ node 'centos7icinga2server.local' {
   icinga2::object::hostgroup { 'smtp_servers':
     display_name => 'SMTP servers',
     target_dir => '/etc/icinga2/objects/hostgroups',
+  }
+
+  #Dependency object to test out this PR: https://github.com/Icinga/puppet-icinga2/pull/28
+  icinga2::object::dependency { "usermail to icinga2mail":
+    object_name => "usermail_dep_on_icinga2mail",
+    parent_host_name => 'icinga2mail.local',
+    child_host_name => 'usermail.local',
+    target_dir => '/etc/icinga2/objects/dependencies',
+    target_file_name => "usermail_to_icinga2mail.conf",
+  }
+
+  #Apply_dependency object to test out this PR: https://github.com/Icinga/puppet-icinga2/pull/28
+  icinga2::object::apply_dependency { 'usermail_dep_on_icinga2mail':
+    parent_host_name => 'icinga2mail.local',
+    assign_where => 'match("^usermail*", host.name)',
+  }
+
+  #Apply_dependency object to test out this PR: https://github.com/Icinga/puppet-icinga2/pull/28
+  icinga2::object::apply_dependency { 'imap_dep_on_smtp':
+    parent_service_name => 'check_ssh',
+    object_type => 'Service',
+    assign_where => 'match("^check_smtp*", service.name)',
   }
 
   #Create a web services servicegroup:
@@ -1738,6 +2079,142 @@ node 'centos7icinga2server.local' {
     assign_where => '"mysql_servers" in host.groups',
     ignore_where => 'host.name == "localhost"',
     target_dir => '/etc/icinga2/objects/applys'
+  }
+
+  #Create a notificationcommand to test out this PR: https://github.com/Icinga/puppet-icinga2/pull/32
+  icinga2::object::notificationcommand { 'mail-service-notification-2':
+    command   => ['"/icinga2/scripts/mail-notification.sh"'],
+    cmd_path  => 'SysconfDir',
+  }
+
+  #Create an eventcommand to test out this PR: https://github.com/Icinga/puppet-icinga2/pull/33
+  icinga2::object::eventcommand { 'restart-httpd-event':
+    command => [ '"/opt/bin/restart-httpd.sh"' ]
+  }
+  
+  #Create a timeperiod object to test out this PR: https://github.com/Icinga/puppet-icinga2/pull/37
+  icinga2::object::timeperiod { 'bra-office-hrs':
+    timeperiod_display_name => 'Brazilian WorkTime Hours',
+    ranges       => {
+      'monday'    => '12:00-21:00',
+      'tuesday'   => '12:00-21:00',
+      'wednesday' => '12:00-21:00',
+      'thursday'  => '12:00-21:00',
+      'friday'    => '12:00-21:00'
+    }
+  }
+
+  #Create an apply_notification_to_service object to test this PR: https://github.com/Icinga/puppet-icinga2/pull/44
+  icinga2::object::apply_notification_to_service { 'pagerduty-service':
+    assign_where => 'service.vars.enable_pagerduty == "true"',
+    command      => 'notify-service-by-pagerduty',
+    users        => [ 'pagerduty' ],
+    states       => [ 'OK', 'Warning', 'Critical', 'Unknown' ],
+    types        => [ 'Problem', 'Acknowledgement', 'Recovery', 'Custom' ],
+    period       => '24x7',
+  }
+
+  #Create a LiveStatusListener object to test this PR: https://github.com/Icinga/puppet-icinga2/pull/48
+  icinga2::object::livestatuslistener { 'livestatus-unix':
+    socket_type => 'unix',
+    socket_path => '/var/run/icinga2/cmd/livestatus'
+  }
+
+  #Create an ExternalCommandListener object to test this PR: https://github.com/Icinga/puppet-icinga2/pull/50
+  icinga2::object::externalcommandlistener { 'external':
+    command_path => '/var/run/icinga2/cmd/icinga2.cmd'
+  }
+
+  #Create a statusdatawriter object to test this PR: https://github.com/Icinga/puppet-icinga2/pull/49
+  icinga2::object::statusdatawriter { 'status':
+      status_path     => '/var/cache/icinga2/status.dat',
+      objects_path    => '/var/cache/icinga2/objects.path',
+      update_interval => 30s
+  }
+
+  #Create a scheduled downtime object to test this PR: https://github.com/Icinga/puppet-icinga2/pull/38
+  icinga2::object::scheduleddowntime {'some-downtime':
+    host_name    => 'localhost',
+    service_name => 'ping4',
+    author       => 'icingaadmin',
+    comment      => 'Some comment',
+    fixed        => false,
+    duration     => '30m',
+    ranges       => { 'sunday' => '02:00-03:00' }
+  }
+
+  #Create an apply_notification_to_host object to test this PR: https://github.com/Icinga/puppet-icinga2/pull/43
+  icinga2::object::apply_notification_to_host { 'pagerduty-host':
+    assign_where => 'host.vars.enable_pagerduty == "true"',
+    command      => 'notify-host-by-pagerduty',
+    users        => [ 'pagerduty' ],
+    states       => [ 'Up', 'Down' ],
+    types        => [ 'Problem', 'Acknowledgement', 'Recovery', 'Custom' ],
+    period       => '24x7',
+  }
+  
+  #Create a PerfDataWriter object to test out this PR: https://github.com/Icinga/puppet-icinga2/pull/47
+  icinga2::object::perfdatawriter { 'pnp':
+    host_perfdata_path      => '/var/spool/icinga2/perfdata/host-perfdata',
+    service_perfdata_path   => '/var/spool/icinga2/perfdata/service-perfdata',
+    host_format_template    => 'DATATYPE::HOSTPERFDATA\tTIMET::$icinga.timet$\tHOSTNAME::$host.name$\tHOSTPERFDATA::$host.perfdata$\tHOSTCHECKCOMMAND::$host.check_command$\tHOSTSTATE::$host.state$\tHOSTSTATETYPE::$host.state_type$',
+    service_format_template => 'DATATYPE::SERVICEPERFDATA\tTIMET::$icinga.timet$\tHOSTNAME::$host.name$\tSERVICEDESC::$service.name$\tSERVICEPERFDATA::$service.perfdata$\tSERVICECHECKCOMMAND::$service.check_command$\tHOSTSTATE::$host.state$\tHOSTSTATETYPE::$host.state_type$\tSERVICESTATE::$service.state$\tSERVICESTATETYPE::$service.state_type$',
+    rotation_interval       => '15s'
+  }
+
+  #Create an HTTP check command:
+  icinga2::object::checkcommand { 'check_http':
+    command => ['"/check_http"'],
+    arguments     => {'"-H"'             => '"$http_vhost$"',
+      '"-I"'          => '"$http_address$"',
+      '"-u"'          => '"$http_uri$"',
+      '"-p"'          => '"$http_port$"',
+      '"-S"'          => {
+        'set_if' => '"$http_ssl$"'
+      },
+      '"--sni"'       => {
+        'set_if' => '"$http_sni$"'
+      },
+      '"-a"'          => {
+        'value'       => '"$http_auth_pair$"',
+        'description' => '"Username:password on sites with basic authentication"'
+      },
+      '"--no-body"'   => {
+        'set_if' => '"$http_ignore_body$"'
+      },
+      '"-r"' => '"$http_expect_body_regex$"',
+      '"-w"' => '"$http_warn_time$"',
+      '"-c"' => '"$http_critical_time$"',
+      '"-e"' => '"$http_expect$"'
+    },
+    vars => {
+      'vars.http_address' => '"$address$"',
+      'vars.http_ssl'     => 'false',
+      'vars.http_sni'     => 'false'
+    }
+  }
+
+
+
+  #Create a notification object to test this PR: https://github.com/Icinga/puppet-icinga2/pull/36
+  icinga2::object::notification { 'localhost-ping-notification':
+    host_name => "localhost",
+    service_name => "ping4",
+    command => "mail-service-notification",
+    types => [ 'Problem', 'Recovery' ]
+    }
+
+  #Install Postfix so we can monitor SMTP services and send out email alerts:
+  class { '::postfix::server':
+    inet_interfaces => 'all', #Listen on all interfaces
+    inet_protocols => 'all', #Use both IPv4 and IPv6
+    mydomain       => 'local',
+    mynetworks => '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 10.0.1.0/24',
+    extra_main_parameters => {
+      'home_mailbox' => 'Maildir/',
+      'mailbox_command' => '',
+      'disable_dns_lookups' => 'yes' #Don't do DNS lookups for MX records since we're just using /etc/hosts for all host lookups
+    }  
   }
 
   #Install Postfix so we can monitor SMTP services and send out email alerts:
