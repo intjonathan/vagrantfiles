@@ -257,6 +257,12 @@ node 'trustyicinga2server.local' {
     target_dir => '/etc/icinga2/features-enabled',
   }
 
+  #Create a compatlogger obect to test out this PR: https://github.com/Icinga/puppet-icinga2/pull/54
+  icinga2::object::compatlogger { 'daily-log':
+    log_dir         => '/var/log/icinga2/compat',
+    rotation_method => 'DAILY'
+  }
+
   #Create a user definition:
   icinga2::object::user { 'nick':
     display_name => 'Nick',
