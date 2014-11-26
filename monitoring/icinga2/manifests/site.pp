@@ -524,7 +524,7 @@ node 'trustyicinga2server.local' {
 
   #Create a scheduled downtime object to test this PR: https://github.com/Icinga/puppet-icinga2/pull/38
   icinga2::object::scheduleddowntime {'some-downtime':
-    host_name    => 'localhost',
+    host_name    => 'usermail.local',
     service_name => 'ping4',
     author       => 'icingaadmin',
     comment      => 'Some comment',
@@ -587,8 +587,8 @@ node 'trustyicinga2server.local' {
 
 
   #Create a notification object to test this PR: https://github.com/Icinga/puppet-icinga2/pull/36
-  icinga2::object::notification { 'localhost-ping-notification':
-    host_name => "localhost",
+  icinga2::object::notification { 'usermail-ping-notification':
+    host_name => "usermail.local",
     service_name => "ping4",
     command => "mail-service-notification",
     types => [ 'Problem', 'Recovery' ]
