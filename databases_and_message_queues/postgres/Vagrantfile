@@ -55,7 +55,7 @@ Vagrant.configure("2") do |config|
 
   #A CentOS postgres master server
   config.vm.define "postgresserver2".to_sym do |postgresserver2_config|
-    postgresserver2_config.vm.box = "centos-6.5-amd64"
+    postgresserver2_config.vm.box = "centos-6.6-amd64"
     postgresserver2_config.vm.hostname = "postgresserver2.local"
     postgresserver2_config.vm.network :private_network, ip: "10.0.1.182"
     #set some machine-specific options	
@@ -83,7 +83,7 @@ Vagrant.configure("2") do |config|
   
   #A CentOS postgres slave server for replication
   config.vm.define "postgresslave2".to_sym do |postgresslave2_config|
-    postgresslave2_config.vm.box = "centos-6.5-amd64"
+    postgresslave2_config.vm.box = "centos-6.6-amd64"
     postgresslave2_config.vm.hostname = "postgresslave2.local"
     postgresslave2_config.vm.network :private_network, ip: "10.0.1.184"
     #set some machine-specific options	
@@ -111,7 +111,7 @@ Vagrant.configure("2") do |config|
   
   #A CentOS BIND DNS client
   config.vm.define "postgresclient2".to_sym do |postgresclient2_config|
-    postgresclient2_config.vm.box = "centos-6.5-amd64"
+    postgresclient2_config.vm.box = "centos-6.6-amd64"
     postgresclient2_config.vm.hostname = "postgresclient2.local"
     postgresclient2_config.vm.network :private_network, ip: " 6"
     #set some machine-specific options	

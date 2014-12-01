@@ -59,7 +59,7 @@ Vagrant.configure("2") do |config|
 
   #centossuricata server
   config.vm.define "centossuricata".to_sym do |centossuricata_config|
-    centossuricata_config.vm.box = "centos-6.5-amd64"
+    centossuricata_config.vm.box = "centos-6.6-amd64"
     centossuricata_config.vm.hostname = "centossuricata.local"
     centossuricata_config.hostmanager.enabled = true
     centossuricata_config.hostmanager.aliases = %w(centossuricata)
@@ -90,7 +90,7 @@ Vagrant.configure("2") do |config|
 
   #an icingaserver client
   config.vm.define "sensor2".to_sym do |sensor2_config|
-    sensor2_config.vm.box = "centos-6.5-amd64"
+    sensor2_config.vm.box = "centos-6.6-amd64"
     sensor2_config.vm.hostname = "sensor2.local"
     sensor2_config.hostmanager.enabled = true
     sensor2_config.vm.network :private_network, ip: "10.0.1.82"
@@ -119,7 +119,7 @@ Vagrant.configure("2") do |config|
 
   #an icingaserver client
   config.vm.define "sensor4".to_sym do |sensor2_config|
-    sensor2_config.vm.box = "centos-6.5-amd64"
+    sensor2_config.vm.box = "centos-6.6-amd64"
     sensor2_config.vm.hostname = "sensor4.local"
     sensor2_config.hostmanager.enabled = true
     sensor2_config.vm.network :private_network, ip: "10.0.1.84"

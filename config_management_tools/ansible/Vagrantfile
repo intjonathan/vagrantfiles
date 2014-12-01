@@ -60,7 +60,7 @@ Vagrant.configure("2") do |config|
 
   #Another Ansible node
   config.vm.define "ansible3".to_sym do |ansible3_config|
-    ansible3_config.vm.box = "centos-6.5-amd64"
+    ansible3_config.vm.box = "centos-6.6-amd64"
     ansible3_config.vm.hostname = "ansible3.local"
     ansible3_config.hostmanager.enabled = true
     ansible3_config.vm.network :private_network, ip: "10.0.1.83"
@@ -74,7 +74,7 @@ Vagrant.configure("2") do |config|
   
   #Another Ansible node
   config.vm.define "ansible4".to_sym do |ansible4_config|
-    ansible4_config.vm.box = "centos-6.5-amd64"
+    ansible4_config.vm.box = "centos-6.6-amd64"
     ansible4_config.vm.hostname = "ansible4.local"
     ansible4_config.hostmanager.enabled = true
     ansible4_config.vm.network :private_network, ip: "10.0.1.84"
@@ -102,7 +102,7 @@ Vagrant.configure("2") do |config|
 
   #another ansible server
   config.vm.define "ansible6".to_sym do |ansible6_config|
-    ansible6_config.vm.box = "centos-6.5-amd64"
+    ansible6_config.vm.box = "centos-6.6-amd64"
     ansible6_config.vm.hostname = "ansible6.local"
     ansible6_config.hostmanager.enabled = true
     ansible6_config.vm.network :private_network, ip: "10.0.1.86"

@@ -75,7 +75,7 @@ Vagrant.configure("2") do |config|
   
   #VM for OpenJDK on CentOS
   config.vm.define "openjavacentos".to_sym do |openjavacentos_config|
-    openjavacentos_config.vm.box = "centos-6.5-amd64"
+    openjavacentos_config.vm.box = "centos-6.6-amd64"
     openjavacentos_config.vm.hostname = "openjavacentos.local"
     openjavacentos_config.hostmanager.enabled = true
     openjavacentos_config.hostmanager.aliases = %w(openjavacentos)

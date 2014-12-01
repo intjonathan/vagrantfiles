@@ -79,7 +79,7 @@ Vagrant.configure("2") do |config|
 
   #CentOS 6 Puppet master
   config.vm.define "centos6master".to_sym do |centos6master_config|
-    centos6master_config.vm.box = "centos-6.5-amd64"
+    centos6master_config.vm.box = "centos-6.6-amd64"
     centos6master_config.vm.hostname = "centos6master.local"
     centos6master_config.hostmanager.aliases = %w(puppetboard.centos6master.local centos6master puppet master)
     centos6master_config.hostmanager.enabled = true

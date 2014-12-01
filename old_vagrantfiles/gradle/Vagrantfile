@@ -52,7 +52,7 @@ Vagrant.configure("2") do |config|
 
   #CentOS Gradle VM
   config.vm.define "centosgradle".to_sym do |centosgradle_config|
-    centosgradle_config.vm.box = "centos-6.5-amd64"
+    centosgradle_config.vm.box = "centos-6.6-amd64"
     centosgradle_config.vm.hostname = "centosgradle.local"
     centosgradle_config.hostmanager.enabled = true
     centosgradle_config.vm.network :private_network, ip: "10.0.1.54"

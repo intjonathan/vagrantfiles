@@ -44,7 +44,7 @@ Vagrant.configure("2") do |config|
 
   #A CentOS 6 FreeIPA server
   config.vm.define "centos6freeipa".to_sym do |centos6freeipa_config|
-    centos6freeipa_config.vm.box = "centos-6.5-amd64"
+    centos6freeipa_config.vm.box = "centos-6.6-amd64"
     centos6freeipa_config.vm.hostname = "centos6freeipa.local"
     centos6freeipa_config.hostmanager.enabled = true
     centos6freeipa_config.hostmanager.aliases = %w(centos6freeipa)
@@ -76,7 +76,7 @@ Vagrant.configure("2") do |config|
 
   #A CentOS 6 FreeIPA client
   config.vm.define "centos6ldapclient".to_sym do |centos6ldapclient_config|
-    centos6ldapclient_config.vm.box = "centos-6.5-amd64"
+    centos6ldapclient_config.vm.box = "centos-6.6-amd64"
     centos6ldapclient_config.vm.hostname = "centos6ldapclient.local"
     centos6ldapclient_config.hostmanager.enabled = true
     centos6ldapclient_config.vm.network :private_network, ip: "10.0.1.187"

@@ -50,7 +50,7 @@ Vagrant.configure("2") do |config|
 
   #A CentOS LDAP client
   config.vm.define "centosldapclient".to_sym do |centosldapclient_config|
-    centosldapclient_config.vm.box = "centos-6.5-amd64"
+    centosldapclient_config.vm.box = "centos-6.6-amd64"
     centosldapclient_config.vm.hostname = "centosldapclient.local"
     centosldapclient_config.hostmanager.enabled = true
     centosldapclient_config.vm.network :private_network, ip: "10.0.1.22"

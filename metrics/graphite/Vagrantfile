@@ -47,7 +47,7 @@ Vagrant.configure("2") do |config|
 
   #A CentOS Graphite server
   config.vm.define "graphite2".to_sym do |graphite2_config|
-    graphite2_config.vm.box = "centos-6.5-amd64"
+    graphite2_config.vm.box = "centos-6.6-amd64"
     graphite2_config.vm.hostname = "graphite2.local"
     graphite2_config.hostmanager.aliases = %w(graphite.graphite1.local)
     graphite2_config.hostmanager.enabled = true
@@ -90,7 +90,7 @@ Vagrant.configure("2") do |config|
 
   #a client machine
   config.vm.define "node3".to_sym do |node3_config|
-    node3_config.vm.box = "centos-6.5-amd64"
+    node3_config.vm.box = "centos-6.6-amd64"
     node3_config.vm.hostname = "node3.local"
     node3_config.hostmanager.enabled = true
     node3_config.vm.network :private_network, ip: "10.0.1.83"
@@ -104,7 +104,7 @@ Vagrant.configure("2") do |config|
   
   #a client machine
   config.vm.define "node4".to_sym do |node4_config|
-    node4_config.vm.box = "centos-6.5-amd64"
+    node4_config.vm.box = "centos-6.6-amd64"
     node4_config.vm.hostname = "node4.local"
     node4_config.hostmanager.enabled = true
     node4_config.vm.network :private_network, ip: "10.0.1.84"
@@ -132,7 +132,7 @@ Vagrant.configure("2") do |config|
 
   #another node server
   config.vm.define "node6".to_sym do |node6_config|
-    node6_config.vm.box = "centos-6.5-amd64"
+    node6_config.vm.box = "centos-6.6-amd64"
     node6_config.vm.hostname = "node6.local"
     node6_config.hostmanager.enabled = true
     node6_config.vm.network :private_network, ip: "10.0.1.86"

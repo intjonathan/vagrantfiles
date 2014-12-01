@@ -49,7 +49,7 @@ Vagrant.configure("2") do |config|
   #A CentOS Barkeep server
   config.vm.define "barkeepcentos".to_sym do |barkeepcentos_config|
     #the base box we're using
-    barkeepcentos_config.vm.box = "centos-6.5-amd64"
+    barkeepcentos_config.vm.box = "centos-6.6-amd64"
     #the box's hostname
     barkeepcentos_config.vm.hostname = "barkeepcentos.local"
     #enable the hostmanager Vagrant plugin for this VM

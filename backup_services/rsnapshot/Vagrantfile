@@ -60,7 +60,7 @@ Vagrant.configure("2") do |config|
 
   #A CentOS 6.5 rsnapshot server
   config.vm.define "rsnapshotserver2".to_sym do |rsnapshotserver2_config|
-    rsnapshotserver2_config.vm.box = "centos-6.5-amd64"
+    rsnapshotserver2_config.vm.box = "centos-6.6-amd64"
     rsnapshotserver2_config.vm.hostname = "rsnapshotserver2.local"
     rsnapshotserver2_config.hostmanager.enabled = true
     rsnapshotserver2_config.hostmanager.aliases = %w(rsnapshotserver2)

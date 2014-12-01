@@ -40,7 +40,7 @@ Vagrant.configure("2") do |config|
 
   #A fail2ban client
   config.vm.define "failclient1".to_sym do |failclient1_config|
-    failclient1_config.vm.box = "centos-6.5-amd64"
+    failclient1_config.vm.box = "centos-6.6-amd64"
     failclient1_config.vm.hostname = "failclient1.local"
     failclient1_config.vm.network :private_network, ip: "10.0.1.71"
     #set some machine-specific options	
@@ -68,7 +68,7 @@ Vagrant.configure("2") do |config|
 
   #A fail2ban client
   config.vm.define "failclient3".to_sym do |failclient3_config|
-    failclient3_config.vm.box = "centos-6.5-amd64"
+    failclient3_config.vm.box = "centos-6.6-amd64"
     failclient3_config.vm.hostname = "failclient3.local"
     failclient3_config.vm.network :private_network, ip: "10.0.1.73"
     #set some machine-specific options	

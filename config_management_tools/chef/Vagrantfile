@@ -53,7 +53,7 @@ Vagrant.configure("2") do |config|
   
   #A Chef client node
   config.vm.define "chefclient2".to_sym do |chefclient2_config|
-    chefclient2_config.vm.box = "centos-6.5-amd64"
+    chefclient2_config.vm.box = "centos-6.6-amd64"
     chefclient2_config.vm.hostname = "chefclient2.local"
     chefclient2_config.hostmanager.enabled = true
     chefclient2_config.vm.network :private_network, ip: "10.0.1.192"

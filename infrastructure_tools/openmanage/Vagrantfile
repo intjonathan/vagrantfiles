@@ -54,7 +54,7 @@ Vagrant.configure("2") do |config|
 
   #A CentOS VM to test OpenManage installations via Puppet
   config.vm.define "openmanage2".to_sym do |openmanage2_config|
-    openmanage2_config.vm.box = "centos-6.5-amd64"
+    openmanage2_config.vm.box = "centos-6.6-amd64"
     openmanage2_config.vm.hostname = "openmanage2.local"
     openmanage2_config.vm.network :private_network, ip: "10.0.1.72"
     #set some machine-specific options	

@@ -55,7 +55,7 @@ Vagrant.configure("2") do |config|
 
   #CentOS Groovy VM
   config.vm.define "centosgroovy".to_sym do |centosgroovy_config|
-    centosgroovy_config.vm.box = "centos-6.5-amd64"
+    centosgroovy_config.vm.box = "centos-6.6-amd64"
     centosgroovy_config.vm.hostname = "centosgroovy.local"
     centosgroovy_config.hostmanager.enabled = true
     centosgroovy_config.vm.network :private_network, ip: "10.0.1.56"

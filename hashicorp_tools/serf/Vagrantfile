@@ -54,7 +54,7 @@ Vagrant.configure("2") do |config|
 
   #CentOS Serf agent VM
   config.vm.define "centosserf".to_sym do |centosserf_config|
-    centosserf_config.vm.box = "centos-6.5-amd64"
+    centosserf_config.vm.box = "centos-6.6-amd64"
     centosserf_config.vm.hostname = "centosserf.local"
     centosserf_config.hostmanager.enabled = true
     centosserf_config.hostmanager.aliases = %w(centosserf centosserf.local)

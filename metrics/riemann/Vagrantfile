@@ -56,7 +56,7 @@ Vagrant.configure("2") do |config|
 
   #A machine running Riemann
   config.vm.define "riemann2".to_sym do |riemann2_config|
-    riemann2_config.vm.box = "centos-6.5-amd64"
+    riemann2_config.vm.box = "centos-6.6-amd64"
     riemann2_config.vm.hostname = "riemann2.local"
     riemann2_config.vm.network :private_network, ip: "10.0.1.192"
     #set some machine-specific options	

@@ -40,7 +40,7 @@ Vagrant.configure("2") do |config|
 
   #A cobbler server
   config.vm.define "cobblerserver".to_sym do |cobblerserver_config|
-    cobblerserver_config.vm.box = "centos-6.5-amd64"
+    cobblerserver_config.vm.box = "centos-6.6-amd64"
     cobblerserver_config.vm.hostname = "cobblerserver.local"
     cobblerserver_config.vm.network :private_network, ip: "10.0.1.191"
     #set some machine-specific options	
@@ -54,7 +54,7 @@ Vagrant.configure("2") do |config|
 
   #A Cobbler client
   config.vm.define "server1".to_sym do |server1_config|
-    server1_config.vm.box = "centos-6.5-amd64"
+    server1_config.vm.box = "centos-6.6-amd64"
     server1_config.vm.hostname = "server1.local"
     server1_config.vm.network :private_network, ip: "10.0.1.192"
     #set some machine-specific options	
@@ -68,7 +68,7 @@ Vagrant.configure("2") do |config|
 
   #A Cobbler client
   config.vm.define "server2".to_sym do |server2_config|
-    server2_config.vm.box = "centos-6.5-amd64"
+    server2_config.vm.box = "centos-6.6-amd64"
     server2_config.vm.hostname = "server2.local"
     server2_config.vm.network :private_network, ip: "10.0.1.193"
     #set some machine-specific options	

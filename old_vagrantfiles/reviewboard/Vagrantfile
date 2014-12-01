@@ -49,7 +49,7 @@ Vagrant.configure("2") do |config|
   #A CentOS ReviewBoard server
   config.vm.define "reviewboardcentos".to_sym do |reviewboardcentos_config|
     #the base box we're using
-    reviewboardcentos_config.vm.box = "centos-6.5-amd64"
+    reviewboardcentos_config.vm.box = "centos-6.6-amd64"
     #the box's hostname
     reviewboardcentos_config.vm.hostname = "reviewboardcentos.local"
     #enable the hostmanager Vagrant plugin for this VM

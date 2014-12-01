@@ -81,7 +81,7 @@ Vagrant.configure("2") do |config|
 
   #CentOS sensu machine
   config.vm.define "sensu3".to_sym do |sensu3_config|
-    sensu3_config.vm.box = "centos-6.5-amd64"
+    sensu3_config.vm.box = "centos-6.6-amd64"
     sensu3_config.vm.hostname = "sensu3.local"
     sensu3_config.hostmanager.enabled = true
     sensu3_config.vm.network :private_network, ip: "10.0.1.53"
@@ -95,7 +95,7 @@ Vagrant.configure("2") do |config|
 
   #CentOS sensu machine
   config.vm.define "sensu4".to_sym do |sensu4_config|
-    sensu4_config.vm.box = "centos-6.5-amd64"
+    sensu4_config.vm.box = "centos-6.6-amd64"
     sensu4_config.vm.hostname = "sensu4.local"
     sensu4_config.hostmanager.enabled = true
     sensu4_config.vm.network :private_network, ip: "10.0.1.54"

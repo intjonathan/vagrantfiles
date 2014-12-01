@@ -4,13 +4,13 @@
 Vagrant::Config.run do |config|
   
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "centos-6.5-amd64-minimal"
+  config.vm.box = "centos-6.6-amd64-minimal"
   #config.hostmanager.auto_update = true
   #config.hostmanager.ignore_private_ip = false	
 
   #Jira server
   config.vm.define :jiraserver do |jiraserver_config|
-	jiraserver_config.vm.box = "centos-6.5-amd64-minimal"
+	jiraserver_config.vm.box = "centos-6.6-amd64-minimal"
     jiraserver_config.vm.host_name = "jiraserver"
 	jiraserver_config.vm.network :hostonly, "10.0.1.80"
 	jiraserver_config.vm.customize ["modifyvm", :id, "--memory", 1024]

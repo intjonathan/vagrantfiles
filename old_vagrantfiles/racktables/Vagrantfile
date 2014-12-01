@@ -24,7 +24,7 @@ Vagrant.configure("2") do |config|
 
   #A graphite server
   config.vm.define "racktables".to_sym do |racktables_config|
-    racktables_config.vm.box = "centos-6.5-amd64"
+    racktables_config.vm.box = "centos-6.6-amd64"
     racktables_config.vm.hostname = "racktables.local"
     racktables_config.hostmanager.enabled = true
     #giving it 'puppet' as an alias so that the agents can connect to it with their default settings

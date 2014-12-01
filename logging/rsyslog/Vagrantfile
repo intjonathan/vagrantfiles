@@ -51,7 +51,7 @@ Vagrant.configure("2") do |config|
 
   #A CentOS rsyslog sender
   config.vm.define "loglogclient2".to_sym do |logclient2_config|
-    logclient2_config.vm.box = "centos-6.5-amd64"
+    logclient2_config.vm.box = "centos-6.6-amd64"
     logclient2_config.vm.hostname = "logclient2.local"
     logclient2_config.hostmanager.enabled = true
     logclient2_config.vm.network :private_network, ip: "10.0.1.52"

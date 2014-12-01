@@ -55,7 +55,7 @@ Vagrant.configure("2") do |config|
 
   #A machine running heka
   config.vm.define "heka2".to_sym do |heka2_config|
-    heka2_config.vm.box = "centos-6.5-amd64"
+    heka2_config.vm.box = "centos-6.6-amd64"
     heka2_config.vm.hostname = "heka2.local"
     heka2_config.vm.network :private_network, ip: "10.0.1.112"
     #set some machine-specific options	

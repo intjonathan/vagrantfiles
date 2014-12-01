@@ -59,7 +59,7 @@ Vagrant.configure("2") do |config|
 
   #centosicinga server
   config.vm.define "centosicinga".to_sym do |centosicinga_config|
-    centosicinga_config.vm.box = "centos-6.5-amd64"
+    centosicinga_config.vm.box = "centos-6.6-amd64"
     centosicinga_config.vm.hostname = "centosicinga.local"
     centosicinga_config.hostmanager.enabled = true
     centosicinga_config.hostmanager.aliases = %w(centosicinga)
@@ -90,7 +90,7 @@ Vagrant.configure("2") do |config|
 
   #an icingaserver client
   config.vm.define "icingaclient2".to_sym do |icingaclient2_config|
-    icingaclient2_config.vm.box = "centos-6.5-amd64"
+    icingaclient2_config.vm.box = "centos-6.6-amd64"
     icingaclient2_config.vm.hostname = "icingaclient2.local"
     icingaclient2_config.hostmanager.enabled = true
     icingaclient2_config.vm.network :private_network, ip: "10.0.1.82"
@@ -119,7 +119,7 @@ Vagrant.configure("2") do |config|
 
   #an icingaserver client
   config.vm.define "icingaclient4".to_sym do |icingaclient4_config|
-    icingaclient4_config.vm.box = "centos-6.5-amd64"
+    icingaclient4_config.vm.box = "centos-6.6-amd64"
     icingaclient4_config.vm.hostname = "icingaclient4.local"
     icingaclient4_config.hostmanager.enabled = true
     icingaclient4_config.vm.network :private_network, ip: "10.0.1.84"

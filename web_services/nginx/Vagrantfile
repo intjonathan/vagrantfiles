@@ -58,7 +58,7 @@ Vagrant.configure("2") do |config|
 
   #A CentOS Nginx server
   config.vm.define "nginx2".to_sym do |nginx2_config|
-    nginx2_config.vm.box = "centos-6.5-amd64"
+    nginx2_config.vm.box = "centos-6.6-amd64"
     nginx2_config.vm.hostname = "nginx2.local"
     nginx2_config.hostmanager.enabled = true
     nginx2_config.vm.network :private_network, ip: "10.0.1.122"

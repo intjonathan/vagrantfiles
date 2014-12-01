@@ -55,7 +55,7 @@ Vagrant.configure("2") do |config|
 
   #A CentOS dnsmasq DNS master server
   config.vm.define "dnsmaster2".to_sym do |dnsmaster2_config|
-    dnsmaster2_config.vm.box = "centos-6.5-amd64"
+    dnsmaster2_config.vm.box = "centos-6.6-amd64"
     dnsmaster2_config.vm.hostname = "dnsmaster2.local"
     dnsmaster2_config.vm.network :private_network, ip: "10.0.1.72"
     #set some machine-specific options	
@@ -83,7 +83,7 @@ Vagrant.configure("2") do |config|
   
   #A CentOS dnsmasq DNS slave
   config.vm.define "dnsslave2".to_sym do |dnsslave2_config|
-    dnsslave2_config.vm.box = "centos-6.5-amd64"
+    dnsslave2_config.vm.box = "centos-6.6-amd64"
     dnsslave2_config.vm.hostname = "dnsslave2.local"
     dnsslave2_config.vm.network :private_network, ip: "10.0.1.74"
     #set some machine-specific options	
@@ -111,7 +111,7 @@ Vagrant.configure("2") do |config|
   
   #A CentOS dnsmasq DNS client
   config.vm.define "dnsclient2".to_sym do |dnsclient2_config|
-    dnsclient2_config.vm.box = "centos-6.5-amd64"
+    dnsclient2_config.vm.box = "centos-6.6-amd64"
     dnsclient2_config.vm.hostname = "dnsclient2.local"
     dnsclient2_config.vm.network :private_network, ip: "10.0.1.76"
     #set some machine-specific options	

@@ -76,7 +76,7 @@ Vagrant.configure("2") do |config|
 
   #A CentOS 6 Icinga 2 server
   config.vm.define "centos6ossecserver".to_sym do |centos6ossecserver_config|
-    centos6ossecserver_config.vm.box = "centos-6.5-amd64"
+    centos6ossecserver_config.vm.box = "centos-6.6-amd64"
     centos6ossecserver_config.vm.hostname = "centos6ossecserver.local"
     centos6ossecserver_config.hostmanager.enabled = true
     centos6ossecserver_config.hostmanager.aliases = %w(centos6ossecserver)
@@ -152,7 +152,7 @@ Vagrant.configure("2") do |config|
 
   #A CentOS 6 Icinga 2 client
   config.vm.define "centos6ossecclient".to_sym do |centos6ossecclient_config|
-    centos6ossecclient_config.vm.box = "centos-6.5-amd64"
+    centos6ossecclient_config.vm.box = "centos-6.6-amd64"
     centos6ossecclient_config.vm.hostname = "centos6ossecclient.local"
     centos6ossecclient_config.hostmanager.enabled = true
     centos6ossecclient_config.vm.network :private_network, ip: "10.0.1.177"

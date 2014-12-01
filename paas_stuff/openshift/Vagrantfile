@@ -39,7 +39,7 @@ Vagrant.configure("2") do |config|
   
   #Ubuntu openshift master server
   config.vm.define "broker".to_sym do |broker_config|
-    broker_config.vm.box = "centos-6.5-amd64"
+    broker_config.vm.box = "centos-6.6-amd64"
     broker_config.vm.hostname = "broker.local"
     broker_config.hostmanager.aliases = %w(console.broker.local)
     broker_config.hostmanager.enabled = true
@@ -54,7 +54,7 @@ Vagrant.configure("2") do |config|
   
   #CentOS OpenShift ActiveMQ server
   config.vm.define "activemq".to_sym do |activemq_config|
-    activemq_config.vm.box = "centos-6.5-amd64"
+    activemq_config.vm.box = "centos-6.6-amd64"
     activemq_config.vm.hostname = "activemq.local"
     activemq_config.hostmanager.enabled = true
     activemq_config.vm.network :private_network, ip: "10.0.1.50"
@@ -68,7 +68,7 @@ Vagrant.configure("2") do |config|
 
   #CentOS OpenShift MongoDB server
   config.vm.define "mongodb".to_sym do |mongodb_config|
-    mongodb_config.vm.box = "centos-6.5-amd64"
+    mongodb_config.vm.box = "centos-6.6-amd64"
     mongodb_config.vm.hostname = "mongodb.local"
     mongodb_config.hostmanager.enabled = true
     mongodb_config.vm.network :private_network, ip: "10.0.1.47"
@@ -82,7 +82,7 @@ Vagrant.configure("2") do |config|
 
   #CentOS OpenShift node
   config.vm.define "node1".to_sym do |node1_config|
-    node1_config.vm.box = "centos-6.5-amd64"
+    node1_config.vm.box = "centos-6.6-amd64"
     node1_config.vm.hostname = "node1.local"
     node1_config.hostmanager.enabled = true
     node1_config.vm.network :private_network, ip: "10.0.1.51"
@@ -96,7 +96,7 @@ Vagrant.configure("2") do |config|
 
   #CentOS OpenShift node
   config.vm.define "node2".to_sym do |node2_config|
-    node2_config.vm.box = "centos-6.5-amd64"
+    node2_config.vm.box = "centos-6.6-amd64"
     node2_config.vm.hostname = "node2.local"
     node2_config.hostmanager.enabled = true
     node2_config.vm.network :private_network, ip: "10.0.1.52"
@@ -110,7 +110,7 @@ Vagrant.configure("2") do |config|
 
   #CentOS OpenShift node
   config.vm.define "node3".to_sym do |node3_config|
-    node3_config.vm.box = "centos-6.5-amd64"
+    node3_config.vm.box = "centos-6.6-amd64"
     node3_config.vm.hostname = "node3.local"
     node3_config.hostmanager.enabled = true
     node3_config.vm.network :private_network, ip: "10.0.1.53"
@@ -124,7 +124,7 @@ Vagrant.configure("2") do |config|
 
   #CentOS OpenShift node
   config.vm.define "node4".to_sym do |node4_config|
-    node4_config.vm.box = "centos-6.5-amd64"
+    node4_config.vm.box = "centos-6.6-amd64"
     node4_config.vm.hostname = "node4.local"
     node4_config.hostmanager.enabled = true
     node4_config.vm.network :private_network, ip: "10.0.1.54"

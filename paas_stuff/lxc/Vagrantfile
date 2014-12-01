@@ -55,7 +55,7 @@ Vagrant.configure("2") do |config|
 
   #CentOS lxc VM
   config.vm.define "centoslxc".to_sym do |centoslxc_config|
-    centoslxc_config.vm.box = "centos-6.5-amd64"
+    centoslxc_config.vm.box = "centos-6.6-amd64"
     centoslxc_config.vm.hostname = "centoslxc.local"
     centoslxc_config.hostmanager.enabled = true
     centoslxc_config.vm.network :private_network, ip: "10.0.1.156"
