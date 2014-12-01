@@ -33,12 +33,8 @@ node 'heka1.local' {
   #Include the rsyslog::client profile to set up logging
   include profile::rsyslog::client
 
-  #This module is: https://github.com/puppetlabs/puppetlabs-ntp
-  class { '::ntp':
-    servers  => [ '0.ubuntu.pool.ntp.org', '1.ubuntu.pool.ntp.org', '2.ubuntu.pool.ntp.org', '3.ubuntu.pool.ntp.org' ],
-    restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
-    disable_monitor => true,
-  }
+  #Include a profile that sets up NTP
+  include profile::ntp::client
 
 }
 
@@ -101,12 +97,8 @@ node 'heka3.local' {
   #Include the rsyslog::client profile to set up logging
   include profile::rsyslog::client
 
-  #This module is: https://github.com/puppetlabs/puppetlabs-ntp
-  class { '::ntp':
-    servers  => [ '0.ubuntu.pool.ntp.org', '1.ubuntu.pool.ntp.org', '2.ubuntu.pool.ntp.org', '3.ubuntu.pool.ntp.org' ],
-    restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
-    disable_monitor => true,
-  }
+  #Include a profile that sets up NTP
+  include profile::ntp::client
 
 }
 
@@ -157,12 +149,8 @@ node 'collectd1.local' {
   #Include the rsyslog::client profile to set up logging
   include profile::rsyslog::client
 
-  #This module is: https://github.com/puppetlabs/puppetlabs-ntp
-  class { '::ntp':
-    servers  => [ '0.ubuntu.pool.ntp.org', '1.ubuntu.pool.ntp.org', '2.ubuntu.pool.ntp.org', '3.ubuntu.pool.ntp.org' ],
-    restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
-    disable_monitor => true,
-  }
+  #Include a profile that sets up NTP
+  include profile::ntp::client
 
   #Install Collectd so we can get metrics from this machine into heka/InfluxDB:
   class { '::collectd':
@@ -247,12 +235,8 @@ node 'collectd2.local' {
   #Include the rsyslog::client profile to set up logging
   include profile::rsyslog::client
 
-  #This module is: https://github.com/puppetlabs/puppetlabs-ntp
-  class { '::ntp':
-    servers  => [ '0.ubuntu.pool.ntp.org', '1.ubuntu.pool.ntp.org', '2.ubuntu.pool.ntp.org', '3.ubuntu.pool.ntp.org' ],
-    restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
-    disable_monitor => true,
-  }
+  #Include a profile that sets up NTP
+  include profile::ntp::client
 
   #Install Postfix locally so that Fail2Ban can send out emails
   class { '::postfix::server':
@@ -306,12 +290,8 @@ node 'influxdb1.local' {
   #Include the rsyslog::client profile to set up logging
   include profile::rsyslog::client
 
-  #This module is: https://github.com/puppetlabs/puppetlabs-ntp
-  class { '::ntp':
-    servers  => [ '0.ubuntu.pool.ntp.org', '1.ubuntu.pool.ntp.org', '2.ubuntu.pool.ntp.org', '3.ubuntu.pool.ntp.org' ],
-    restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
-    disable_monitor => true,
-  }
+  #Include a profile that sets up NTP
+  include profile::ntp::client
 
   #Install Collectd so we can get metrics from this machine into heka/InfluxDB:
   class { '::collectd':
@@ -432,12 +412,8 @@ node 'grafana1.local' {
   #Include the rsyslog::client profile to set up logging
   include profile::rsyslog::client
 
-  #This module is: https://github.com/puppetlabs/puppetlabs-ntp
-  class { '::ntp':
-    servers  => [ '0.ubuntu.pool.ntp.org', '1.ubuntu.pool.ntp.org', '2.ubuntu.pool.ntp.org', '3.ubuntu.pool.ntp.org' ],
-    restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
-    disable_monitor => true,
-  }
+  #Include a profile that sets up NTP
+  include profile::ntp::client
 
   #Install Collectd so we can get metrics from this machine into heka/InfluxDB:
   class { '::collectd':
@@ -483,12 +459,8 @@ node 'hekalogging.local' {
   #Include the rsyslog::client profile to set up logging
   include profile::rsyslog::client
 
-  #This module is: https://github.com/puppetlabs/puppetlabs-ntp
-  class { '::ntp':
-    servers  => [ '0.ubuntu.pool.ntp.org', '1.ubuntu.pool.ntp.org', '2.ubuntu.pool.ntp.org', '3.ubuntu.pool.ntp.org' ],
-    restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
-    disable_monitor => true,
-  }
+  #Include a profile that sets up NTP
+  include profile::ntp::client
 
 
   #Apache module classes for Grafana:
@@ -636,12 +608,8 @@ node 'hekaelasticsearch.local' {
   #Include the rsyslog::client profile to set up logging
   include profile::rsyslog::client
 
-  #This module is: https://github.com/puppetlabs/puppetlabs-ntp
-  class { '::ntp':
-    servers  => [ '0.ubuntu.pool.ntp.org', '1.ubuntu.pool.ntp.org', '2.ubuntu.pool.ntp.org', '3.ubuntu.pool.ntp.org' ],
-    restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
-    disable_monitor => true,
-  }
+  #Include a profile that sets up NTP
+  include profile::ntp::client
 
 
   #Apache module classes for Grafana:
@@ -775,12 +743,8 @@ node 'hekamail.local' {
   #Include the rsyslog::client profile to set up logging
   include profile::rsyslog::client
 
-  #This module is: https://github.com/puppetlabs/puppetlabs-ntp
-  class { '::ntp':
-    servers  => [ '0.ubuntu.pool.ntp.org', '1.ubuntu.pool.ntp.org', '2.ubuntu.pool.ntp.org', '3.ubuntu.pool.ntp.org' ],
-    restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
-    disable_monitor => true,
-  }
+  #Include a profile that sets up NTP
+  include profile::ntp::client
 
   #Install Postfix so we can monitor SMTP services and send out email alerts:
   class { '::postfix::server':
