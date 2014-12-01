@@ -46,12 +46,8 @@ node 'heka2.local' {
   #Include the rsyslog::client profile to set up logging
   include profile::rsyslog::client
 
-  #This module is: https://github.com/puppetlabs/puppetlabs-ntp
-  class { '::ntp':
-    servers  => [ '0.centos.pool.ntp.org', '1.centos.pool.ntp.org', '2.centos.pool.ntp.org', '3.centos.pool.ntp.org' ],
-    restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
-    disable_monitor => true,
-  }
+  #Include a profile that sets up NTP
+  include profile::ntp::client
 
   #Install Collectd so we can get metrics from this machine into heka/InfluxDB:
   class { '::collectd':
