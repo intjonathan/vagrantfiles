@@ -71,15 +71,7 @@ node 'heka3.local' {
 node 'collectd1.local' {
 
   #Install Apache so we test collectd's Apache metrics gathering.
-  #This is the Puppet Labs Apache module: https://github.com/puppetlabs/puppetlabs-apache
-  class { 'apache': 
-    purge_configs => 'true'
-  }
-  
-  ::apache::mod { 'ssl': } #Install/enable the SSL module
-  ::apache::mod { 'proxy': } #Install/enable the proxy module
-  ::apache::mod { 'proxy_http': } #Install/enable the HTTP proxy module
-  ::apache::mod { 'headers': }
+  include profile::apache
 
   #Install MySQL to test collectd's MySQL metrics gathering.
   #This module is the Puppet Labs MySQL module: https://github.com/puppetlabs/puppetlabs-mysql
@@ -127,15 +119,7 @@ node 'collectd1.local' {
 node 'collectd2.local' {
 
   #Install Apache so we test collectd's Apache metrics gathering.
-  #This is the Puppet Labs Apache module: https://github.com/puppetlabs/puppetlabs-apache
-  class { 'apache': 
-    purge_configs => 'true'
-  }
-  
-  ::apache::mod { 'ssl': } #Install/enable the SSL module
-  ::apache::mod { 'proxy': } #Install/enable the proxy module
-  ::apache::mod { 'proxy_http': } #Install/enable the HTTP proxy module
-  ::apache::mod { 'headers': }
+  include profile::apache
 
   #Install MySQL to test collectd's MySQL metrics gathering.
   #This module is the Puppet Labs MySQL module: https://github.com/puppetlabs/puppetlabs-mysql
@@ -225,15 +209,8 @@ node 'influxdb1.local' {
 
 node 'grafana1.local' {
 
-  #Apache module classes for Grafana:
-  class { 'apache': 
-    purge_configs => 'true'
-  }
-
-  ::apache::mod { 'ssl': } #Install/enable the SSL module
-  ::apache::mod { 'proxy': } #Install/enable the proxy module
-  ::apache::mod { 'proxy_http': } #Install/enable the HTTP proxy module
-  ::apache::mod { 'headers': }
+  #Install Apache so we test collectd's Apache metrics gathering.
+  include profile::apache
   
   #Install Elasticsearch...
   class { 'elasticsearch':
@@ -306,16 +283,8 @@ node 'hekalogging.local' {
   #Include a profile that sets up NTP
   include profile::ntp::client
 
-
-  #Apache module classes for Grafana:
-  class { 'apache': 
-    purge_configs => 'true'
-  }
-
-  ::apache::mod { 'ssl': } #Install/enable the SSL module
-  ::apache::mod { 'proxy': } #Install/enable the proxy module
-  ::apache::mod { 'proxy_http': } #Install/enable the HTTP proxy module
-  ::apache::mod { 'headers': }
+  #Install Apache so we test collectd's Apache metrics gathering.
+  include profile::apache
 
   #Install Java...
   package { 'openjdk-7-jre-headless':
@@ -425,16 +394,8 @@ node 'hekaelasticsearch.local' {
   #Include a profile that sets up NTP
   include profile::ntp::client
 
-
-  #Apache module classes for Grafana:
-  class { 'apache': 
-    purge_configs => 'true'
-  }
-
-  ::apache::mod { 'ssl': } #Install/enable the SSL module
-  ::apache::mod { 'proxy': } #Install/enable the proxy module
-  ::apache::mod { 'proxy_http': } #Install/enable the HTTP proxy module
-  ::apache::mod { 'headers': }
+  #Install Apache so we test collectd's Apache metrics gathering.
+  include profile::apache
 
   #Install Java...
   package { 'openjdk-7-jre-headless':
