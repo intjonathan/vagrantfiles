@@ -49,39 +49,9 @@ node 'heka2.local' {
   #Include a profile that sets up NTP
   include profile::ntp::client
 
-  #Install Collectd so we can get metrics from this machine into heka/InfluxDB:
-  class { '::collectd':
-    purge        => true,
-    recurse      => true,
-    purge_config => true,
-  }
-  
-  collectd::plugin { 'df': }
-  collectd::plugin { 'disk': }
-  collectd::plugin { 'entropy': }
-  collectd::plugin { 'memory': }
-  collectd::plugin { 'swap': }
-  collectd::plugin { 'cpu': }
-  collectd::plugin { 'cpufreq': }
-  collectd::plugin { 'contextswitch': }
-  collectd::plugin { 'processes': }
-  collectd::plugin { 'vmem': }
-  class { 'collectd::plugin::load':}
-  
-  #Gather NTP stats:
-  class { 'collectd::plugin::ntpd':
-    host           => 'localhost',
-    port           => 123,
-    reverselookups => false,
-    includeunitid  => false,
-  }
-  
-  #Write the collectd status to the heka VM in the Graphite format:
-  class { 'collectd::plugin::write_graphite':
-    graphitehost => 'heka1.local',
-    protocol => 'tcp',
-    graphiteport => 2003,
-  }
+  #Include the role that sets up CollectD, sets it up to gather system and NTP metrics and
+  #sends it to a Graphite (in this case, Heka) server:
+  include role::collectd::collectd_system_and_ntp_metrics_and_write_graphite
 
 }
 
@@ -148,39 +118,9 @@ node 'collectd1.local' {
   #Include a profile that sets up NTP
   include profile::ntp::client
 
-  #Install Collectd so we can get metrics from this machine into heka/InfluxDB:
-  class { '::collectd':
-    purge        => true,
-    recurse      => true,
-    purge_config => true,
-  }
-  
-  collectd::plugin { 'df': }
-  collectd::plugin { 'disk': }
-  collectd::plugin { 'entropy': }
-  collectd::plugin { 'memory': }
-  collectd::plugin { 'swap': }
-  collectd::plugin { 'cpu': }
-  collectd::plugin { 'cpufreq': }
-  collectd::plugin { 'contextswitch': }
-  collectd::plugin { 'processes': }
-  collectd::plugin { 'vmem': }
-  class { 'collectd::plugin::load':}
-  
-  #Gather NTP stats:
-  class { 'collectd::plugin::ntpd':
-    host           => 'localhost',
-    port           => 123,
-    reverselookups => false,
-    includeunitid  => false,
-  }
-  
-  #Write the collectd status to the heka VM in the Graphite format:
-  class { 'collectd::plugin::write_graphite':
-    graphitehost => 'heka1.local',
-    protocol => 'tcp',
-    graphiteport => 2003,
-  }
+  #Include the role that sets up CollectD, sets it up to gather system and NTP metrics and
+  #sends it to a Graphite (in this case, Heka) server:
+  include role::collectd::collectd_system_and_ntp_metrics_and_write_graphite
 
 }
 
@@ -241,40 +181,9 @@ node 'collectd2.local' {
     mydomain       => 'local',
   }
 
-
-  #Install Collectd so we can get metrics from this machine into heka/InfluxDB:
-  class { '::collectd':
-    purge        => true,
-    recurse      => true,
-    purge_config => true,
-  }
-  
-  collectd::plugin { 'df': }
-  collectd::plugin { 'disk': }
-  collectd::plugin { 'entropy': }
-  collectd::plugin { 'memory': }
-  collectd::plugin { 'swap': }
-  collectd::plugin { 'cpu': }
-  collectd::plugin { 'cpufreq': }
-  collectd::plugin { 'contextswitch': }
-  collectd::plugin { 'processes': }
-  collectd::plugin { 'vmem': }
-  class { 'collectd::plugin::load':}
-  
-  #Gather NTP stats:
-  class { 'collectd::plugin::ntpd':
-    host           => 'localhost',
-    port           => 123,
-    reverselookups => false,
-    includeunitid  => false,
-  }
-  
-  #Write the collectd status to the heka VM in the Graphite format:
-  class { 'collectd::plugin::write_graphite':
-    graphitehost => 'heka1.local',
-    protocol => 'tcp',
-    graphiteport => 2003,
-  }
+  #Include the role that sets up CollectD, sets it up to gather system and NTP metrics and
+  #sends it to a Graphite (in this case, Heka) server:
+  include role::collectd::collectd_system_and_ntp_metrics_and_write_graphite
 
 }
 
@@ -289,39 +198,9 @@ node 'influxdb1.local' {
   #Include a profile that sets up NTP
   include profile::ntp::client
 
-  #Install Collectd so we can get metrics from this machine into heka/InfluxDB:
-  class { '::collectd':
-    purge        => true,
-    recurse      => true,
-    purge_config => true,
-  }
-  
-  collectd::plugin { 'df': }
-  collectd::plugin { 'disk': }
-  collectd::plugin { 'entropy': }
-  collectd::plugin { 'memory': }
-  collectd::plugin { 'swap': }
-  collectd::plugin { 'cpu': }
-  collectd::plugin { 'cpufreq': }
-  collectd::plugin { 'contextswitch': }
-  collectd::plugin { 'processes': }
-  collectd::plugin { 'vmem': }
-  class { 'collectd::plugin::load':}
-  
-  #Gather NTP stats:
-  class { 'collectd::plugin::ntpd':
-    host           => 'localhost',
-    port           => 123,
-    reverselookups => false,
-    includeunitid  => false,
-  }
-  
-  #Write the collectd status to the heka VM in the Graphite format:
-  class { 'collectd::plugin::write_graphite':
-    graphitehost => 'heka1.local',
-    protocol => 'tcp',
-    graphiteport => 2003,
-  }
+  #Include the role that sets up CollectD, sets it up to gather system and NTP metrics and
+  #sends it to a Graphite (in this case, Heka) server:
+  include role::collectd::collectd_system_and_ntp_metrics_and_write_graphite
 
   #Install Java so we can run ElasticSearch:
   package {'openjdk-7-jdk':
@@ -341,7 +220,6 @@ node 'influxdb1.local' {
   elasticsearch::instance { $fqdn:
     config => { 'node.name' => $fqdn }
   }
-
 
 }
 
@@ -411,39 +289,9 @@ node 'grafana1.local' {
   #Include a profile that sets up NTP
   include profile::ntp::client
 
-  #Install Collectd so we can get metrics from this machine into heka/InfluxDB:
-  class { '::collectd':
-    purge        => true,
-    recurse      => true,
-    purge_config => true,
-  }
-  
-  collectd::plugin { 'df': }
-  collectd::plugin { 'disk': }
-  collectd::plugin { 'entropy': }
-  collectd::plugin { 'memory': }
-  collectd::plugin { 'swap': }
-  collectd::plugin { 'cpu': }
-  collectd::plugin { 'cpufreq': }
-  collectd::plugin { 'contextswitch': }
-  collectd::plugin { 'processes': }
-  collectd::plugin { 'vmem': }
-  class { 'collectd::plugin::load':}
-  
-  #Gather NTP stats:
-  class { 'collectd::plugin::ntpd':
-    host           => 'localhost',
-    port           => 123,
-    reverselookups => false,
-    includeunitid  => false,
-  }
-  
-  #Write the collectd status to the heka VM in the Graphite format:
-  class { 'collectd::plugin::write_graphite':
-    graphitehost => 'heka1.local',
-    protocol => 'tcp',
-    graphiteport => 2003,
-  }
+  #Include the role that sets up CollectD, sets it up to gather system and NTP metrics and
+  #sends it to a Graphite (in this case, Heka) server:
+  include role::collectd::collectd_system_and_ntp_metrics_and_write_graphite
 
 }
 
@@ -560,39 +408,9 @@ node 'hekalogging.local' {
     mode => '600',
   }
 
-  #Install Collectd so we can get metrics from this machine into heka/InfluxDB:
-  class { '::collectd':
-    purge        => true,
-    recurse      => true,
-    purge_config => true,
-  }
-  
-  collectd::plugin { 'df': }
-  collectd::plugin { 'disk': }
-  collectd::plugin { 'entropy': }
-  collectd::plugin { 'memory': }
-  collectd::plugin { 'swap': }
-  collectd::plugin { 'cpu': }
-  collectd::plugin { 'cpufreq': }
-  collectd::plugin { 'contextswitch': }
-  collectd::plugin { 'processes': }
-  collectd::plugin { 'vmem': }
-  class { 'collectd::plugin::load':}
-  
-  #Gather NTP stats:
-  class { 'collectd::plugin::ntpd':
-    host           => 'localhost',
-    port           => 123,
-    reverselookups => false,
-    includeunitid  => false,
-  }
-  
-  #Write the collectd status to the heka VM in the Graphite format:
-  class { 'collectd::plugin::write_graphite':
-    graphitehost => 'heka1.local',
-    protocol => 'tcp',
-    graphiteport => 2003,
-  }
+  #Include the role that sets up CollectD, sets it up to gather system and NTP metrics and
+  #sends it to a Graphite (in this case, Heka) server:
+  include role::collectd::collectd_system_and_ntp_metrics_and_write_graphite
 
 }
 
@@ -695,39 +513,9 @@ node 'hekaelasticsearch.local' {
     mode => '600',
   }
 
-  #Install Collectd so we can get metrics from this machine into heka/InfluxDB:
-  class { '::collectd':
-    purge        => true,
-    recurse      => true,
-    purge_config => true,
-  }
-  
-  collectd::plugin { 'df': }
-  collectd::plugin { 'disk': }
-  collectd::plugin { 'entropy': }
-  collectd::plugin { 'memory': }
-  collectd::plugin { 'swap': }
-  collectd::plugin { 'cpu': }
-  collectd::plugin { 'cpufreq': }
-  collectd::plugin { 'contextswitch': }
-  collectd::plugin { 'processes': }
-  collectd::plugin { 'vmem': }
-  class { 'collectd::plugin::load':}
-  
-  #Gather NTP stats:
-  class { 'collectd::plugin::ntpd':
-    host           => 'localhost',
-    port           => 123,
-    reverselookups => false,
-    includeunitid  => false,
-  }
-  
-  #Write the collectd status to the heka VM in the Graphite format:
-  class { 'collectd::plugin::write_graphite':
-    graphitehost => 'heka1.local',
-    protocol => 'tcp',
-    graphiteport => 2003,
-  }
+  #Include the role that sets up CollectD, sets it up to gather system and NTP metrics and
+  #sends it to a Graphite (in this case, Heka) server:
+  include role::collectd::collectd_system_and_ntp_metrics_and_write_graphite
 
 }
 
