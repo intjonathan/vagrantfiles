@@ -24,18 +24,13 @@ node 'hekamaster.local' {
   }
  
   #Include the rsyslog::client profile to set up logging
-
   include profile::rsyslog::client
 
   #Include a profile that sets up our usual SSH settings:
   include profile::ssh
 
-  #This module is: https://github.com/puppetlabs/puppetlabs-ntp
-  class { '::ntp':
-    servers  => [ '0.ubuntu.pool.ntp.org', '1.ubuntu.pool.ntp.org', '2.ubuntu.pool.ntp.org', '3.ubuntu.pool.ntp.org' ],
-    restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
-    disable_monitor => true,
-  }
+  #Include a profile that sets up NTP
+  include profile::ntp::client
 
   #Install Collectd so we can get metrics from this machine into heka/InfluxDB:
   class { '::collectd':
