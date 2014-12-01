@@ -17,42 +17,12 @@ node 'hekamaster.local' {
   include profile::ntp::client
 
   #Include the role that sets up PuppetDB, the Puppet master to work with PuppetDB and Puppetboard:
-  include role::puppet_master_and_puppetdb_server_with_puppetboard
+  include role::puppetdb::puppet_master_and_puppetdb_server_with_puppetboard
 
-  #Install Collectd so we can get metrics from this machine into heka/InfluxDB:
-  class { '::collectd':
-    purge        => true,
-    recurse      => true,
-    purge_config => true,
-  }
+  #Include the role that sets up CollectD, sets it up to gather system and NTP metrics and
+  #sends it to a Graphite (in this case, Heka) server:
+  include role::collectd::collectd_system_and_ntp_metrics_and_write_graphite
   
-  collectd::plugin { 'df': }
-  collectd::plugin { 'disk': }
-  collectd::plugin { 'entropy': }
-  collectd::plugin { 'memory': }
-  collectd::plugin { 'swap': }
-  collectd::plugin { 'cpu': }
-  collectd::plugin { 'cpufreq': }
-  collectd::plugin { 'contextswitch': }
-  collectd::plugin { 'processes': }
-  collectd::plugin { 'vmem': }
-  class { 'collectd::plugin::load':}
-  
-  #Gather NTP stats:
-  class { 'collectd::plugin::ntpd':
-    host           => 'localhost',
-    port           => 123,
-    reverselookups => false,
-    includeunitid  => false,
-  }
-  
-  #Write the collectd status to the heka VM in the Graphite format:
-  class { 'collectd::plugin::write_graphite':
-    graphitehost => 'heka1.local',
-    protocol => 'tcp',
-    graphiteport => 2003,
-  }
-
 }
 
 node 'heka1.local' {
