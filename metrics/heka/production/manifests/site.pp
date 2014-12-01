@@ -1,13 +1,6 @@
 #puppet master node definition
 node 'hekamaster.local' {
 
- #This module is from: https://github.com/puppetlabs/puppetlabs-puppetdb/
-  class { 'puppetdb':
-    listen_address => '0.0.0.0'
-  }
-  
-  include puppetdb::master::config
-  
   #Apache modules for PuppetBoard:
   include profile::apache::wsgi
   
@@ -22,6 +15,9 @@ node 'hekamaster.local' {
 
   #Include a profile that sets up NTP
   include profile::ntp::client
+
+  #Include the role that sets up PuppetDB, the Puppet master to work with PuppetDB and Puppetboard:
+  include role::puppet_master_and_puppetdb_server_with_puppetboard
 
   #Install Collectd so we can get metrics from this machine into heka/InfluxDB:
   class { '::collectd':
