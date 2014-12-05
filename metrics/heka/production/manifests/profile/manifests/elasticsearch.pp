@@ -14,4 +14,24 @@ class profile::elasticsearch {
     config => { 'node.name' => $fqdn }
   }
 
+  #...and some plugins:
+  elasticsearch::instance { $fqdn:
+    config => { 'node.name' => $fqdn }
+  }
+
+  elasticsearch::plugin{'mobz/elasticsearch-head':
+    module_dir => 'head',
+    instances  => $fqdn,
+  }
+
+  elasticsearch::plugin{'karmi/elasticsearch-paramedic':
+    module_dir => 'paramedic',
+    instances  => $fqdn,
+  }
+
+  elasticsearch::plugin{'lmenezes/elasticsearch-kopf':
+    module_dir => 'kopf',
+    instances  => $fqdn,
+  }
+
 }
