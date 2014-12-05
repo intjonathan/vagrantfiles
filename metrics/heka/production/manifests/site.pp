@@ -332,21 +332,7 @@ node 'hekamail.local' {
   #Include a profile that installs and configures Postfix:
   include profile::postfix
 
-  #Create a user account so we can test receiving mail:
-  user { 'nick':
-    ensure => present,
-    home => '/home/nick',
-    groups => ['sudo', 'admin'],
-    #This is 'password', in salted SHA-512 form:
-    password => '$6$IPYwCTfWyO$bIVTSw4ai/BGtZpfI4HtC8XE7bmb8b3kdZ6gRz4DF4hm7WmD35azXoFxN90TRrSYQdKo011YnBl7p3UXR2osQ1',
-    shell => '/bin/bash',
-  }
-
-  file { '/home/nick' :
-    ensure => directory,
-    owner => 'nick',
-    group => 'nick',
-    mode =>  '755',
-  }
+  #Include the profile that sets up my user account:
+  include profile::users
 
 }
