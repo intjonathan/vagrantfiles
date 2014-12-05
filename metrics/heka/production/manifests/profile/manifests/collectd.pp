@@ -28,7 +28,7 @@ class profile::collectd::system_metrics {
 class profile::collectd::ntp_metrics {
 
   #Gather NTP stats:
-  class { 'collectd::plugin::ntpd':
+  class { '::collectd::plugin::ntpd':
     host           => 'localhost',
     port           => 123,
     reverselookups => false,
@@ -40,7 +40,7 @@ class profile::collectd::ntp_metrics {
 class profile::collectd::write_graphite {
 
   #Write the collectd status to the heka VM in the Graphite format:
-  class { 'collectd::plugin::write_graphite':
+  class { '::collectd::plugin::write_graphite':
     graphitehost => 'heka1.local',
     protocol => 'tcp',
     graphiteport => 2003,

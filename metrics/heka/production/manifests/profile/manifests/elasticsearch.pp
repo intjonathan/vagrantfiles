@@ -1,6 +1,6 @@
 class profile::elasticsearch {
 
-    class { 'elasticsearch':
+    class { '::elasticsearch':
     java_install => false,
     package_url => 'https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.4.1.deb',
     config => { 'cluster.name'             => 'heka',
@@ -10,26 +10,26 @@ class profile::elasticsearch {
     },
   }
 
-  elasticsearch::instance { $fqdn:
+  ::elasticsearch::instance { $fqdn:
     config => { 'node.name' => $fqdn }
   }
 
   #...and some plugins:
-  elasticsearch::instance { $fqdn:
+  ::elasticsearch::instance { $fqdn:
     config => { 'node.name' => $fqdn }
   }
 
-  elasticsearch::plugin{'mobz/elasticsearch-head':
+  ::elasticsearch::plugin{'mobz/elasticsearch-head':
     module_dir => 'head',
     instances  => $fqdn,
   }
 
-  elasticsearch::plugin{'karmi/elasticsearch-paramedic':
+  ::elasticsearch::plugin{'karmi/elasticsearch-paramedic':
     module_dir => 'paramedic',
     instances  => $fqdn,
   }
 
-  elasticsearch::plugin{'lmenezes/elasticsearch-kopf':
+  ::elasticsearch::plugin{'lmenezes/elasticsearch-kopf':
     module_dir => 'kopf',
     instances  => $fqdn,
   }
