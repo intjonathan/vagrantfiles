@@ -12,6 +12,21 @@ class profile::apache {
   ::apache::mod { 'proxy_http': } #Install/enable the HTTP proxy module
   ::apache::mod { 'headers': }
 
+  #Create /sites/apps for Apache to serve static applications out of:
+  file {'/sites/': 
+      ensure => directory,
+      owner => 'www-data',
+      group => 'www-data',
+      mode => '755',
+    }
+
+  file {'/sites/apps/': 
+      ensure => directory,
+      owner => 'www-data',
+      group => 'www-data',
+      mode => '755',
+    }
+
 }
 
 class profile::apache::wsgi {

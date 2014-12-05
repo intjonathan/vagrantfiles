@@ -230,20 +230,6 @@ node 'hekalogging.local' {
   #Include Elasticsearch
   include profile::elasticsearch
 
-  file {'/sites/': 
-      ensure => directory,
-      owner => 'www-data',
-      group => 'www-data',
-      mode => '755',
-    }
-
-  file {'/sites/apps/': 
-      ensure => directory,
-      owner => 'www-data',
-      group => 'www-data',
-      mode => '755',
-    }
-
   #A non-SSL virtual host for Kibana:
   ::apache::vhost { 'kibana.hekalogging.local_non-ssl':
     port            => 80,
