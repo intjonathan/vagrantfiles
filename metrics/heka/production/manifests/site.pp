@@ -230,25 +230,6 @@ node 'hekalogging.local' {
   #Include Elasticsearch
   include profile::elasticsearch
 
-  #A non-SSL virtual host for Kibana:
-  ::apache::vhost { 'kibana.hekalogging.local_non-ssl':
-    port            => 80,
-    docroot         => '/sites/apps/kibana3',
-    servername      => "kibana.${fqdn}",
-    access_log => true,
-    access_log_syslog=> 'syslog:local1',
-    error_log => true,
-    error_log_syslog=> 'syslog:local1',
-    custom_fragment => '
-      #Disable multiviews since they can have unpredictable results
-      <Directory "/sites/apps/kibana3">
-        AllowOverride All
-        Require all granted
-        Options -Multiviews
-      </Directory>
-    ',
-  }
-
   #Include the role that sets up CollectD, sets it up to gather system and NTP metrics and
   #sends it to a Graphite (in this case, Heka) server:
   include role::collectd::collectd_system_and_ntp_metrics_and_write_graphite
