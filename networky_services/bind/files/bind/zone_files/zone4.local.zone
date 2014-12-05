@@ -19,6 +19,7 @@ zone4.local. IN SOA dnsmaster2.local. root.zone4.local. (
 ; Nameserver records
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;Say that dnsmaster2.local is a nameserver for the zone zone3.local:
 zone4.local. IN NS dnsmaster2.local.
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
