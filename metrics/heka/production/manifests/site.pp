@@ -209,9 +209,7 @@ node 'hekalogging.local' {
   include profile::apache
 
   #Install Java...
-  package { 'openjdk-7-jre-headless':
-    ensure => installed,
-  }
+  include profile::java
 
   #Install Logstash:  
   class { 'logstash':
