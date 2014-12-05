@@ -171,7 +171,7 @@ node 'collectd2.local' {
 
 }
 
-node 'influxdb1.local' {
+node 'hekametrics.local' {
 
   #Include a profile that sets up our usual SSH settings:
   include profile::ssh
@@ -207,71 +207,6 @@ node 'influxdb1.local' {
 
 }
 
-node 'grafana1.local' {
-
-  #Install Apache so we test collectd's Apache metrics gathering.
-  include profile::apache
-  
-  #Install Elasticsearch...
-  class { 'elasticsearch':
-    java_install => false,
-    package_url => 'https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.3.2.deb',
-    config => { 'cluster.name'             => 'logstash',
-                'network.host'             => $ipaddress_eth1,
-                'index.number_of_replicas' => '1',
-                'index.number_of_shards'   => '4',
-    },
-  }
-
-  #...and some plugins:
-  elasticsearch::instance { $fqdn:
-    config => { 'node.name' => $fqdn }
-  }
-
-  elasticsearch::plugin{'mobz/elasticsearch-head':
-    module_dir => 'head',
-    instances  => $fqdn,
-  }
-
-  elasticsearch::plugin{'karmi/elasticsearch-paramedic':
-    module_dir => 'paramedic',
-    instances  => $fqdn,
-  }
-
-  elasticsearch::plugin{'lmenezes/elasticsearch-kopf':
-    module_dir => 'kopf',
-    instances  => $fqdn,
-  }
-
-  file {'/sites/': 
-      ensure => directory,
-      owner => 'www-data',
-      group => 'www-data',
-      mode => '755',
-    }
-
-  file {'/sites/apps/': 
-      ensure => directory,
-      owner => 'www-data',
-      group => 'www-data',
-      mode => '755',
-    }
-
-  #Include a profile that sets up our usual SSH settings:
-  include profile::ssh
-  
-  #Include the rsyslog::client profile to set up logging
-  include profile::rsyslog::client
-
-  #Include a profile that sets up NTP
-  include profile::ntp::client
-
-  #Include the role that sets up CollectD, sets it up to gather system and NTP metrics and
-  #sends it to a Graphite (in this case, Heka) server:
-  include role::collectd::collectd_system_and_ntp_metrics_and_write_graphite
-
-}
-
 node 'hekalogging.local' {
 
   #Include a profile that sets up our usual SSH settings:
@@ -303,103 +238,6 @@ node 'hekalogging.local' {
   logstash::configfile { 'logstash_monolithic':
     source => 'puppet:///logstash/configs/logstash.conf',
     order   => 10
-  }
-
-  #Install Elasticsearch...
-  class { 'elasticsearch':
-    java_install => false,
-    package_url => 'https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.3.2.deb',
-    config => { 'cluster.name'             => 'logstash',
-                'network.host'             => $ipaddress_eth1,
-                'index.number_of_replicas' => '1',
-                'index.number_of_shards'   => '4',
-    },
-  }
-
-  #...and some plugins:
-  elasticsearch::instance { $fqdn:
-    config => { 'node.name' => $fqdn }
-  }
-
-  elasticsearch::plugin{'mobz/elasticsearch-head':
-    module_dir => 'head',
-    instances  => $fqdn,
-  }
-
-  elasticsearch::plugin{'karmi/elasticsearch-paramedic':
-    module_dir => 'paramedic',
-    instances  => $fqdn,
-  }
-
-  elasticsearch::plugin{'lmenezes/elasticsearch-kopf':
-    module_dir => 'kopf',
-    instances  => $fqdn,
-  }
-
-  file {'/sites/': 
-      ensure => directory,
-      owner => 'www-data',
-      group => 'www-data',
-      mode => '755',
-    }
-
-  file {'/sites/apps/': 
-      ensure => directory,
-      owner => 'www-data',
-      group => 'www-data',
-      mode => '755',
-    }
-
-  #A non-SSL virtual host for Kibana:
-  ::apache::vhost { 'kibana.hekalogging.local_non-ssl':
-    port            => 80,
-    docroot         => '/sites/apps/kibana3',
-    servername      => "kibana.${fqdn}",
-    access_log => true,
-    access_log_syslog=> 'syslog:local1',
-    error_log => true,
-    error_log_syslog=> 'syslog:local1',
-    custom_fragment => '
-      #Disable multiviews since they can have unpredictable results
-      <Directory "/sites/apps/kibana3">
-        AllowOverride All
-        Require all granted
-        Options -Multiviews
-      </Directory>
-    ',
-  }
-
-  #Create a folder where the SSL certificate and key will live:
-  file {'/etc/apache2/ssl': 
-    ensure => directory,
-    owner => 'root',
-    group => 'root',
-    mode => '600',
-  }
-
-  #Include the role that sets up CollectD, sets it up to gather system and NTP metrics and
-  #sends it to a Graphite (in this case, Heka) server:
-  include role::collectd::collectd_system_and_ntp_metrics_and_write_graphite
-
-}
-
-node 'hekaelasticsearch.local' {
-
-  #Include a profile that sets up our usual SSH settings:
-  include profile::ssh
-  
-  #Include the rsyslog::client profile to set up logging
-  include profile::rsyslog::client
-
-  #Include a profile that sets up NTP
-  include profile::ntp::client
-
-  #Install Apache so we test collectd's Apache metrics gathering.
-  include profile::apache
-
-  #Install Java...
-  package { 'openjdk-7-jre-headless':
-    ensure => installed,
   }
 
   #Install Elasticsearch...
