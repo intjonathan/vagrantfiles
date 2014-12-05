@@ -109,18 +109,21 @@ Vagrant.configure("2") do |config|
 	  collectd2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
   end
   
-  #A machine running InfluxDB and Grafana
-  config.vm.define "influxdb1".to_sym do |influxdb1_config|
-    influxdb1_config.vm.box = "ubuntu-14.04-server-amd64"
-    influxdb1_config.vm.hostname = "influxdb1.local"
-    influxdb1_config.vm.network :private_network, ip: "10.0.1.115"
+  #A machine running Riemann, InfluxDB and Grafana to test:
+  # * Heka sending metrics to a Graphite server (Riemann)
+  # * Heka sending metrics to InfluxDB directly via its API
+  # * Charting metrics from InfluxDB with Grafana
+  config.vm.define "metrics".to_sym do |metrics_config|
+    metrics_config.vm.box = "ubuntu-14.04-server-amd64"
+    metrics_config.vm.hostname = "metrics.local"
+    metrics_config.vm.network :private_network, ip: "10.0.1.115"
     #set some machine-specific options	
-    influxdb1_config.vm.provider "virtualbox" do |v|
+    metrics_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "512"]
     end
     #Puppet agent provisioning script
-	  influxdb1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+	  metrics_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
   end
 
   #A machine running grafana
