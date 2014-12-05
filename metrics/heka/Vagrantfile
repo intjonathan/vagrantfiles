@@ -39,7 +39,7 @@ Vagrant.configure("2") do |config|
     hekamaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_master.sh"
   end
 
-  #A machine running heka
+  #An Ubuntu machine running heka
   config.vm.define "heka1".to_sym do |heka1_config|
     heka1_config.vm.box = "ubuntu-14.04-server-amd64"
     heka1_config.vm.hostname = "heka1.local"
@@ -53,7 +53,7 @@ Vagrant.configure("2") do |config|
 	  heka1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
   end
 
-  #A machine running heka
+  #A CentOS 6 machine running heka
   config.vm.define "heka2".to_sym do |heka2_config|
     heka2_config.vm.box = "centos-6.6-amd64"
     heka2_config.vm.hostname = "heka2.local"
@@ -67,7 +67,7 @@ Vagrant.configure("2") do |config|
     heka2_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
   end
 
-  #A machine running heka
+  #A CentOS 7 machine running heka
   config.vm.define "heka3".to_sym do |heka3_config|
     heka3_config.vm.box = "centos-7.0-amd64"
     heka3_config.vm.hostname = "heka3.local"
@@ -109,7 +109,7 @@ Vagrant.configure("2") do |config|
 	  collectd2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
   end
   
-  #A machine running InfluxDB
+  #A machine running InfluxDB and Grafana
   config.vm.define "influxdb1".to_sym do |influxdb1_config|
     influxdb1_config.vm.box = "ubuntu-14.04-server-amd64"
     influxdb1_config.vm.hostname = "influxdb1.local"
