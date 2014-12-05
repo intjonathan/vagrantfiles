@@ -158,12 +158,8 @@ node 'collectd2.local' {
   #Include a profile that sets up NTP
   include profile::ntp::client
 
-  #Install Postfix locally so that Fail2Ban can send out emails
-  class { '::postfix::server':
-    inet_interfaces => 'localhost', #Only listen on localhost
-    inet_protocols => 'all', #Use both IPv4 and IPv6
-    mydomain       => 'local',
-  }
+  #Include a profile that installs and configures Postfix:
+  include profile::postfix
 
   #Include the role that sets up CollectD, sets it up to gather system and NTP metrics and
   #sends it to a Graphite (in this case, Heka) server:
