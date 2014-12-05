@@ -185,11 +185,9 @@ node 'hekametrics.local' {
   #Include the role that sets up CollectD, sets it up to gather system and NTP metrics and
   #sends it to a Graphite (in this case, Heka) server:
   include role::collectd::collectd_system_and_ntp_metrics_and_write_graphite
-
-  #Install Java so we can run ElasticSearch:
-  package {'openjdk-7-jdk':
-    ensure => installed,
-  } ->
+  
+  #Install Java via the Java profile
+  include profile::java ->
 
   class { 'elasticsearch':
     java_install => false,
