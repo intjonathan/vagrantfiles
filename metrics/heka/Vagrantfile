@@ -113,17 +113,17 @@ Vagrant.configure("2") do |config|
   # * Heka sending metrics to a Graphite server (Riemann)
   # * Heka sending metrics to InfluxDB directly via its API
   # * Charting metrics from InfluxDB with Grafana
-  config.vm.define "metrics".to_sym do |metrics_config|
-    metrics_config.vm.box = "ubuntu-14.04-server-amd64"
-    metrics_config.vm.hostname = "metrics.local"
-    metrics_config.vm.network :private_network, ip: "10.0.1.115"
+  config.vm.define "hekametrics".to_sym do |hekametrics_config|
+    hekametrics_config.vm.box = "ubuntu-14.04-server-amd64"
+    hekametrics_config.vm.hostname = "hekametrics.local"
+    hekametrics_config.vm.network :private_network, ip: "10.0.1.115"
     #set some machine-specific options	
-    metrics_config.vm.provider "virtualbox" do |v|
+    hekametrics_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "1024"]
     end
     #Puppet agent provisioning script
-	  metrics_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+	  hekametrics_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
   end
 
   #A machine running Logstash, Elasticsearch and Kibana for system logs:
