@@ -183,7 +183,7 @@ node 'hekametrics.local' {
   include role::collectd::collectd_system_and_ntp_metrics_and_write_graphite
   
   #Install Java via the Java profile
-  include profile::java ->
+  include profile::java
 
   #Include Elasticsearch
   include profile::elasticsearch
