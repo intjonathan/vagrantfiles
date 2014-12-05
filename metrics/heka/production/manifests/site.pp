@@ -249,14 +249,6 @@ node 'hekalogging.local' {
     ',
   }
 
-  #Create a folder where the SSL certificate and key will live:
-  file {'/etc/apache2/ssl': 
-    ensure => directory,
-    owner => 'root',
-    group => 'root',
-    mode => '600',
-  }
-
   #Include the role that sets up CollectD, sets it up to gather system and NTP metrics and
   #sends it to a Graphite (in this case, Heka) server:
   include role::collectd::collectd_system_and_ntp_metrics_and_write_graphite

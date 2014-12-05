@@ -12,6 +12,14 @@ class profile::apache {
   ::apache::mod { 'proxy_http': } #Install/enable the HTTP proxy module
   ::apache::mod { 'headers': }
 
+  #Create a folder where the SSL certificate and key will live:
+  file {'/etc/apache2/ssl': 
+    ensure => directory,
+    owner => 'root',
+    group => 'root',
+    mode => '600',
+  }
+
   #Create /sites/apps for Apache to serve static applications out of:
   file {'/sites/': 
       ensure => directory,
