@@ -187,6 +187,12 @@ node 'hekametrics.local' {
 
   #Include Elasticsearch
   include profile::elasticsearch
+  
+  #Install Riemann
+  include profile::riemann
+  
+  #Install InfluxDB
+  include profile::influxdb
 
 }
 
@@ -213,6 +219,9 @@ node 'hekalogging.local' {
 
   #Include Elasticsearch
   include profile::elasticsearch
+
+  #Include the profile that sets up a virtual host for Kibana3:
+  include profile::kibana3::apache_virtualhost
 
   #Include the role that sets up CollectD, sets it up to gather system and NTP metrics and
   #sends it to a Graphite (in this case, Heka) server:

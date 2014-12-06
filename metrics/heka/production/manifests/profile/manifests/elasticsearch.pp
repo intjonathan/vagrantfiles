@@ -15,10 +15,6 @@ class profile::elasticsearch {
   }
 
   #...and some plugins:
-  ::elasticsearch::instance { $fqdn:
-    config => { 'node.name' => $fqdn }
-  }
-
   ::elasticsearch::plugin{'mobz/elasticsearch-head':
     module_dir => 'head',
     instances  => $fqdn,
