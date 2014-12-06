@@ -7,6 +7,8 @@ class profile::elasticsearch {
                 'network.host'             => $ipaddress_eth1,
                 'index.number_of_replicas' => '1',
                 'index.number_of_shards'   => '4',
+                'http.cors.enabled'        => 'true',
+                'http.cors.allow-origin'   => 'http://kibana.hekalogging.local'
     },
   }
 
