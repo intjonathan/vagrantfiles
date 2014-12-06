@@ -193,6 +193,12 @@ node 'hekametrics.local' {
   
   #Install InfluxDB
   include profile::influxdb
+  
+  #Include the Grafana profile
+  include profile::grafana
+  
+  #Include the Apache profile so we can set up Grafana with it:
+  include profile::apache
 
 }
 
