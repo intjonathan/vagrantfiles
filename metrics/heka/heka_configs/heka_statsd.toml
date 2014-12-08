@@ -9,5 +9,10 @@ address = "127.0.0.1:8126"
 
 [stat_accumulator]
 type = "StatAccumInput"
-ticker_interval = 1
+ticker_interval = 10
 emit_in_fields = true
+
+[CarbonOutput]
+message_matcher = "Type == 'heka.statmetric'"
+address = "hekametrics.local:2003"
+protocol = "udp"
