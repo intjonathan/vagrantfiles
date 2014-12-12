@@ -35,7 +35,6 @@ Vagrant.configure("2") do |config|
     config.vm.synced_folder "manifests/", "/etc/puppet/environments/production/manifests", :nfs => true
     config.vm.synced_folder "hieradata", "/etc/puppet/environments/production/hieradata", :nfs => true
     #Puppet master provisioning script
-    utopicpuppetmaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_utopic_puppet_master.sh"
   end
 
   #An Ubuntu 14.04 utopic Puppet agent machine
