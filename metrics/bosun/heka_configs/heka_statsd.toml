@@ -1,0 +1,18 @@
+[statsd_input_8125]
+type = "StatsdInput"
+stat_accum_name = "stat_accumulator"
+
+[statsd_input_8126]
+type = "StatsdInput"
+stat_accum_name = "stat_accumulator"
+address = "127.0.0.1:8126"
+
+[stat_accumulator]
+type = "StatAccumInput"
+ticker_interval = 10
+emit_in_fields = true
+
+[CarbonOutput]
+message_matcher = "Type == 'bosun.statmetric'"
+address = "bosunmetrics.local:2003"
+protocol = "udp"

@@ -1,0 +1,163 @@
+Vagrant.configure("2") do |config|
+  # All Vagrant configuration is done here. The most common configuration
+  # options are documented and commented below. For a complete reference,
+  # please see the online documentation at vagrantup.com.
+  
+  ####################
+  # Snippets to use
+  ####################
+  
+  #NFS folder sharing
+  #config.vm.synced_folder "modules", "/etc/puppet/modules", :nfs => true
+  
+  ####################
+  ####################
+  
+  #vagrant-hostmanager plugin options
+  config.hostmanager.enabled = true
+  config.hostmanager.ignore_private_ip = false
+  #update the /etc/hosts of the host OS
+  config.hostmanager.manage_host = true
+  
+  #Puppet master
+  config.vm.define "bosunmaster".to_sym do |bosunmaster_config|
+    bosunmaster_config.vm.box = "ubuntu-14.04-server-amd64"
+    bosunmaster_config.vm.hostname = "bosunmaster.local"
+    bosunmaster_config.hostmanager.aliases = %w(master puppet master.local puppetboard.bosunmaster.local)
+    bosunmaster_config.vm.network :private_network, ip: "10.0.1.110"
+    #set some machine-specific options	
+    bosunmaster_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    #NFS folder sharing for Puppet modules and manifests
+    bosunmaster_config.vm.synced_folder "production/", "/etc/puppet/environments/production", :nfs => true
+    bosunmaster_config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/environments/production/modules", :nfs => true
+    #bosunmaster_config.vm.synced_folder "hieradata/", "/etc/puppet/environments/production/hieradata", :nfs => true
+    bosunmaster_config.vm.synced_folder "files/", "/etc/puppet/files", :nfs => true
+    #Puppet master provisioning script
+    bosunmaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_master.sh"
+  end
+
+  #An Ubuntu machine running bosun
+  config.vm.define "bosun1".to_sym do |bosun1_config|
+    bosun1_config.vm.box = "ubuntu-14.04-server-amd64"
+    bosun1_config.vm.hostname = "bosun1.local"
+    bosun1_config.vm.network :private_network, ip: "10.0.1.111"
+    #set some machine-specific options	
+    bosun1_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    #Puppet agent provisioning script
+	  bosun1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+    bosun1_config.vm.synced_folder "bosun_configs/", "/etc/bosun/configs/", :nfs => true
+  end
+
+  #A CentOS 6 machine running bosun
+  config.vm.define "bosun2".to_sym do |bosun2_config|
+    bosun2_config.vm.box = "centos-6.6-amd64"
+    bosun2_config.vm.hostname = "bosun2.local"
+    bosun2_config.vm.network :private_network, ip: "10.0.1.112"
+    #set some machine-specific options	
+    bosun2_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    #Puppet agent provisioning script
+    bosun2_config.vm.provision :shell, :path => "../provisioning_scripts/el6_puppet_agent.sh"
+    bosun2_config.vm.synced_folder "bosun_configs/", "/etc/bosun/configs/", :nfs => true
+  end
+
+  #A CentOS 7 machine running bosun
+  config.vm.define "bosun3".to_sym do |bosun3_config|
+    bosun3_config.vm.box = "centos-7.0-amd64"
+    bosun3_config.vm.hostname = "bosun3.local"
+    bosun3_config.vm.network :private_network, ip: "10.0.1.120"
+    #set some machine-specific options	
+    bosun3_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    #Puppet agent provisioning script
+    bosun3_config.vm.provision :shell, :path => "../provisioning_scripts/el7_puppet_agent.sh"
+    bosun3_config.vm.synced_folder "bosun_configs/", "/etc/bosun/configs/", :nfs => true
+  end
+
+  #A machine running collectd that will send metrics to the bosun machines
+  config.vm.define "collectd1".to_sym do |collectd1_config|
+    collectd1_config.vm.box = "ubuntu-14.04-server-amd64"
+    collectd1_config.vm.hostname = "collectd1.local"
+    collectd1_config.vm.network :private_network, ip: "10.0.1.113"
+    #set some machine-specific options	
+    collectd1_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "256"]
+    end
+    #Puppet agent provisioning script
+	  collectd1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+  end
+
+  #A machine running collectd that will send metrics to the bosun machines
+  config.vm.define "collectd2".to_sym do |collectd2_config|
+    collectd2_config.vm.box = "ubuntu-14.04-server-amd64"
+    collectd2_config.vm.hostname = "collectd2.local"
+    collectd2_config.vm.network :private_network, ip: "10.0.1.114"
+    #set some machine-specific options	
+    collectd2_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "256"]
+    end
+    #Puppet agent provisioning script
+	  collectd2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+  end
+  
+  #A machine running Riemann, InfluxDB and Grafana to test:
+  # * bosun sending metrics to a Graphite server (Riemann)
+  # * bosun sending metrics to InfluxDB directly via its API
+  # * Charting metrics from InfluxDB with Grafana
+  config.vm.define "bosunmetrics".to_sym do |bosunmetrics_config|
+    bosunmetrics_config.vm.box = "ubuntu-14.04-server-amd64"
+    bosunmetrics_config.vm.hostname = "bosunmetrics.local"
+    bosunmetrics_config.hostmanager.aliases = %w(bosunmetrics grafana.bosunmetrics.local)
+    bosunmetrics_config.vm.network :private_network, ip: "10.0.1.115"
+    #set some machine-specific options	
+    bosunmetrics_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+    #Puppet agent provisioning script
+	  bosunmetrics_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+  end
+
+  #A machine running Logstash, Elasticsearch and Kibana for system logs:
+  config.vm.define "bosunlogging".to_sym do |bosunlogging_config|
+    bosunlogging_config.vm.box = "ubuntu-14.04-server-amd64"
+    bosunlogging_config.vm.hostname = "bosunlogging.local"
+    bosunlogging_config.hostmanager.aliases = %w(bosunlogging kibana.bosunlogging.local)
+    bosunlogging_config.vm.network :private_network, ip: "10.0.1.117"
+    #set some machine-specific options	
+    bosunlogging_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+    #Puppet agent provisioning script
+	  bosunlogging_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+  end
+
+  #A machine running Postfix and Dovecot for email stuff
+  config.vm.define "bosunmail".to_sym do |bosunmail_config|
+    bosunmail_config.vm.box = "ubuntu-14.04-server-amd64"
+    bosunmail_config.vm.hostname = "bosunmail.local"
+    bosunmail_config.hostmanager.aliases = %w(bosunmail)
+    bosunmail_config.vm.network :private_network, ip: "10.0.1.119"
+    #set some machine-specific options	
+    bosunmail_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "256"]
+    end
+    #Puppet agent provisioning script
+	  bosunmail_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+  end
+
+end
