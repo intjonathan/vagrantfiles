@@ -474,6 +474,12 @@ node 'trustyicinga2server.local' {
   #Create a CheckerComponent object to test out this PR: https://github.com/Icinga/puppet-icinga2/pull/59
   icinga2::object::checkercomponent {'checker':}
 
+  #Create an endpoint object to test out this PR: https://github.com/Icinga/puppet-icinga2/pull/63
+  icinga2::object::endpoint { 'icinga2b':
+    host => '192.168.5.46',
+    port => 5665
+  }
+
   #Create a notificationcommand to test out this PR: https://github.com/Icinga/puppet-icinga2/pull/32
   icinga2::object::notificationcommand { 'mail-service-notification-2':
     command   => ['"/icinga2/scripts/mail-notification.sh"'],
