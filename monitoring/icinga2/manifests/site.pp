@@ -488,6 +488,12 @@ node 'trustyicinga2server.local' {
     update_interval   => '15s',
   }
 
+  #Create a FileLogger object to test out this PR: https://github.com/Icinga/puppet-icinga2/pull/61
+  icinga2::object::filelogger { 'debug-file':
+    severity => 'debug',
+    path     => '/var/log/icinga2/debug.log',
+  }
+
   #Create a timeperiod object to test out this PR: https://github.com/Icinga/puppet-icinga2/pull/37
   icinga2::object::timeperiod { 'bra-office-hrs':
     timeperiod_display_name => 'Brazilian WorkTime Hours',
