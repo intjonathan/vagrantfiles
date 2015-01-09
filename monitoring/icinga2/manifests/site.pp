@@ -269,6 +269,12 @@ node 'trustyicinga2server.local' {
     spool_dir => '/data/check-results'
   }
 
+  #Create an API listener object:
+  icinga2::object::apilistener { 'master-api':
+    bind_host => $ipaddress_eth1,
+    accept_commands => true,
+  }
+
   #Create a user definition:
   icinga2::object::user { 'nick':
     display_name => 'Nick',
