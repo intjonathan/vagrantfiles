@@ -129,7 +129,7 @@ node 'trustyicinga2client.local' {
   #Include a profile that sets up NTP
   include profile::ntp::client
 
-
+  include role::icinga2::nrpeclient
 
 }
 
@@ -145,6 +145,8 @@ node 'utopicicinga2client.local' {
   #Include a profile that sets up NTP
   include profile::ntp::client
 
+  include role::icinga2::nrpeclient
+
 }
 
 #An Ubuntu 12.04 Icinga 2 client node
@@ -158,6 +160,8 @@ node 'preciseicinga2client.local' {
 
   #Include a profile that sets up NTP
   include profile::ntp::client
+
+  include role::icinga2::nrpeclient
 
 }
 
@@ -173,6 +177,8 @@ node 'centos6icinga2client.local' {
   #Include a profile that sets up NTP
   include profile::ntp::client
 
+  include role::icinga2::nrpeclient
+
 }
 
 #A CentOS 7 Icinga 2 client node
@@ -186,6 +192,8 @@ node 'centos7icinga2client.local' {
 
   #Include a profile that sets up NTP
   include profile::ntp::client
+
+  include role::icinga2::nrpeclient
 
 }
 
@@ -201,6 +209,8 @@ node 'debian7icinga2client.local' {
   #Include a profile that sets up NTP
   include profile::ntp::client
 
+  include role::icinga2::nrpeclient
+
 }
 
 node 'icinga2mail.local' {
@@ -213,6 +223,11 @@ node 'icinga2mail.local' {
 
   #Include a profile that sets up NTP
   include profile::ntp::client
+
+  include role::icinga2::nrpeclient
+
+  #Include the profile that sets up my user account:
+  include profile::users
 
 }
 
@@ -227,6 +242,14 @@ node 'usermail.local' {
   #Include a profile that sets up NTP
   include profile::ntp::client
 
+  include role::icinga2::nrpeclient
+
+  #Include a profile that installs and configures Postfix:
+  include profile::postfix::server
+
+  #Include the profile that sets up my user account:
+  include profile::users
+
 }
 
 node 'icinga2logging.local' {
@@ -240,6 +263,24 @@ node 'icinga2logging.local' {
   #Include a profile that sets up NTP
   include profile::ntp::client
 
+  include role::icinga2::nrpeclient
+  
+  #Install Apache so we use Kibana 3:
+  include profile::apache
+
+  #Install Java...
+  include profile::java
+
+  #Include Logstash
+  include profile::logstash
+  include profile::logstash::config
+
+  #Include Elasticsearch
+  include profile::elasticsearch
+
+  #Include the profile that sets up a virtual host for Kibana3:
+  include profile::kibana3::apache_virtualhost
+
 }
 
 node 'icinga2metrics.local' {
@@ -252,5 +293,17 @@ node 'icinga2metrics.local' {
 
   #Include a profile that sets up NTP
   include profile::ntp::client
+
+  include role::icinga2::nrpeclient
+
+  #Install Riemann
+  include profile::riemann
+  
+  #Install InfluxDB
+  include profile::influxdb
+  
+  #Include the Grafana profile
+  include profile::grafana
+
 
 }
