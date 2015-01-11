@@ -33,6 +33,8 @@ node 'trustyicinga2server.local' {
   #Include a profile that sets up NTP
   include profile::ntp::client
 
+  include role::icinga2::server
+
 }
 
 #An Ubuntu 14.10 Icinga2 server node
