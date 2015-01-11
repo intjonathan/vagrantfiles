@@ -49,6 +49,8 @@ node 'utopicicinga2server.local' {
   #Include a profile that sets up NTP
   include profile::ntp::client
 
+  include role::icinga2::server
+
 }
 
 #An Ubuntu 12.04 Icinga2 server node
@@ -63,6 +65,8 @@ node 'preciseicinga2server.local' {
   #Include a profile that sets up NTP
   include profile::ntp::client
 
+  include role::icinga2::server
+    
 }
 
 #CentOS 6 Icinga 2 server node
@@ -76,6 +80,8 @@ node 'centos6icinga2server.local' {
 
   #Include a profile that sets up NTP
   include profile::ntp::client
+
+  include role::icinga2::server
 
 }
 
@@ -91,6 +97,8 @@ node 'centos7icinga2server.local' {
   #Include a profile that sets up NTP
   include profile::ntp::client
 
+  include role::icinga2::server
+
 }
 
 #A Debian 7 Icinga2 server node
@@ -104,6 +112,8 @@ node 'debian7icinga2server.local' {
 
   #Include a profile that sets up NTP
   include profile::ntp::client
+
+  include role::icinga2::server
 
 }
 
