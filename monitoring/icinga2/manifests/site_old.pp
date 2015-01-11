@@ -1,139 +1,10 @@
-#default node defition
-node default {
-
-  #This module is from: https://github.com/saz/puppet-ssh
-  class { 'ssh':
-    #Export host keys to PuppetDB:
-    storeconfigs_enabled => true,
-    server_options => {
-      #Whether to allow password auth; if set to 'no', only SSH keys can be used:
-      #'PasswordAuthentication' => 'no',
-      #How many authentication attempts to allow before disconnecting:
-      'MaxAuthTries'         => '10',
-      'PermitEmptyPasswords' => 'no', 
-      'PermitRootLogin'      => 'no',
-      'Port'                 => [22],
-      'PubkeyAuthentication' => 'yes',
-      #Whether to be strict about the permissions on a user's .ssh/ folder and public keys:
-      'StrictModes'          => 'yes',
-      'TCPKeepAlive'         => 'yes',
-      #Whether to do reverse DNS lookups of client IP addresses when they connect:
-      'UseDNS'               => 'no',
-    },
-  }
-
-}
-
 #puppet master node definition
 node 'icinga2master.local' {
-
-  #This module is from: https://github.com/puppetlabs/puppetlabs-puppetdb/
-  class { 'puppetdb':
-    listen_address => '0.0.0.0'
-  }
-  
-  include puppetdb::master::config
-  
-  #Apache modules for PuppetBoard:
-  class { 'apache': }
-  class { 'apache::mod::wsgi': }
-
-  #Configure Puppetboard with this module: https://github.com/nibalizer/puppet-module-puppetboard
-  class { 'puppetboard':
-    manage_virtualenv => true,
-  }
-
-  #A virtualhost for PuppetBoard
-  class { 'puppetboard::apache::vhost':
-    vhost_name => "puppetboard.${fqdn}",
-    port => 80,
-  }
- 
-  #This module is from: https://github.com/saz/puppet-rsyslog
-  class { 'rsyslog::client':
-    #Write out logs in RFC3146 format so that they're more consistent when we send them to
-    #Logstash. Logstash is set up to understand this format of logs in its config:
-    log_templates => [
-      { name => 'RFC3164fmt', template => '<%PRI%>%TIMESTAMP% %HOSTNAME% %syslogtag%%msg%',},
-    ],
-    log_remote     => true,
-    server         => 'icinga2logging.local',
-    port           => '5514',
-    remote_type    => 'tcp',
-    log_local      => true,
-    log_auth_local => true,
-    custom_config  => undef,
-  }
- 
-  #This module is from: https://github.com/saz/puppet-ssh
-  class { 'ssh':
-    #Export host keys to PuppetDB:
-    storeconfigs_enabled => true,
-    server_options => {
-      #Whether to allow password auth; if set to 'no', only SSH keys can be used:
-      #'PasswordAuthentication' => 'no',
-      #How many authentication attempts to allow before disconnecting:
-      'MaxAuthTries'         => '10',
-      'PermitEmptyPasswords' => 'no', 
-      'PermitRootLogin'      => 'no',
-      'Port'                 => [22],
-      'PubkeyAuthentication' => 'yes',
-      #Whether to be strict about the permissions on a user's .ssh/ folder and public keys:
-      'StrictModes'          => 'yes',
-      'TCPKeepAlive'         => 'yes',
-      #Whether to do reverse DNS lookups of client IP addresses when they connect:
-      'UseDNS'               => 'no',
-    },
-  }
-
-  #This module is: https://github.com/puppetlabs/puppetlabs-ntp
-  class { '::ntp':
-    servers  => [ '0.ubuntu.pool.ntp.org', '1.ubuntu.pool.ntp.org', '2.ubuntu.pool.ntp.org', '3.ubuntu.pool.ntp.org' ],
-    restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
-    disable_monitor => true,
-  }
 
 }
 
 #An Ubuntu 14.04 Icinga2 server node
 node 'trustyicinga2server.local' {
-
-  #This module is from: https://github.com/saz/puppet-ssh
-  class { 'ssh':
-    #Export host keys to PuppetDB:
-    storeconfigs_enabled => true,
-    server_options => {
-      #Whether to allow password auth; if set to 'no', only SSH keys can be used:
-      #'PasswordAuthentication' => 'no',
-      #How many authentication attempts to allow before disconnecting:
-      'MaxAuthTries'         => '10',
-      'PermitEmptyPasswords' => 'no', 
-      'PermitRootLogin'      => 'no',
-      'Port'                 => [22],
-      'PubkeyAuthentication' => 'yes',
-      #Whether to be strict about the permissions on a user's .ssh/ folder and public keys:
-      'StrictModes'          => 'yes',
-      'TCPKeepAlive'         => 'yes',
-      #Whether to do reverse DNS lookups of client IP addresses when they connect:
-      'UseDNS'               => 'no',
-    },
-  }
-
-  #This module is from: https://github.com/saz/puppet-rsyslog
-  class { 'rsyslog::client':
-    #Write out logs in RFC3146 format so that they're more consistent when we send them to
-    #Logstash. Logstash is set up to understand this format of logs in its config:
-    log_templates => [
-      { name => 'RFC3164fmt', template => '<%PRI%>%TIMESTAMP% %HOSTNAME% %syslogtag%%msg%',},
-    ],
-    log_remote     => true,
-    server         => 'icinga2logging.local',
-    port           => '5514',
-    remote_type    => 'tcp',
-    log_local      => true,
-    log_auth_local => true,
-    custom_config  => undef,
-  }
 
   #Make rsyslog watch the Apache log files:
   rsyslog::imfile { 'apache-access':
@@ -150,12 +21,7 @@ node 'trustyicinga2server.local' {
     file_severity => 'error',
   }
 
-  #This module is: https://github.com/puppetlabs/puppetlabs-ntp
-  class { '::ntp':
-    servers  => [ '0.ubuntu.pool.ntp.org', '1.ubuntu.pool.ntp.org', '2.ubuntu.pool.ntp.org', '3.ubuntu.pool.ntp.org' ],
-    restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
-    disable_monitor => true,
-  }
+
 
   #Install Postgres for use as a database with Icinga 2...
   class { 'postgresql::server': } ->
@@ -675,42 +541,9 @@ node 'trustyicinga2server.local' {
 #An Ubuntu 14.10 Icinga2 server node
 node 'utopicicinga2server.local' {
 
-  #This module is from: https://github.com/saz/puppet-ssh
-  class { 'ssh':
-    #Export host keys to PuppetDB:
-    storeconfigs_enabled => true,
-    server_options => {
-      #Whether to allow password auth; if set to 'no', only SSH keys can be used:
-      #'PasswordAuthentication' => 'no',
-      #How many authentication attempts to allow before disconnecting:
-      'MaxAuthTries'         => '10',
-      'PermitEmptyPasswords' => 'no', 
-      'PermitRootLogin'      => 'no',
-      'Port'                 => [22],
-      'PubkeyAuthentication' => 'yes',
-      #Whether to be strict about the permissions on a user's .ssh/ folder and public keys:
-      'StrictModes'          => 'yes',
-      'TCPKeepAlive'         => 'yes',
-      #Whether to do reverse DNS lookups of client IP addresses when they connect:
-      'UseDNS'               => 'no',
-    },
-  }
 
-  #This module is from: https://github.com/saz/puppet-rsyslog
-  class { 'rsyslog::client':
-    #Write out logs in RFC3146 format so that they're more consistent when we send them to
-    #Logstash. Logstash is set up to understand this format of logs in its config:
-    log_templates => [
-      { name => 'RFC3164fmt', template => '<%PRI%>%TIMESTAMP% %HOSTNAME% %syslogtag%%msg%',},
-    ],
-    log_remote     => true,
-    server         => 'icinga2logging.local',
-    port           => '5514',
-    remote_type    => 'tcp',
-    log_local      => true,
-    log_auth_local => true,
-    custom_config  => undef,
-  }
+
+
 
   #Make rsyslog watch the Apache log files:
   rsyslog::imfile { 'apache-access':
@@ -727,12 +560,7 @@ node 'utopicicinga2server.local' {
     file_severity => 'error',
   }
 
-  #This module is: https://github.com/puppetlabs/puppetlabs-ntp
-  class { '::ntp':
-    servers  => [ '0.ubuntu.pool.ntp.org', '1.ubuntu.pool.ntp.org', '2.ubuntu.pool.ntp.org', '3.ubuntu.pool.ntp.org' ],
-    restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
-    disable_monitor => true,
-  }
+
 
   #Install Postgres for use as a database with Icinga 2...
   class { 'postgresql::server': } ->
@@ -1246,49 +1074,11 @@ node 'utopicicinga2server.local' {
 #An Ubuntu 12.04 Icinga2 server node
 node 'preciseicinga2server.local' {
 
-  #This module is from: https://github.com/saz/puppet-ssh
-  class { 'ssh':
-    #Export host keys to PuppetDB:
-    storeconfigs_enabled => true,
-    server_options => {
-      #Whether to allow password auth; if set to 'no', only SSH keys can be used:
-      #'PasswordAuthentication' => 'no',
-      #How many authentication attempts to allow before disconnecting:
-      'MaxAuthTries'         => '10',
-      'PermitEmptyPasswords' => 'no', 
-      'PermitRootLogin'      => 'no',
-      'Port'                 => [22],
-      'PubkeyAuthentication' => 'yes',
-      #Whether to be strict about the permissions on a user's .ssh/ folder and public keys:
-      'StrictModes'          => 'yes',
-      'TCPKeepAlive'         => 'yes',
-      #Whether to do reverse DNS lookups of client IP addresses when they connect:
-      'UseDNS'               => 'no',
-    },
-  }
 
-  #This module is from: https://github.com/saz/puppet-rsyslog
-  class { 'rsyslog::client':
-    #Write out logs in RFC3146 format so that they're more consistent when we send them to
-    #Logstash. Logstash is set up to understand this format of logs in its config:
-    log_templates => [
-      { name => 'RFC3164fmt', template => '<%PRI%>%TIMESTAMP% %HOSTNAME% %syslogtag%%msg%',},
-    ],
-    log_remote     => true,
-    server         => 'icinga2logging.local',
-    port           => '5514',
-    remote_type    => 'tcp',
-    log_local      => true,
-    log_auth_local => true,
-    custom_config  => undef,
-  }
 
-  #This module is: https://github.com/puppetlabs/puppetlabs-ntp
-  class { '::ntp':
-    servers  => [ '0.ubuntu.pool.ntp.org', '1.ubuntu.pool.ntp.org', '2.ubuntu.pool.ntp.org', '3.ubuntu.pool.ntp.org' ],
-    restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
-    disable_monitor => true,
-  }
+
+
+
 
   #Install Postgres for use as a database with Icinga 2...
   class { 'postgresql::server': } ->
@@ -1791,42 +1581,9 @@ node 'preciseicinga2server.local' {
 #CentOS 6 Icinga 2 server node
 node 'centos6icinga2server.local' {
 
-  #This module is from: https://github.com/saz/puppet-ssh
-  class { 'ssh':
-    #Export host keys to PuppetDB:
-    storeconfigs_enabled => true,
-    server_options => {
-      #Whether to allow password auth; if set to 'no', only SSH keys can be used:
-      #'PasswordAuthentication' => 'no',
-      #How many authentication attempts to allow before disconnecting:
-      'MaxAuthTries'         => '10',
-      'PermitEmptyPasswords' => 'no', 
-      'PermitRootLogin'      => 'no',
-      'Port'                 => [22],
-      'PubkeyAuthentication' => 'yes',
-      #Whether to be strict about the permissions on a user's .ssh/ folder and public keys:
-      'StrictModes'          => 'yes',
-      'TCPKeepAlive'         => 'yes',
-      #Whether to do reverse DNS lookups of client IP addresses when they connect:
-      'UseDNS'               => 'no',
-    },
-  }
 
-  #This module is from: https://github.com/saz/puppet-rsyslog
-  class { 'rsyslog::client':
-    #Write out logs in RFC3146 format so that they're more consistent when we send them to
-    #Logstash. Logstash is set up to understand this format of logs in its config:
-    log_templates => [
-      { name => 'RFC3164fmt', template => '<%PRI%>%TIMESTAMP% %HOSTNAME% %syslogtag%%msg%',},
-    ],
-    log_remote     => true,
-    server         => 'icinga2logging.local',
-    port           => '5514',
-    remote_type    => 'tcp',
-    log_local      => true,
-    log_auth_local => true,
-    custom_config  => undef,
-  }
+
+
 
   #This module is: https://github.com/puppetlabs/puppetlabs-ntp
   class { '::ntp':
@@ -2336,42 +2093,9 @@ node 'centos6icinga2server.local' {
 #A CentOS 7 Icinga 2 server node
 node 'centos7icinga2server.local' {
 
-  #This module is from: https://github.com/saz/puppet-ssh
-  class { 'ssh':
-    #Export host keys to PuppetDB:
-    storeconfigs_enabled => true,
-    server_options => {
-      #Whether to allow password auth; if set to 'no', only SSH keys can be used:
-      #'PasswordAuthentication' => 'no',
-      #How many authentication attempts to allow before disconnecting:
-      'MaxAuthTries'         => '10',
-      'PermitEmptyPasswords' => 'no', 
-      'PermitRootLogin'      => 'no',
-      'Port'                 => [22],
-      'PubkeyAuthentication' => 'yes',
-      #Whether to be strict about the permissions on a user's .ssh/ folder and public keys:
-      'StrictModes'          => 'yes',
-      'TCPKeepAlive'         => 'yes',
-      #Whether to do reverse DNS lookups of client IP addresses when they connect:
-      'UseDNS'               => 'no',
-    },
-  }
 
-  #This module is from: https://github.com/saz/puppet-rsyslog
-  class { 'rsyslog::client':
-    #Write out logs in RFC3146 format so that they're more consistent when we send them to
-    #Logstash. Logstash is set up to understand this format of logs in its config:
-    log_templates => [
-      { name => 'RFC3164fmt', template => '<%PRI%>%TIMESTAMP% %HOSTNAME% %syslogtag%%msg%',},
-    ],
-    log_remote     => true,
-    server         => 'icinga2logging.local',
-    port           => '5514',
-    remote_type    => 'tcp',
-    log_local      => true,
-    log_auth_local => true,
-    custom_config  => undef,
-  }
+
+
 
   #This module is: https://github.com/puppetlabs/puppetlabs-ntp
   class { '::ntp':
@@ -2881,49 +2605,11 @@ node 'centos7icinga2server.local' {
 #A Debian 7 Icinga2 server node
 node 'debian7icinga2server.local' {
 
-  #This module is from: https://github.com/saz/puppet-ssh
-  class { 'ssh':
-    #Export host keys to PuppetDB:
-    storeconfigs_enabled => true,
-    server_options => {
-      #Whether to allow password auth; if set to 'no', only SSH keys can be used:
-      #'PasswordAuthentication' => 'no',
-      #How many authentication attempts to allow before disconnecting:
-      'MaxAuthTries'         => '10',
-      'PermitEmptyPasswords' => 'no', 
-      'PermitRootLogin'      => 'no',
-      'Port'                 => [22],
-      'PubkeyAuthentication' => 'yes',
-      #Whether to be strict about the permissions on a user's .ssh/ folder and public keys:
-      'StrictModes'          => 'yes',
-      'TCPKeepAlive'         => 'yes',
-      #Whether to do reverse DNS lookups of client IP addresses when they connect:
-      'UseDNS'               => 'no',
-    },
-  }
 
-  #This module is from: https://github.com/saz/puppet-rsyslog
-  class { 'rsyslog::client':
-    #Write out logs in RFC3146 format so that they're more consistent when we send them to
-    #Logstash. Logstash is set up to understand this format of logs in its config:
-    log_templates => [
-      { name => 'RFC3164fmt', template => '<%PRI%>%TIMESTAMP% %HOSTNAME% %syslogtag%%msg%',},
-    ],
-    log_remote     => true,
-    server         => 'icinga2logging.local',
-    port           => '5514',
-    remote_type    => 'tcp',
-    log_local      => true,
-    log_auth_local => true,
-    custom_config  => undef,
-  }
 
-  #This module is: https://github.com/puppetlabs/puppetlabs-ntp
-  class { '::ntp':
-    servers  => [ '0.ubuntu.pool.ntp.org', '1.ubuntu.pool.ntp.org', '2.ubuntu.pool.ntp.org', '3.ubuntu.pool.ntp.org' ],
-    restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
-    disable_monitor => true,
-  }
+
+
+
 
   #Install Postgres for use as a database with Icinga 2...
   class { 'postgresql::server': } ->
@@ -3268,49 +2954,11 @@ node 'debian7icinga2server.local' {
 #An Ubuntu 14.04 Icinga 2 client node
 node 'trustyicinga2client.local' {
 
-  #This module is from: https://github.com/saz/puppet-ssh
-  class { 'ssh':
-    #Export host keys to PuppetDB:
-    storeconfigs_enabled => true,
-    server_options => {
-      #Whether to allow password auth; if set to 'no', only SSH keys can be used:
-      #'PasswordAuthentication' => 'no',
-      #How many authentication attempts to allow before disconnecting:
-      'MaxAuthTries'         => '10',
-      'PermitEmptyPasswords' => 'no', 
-      'PermitRootLogin'      => 'no',
-      'Port'                 => [22],
-      'PubkeyAuthentication' => 'yes',
-      #Whether to be strict about the permissions on a user's .ssh/ folder and public keys:
-      'StrictModes'          => 'yes',
-      'TCPKeepAlive'         => 'yes',
-      #Whether to do reverse DNS lookups of client IP addresses when they connect:
-      'UseDNS'               => 'no',
-    },
-  }
 
-  #This module is from: https://github.com/saz/puppet-rsyslog
-  class { 'rsyslog::client':
-    #Write out logs in RFC3146 format so that they're more consistent when we send them to
-    #Logstash. Logstash is set up to understand this format of logs in its config:
-    log_templates => [
-      { name => 'RFC3164fmt', template => '<%PRI%>%TIMESTAMP% %HOSTNAME% %syslogtag%%msg%',},
-    ],
-    log_remote     => true,
-    server         => 'icinga2logging.local',
-    port           => '5514',
-    remote_type    => 'tcp',
-    log_local      => true,
-    log_auth_local => true,
-    custom_config  => undef,
-  }
 
-  #This module is: https://github.com/puppetlabs/puppetlabs-ntp
-  class { '::ntp':
-    servers  => [ '0.ubuntu.pool.ntp.org', '1.ubuntu.pool.ntp.org', '2.ubuntu.pool.ntp.org', '3.ubuntu.pool.ntp.org' ],
-    restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
-    disable_monitor => true,
-  }
+
+
+
 
   #Install some stuff to monitor like...
   
@@ -3421,49 +3069,11 @@ node 'trustyicinga2client.local' {
 #An Ubuntu 14.10 Icinga 2 client node
 node 'utopicicinga2client.local' {
 
-  #This module is from: https://github.com/saz/puppet-ssh
-  class { 'ssh':
-    #Export host keys to PuppetDB:
-    storeconfigs_enabled => true,
-    server_options => {
-      #Whether to allow password auth; if set to 'no', only SSH keys can be used:
-      #'PasswordAuthentication' => 'no',
-      #How many authentication attempts to allow before disconnecting:
-      'MaxAuthTries'         => '10',
-      'PermitEmptyPasswords' => 'no', 
-      'PermitRootLogin'      => 'no',
-      'Port'                 => [22],
-      'PubkeyAuthentication' => 'yes',
-      #Whether to be strict about the permissions on a user's .ssh/ folder and public keys:
-      'StrictModes'          => 'yes',
-      'TCPKeepAlive'         => 'yes',
-      #Whether to do reverse DNS lookups of client IP addresses when they connect:
-      'UseDNS'               => 'no',
-    },
-  }
 
-  #This module is from: https://github.com/saz/puppet-rsyslog
-  class { 'rsyslog::client':
-    #Write out logs in RFC3146 format so that they're more consistent when we send them to
-    #Logstash. Logstash is set up to understand this format of logs in its config:
-    log_templates => [
-      { name => 'RFC3164fmt', template => '<%PRI%>%TIMESTAMP% %HOSTNAME% %syslogtag%%msg%',},
-    ],
-    log_remote     => true,
-    server         => 'icinga2logging.local',
-    port           => '5514',
-    remote_type    => 'tcp',
-    log_local      => true,
-    log_auth_local => true,
-    custom_config  => undef,
-  }
 
-  #This module is: https://github.com/puppetlabs/puppetlabs-ntp
-  class { '::ntp':
-    servers  => [ '0.ubuntu.pool.ntp.org', '1.ubuntu.pool.ntp.org', '2.ubuntu.pool.ntp.org', '3.ubuntu.pool.ntp.org' ],
-    restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
-    disable_monitor => true,
-  }
+
+
+
 
   #Install some stuff to monitor like...
   
@@ -3574,49 +3184,11 @@ node 'utopicicinga2client.local' {
 #An Ubuntu 12.04 Icinga 2 client node
 node 'preciseicinga2client.local' {
 
-  #This module is from: https://github.com/saz/puppet-ssh
-  class { 'ssh':
-    #Export host keys to PuppetDB:
-    storeconfigs_enabled => true,
-    server_options => {
-      #Whether to allow password auth; if set to 'no', only SSH keys can be used:
-      #'PasswordAuthentication' => 'no',
-      #How many authentication attempts to allow before disconnecting:
-      'MaxAuthTries'         => '10',
-      'PermitEmptyPasswords' => 'no', 
-      'PermitRootLogin'      => 'no',
-      'Port'                 => [22],
-      'PubkeyAuthentication' => 'yes',
-      #Whether to be strict about the permissions on a user's .ssh/ folder and public keys:
-      'StrictModes'          => 'yes',
-      'TCPKeepAlive'         => 'yes',
-      #Whether to do reverse DNS lookups of client IP addresses when they connect:
-      'UseDNS'               => 'no',
-    },
-  }
 
-  #This module is from: https://github.com/saz/puppet-rsyslog
-  class { 'rsyslog::client':
-    #Write out logs in RFC3146 format so that they're more consistent when we send them to
-    #Logstash. Logstash is set up to understand this format of logs in its config:
-    log_templates => [
-      { name => 'RFC3164fmt', template => '<%PRI%>%TIMESTAMP% %HOSTNAME% %syslogtag%%msg%',},
-    ],
-    log_remote     => true,
-    server         => 'icinga2logging.local',
-    port           => '5514',
-    remote_type    => 'tcp',
-    log_local      => true,
-    log_auth_local => true,
-    custom_config  => undef,
-  }
 
-  #This module is: https://github.com/puppetlabs/puppetlabs-ntp
-  class { '::ntp':
-    servers  => [ '0.ubuntu.pool.ntp.org', '1.ubuntu.pool.ntp.org', '2.ubuntu.pool.ntp.org', '3.ubuntu.pool.ntp.org' ],
-    restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
-    disable_monitor => true,
-  }
+
+
+
 
   #...Apache:
   class{ '::apache':}
@@ -3724,42 +3296,9 @@ node 'preciseicinga2client.local' {
 #A CentOS 6 Icinga 2 client node
 node 'centos6icinga2client.local' {
 
-  #This module is from: https://github.com/saz/puppet-ssh
-  class { 'ssh':
-    #Export host keys to PuppetDB:
-    storeconfigs_enabled => true,
-    server_options => {
-      #Whether to allow password auth; if set to 'no', only SSH keys can be used:
-      #'PasswordAuthentication' => 'no',
-      #How many authentication attempts to allow before disconnecting:
-      'MaxAuthTries'         => '10',
-      'PermitEmptyPasswords' => 'no', 
-      'PermitRootLogin'      => 'no',
-      'Port'                 => [22],
-      'PubkeyAuthentication' => 'yes',
-      #Whether to be strict about the permissions on a user's .ssh/ folder and public keys:
-      'StrictModes'          => 'yes',
-      'TCPKeepAlive'         => 'yes',
-      #Whether to do reverse DNS lookups of client IP addresses when they connect:
-      'UseDNS'               => 'no',
-    },
-  }
 
-  #This module is from: https://github.com/saz/puppet-rsyslog
-  class { 'rsyslog::client':
-    #Write out logs in RFC3146 format so that they're more consistent when we send them to
-    #Logstash. Logstash is set up to understand this format of logs in its config:
-    log_templates => [
-      { name => 'RFC3164fmt', template => '<%PRI%>%TIMESTAMP% %HOSTNAME% %syslogtag%%msg%',},
-    ],
-    log_remote     => true,
-    server         => 'icinga2logging.local',
-    port           => '5514',
-    remote_type    => 'tcp',
-    log_local      => true,
-    log_auth_local => true,
-    custom_config  => undef,
-  }
+
+
 
   #This module is: https://github.com/puppetlabs/puppetlabs-ntp
   class { '::ntp':
@@ -3895,42 +3434,9 @@ node 'centos6icinga2client.local' {
 #A CentOS 7 Icinga 2 client node
 node 'centos7icinga2client.local' {
 
-  #This module is from: https://github.com/saz/puppet-ssh
-  class { 'ssh':
-    #Export host keys to PuppetDB:
-    storeconfigs_enabled => true,
-    server_options => {
-      #Whether to allow password auth; if set to 'no', only SSH keys can be used:
-      #'PasswordAuthentication' => 'no',
-      #How many authentication attempts to allow before disconnecting:
-      'MaxAuthTries'         => '10',
-      'PermitEmptyPasswords' => 'no', 
-      'PermitRootLogin'      => 'no',
-      'Port'                 => [22],
-      'PubkeyAuthentication' => 'yes',
-      #Whether to be strict about the permissions on a user's .ssh/ folder and public keys:
-      'StrictModes'          => 'yes',
-      'TCPKeepAlive'         => 'yes',
-      #Whether to do reverse DNS lookups of client IP addresses when they connect:
-      'UseDNS'               => 'no',
-    },
-  }
 
-  #This module is from: https://github.com/saz/puppet-rsyslog
-  class { 'rsyslog::client':
-    #Write out logs in RFC3146 format so that they're more consistent when we send them to
-    #Logstash. Logstash is set up to understand this format of logs in its config:
-    log_templates => [
-      { name => 'RFC3164fmt', template => '<%PRI%>%TIMESTAMP% %HOSTNAME% %syslogtag%%msg%',},
-    ],
-    log_remote     => true,
-    server         => 'icinga2logging.local',
-    port           => '5514',
-    remote_type    => 'tcp',
-    log_local      => true,
-    log_auth_local => true,
-    custom_config  => undef,
-  }
+
+
 
   #This module is: https://github.com/puppetlabs/puppetlabs-ntp
   class { '::ntp':
@@ -4044,49 +3550,11 @@ node 'centos7icinga2client.local' {
 #A Debian 7 Icinga 2 client node
 node 'debian7icinga2client.local' {
 
-  #This module is from: https://github.com/saz/puppet-ssh
-  class { 'ssh':
-    #Export host keys to PuppetDB:
-    storeconfigs_enabled => true,
-    server_options => {
-      #Whether to allow password auth; if set to 'no', only SSH keys can be used:
-      #'PasswordAuthentication' => 'no',
-      #How many authentication attempts to allow before disconnecting:
-      'MaxAuthTries'         => '10',
-      'PermitEmptyPasswords' => 'no', 
-      'PermitRootLogin'      => 'no',
-      'Port'                 => [22],
-      'PubkeyAuthentication' => 'yes',
-      #Whether to be strict about the permissions on a user's .ssh/ folder and public keys:
-      'StrictModes'          => 'yes',
-      'TCPKeepAlive'         => 'yes',
-      #Whether to do reverse DNS lookups of client IP addresses when they connect:
-      'UseDNS'               => 'no',
-    },
-  }
 
-  #This module is from: https://github.com/saz/puppet-rsyslog
-  class { 'rsyslog::client':
-    #Write out logs in RFC3146 format so that they're more consistent when we send them to
-    #Logstash. Logstash is set up to understand this format of logs in its config:
-    log_templates => [
-      { name => 'RFC3164fmt', template => '<%PRI%>%TIMESTAMP% %HOSTNAME% %syslogtag%%msg%',},
-    ],
-    log_remote     => true,
-    server         => 'icinga2logging.local',
-    port           => '5514',
-    remote_type    => 'tcp',
-    log_local      => true,
-    log_auth_local => true,
-    custom_config  => undef,
-  }
 
-  #This module is: https://github.com/puppetlabs/puppetlabs-ntp
-  class { '::ntp':
-    servers  => [ '0.ubuntu.pool.ntp.org', '1.ubuntu.pool.ntp.org', '2.ubuntu.pool.ntp.org', '3.ubuntu.pool.ntp.org' ],
-    restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
-    disable_monitor => true,
-  }
+
+
+
 
   #Install some stuff to monitor like...
   
@@ -4195,42 +3663,9 @@ node 'debian7icinga2client.local' {
 
 node 'icinga2mail.local' {
 
-  #This module is from: https://github.com/saz/puppet-ssh
-  class { 'ssh':
-    #Export host keys to PuppetDB:
-    storeconfigs_enabled => true,
-    server_options => {
-      #Whether to allow password auth; if set to 'no', only SSH keys can be used:
-      #'PasswordAuthentication' => 'no',
-      #How many authentication attempts to allow before disconnecting:
-      'MaxAuthTries'         => '10',
-      'PermitEmptyPasswords' => 'no', 
-      'PermitRootLogin'      => 'no',
-      'Port'                 => [22],
-      'PubkeyAuthentication' => 'yes',
-      #Whether to be strict about the permissions on a user's .ssh/ folder and public keys:
-      'StrictModes'          => 'yes',
-      'TCPKeepAlive'         => 'yes',
-      #Whether to do reverse DNS lookups of client IP addresses when they connect:
-      'UseDNS'               => 'no',
-    },
-  }
 
-  #This module is from: https://github.com/saz/puppet-rsyslog
-  class { 'rsyslog::client':
-    #Write out logs in RFC3146 format so that they're more consistent when we send them to
-    #Logstash. Logstash is set up to understand this format of logs in its config:
-    log_templates => [
-      { name => 'RFC3164fmt', template => '<%PRI%>%TIMESTAMP% %HOSTNAME% %syslogtag%%msg%',},
-    ],
-    log_remote     => true,
-    server         => 'icinga2logging.local',
-    port           => '5514',
-    remote_type    => 'tcp',
-    log_local      => true,
-    log_auth_local => true,
-    custom_config  => undef,
-  }
+
+
 
   #Install Java...
   package { 'openjdk-7-jre-headless':
@@ -4253,12 +3688,7 @@ node 'icinga2mail.local' {
     config => { 'node.name' => $fqdn }
   }
 
-  #This module is: https://github.com/puppetlabs/puppetlabs-ntp
-  class { '::ntp':
-    servers  => [ '0.ubuntu.pool.ntp.org', '1.ubuntu.pool.ntp.org', '2.ubuntu.pool.ntp.org', '3.ubuntu.pool.ntp.org' ],
-    restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
-    disable_monitor => true,
-  }
+
 
   #Install some stuff to monitor like...
   
@@ -4367,42 +3797,9 @@ node 'icinga2mail.local' {
 
 node 'usermail.local' {
 
-  #This module is from: https://github.com/saz/puppet-ssh
-  class { 'ssh':
-    #Export host keys to PuppetDB:
-    storeconfigs_enabled => true,
-    server_options => {
-      #Whether to allow password auth; if set to 'no', only SSH keys can be used:
-      #'PasswordAuthentication' => 'no',
-      #How many authentication attempts to allow before disconnecting:
-      'MaxAuthTries'         => '10',
-      'PermitEmptyPasswords' => 'no', 
-      'PermitRootLogin'      => 'no',
-      'Port'                 => [22],
-      'PubkeyAuthentication' => 'yes',
-      #Whether to be strict about the permissions on a user's .ssh/ folder and public keys:
-      'StrictModes'          => 'yes',
-      'TCPKeepAlive'         => 'yes',
-      #Whether to do reverse DNS lookups of client IP addresses when they connect:
-      'UseDNS'               => 'no',
-    },
-  }
 
-  #This module is from: https://github.com/saz/puppet-rsyslog
-  class { 'rsyslog::client':
-    #Write out logs in RFC3146 format so that they're more consistent when we send them to
-    #Logstash. Logstash is set up to understand this format of logs in its config:
-    log_templates => [
-      { name => 'RFC3164fmt', template => '<%PRI%>%TIMESTAMP% %HOSTNAME% %syslogtag%%msg%',},
-    ],
-    log_remote     => true,
-    server         => 'icinga2logging.local',
-    port           => '5514',
-    remote_type    => 'tcp',
-    log_local      => true,
-    log_auth_local => true,
-    custom_config  => undef,
-  }
+
+
 
   #Install Java...
   package { 'openjdk-7-jre-headless':
@@ -4425,12 +3822,7 @@ node 'usermail.local' {
     config => { 'node.name' => $fqdn }
   }
 
-  #This module is: https://github.com/puppetlabs/puppetlabs-ntp
-  class { '::ntp':
-    servers  => [ '0.ubuntu.pool.ntp.org', '1.ubuntu.pool.ntp.org', '2.ubuntu.pool.ntp.org', '3.ubuntu.pool.ntp.org' ],
-    restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
-    disable_monitor => true,
-  }
+
 
   #Install some stuff to monitor like...
   
@@ -4556,33 +3948,9 @@ node 'usermail.local' {
 
 node 'icinga2logging.local' {
 
-  #This module is from: https://github.com/saz/puppet-ssh
-  class { 'ssh':
-    #Export host keys to PuppetDB:
-    storeconfigs_enabled => true,
-    server_options => {
-      #Whether to allow password auth; if set to 'no', only SSH keys can be used:
-      #'PasswordAuthentication' => 'no',
-      #How many authentication attempts to allow before disconnecting:
-      'MaxAuthTries'         => '10',
-      'PermitEmptyPasswords' => 'no', 
-      'PermitRootLogin'      => 'no',
-      'Port'                 => [22],
-      'PubkeyAuthentication' => 'yes',
-      #Whether to be strict about the permissions on a user's .ssh/ folder and public keys:
-      'StrictModes'          => 'yes',
-      'TCPKeepAlive'         => 'yes',
-      #Whether to do reverse DNS lookups of client IP addresses when they connect:
-      'UseDNS'               => 'no',
-    },
-  }
 
-  #This module is: https://github.com/puppetlabs/puppetlabs-ntp
-  class { '::ntp':
-    servers  => [ '0.ubuntu.pool.ntp.org', '1.ubuntu.pool.ntp.org', '2.ubuntu.pool.ntp.org', '3.ubuntu.pool.ntp.org' ],
-    restrict => ['127.0.0.1', '10.0.1.0 mask 255.255.255.0 kod notrap nomodify nopeer noquery'],
-    disable_monitor => true,
-  }
+
+
 
   #Install some stuff to monitor like...
   
