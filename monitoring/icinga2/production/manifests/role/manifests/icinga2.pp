@@ -21,3 +21,18 @@ class role::icinga2::server {
 class role::icinga2::node {
 
 }
+
+class role::icinga2::nrpeclient {
+  
+  include profile::icinga2::hostexport
+  
+  include profile::icinga2::nrpe
+  include profile::icinga2::nrpe::objects
+  include profile::icinga2::stuff_to_monitor::apache
+  include profile::icinga2::stuff_to_monitor::mysql
+  include profile::icinga2::stuff_to_monitor::postgresql
+  include profile::icinga2::stuff_to_monitor::postfix
+  include profile::icinga2::stuff_to_monitor::dovecot
+
+
+}

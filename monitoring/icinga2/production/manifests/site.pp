@@ -129,6 +129,8 @@ node 'trustyicinga2client.local' {
   #Include a profile that sets up NTP
   include profile::ntp::client
 
+
+
 }
 
 #An Ubuntu 14.10 Icinga 2 client node
