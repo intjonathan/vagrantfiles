@@ -41,7 +41,7 @@ class profile::collectd::write_graphite {
 
   #Write the collectd status to the heka VM in the Graphite format:
   class { '::collectd::plugin::write_graphite':
-    graphitehost => 'hekametrics.local',
+    graphitehost => 'icinga2metrics.local',
     protocol => 'tcp',
     graphiteport => 2003,
   }
