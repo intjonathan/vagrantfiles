@@ -213,6 +213,90 @@ node 'debian7icinga2nrpeclient.local' {
 
 }
 
+#An Ubuntu 14.04 Icinga 2 client node
+node 'trustyicinga2node.local' {
+
+  #Include a profile that sets up our usual SSH settings:
+  include profile::ssh
+
+  #Include the rsyslog::client profile to set up logging
+  include profile::rsyslog::client
+
+  #Include a profile that sets up NTP
+  include profile::ntp::client
+
+}
+
+#An Ubuntu 14.10 Icinga 2 client node
+node 'utopicicinga2node.local' {
+
+  #Include a profile that sets up our usual SSH settings:
+  include profile::ssh
+
+  #Include the rsyslog::client profile to set up logging
+  include profile::rsyslog::client
+
+  #Include a profile that sets up NTP
+  include profile::ntp::client
+
+}
+
+#An Ubuntu 12.04 Icinga 2 client node
+node 'preciseicinga2node.local' {
+
+  #Include a profile that sets up our usual SSH settings:
+  include profile::ssh
+
+  #Include the rsyslog::client profile to set up logging
+  include profile::rsyslog::client
+
+  #Include a profile that sets up NTP
+  include profile::ntp::client
+
+}
+
+#A CentOS 6 Icinga 2 client node
+node 'centos6icinga2node.local' {
+
+  #Include a profile that sets up our usual SSH settings:
+  include profile::ssh
+
+  #Include the rsyslog::client profile to set up logging
+  include profile::rsyslog::client
+
+  #Include a profile that sets up NTP
+  include profile::ntp::client
+
+}
+
+#A CentOS 7 Icinga 2 client node
+node 'centos7icinga2node.local' {
+
+  #Include a profile that sets up our usual SSH settings:
+  include profile::ssh
+
+  #Include the rsyslog::client profile to set up logging
+  include profile::rsyslog::client
+
+  #Include a profile that sets up NTP
+  include profile::ntp::client
+
+}
+
+#A Debian 7 Icinga 2 client node
+node 'debian7icinga2node.local' {
+
+  #Include a profile that sets up our usual SSH settings:
+  include profile::ssh
+
+  #Include the rsyslog::client profile to set up logging
+  include profile::rsyslog::client
+
+  #Include a profile that sets up NTP
+  include profile::ntp::client
+
+}
+
 node 'icinga2mail.local' {
 
   #Include a profile that sets up our usual SSH settings:
