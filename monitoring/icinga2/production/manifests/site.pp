@@ -1,6 +1,24 @@
 #puppet master node definition
 node 'icinga2master.local' {
 
+  #Apache modules for PuppetBoard:
+  include profile::apache::wsgi
+  
+  #Profiles for Puppetboard itself and its vhost:
+  include profile::puppetboard
+ 
+  #Include the rsyslog::client profile to set up logging
+  include profile::rsyslog::client
+
+  #Include a profile that sets up our usual SSH settings:
+  include profile::ssh
+
+  #Include a profile that sets up NTP
+  include profile::ntp::client
+
+  #Include the role that sets up PuppetDB, the Puppet master to work with PuppetDB and Puppetboard:
+  include role::puppetdb::puppet_master_and_puppetdb_server_with_puppetboard
+
 }
 
 #An Ubuntu 14.04 Icinga2 server node
