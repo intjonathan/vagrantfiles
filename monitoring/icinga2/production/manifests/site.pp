@@ -227,3 +227,16 @@ node 'icinga2logging.local' {
   include profile::ntp::client
 
 }
+
+node 'icinga2metrics.local' {
+
+  #Include a profile that sets up our usual SSH settings:
+  include profile::ssh
+
+  #Include the rsyslog::client profile to set up logging
+  include profile::rsyslog::client
+
+  #Include a profile that sets up NTP
+  include profile::ntp::client
+
+}

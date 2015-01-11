@@ -271,4 +271,20 @@ Vagrant.configure("2") do |config|
     icinga2logging_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
   end
 
+  #Riemann/InfluxDB/Grafana VM for looking at metrics that the Icinga machines generate:
+  config.vm.define "icinga2metrics".to_sym do |icinga2metrics_config|
+    icinga2metrics_config.vm.box = "ubuntu-14.04-server-amd64"
+    icinga2metrics_config.vm.hostname = "icinga2metrics.local"
+    icinga2metrics_config.hostmanager.enabled = true
+    icinga2metrics_config.hostmanager.aliases = %w(icinga2metrics icinga2metrics.local)
+    icinga2metrics_config.vm.network :private_network, ip: "10.0.1.94"
+    #set some machine-specific options	
+    icinga2metrics_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+      v.cpus = 2
+    end
+    #Puppet agent provisioning script
+    icinga2metrics_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+  end
 end
