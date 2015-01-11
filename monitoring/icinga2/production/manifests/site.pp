@@ -118,7 +118,7 @@ node 'debian7icinga2server.local' {
 }
 
 #An Ubuntu 14.04 Icinga 2 client node
-node 'trustyicinga2client.local' {
+node 'trustyicinga2nrpeclient.local' {
 
   #Include a profile that sets up our usual SSH settings:
   include profile::ssh
@@ -134,7 +134,7 @@ node 'trustyicinga2client.local' {
 }
 
 #An Ubuntu 14.10 Icinga 2 client node
-node 'utopicicinga2client.local' {
+node 'utopicicinga2nrpeclient.local' {
 
   #Include a profile that sets up our usual SSH settings:
   include profile::ssh
@@ -150,7 +150,7 @@ node 'utopicicinga2client.local' {
 }
 
 #An Ubuntu 12.04 Icinga 2 client node
-node 'preciseicinga2client.local' {
+node 'preciseicinga2nrpeclient.local' {
 
   #Include a profile that sets up our usual SSH settings:
   include profile::ssh
@@ -166,7 +166,7 @@ node 'preciseicinga2client.local' {
 }
 
 #A CentOS 6 Icinga 2 client node
-node 'centos6icinga2client.local' {
+node 'centos6icinga2nrpeclient.local' {
 
   #Include a profile that sets up our usual SSH settings:
   include profile::ssh
@@ -182,7 +182,7 @@ node 'centos6icinga2client.local' {
 }
 
 #A CentOS 7 Icinga 2 client node
-node 'centos7icinga2client.local' {
+node 'centos7icinga2nrpeclient.local' {
 
   #Include a profile that sets up our usual SSH settings:
   include profile::ssh
@@ -198,7 +198,7 @@ node 'centos7icinga2client.local' {
 }
 
 #A Debian 7 Icinga 2 client node
-node 'debian7icinga2client.local' {
+node 'debian7icinga2nrpeclient.local' {
 
   #Include a profile that sets up our usual SSH settings:
   include profile::ssh
