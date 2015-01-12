@@ -1,4 +1,6 @@
-class profile::postfix {
+class profile::postfix { }
+
+class profile::postfix::server {
 
   #Install Postfix so we can monitor SMTP services and send out email alerts:
   class { '::postfix::server':

@@ -3,12 +3,12 @@ class profile::elasticsearch {
     class { '::elasticsearch':
     java_install => false,
     package_url => 'https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.4.1.deb',
-    config => { 'cluster.name'             => 'bosun',
+    config => { 'cluster.name'             => 'heka',
                 'network.host'             => $ipaddress_eth1,
                 'index.number_of_replicas' => '1',
                 'index.number_of_shards'   => '4',
                 'http.cors.enabled'        => 'true',
-                'http.cors.allow-origin'   => 'http://kibana.bosunlogging.local'
+                'http.cors.allow-origin'   => 'http://kibana.icinga2logging.local'
     },
   }
 

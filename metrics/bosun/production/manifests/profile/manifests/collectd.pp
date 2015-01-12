@@ -1,6 +1,6 @@
 class profile::collectd {
 
-  #Install Collectd so we can get metrics from this machine into bosun/InfluxDB:
+  #Install Collectd so we can get metrics from this machine into heka/InfluxDB:
   class { '::collectd':
     purge        => true,
     recurse      => true,
@@ -39,9 +39,9 @@ class profile::collectd::ntp_metrics {
 
 class profile::collectd::write_graphite {
 
-  #Write the collectd status to the bosun VM in the Graphite format:
+  #Write the collectd status to the heka VM in the Graphite format:
   class { '::collectd::plugin::write_graphite':
-    graphitehost => 'bosunmetrics.local',
+    graphitehost => 'icinga2metrics.local',
     protocol => 'tcp',
     graphiteport => 2003,
   }
