@@ -6,6 +6,9 @@ node 'icinga2master.local' {
   
   #Profiles for Puppetboard itself and its vhost:
   include profile::puppetboard
+  
+  #Profile for setting up puppetexplorer:
+  include profile::puppetexplorer
  
   #Include the rsyslog::client profile to set up logging
   include profile::rsyslog::client

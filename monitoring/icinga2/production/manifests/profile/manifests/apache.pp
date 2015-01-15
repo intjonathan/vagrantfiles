@@ -60,8 +60,6 @@ class profile::apache::wsgi {
   }  
 
   ::apache::mod { 'ssl': } #Install/enable the SSL module
-  ::apache::mod { 'proxy': } #Install/enable the proxy module
-  ::apache::mod { 'proxy_http': } #Install/enable the HTTP proxy module
   ::apache::mod { 'headers': }
 
   class { '::apache::mod::wsgi': }
