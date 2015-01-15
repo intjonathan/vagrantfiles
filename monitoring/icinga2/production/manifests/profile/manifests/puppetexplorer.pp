@@ -1,5 +1,6 @@
 class profile::puppetexplorer {
 
+  #Most of this profile was adapted from: https://github.com/spotify/puppet-puppetexplorer/blob/master/manifests/init.pp
   $puppetdb_servers   = [ ['production', "http://puppetexplorer.${fqdn}/api"] ]
   $node_facts         = [
     'operatingsystem',
