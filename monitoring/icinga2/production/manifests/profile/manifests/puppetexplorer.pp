@@ -70,6 +70,8 @@ class profile::puppetexplorer {
 
   apache::vhost { "puppetexplorer.${fqdn}":
     docroot  => '/usr/share/puppetexplorer/',
+    port => 80,
+    priority => 30,
     proxy_pass => { 
       'path' => '/api/v4',
       'url' => 'http://127.0.0.1:8080/v4',
