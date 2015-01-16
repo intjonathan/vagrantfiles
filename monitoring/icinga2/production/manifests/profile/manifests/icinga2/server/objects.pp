@@ -366,4 +366,10 @@ class profile::icinga2::server::objects {
     types => [ 'Problem', 'Recovery' ]
     }
 
+  #Created a checkplugin object to test out this PR's feature of specifying content inline: https://github.com/Icinga/puppet-icinga2/pull/77:
+  ::icinga2::checkplugin { 'check_diskstats':
+    checkplugin_file_distribution_method => 'inline',
+    checkplugin_source_inline            => 'command[check_disks]=/usr/lib64/nagios/plugins/check_disk -w 20 -c 10 -p /',
+  }
+
 }
