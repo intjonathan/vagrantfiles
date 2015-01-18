@@ -547,7 +547,7 @@ node 'dnsmonitoring.local' {
   #Install Java so we can run Riemann; use the -> arrow so that it gets instaleld:
   package {'openjdk-7-jdk':
     ensure => installed,
-  } ->
+  }
 
   #Install Riemann
   include profile::riemann
@@ -555,7 +555,7 @@ node 'dnsmonitoring.local' {
   ###############################
   # InfluxDB installation/setup
   ###############################
-  
+
   #Install InfluxDB
   include profile::influxdb
 
