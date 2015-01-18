@@ -604,23 +604,6 @@ node 'dnsmonitoring.local' {
   #and collectd
   include role::icinga2::server 
 
-
-  ###############################
-  # NRPE installation/configuration
-  ###############################
-
-  #Install and configure NRPE
-  include profile::icinga2::nrpe
-  
-  #Include NRPE command definitions
-  include profile::icinga2::nrpe::objects
-
-  ###############################
-  # Icinga 2 host export stuff
-  ###############################
-
-  include profile::icinga2::hostexport
-
   ###############################
   # collectd installation/setup
   ###############################
