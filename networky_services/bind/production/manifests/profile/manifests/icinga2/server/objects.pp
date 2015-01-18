@@ -85,6 +85,12 @@ class profile::icinga2::server::objects {
     target_dir => '/etc/icinga2/objects/hostgroups',
   }
 
+  #Create a DNS servers hostgroup
+  icinga2::object::hostgroup { 'dns_servers':
+    display_name => 'DNS servers',
+    target_dir => '/etc/icinga2/objects/hostgroups',
+  }
+
   #Dependency object to test out this PR: https://github.com/Icinga/puppet-icinga2/pull/28
   icinga2::object::dependency { "dnsdnsusermail to dnsmailrelay":
     object_name => "dnsusermail_dep_on_dnsmailrelay",
