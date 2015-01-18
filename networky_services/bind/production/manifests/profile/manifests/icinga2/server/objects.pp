@@ -96,7 +96,7 @@ class profile::icinga2::server::objects {
     object_name => "dnsusermail_dep_on_dnsmailrelay",
     #hieravaluereplace
     parent_host_name => 'dnsmailrelay.local',
-    child_host_name => 'dnsdnsusermail.local',
+    child_host_name => 'dnsusermail.local',
     target_dir => '/etc/icinga2/objects/dependencies',
     target_file_name => "dnsusermail_to_dnsmailrelay.conf",
   }
