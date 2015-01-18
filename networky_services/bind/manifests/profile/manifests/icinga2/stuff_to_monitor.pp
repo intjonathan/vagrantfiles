@@ -19,6 +19,7 @@ class profile::icinga2::stuff_to_monitor::mysql {
 
   #...and install MySQL as well:
   class { '::mysql::server':
+    #hieravaluereplace
     root_password    => 'horsebatterystaple',
     override_options => { 'mysqld' => { 'max_connections' => '1024' } }
   }
@@ -26,6 +27,7 @@ class profile::icinga2::stuff_to_monitor::mysql {
   #Create a MySQL test database for Icinga 2 to monitor:
   mysql::db { 'test_data':
     user     => 'test',
+    #hieravaluereplace
     password => 'password',
     host     => 'localhost',
     grant    => ['ALL'],
@@ -41,6 +43,7 @@ class profile::icinga2::stuff_to_monitor::postgresql {
   #Create a Postgres test DB for Icinga 2 to monitor:
   postgresql::server::db { 'test_data':
     user     => 'tester',
+    #hieravaluereplace
     password => postgresql_password('tester', 'password'),
   }
 

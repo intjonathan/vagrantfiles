@@ -34,7 +34,7 @@ class profile::icinga2::server::objects {
   #Create a user definition:
   icinga2::object::user { 'nick':
     display_name => 'Nick',
-    email => 'nick@usermail.local',
+    email => 'nick@dnsusermail.local',
     period => '24x7',
     enable_notifications => 'true',
     groups => [ 'admins' ],
@@ -86,18 +86,20 @@ class profile::icinga2::server::objects {
   }
 
   #Dependency object to test out this PR: https://github.com/Icinga/puppet-icinga2/pull/28
-  icinga2::object::dependency { "usermail to icinga2mail":
-    object_name => "usermail_dep_on_icinga2mail",
-    parent_host_name => 'icinga2mail.local',
-    child_host_name => 'usermail.local',
+  icinga2::object::dependency { "dnsdnsusermail to dnsmailrelay":
+    object_name => "dnsusermail_dep_on_dnsmailrelay",
+    #hieravaluereplace
+    parent_host_name => 'dnsmailrelay.local',
+    child_host_name => 'dnsdnsusermail.local',
     target_dir => '/etc/icinga2/objects/dependencies',
-    target_file_name => "usermail_to_icinga2mail.conf",
+    target_file_name => "dnsusermail_to_dnsmailrelay.conf",
   }
 
   #Apply_dependency object to test out this PR: https://github.com/Icinga/puppet-icinga2/pull/28
-  icinga2::object::apply_dependency { 'usermail_dep_on_icinga2mail':
-    parent_host_name => 'icinga2mail.local',
-    assign_where => 'match("^usermail*", host.name)',
+  icinga2::object::apply_dependency { 'dnsusermail_dep_on_dnsmailrelay':
+    #hieravaluereplace
+    parent_host_name => 'dnsmailrelay.local',
+    assign_where => 'match("^dnsusermail*", host.name)',
   }
 
   #Apply_dependency object to test out this PR: https://github.com/Icinga/puppet-icinga2/pull/28
@@ -298,7 +300,7 @@ class profile::icinga2::server::objects {
 
   #Create a scheduled downtime object to test this PR: https://github.com/Icinga/puppet-icinga2/pull/38
   icinga2::object::scheduleddowntime {'some-downtime':
-    host_name    => 'usermail.local',
+    host_name    => 'dnsusermail.local',
     service_name => 'ping4',
     author       => 'icingaadmin',
     comment      => 'Some comment',
@@ -359,8 +361,8 @@ class profile::icinga2::server::objects {
   }
 
   #Create a notification object to test this PR: https://github.com/Icinga/puppet-icinga2/pull/36
-  icinga2::object::notification { 'usermail-ping-notification':
-    host_name => "usermail.local",
+  icinga2::object::notification { 'dnsusermail-ping-notification':
+    host_name => "dnsusermail.local",
     service_name => "ping4",
     command => "mail-service-notification",
     types => [ 'Problem', 'Recovery' ]

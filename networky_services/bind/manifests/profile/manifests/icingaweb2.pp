@@ -4,7 +4,9 @@ class profile::icingaweb2::postgresql_db {
 
   #Create a Postgres DB for Icinga Web 2:
   postgresql::server::db { 'icingaweb2_data':
+    #hieravaluereplace
     user     => 'icingaweb2',
+    #hieravaluereplace
     password => postgresql_password('icingaweb2', 'password'),
     grant => 'all',
   }

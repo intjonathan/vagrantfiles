@@ -12,7 +12,8 @@ class profile::rsyslog::client {
       { name => 'RFC3164fmt', template => '<%PRI%>%TIMESTAMP% %HOSTNAME% %syslogtag%%msg%',},
     ],
     log_remote     => true,
-    server         => 'icinga2logging.local',
+    #hieravaluereplace
+    server         => 'dnsmonitoring.local',
     port           => '5514',
     remote_type    => 'tcp',
     log_local      => true,
