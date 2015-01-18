@@ -41,7 +41,7 @@ Vagrant.configure("2") do |config|
 
   #An Ubuntu BIND DNS master server
   config.vm.define "dnsmaster1".to_sym do |dnsmaster1_config|
-    dnsmaster1_config.vm.box = "ubuntu-14.04-server-amd64"
+    dnsmaster1_config.vm.box = "centos-7.0-amd64"
     dnsmaster1_config.vm.hostname = "dnsmaster1.local"
     dnsmaster1_config.vm.network :private_network, ip: "10.0.1.71"
     #set some machine-specific options	
@@ -50,7 +50,7 @@ Vagrant.configure("2") do |config|
       v.customize ["modifyvm", :id, "--memory", "256"]
     end
     #Puppet agent provisioning script
-	  dnsmaster1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+	  dnsmaster1_config.vm.provision :shell, :path => "../provisioning_scripts/el7_puppet_agent.sh"
   end
 
   #A CentOS BIND DNS master server
@@ -69,7 +69,7 @@ Vagrant.configure("2") do |config|
 
   #An Ubuntu BIND DNS slave
   config.vm.define "dnsslave1".to_sym do |dnsslave1_config|
-    dnsslave1_config.vm.box = "ubuntu-14.04-server-amd64"
+    dnsslave1_config.vm.box = "centos-7.0-amd64"
     dnsslave1_config.vm.hostname = "dnsslave1.local"
     dnsslave1_config.vm.network :private_network, ip: "10.0.1.73"
     #set some machine-specific options	
@@ -78,7 +78,7 @@ Vagrant.configure("2") do |config|
       v.customize ["modifyvm", :id, "--memory", "256"]
     end
     #Puppet agent provisioning script
-	  dnsslave1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+	  dnsslave1_config.vm.provision :shell, :path => "../provisioning_scripts/el7_puppet_agent.sh"
   end
   
   #A CentOS BIND DNS slave
@@ -97,7 +97,7 @@ Vagrant.configure("2") do |config|
 
   #An Ubuntu BIND DNS client
   config.vm.define "dnsclient1".to_sym do |dnsclient1_config|
-    dnsclient1_config.vm.box = "ubuntu-14.04-server-amd64"
+    dnsclient1_config.vm.box = "centos-7.0-amd64"
     dnsclient1_config.vm.hostname = "dnsclient1.local"
     dnsclient1_config.vm.network :private_network, ip: "10.0.1.75"
     #set some machine-specific options	
@@ -106,7 +106,7 @@ Vagrant.configure("2") do |config|
       v.customize ["modifyvm", :id, "--memory", "256"]
     end
     #Puppet agent provisioning script
-	  dnsclient1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+	  dnsclient1_config.vm.provision :shell, :path => "../provisioning_scripts/el7_puppet_agent.sh"
   end
   
   #A CentOS BIND DNS client
@@ -137,6 +137,36 @@ Vagrant.configure("2") do |config|
     end
     #Puppet agent provisioning script
     dnsmonitoring_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+  end
+
+  #A mail relay server running Postfix:
+  config.vm.define "dnsmailrelay".to_sym do |dnsmailrelay_config|
+    dnsmailrelay_config.vm.box = "ubuntu-14.04-server-amd64"
+    dnsmailrelay_config.vm.hostname = "dnsmailrelay.local"
+    dnsmailrelay_config.hostmanager.aliases = %w(dnsmailrelay.local)
+    dnsmailrelay_config.vm.network :private_network, ip: "10.0.1.81"
+    #set some machine-specific options	
+    dnsmailrelay_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "256"]
+    end
+    #Puppet agent provisioning script
+    dnsmailrelay_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+  end
+
+  #A mail server with Dovecot for IMAP
+  config.vm.define "dnsusermail".to_sym do |dnsusermail_config|
+    dnsusermail_config.vm.box = "ubuntu-14.04-server-amd64"
+    dnsusermail_config.vm.hostname = "dnsusermail.local"
+    dnsusermail_config.hostmanager.aliases = %w(dnsusermail.local)
+    dnsusermail_config.vm.network :private_network, ip: "10.0.1.82"
+    #set some machine-specific options	
+    dnsusermail_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "256"]
+    end
+    #Puppet agent provisioning script
+    dnsusermail_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
   end
 
 end

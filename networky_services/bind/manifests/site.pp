@@ -638,3 +638,137 @@ node 'dnsmonitoring.local' {
   include profile::collectd::write_graphite
 
 }
+
+node 'dnsmailrelay.local' {
+
+  ###############################
+  # SSH installation/setup
+  ###############################
+
+  #Include a profile that sets up our usual SSH settings:
+  include profile::ssh
+
+  ###############################
+  # rsyslog installation/setup
+  ###############################
+
+  #Include the rsyslog::client profile to set up logging
+  include profile::rsyslog::client
+
+  ###############################
+  # NTP installation/setup
+  ###############################
+
+  #Include a profile that sets up NTP
+  include profile::ntp::client
+ 
+  ###############################
+  # collectd installation/setup
+  ###############################
+
+  #Install Collectd so we can get metrics from this machine into Riemann/InfluxDB:
+  include profile::collectd
+  
+  #Gather NTP stats:
+  include profile::collectd::system_metrics
+  
+  #Gather network metrics
+  include profile::collectd::network_metrics
+  
+  #Send collectd metrics to the monitoring VM
+  include profile::collectd::write_graphite
+
+  ###############################
+  # Icinga 2 host export stuff
+  ###############################
+
+  include profile::icinga2::hostexport
+
+  ###############################
+  # NRPE installation/configuration
+  ###############################
+
+  #Install and configure NRPE
+  include profile::icinga2::nrpe
+  
+  #Include NRPE command definitions
+  include profile::icinga2::nrpe::objects
+
+  ###############################
+  # Postfix installation/setup
+  ###############################
+
+   #Include a profile that installs and configures Postfix:
+  include profile::postfix::server
+
+  #Include the profile that sets up my user account:
+  include profile::users
+
+}
+
+node 'dnsusermail.local' {
+
+  ###############################
+  # SSH installation/setup
+  ###############################
+
+  #Include a profile that sets up our usual SSH settings:
+  include profile::ssh
+
+  ###############################
+  # rsyslog installation/setup
+  ###############################
+
+  #Include the rsyslog::client profile to set up logging
+  include profile::rsyslog::client
+
+  ###############################
+  # NTP installation/setup
+  ###############################
+
+  #Include a profile that sets up NTP
+  include profile::ntp::client
+ 
+  ###############################
+  # collectd installation/setup
+  ###############################
+
+  #Install Collectd so we can get metrics from this machine into Riemann/InfluxDB:
+  include profile::collectd
+  
+  #Gather NTP stats:
+  include profile::collectd::system_metrics
+  
+  #Gather network metrics
+  include profile::collectd::network_metrics
+  
+  #Send collectd metrics to the monitoring VM
+  include profile::collectd::write_graphite
+
+  ###############################
+  # Icinga 2 host export stuff
+  ###############################
+
+  include profile::icinga2::hostexport
+
+  ###############################
+  # NRPE installation/configuration
+  ###############################
+
+  #Install and configure NRPE
+  include profile::icinga2::nrpe
+  
+  #Include NRPE command definitions
+  include profile::icinga2::nrpe::objects
+
+  ###############################
+  # Postfix installation/setup
+  ###############################
+
+   #Include a profile that installs and configures Postfix:
+  include profile::postfix::server
+
+  #Include the profile that sets up my user account:
+  include profile::users
+
+}
