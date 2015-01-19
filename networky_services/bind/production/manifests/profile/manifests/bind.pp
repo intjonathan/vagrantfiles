@@ -34,7 +34,7 @@ class profile::bind::master {
       'channel-1' => {
         listen_address => '*',
         listen_port    => '9053',
-        allow          => ['localhost'],
+        allow          => ['localhost', '10net'],
       },
     },
     #Specify a managed keys directory; BIND needs this specified in /etc/named.conf or it 
