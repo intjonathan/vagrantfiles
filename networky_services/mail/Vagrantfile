@@ -2,56 +2,116 @@ Vagrant.configure("2") do |config|
   # All Vagrant configuration is done here. The most common configuration
   # options are documented and commented below. For a complete reference,
   # please see the online documentation at vagrantup.com.
-
+  
   ####################
   # Snippets to use
   ####################
-
+  
   #NFS folder sharing
   #config.vm.synced_folder "modules", "/etc/puppet/modules", :nfs => true
   
-  config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/modules"
-  config.vm.synced_folder "manifests/", "/etc/puppet/environments/production/manifests"
-  config.vm.synced_folder "hieradata/", "/etc/puppet/environments/production/hieradata"
-
   ####################
   ####################
-
+  
   #vagrant-hostmanager plugin options
   config.hostmanager.enabled = true
   config.hostmanager.ignore_private_ip = false
   #update the /etc/hosts of the host OS
   config.hostmanager.manage_host = true
-  #incorporate offline box's IPs into the /etc/hosts of boxes that are up/being brought up
-  config.hostmanager.include_offline = true
-
-  #A mailserver
-  config.vm.define "mailserver1".to_sym do |mailserver1_config|
-    mailserver1_config.vm.box = "ubuntu-14.04-server-amd64"
-    mailserver1_config.vm.hostname = "mailserver1.local"
-    mailserver1_config.hostmanager.enabled = true
-    #giving it 'puppet' as an alias so that the agents can connect to it with their default settings
-    mailserver1_config.hostmanager.aliases = %w(mailserver1 puppet puppet.local webmail.mailserver1.local)
-    mailserver1_config.vm.network :private_network, ip: "10.0.1.190"
+  
+  #Puppet master
+  config.vm.define "mailpuppetmaster".to_sym do |mailpuppetmaster_config|
+    mailpuppetmaster_config.vm.box = "ubuntu-14.04-server-amd64"
+    mailpuppetmaster_config.vm.hostname = "mailpuppetmaster.local"
+    mailpuppetmaster_config.hostmanager.aliases = %w(puppet mailpuppetmaster.local puppetexplorer.mailpuppetmaster.local puppetboard.mailpuppetmaster.local)
+    mailpuppetmaster_config.vm.network :private_network, ip: "10.0.1.190"
     #set some machine-specific options	
-    mailserver1_config.vm.provider "virtualbox" do |v|
+    mailpuppetmaster_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "1024"]
     end
-    mailserver1_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_master.sh"
+    #NFS folder sharing for Puppet modules and manifests
+    mailpuppetmaster_config.vm.synced_folder "production/", "/etc/puppet/environments/production", :nfs => true
+    mailpuppetmaster_config.vm.synced_folder "/Users/nick/Documents/git/puppet-code/modules", "/etc/puppet/environments/production/modules", :nfs => true
+    mailpuppetmaster_config.vm.synced_folder "hieradata/", "/etc/puppet/environments/production/hieradata", :nfs => true
+    mailpuppetmaster_config.vm.synced_folder "files/", "/etc/puppet/files", :nfs => true
+    #Puppet master provisioning script
+    mailpuppetmaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_master.sh"
   end
 
-  #Another mail server
-  config.vm.define "mailserver2".to_sym do |mailserver2_config|
-    mailserver2_config.vm.box = "ubuntu-14.04-server-amd64"
-    mailserver2_config.vm.hostname = "mailserver2.local"
-    mailserver2_config.hostmanager.enabled = true
-    mailserver2_config.vm.network :private_network, ip: "10.0.1.191"
+  #A mail relay server running Postfix for SMTP:
+  config.vm.define "mailrelay".to_sym do |mailrelay_config|
+    mailrelay_config.vm.box = "ubuntu-14.04-server-amd64"
+    mailrelay_config.vm.hostname = "mailrelay.local"
+    mailrelay_config.hostmanager.aliases = %w(mailrelay.local)
+    mailrelay_config.vm.network :private_network, ip: "10.0.1.191"
     #set some machine-specific options	
-    mailserver2_config.vm.provider "virtualbox" do |v|
+    mailrelay_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "256"]
+    end
+    #Puppet agent provisioning script
+    mailrelay_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+  end
+
+  #A mail server running Postfix for SMTP and Dovecot for IMAP:
+  config.vm.define "mailserver".to_sym do |mailserver_config|
+    mailserver_config.vm.box = "ubuntu-14.04-server-amd64"
+    mailserver_config.vm.hostname = "mailserver.local"
+    mailserver_config.hostmanager.aliases = %w(mailserver.local)
+    mailserver_config.vm.network :private_network, ip: "10.0.1.192"
+    #set some machine-specific options	
+    mailserver_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "256"]
+    end
+    #Puppet agent provisioning script
+    mailserver_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+  end
+
+  #A mail server for human user accounts with Postfix for SMTP and Dovecot for IMAP
+  config.vm.define "usermail".to_sym do |usermail_config|
+    usermail_config.vm.box = "ubuntu-14.04-server-amd64"
+    usermail_config.vm.hostname = "usermail.local"
+    usermail_config.hostmanager.aliases = %w(usermail.local)
+    usermail_config.vm.network :private_network, ip: "10.0.1.193"
+    #set some machine-specific options	
+    usermail_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "256"]
+    end
+    #Puppet agent provisioning script
+    usermail_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+  end
+
+  #A DNS server for MX records:
+  config.vm.define "maildns".to_sym do |maildns_config|
+    maildns_config.vm.box = "centos-7.0-amd64"
+    maildns_config.vm.hostname = "maildns.local"
+    maildns_config.hostmanager.aliases = %w(maildns.local)
+    maildns_config.vm.network :private_network, ip: "10.0.1.195"
+    #set some machine-specific options	
+    maildns_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "256"]
+    end
+    #Puppet agent provisioning script
+    maildns_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+  end
+
+  #An Elasticsearch/Logstash/Kibana and Riemann/InfluxDB/Grafana and Icinga 2 monitoring VM;
+  #also has a mail server for sending email alerts
+  config.vm.define "mailmonitoring".to_sym do |mailmonitoring_config|
+    mailmonitoring_config.vm.box = "ubuntu-14.04-server-amd64"
+    mailmonitoring_config.vm.hostname = "mailmonitoring.local"
+    mailmonitoring_config.hostmanager.aliases = %w(grafana.mailmonitoring.local kibana3.mailmonitoring.local kibana4.mailmonitoring.local)
+    mailmonitoring_config.vm.network :private_network, ip: "10.0.1.195"
+    #set some machine-specific options	
+    mailmonitoring_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
       v.customize ["modifyvm", :id, "--memory", "1024"]
     end
-    mailserver2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+    #Puppet agent provisioning script
+    mailmonitoring_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
   end
 end

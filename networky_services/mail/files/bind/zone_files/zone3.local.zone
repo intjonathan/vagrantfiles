@@ -1,0 +1,29 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; zone3.local zone data records
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;Set a default TTL of 1 hour for records in this zone data file
+$TTL 1h
+
+; IN- An INternet record; this is one class of DNS data. In theory, there could be other data classes but they are never used.
+; SOA- stands for Status Of Authority; this means that the hostname after the 'IN SOA' is authoritative for this zone
+
+zone3.local. IN SOA maildns.local. root.zone3.local. (
+  1   ; Serial
+  3h  ; Refresh after 3 hours
+  1h  ; Retry after 1 hour
+  1w  ; Expire after 1 week
+  1h) ; Negative caching TTL of 1 hour
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Nameserver records
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;Say that maildns.local is a nameserver for the zone zone3.local:
+zone3.local. IN NS maildns.local.
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Hostname records
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+webserver.zone3.local. IN A 10.0.1.79
