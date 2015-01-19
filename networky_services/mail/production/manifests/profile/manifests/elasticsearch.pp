@@ -9,7 +9,7 @@ class profile::elasticsearch {
                 'index.number_of_replicas' => '1',
                 'index.number_of_shards'   => '4',
                 'http.cors.enabled'        => 'true',
-                'http.cors.allow-origin'   => "http://kibana.${fqdn}"
+                'http.cors.allow-origin'   => "http://kibana3.${fqdn}"
     },
   }
 
