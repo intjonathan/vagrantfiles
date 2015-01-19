@@ -7,8 +7,15 @@ class profile::bind::master {
   ###############################
 
   #BIND module is from: https://github.com/thias/puppet-bind
-  include ::bind
-  
+   class { '::bind':
+    service_reload => true,
+    #Use a custom restart command
+    #The command below runs named-checkconf and only runs 'service named restart' if 'named-checkconf' succeeds
+    service_restart_command => '/sbin/named-checkconf -z /etc/named.conf && /sbin/service named restart'
+  }
+ 
+ 
+   
   ::bind::server::conf { '/etc/named.conf':
     acls => {
       'rfc1918' => [ '10/8', '172.16/12', '192.168/16' ],
