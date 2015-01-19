@@ -96,7 +96,7 @@ Vagrant.configure("2") do |config|
       v.customize ["modifyvm", :id, "--memory", "256"]
     end
     #Puppet agent provisioning script
-    maildns_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+    maildns_config.vm.provision :shell, :path => "../provisioning_scripts/el7_puppet_agent.sh"
   end
 
   #An Elasticsearch/Logstash/Kibana and Riemann/InfluxDB/Grafana and Icinga 2 monitoring VM;
@@ -105,7 +105,7 @@ Vagrant.configure("2") do |config|
     mailmonitoring_config.vm.box = "ubuntu-14.04-server-amd64"
     mailmonitoring_config.vm.hostname = "mailmonitoring.local"
     mailmonitoring_config.hostmanager.aliases = %w(grafana.mailmonitoring.local kibana3.mailmonitoring.local kibana4.mailmonitoring.local)
-    mailmonitoring_config.vm.network :private_network, ip: "10.0.1.195"
+    mailmonitoring_config.vm.network :private_network, ip: "10.0.1.196"
     #set some machine-specific options	
     mailmonitoring_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
