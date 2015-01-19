@@ -29,6 +29,14 @@ class profile::bind::master {
     allow_query       => [ 'localhost', 'local' ],
     recursion         => 'no',
     allow_recursion   => [ 'localhost', 'local', '10net'],
+    #Enable a statistics channel so collectd can gather DNS metrics:
+    statistics_channels    => {
+      'channel-1' => {
+        listen_address => '*',
+        listen_port    => '9053',
+        allow          => ['localhost'],
+      },
+    },
     #Specify a managed keys directory; BIND needs this specified in /etc/named.conf or it 
     #won't be able to write to it; unfortunately, the module has the value default to 'undef'
     #and won't print it in named.conf if nothing is specified
