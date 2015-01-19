@@ -34,7 +34,7 @@ class profile::consul::client {
     version => '0.4.1',
     config_hash => {
       'bind_addr'             => $ipaddress_eth1,
-      'join'                  => '10.0.1.80',
+      'join'                  => '10.0.1.195',
       'check_update_interval' => '2m',
       'client_addr'           => '0.0.0.0',
       'data_dir'              => '/opt/consul',
