@@ -150,6 +150,31 @@ node 'dnsmaster1.local' {
     }
   }
 
+  bind::server::file { [ 'zone1.local.zone' ]:
+    zonedir => '/var/named/data',
+    source_base => 'puppet:///bind/zone_files/',
+  }
+
+  bind::server::file { [ 'zone2.local.zone' ]:
+    zonedir => '/var/named/data',
+    source_base => 'puppet:///bind/zone_files/',
+  }
+
+  bind::server::file { [ 'zone3.local.zone' ]:
+    zonedir => '/var/named/data',
+    source_base => 'puppet:///bind/zone_files/',
+  }
+
+  bind::server::file { [ 'zone4.local.zone' ]:
+    zonedir => '/var/named/data',
+    source_base => 'puppet:///bind/zone_files/',
+  }
+
+  bind::server::file { [ 'zone5.local.zone' ]:
+    zonedir => '/var/named/data',
+    source_base => 'puppet:///bind/zone_files/',
+  }
+
 }
 
 node 'dnsmaster2.local' {
