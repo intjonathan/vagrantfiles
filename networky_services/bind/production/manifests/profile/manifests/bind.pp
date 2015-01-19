@@ -13,8 +13,6 @@ class profile::bind::master {
     #The command below runs named-checkconf and only runs 'service named restart' if 'named-checkconf' succeeds
     service_restart_command => '/sbin/named-checkconf -z /etc/named.conf && /sbin/service named restart'
   }
- 
- 
    
   ::bind::server::conf { '/etc/named.conf':
     acls => {
