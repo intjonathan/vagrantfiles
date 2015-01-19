@@ -251,50 +251,79 @@ node 'dnsmaster2.local' {
     allow_query       => [ 'localhost', 'local' ],
     recursion         => 'no',
     allow_recursion   => [ 'localhost', 'local', '10net'],
+    #Specify a managed keys directory; BIND needs this specified in /etc/named.conf or it 
+    #won't be able to write to it; unfortunately, the module has the value default to 'undef'
+    #and won't print it in named.conf if nothing is specified
+    managed_keys_directory => '/var/named/dynamic',
     #Include some other zone files for localhost and loopback zones:
-    includes => ['/etc/bind/named.conf.local', '/etc/bind/named.conf.default-zones'],
+    includes => ['/etc/named.rfc1912.zones', '/etc/named.root.key'],
     zones => {
       #root hints zone
       '.' => [
         'type hint',
-        'file "/etc/bind/db.root"',
+        'file "named.ca"',
       ], 
       'zone1.local' => [
       'type master',
-      'file "zone1.local"',
+      'file "data/zone1.local.zone"',
       'allow-query { any; }',
       'allow-transfer { 10net; }',
       'allow-update { local; }',
       ],
     'zone2.local' => [
       'type master',
-      'file "zone2.local"',
+      'file "data/zone2.local.zone"',
       'allow-query { any; }',
       'allow-transfer { 10net; }',
       'allow-update { local; }',
       ],
     'zone3.local' => [
       'type master',
-      'file "zone3.local"',
+      'file "data/zone3.local.zone"',
       'allow-query { any; }',
       'allow-transfer { 10net; }',
       'allow-update { local; }',
       ],
     'zone4.local' => [
       'type master',
-      'file "zone4.local"',
+      'file "data/zone4.local.zone"',
       'allow-query { any; }',
       'allow-transfer { 10net; }',
       'allow-update { local; }',
       ],
     'zone5.local' => [
       'type master',
-      'file "zone5.local"',
+      'file "data/zone5.local.zone"',
       'allow-query { any; }',
       'allow-transfer { 10net; }',
       'allow-update { local; }',
       ],
     }
+  }
+
+  bind::server::file { [ 'zone1.local.zone' ]:
+    zonedir => '/var/named/data',
+    source_base => 'puppet:///bind/zone_files/',
+  }
+
+  bind::server::file { [ 'zone2.local.zone' ]:
+    zonedir => '/var/named/data',
+    source_base => 'puppet:///bind/zone_files/',
+  }
+
+  bind::server::file { [ 'zone3.local.zone' ]:
+    zonedir => '/var/named/data',
+    source_base => 'puppet:///bind/zone_files/',
+  }
+
+  bind::server::file { [ 'zone4.local.zone' ]:
+    zonedir => '/var/named/data',
+    source_base => 'puppet:///bind/zone_files/',
+  }
+
+  bind::server::file { [ 'zone5.local.zone' ]:
+    zonedir => '/var/named/data',
+    source_base => 'puppet:///bind/zone_files/',
   }
 
 }
