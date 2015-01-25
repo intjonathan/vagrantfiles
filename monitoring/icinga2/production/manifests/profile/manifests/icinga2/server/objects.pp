@@ -371,5 +371,11 @@ class profile::icinga2::server::objects {
     checkplugin_file_distribution_method => 'inline',
     checkplugin_source_inline            => 'command[check_disks]=/usr/lib64/nagios/plugins/check_disk -w 20 -c 10 -p /',
   }
+  
+  #Create a NotificationComponent to test this PR: https://github.com/Icinga/puppet-icinga2/pull/60:
+  icinga2::object::notificationcomponent {'notification':}
+  
+  #Create a CheckerComponent object to test this PR: https://github.com/Icinga/puppet-icinga2/pull/59:
+  icinga2::object::checkercomponent {'checker':}
 
 }
