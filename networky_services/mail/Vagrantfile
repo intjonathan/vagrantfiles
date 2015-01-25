@@ -41,7 +41,7 @@ Vagrant.configure("2") do |config|
 
   #A mail relay server running Postfix for SMTP:
   config.vm.define "mailrelay".to_sym do |mailrelay_config|
-    mailrelay_config.vm.box = "ubuntu-14.04-server-amd64"
+    mailrelay_config.vm.box = "centos-7.0-amd64"
     mailrelay_config.vm.hostname = "mailrelay.local"
     mailrelay_config.hostmanager.aliases = %w(mailrelay.local)
     mailrelay_config.vm.network :private_network, ip: "10.0.1.191"
@@ -56,7 +56,7 @@ Vagrant.configure("2") do |config|
 
   #A mail server running Postfix for SMTP and Dovecot for IMAP:
   config.vm.define "mailserver".to_sym do |mailserver_config|
-    mailserver_config.vm.box = "ubuntu-14.04-server-amd64"
+    mailserver_config.vm.box = "centos-7.0-amd64"
     mailserver_config.vm.hostname = "mailserver.local"
     mailserver_config.hostmanager.aliases = %w(mailserver.local)
     mailserver_config.vm.network :private_network, ip: "10.0.1.192"
@@ -71,7 +71,7 @@ Vagrant.configure("2") do |config|
 
   #A mail server for human user accounts with Postfix for SMTP and Dovecot for IMAP
   config.vm.define "usermail".to_sym do |usermail_config|
-    usermail_config.vm.box = "ubuntu-14.04-server-amd64"
+    usermail_config.vm.box = "centos-7.0-amd64"
     usermail_config.vm.hostname = "usermail.local"
     usermail_config.hostmanager.aliases = %w(usermail.local)
     usermail_config.vm.network :private_network, ip: "10.0.1.193"
