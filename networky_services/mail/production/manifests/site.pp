@@ -91,6 +91,9 @@ node 'mailrelay.local' {
   #Include the profile that sets up my user account:
   include profile::users
 
+  #Include the profile that sets up sudo rules:
+  include profile::sudo
+
 }
 
 node 'mailserver.local' {
@@ -157,6 +160,9 @@ node 'mailserver.local' {
 
   #Include the profile that sets up my user account:
   include profile::users
+
+  #Include the profile that sets up sudo rules:
+  include profile::sudo
 
 }
 
@@ -241,6 +247,9 @@ node 'mailmonitoring.local' {
 
   #Include the profile that sets up my user account:
   include profile::users
+
+  #Include the profile that sets up sudo rules:
+  include profile::sudo
 
   ###############################
   # Apache installation/setup
@@ -393,7 +402,17 @@ node 'usermail.local' {
    #Include a profile that installs and configures Postfix:
   include profile::postfix::server
 
+  ###############################
+  # Dovecot installation/setup
+  ###############################
+
+  #Include a profile to install and configure Dovecot:
+  include profile::dovecot
+
   #Include the profile that sets up my user account:
   include profile::users
+  
+  #Include the profile that sets up sudo rules:
+  include profile::sudo
 
 }
