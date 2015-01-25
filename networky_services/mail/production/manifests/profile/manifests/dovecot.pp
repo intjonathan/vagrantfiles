@@ -1,5 +1,7 @@
 class profile::dovecot {
 
-  class { '::dovecot': }    
+  class { '::dovecot': 
+    mail_location => 'maildir:~/Maildir',
+  }
 
 }
