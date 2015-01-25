@@ -18,4 +18,12 @@ class profile::users {
     mode =>  '755',
   }
 
+  group { 'sudo' :
+    ensure => present,
+  }
+
+  group { 'admin' :
+    ensure => present,
+  }
+
 }
