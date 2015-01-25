@@ -60,7 +60,7 @@ Vagrant.configure("2") do |config|
 
   #Debian Scala VM
   config.vm.define "debianscala".to_sym do |debianscala_config|
-    debianscala_config.vm.box = "debian-7.4-amd64"
+    debianscala_config.vm.box = "debian-7.8-amd64"
     debianscala_config.vm.hostname = "debianscala.local"
     debianscala_config.hostmanager.enabled = true
     debianscala_config.vm.network :private_network, ip: "10.0.1.58"

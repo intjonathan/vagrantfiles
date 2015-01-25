@@ -71,7 +71,7 @@ Vagrant.configure("2") do |config|
   
   #An SNMP client node
   config.vm.define "snmpclient3".to_sym do |snmpclient3_config|
-    snmpclient3_config.vm.box = "debian-7.2-amd64"
+    snmpclient3_config.vm.box = "debian-7.8-amd64"
     snmpclient3_config.vm.hostname = "snmpclient3.local"
     snmpclient3_config.hostmanager.enabled = true
     snmpclient3_config.vm.network :private_network, ip: "10.0.1.193"
