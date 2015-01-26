@@ -10,6 +10,8 @@ class profile::dovecot {
 
   class { '::dovecot': 
     mail_location => 'maildir:~/Maildir',
+    #Enable authentication debugging logs:
+    auth_debug => 'yes',
   }
 
 }
