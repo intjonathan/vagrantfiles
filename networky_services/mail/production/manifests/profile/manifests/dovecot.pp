@@ -8,6 +8,25 @@ class profile::dovecot {
     mode => '0700',
   }
 
+  #Dovecot certificate:
+  file { "/etc/dovecot/ssl/${fqdn}.pem":
+    ensure => file,
+    owner => 'root',
+    group => 'root',
+    mode => '0400',
+    source => "puppet:///dovecot/certs/${fqdn}.pem",
+  }
+  
+  #Dovecot private key:
+  file { "/etc/dovecot/ssl/${fqdn}.key":
+    ensure => file,
+    owner => 'root',
+    group => 'root',
+    mode => '0400',
+    source => "puppet:///dovecot/keys/${fqdn}.key",
+  }
+
+
   class { '::dovecot': 
     #Point Dovecot to maildir folders in user home folders as the place to store delivered mail:
     mail_location => 'maildir:~/Maildir',
