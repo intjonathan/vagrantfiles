@@ -16,6 +16,8 @@ class profile::dovecot {
     #Enable authentication debugging logs:
     auth_debug => 'yes',
     hostname => $fqdn,
+    ssl_cert => "/etc/dovecot/ssl/${fqdn}.pem",
+    ssl_key => "/etc/dovecot/ssl/${fqdn}.key",
   }
 
 }
