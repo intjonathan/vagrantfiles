@@ -1,5 +1,9 @@
 class profile::sudo {
 
+  class { '::sudo':
+    purge               => false,
+    config_file_replace => false,
+  }
 
   ::sudo::conf { 'admin':
     priority => 10,
