@@ -5,7 +5,7 @@ class profile::dovecot {
     ensure => directory,
     owner => 'root',
     group => 'root',
-    mode => '0400',
+    mode => '0700',
   }
 
   class { '::dovecot': 
