@@ -15,6 +15,7 @@ class profile::dovecot {
     protocols => 'imap',
     #Enable authentication debugging logs:
     auth_debug => 'yes',
+    hostname => $fqdn,
   }
 
 }
