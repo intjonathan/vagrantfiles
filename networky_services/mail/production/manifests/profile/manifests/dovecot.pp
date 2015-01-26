@@ -12,7 +12,7 @@ class profile::dovecot {
     #Point Dovecot to maildir folders in user home folders as the place to store delivered mail:
     mail_location => 'maildir:~/Maildir',
     #Enable IMAP with SSL/TLS as a protocol Dovecot uses:
-    protocols => 'imaps',
+    protocols => 'imap',
     #Enable authentication debugging logs:
     auth_debug => 'yes',
   }
