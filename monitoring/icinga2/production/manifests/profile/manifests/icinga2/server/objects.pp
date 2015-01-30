@@ -150,6 +150,7 @@ class profile::icinga2::server::objects {
     vars => {
       service_type => 'production',
     },
+    check_period => 'bra-office-hrs',
     assign_where => '"linux_servers" in host.groups',
     ignore_where => 'host.name == "localhost"',
     target_dir => '/etc/icinga2/objects/applys'
