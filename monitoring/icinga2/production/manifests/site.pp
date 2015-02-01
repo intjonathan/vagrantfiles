@@ -271,6 +271,9 @@ node 'trustyicinga2node.local' {
   #Make this machine a Consul client:
   include profile::consul::client
 
+  #Set up this machine as an Icinga 2 node:
+  include profile::icinga2::node
+
 }
 
 #An Ubuntu 14.10 Icinga 2 client node
@@ -322,6 +325,9 @@ node 'centos6icinga2node.local' {
   #Make this machine a Consul client:
   include profile::consul::client
 
+  #Set up this machine as an Icinga 2 node:
+  include profile::icinga2::node
+
 }
 
 #A CentOS 7 Icinga 2 client node
@@ -339,6 +345,9 @@ node 'centos7icinga2node.local' {
   #Make this machine a Consul client:
   include profile::consul::client
 
+  #Set up this machine as an Icinga 2 node:
+  include profile::icinga2::node
+
 }
 
 #A Debian 7 Icinga 2 client node
@@ -355,6 +364,9 @@ node 'debian7icinga2node.local' {
   
   #Make this machine a Consul client:
   include profile::consul::client
+
+  #Set up this machine as an Icinga 2 node:
+  include profile::icinga2::node
 
 }
 
