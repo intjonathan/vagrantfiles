@@ -28,6 +28,15 @@ class role::icinga2::nrpeclient {
   
   include profile::icinga2::nrpe
   include profile::icinga2::nrpe::objects
+ 
+}
+
+class role::icinga2::nrpeclient_stuff_to_monitor {
+  
+  include profile::icinga2::hostexport
+  
+  include profile::icinga2::nrpe
+  include profile::icinga2::nrpe::objects
   include profile::icinga2::stuff_to_monitor::apache
   include profile::icinga2::stuff_to_monitor::mysql
   include profile::icinga2::stuff_to_monitor::postgresql

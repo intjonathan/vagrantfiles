@@ -11,7 +11,7 @@ class profile::icinga2::stuff_to_monitor::apache {
   ::apache::mod { 'ssl': } #Install/enable the SSL module
   ::apache::mod { 'proxy': } #Install/enable the proxy module
   ::apache::mod { 'proxy_http': } #Install/enable the HTTP proxy module
-  ::apache::mod { 'rewrite': } #Install/enable the rewrite module
+  #::apache::mod { 'rewrite': } #Install/enable the rewrite module
 
 }
 

@@ -154,7 +154,7 @@ node 'trustyicinga2nrpeclient.local' {
   #Include a profile that sets up NTP
   include profile::ntp::client
 
-  include role::icinga2::nrpeclient
+  include role::icinga2::nrpeclient_stuff_to_monitor
 
   #Make this machine a Consul client:
   include profile::consul::client
@@ -173,7 +173,7 @@ node 'utopicicinga2nrpeclient.local' {
   #Include a profile that sets up NTP
   include profile::ntp::client
 
-  include role::icinga2::nrpeclient
+  include role::icinga2::nrpeclient_stuff_to_monitor
 
   #Make this machine a Consul client:
   include profile::consul::client
@@ -192,7 +192,7 @@ node 'preciseicinga2nrpeclient.local' {
   #Include a profile that sets up NTP
   include profile::ntp::client
 
-  include role::icinga2::nrpeclient
+  include role::icinga2::nrpeclient_stuff_to_monitor
 
   #Make this machine a Consul client:
   include profile::consul::client
@@ -211,7 +211,7 @@ node 'centos6icinga2nrpeclient.local' {
   #Include a profile that sets up NTP
   include profile::ntp::client
 
-  include role::icinga2::nrpeclient
+  include role::icinga2::nrpeclient_stuff_to_monitor
 
   #Make this machine a Consul client:
   include profile::consul::client
@@ -230,7 +230,7 @@ node 'centos7icinga2nrpeclient.local' {
   #Include a profile that sets up NTP
   include profile::ntp::client
 
-  include role::icinga2::nrpeclient
+  include role::icinga2::nrpeclient_stuff_to_monitor
 
   #Make this machine a Consul client:
   include profile::consul::client
@@ -249,7 +249,7 @@ node 'debian7icinga2nrpeclient.local' {
   #Include a profile that sets up NTP
   include profile::ntp::client
 
-  include role::icinga2::nrpeclient
+  include role::icinga2::nrpeclient_stuff_to_monitor
 
   #Make this machine a Consul client:
   include profile::consul::client
@@ -381,7 +381,7 @@ node 'icinga2mail.local' {
   #Include a profile that sets up NTP
   include profile::ntp::client
 
-  include role::icinga2::nrpeclient
+  include role::icinga2::nrpeclient_stuff_to_monitor
 
   #Include the profile that sets up my user account:
   include profile::users
@@ -402,7 +402,7 @@ node 'usermail.local' {
   #Include a profile that sets up NTP
   include profile::ntp::client
 
-  include role::icinga2::nrpeclient
+  include role::icinga2::nrpeclient_stuff_to_monitor
 
   #Include a profile that installs and configures Postfix:
   include profile::postfix::server
