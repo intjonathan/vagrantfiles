@@ -1,5 +1,5 @@
 {
-  "title": "Logstash Search",
+  "title": "Logstash environment logs",
   "services": {
     "query": {
       "list": {
@@ -22,7 +22,7 @@
         "0": {
           "type": "time",
           "field": "@timestamp",
-          "from": "now-1h",
+          "from": "now-5m",
           "to": "now",
           "mandate": "must",
           "active": true,
@@ -55,7 +55,7 @@
           "value_field": null,
           "auto_int": true,
           "resolution": 100,
-          "interval": "30s",
+          "interval": "1s",
           "fill": 3,
           "linewidth": 3,
           "timezone": "browser",
@@ -138,8 +138,8 @@
             "default"
           ],
           "type": "table",
-          "size": 200,
-          "pages": 10,
+          "size": 100,
+          "pages": 5,
           "offset": 0,
           "sort": [
             "@timestamp",
@@ -153,7 +153,7 @@
             "@host",
             "@message",
             "syslog_program",
-            "client_ip",
+            "syslog_facility",
             "@timestamp"
           ],
           "localTime": true,
@@ -169,7 +169,7 @@
               0
             ]
           },
-          "field_list": true,
+          "field_list": false,
           "status": "Stable",
           "trimFactor": 300,
           "normTimes": true,
@@ -198,11 +198,7 @@
       "pinned": true,
       "history": [
         "",
-        "*",
-        "postfix",
-        "postfi",
-        "puppet-agent",
-        "puppet"
+        "consul"
       ],
       "remember": 10,
       "enable": true
@@ -221,13 +217,24 @@
       "notice": false,
       "status": "Stable",
       "time_options": [
+        "2m",
         "5m",
+        "10m",
         "15m",
+        "20m",
+        "30m",
         "1h",
         "6h",
         "12h",
+        "16h",
+        "18h",
         "24h",
+        "36h",
         "2d",
+        "3d",
+        "4d",
+        "5d",
+        "6d",
         "7d",
         "30d"
       ],
