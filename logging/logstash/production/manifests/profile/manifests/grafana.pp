@@ -31,12 +31,12 @@ class profile::grafana {
     grafana_user => 'www-data',
     grafana_group => 'www-data',
     datasources  => {
-      'graphite' => {
+      'influxdbdata' => {
         'type'    => 'influxdb',
         'url'     => 'http://logstashmetrics.local:8086/db/riemann-data',
         'default' => 'true'
       },
-      'elasticsearch' => {
+      'grafanadb' => {
         'type'      => 'influxdb',
         'url'       => 'http://logstashmetrics.local:8086/db/grafana',
         'index'     => 'grafana',
