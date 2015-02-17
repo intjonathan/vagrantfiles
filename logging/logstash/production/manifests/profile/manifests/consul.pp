@@ -20,7 +20,7 @@ class profile::consul::server {
       'ui_dir'                => '/opt/consul/ui',
       'dc'                    => 'logstash',
       'enable_syslog'         => true,
-      'log_level'             => 'DEBUG',
+      'log_level'             => 'INFO',
       'node_name'             => $fqdn,
       'server'                => true
     }
@@ -40,7 +40,7 @@ class profile::consul::client {
       'data_dir'              => '/opt/consul',
       'dc'                    => 'logstash',
       'enable_syslog'         => true,
-      'log_level'             => 'DEBUG',
+      'log_level'             => 'INFO',
       'node_name'             => $fqdn,
     }
   }
