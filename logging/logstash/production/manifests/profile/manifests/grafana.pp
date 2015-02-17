@@ -3,7 +3,9 @@ class profile::grafana {
   #A non-SSL virtual host for grafana:
   ::apache::vhost { "grafana.${fqdn}_non-ssl":
     port            => 80,
-    docroot         => '/sites/apps/grafana',
+    #This has to be grafana/grafana so that we don't get duplicated resource errrors from
+    #/sites/apps/grafana/ being used by this virtual host resource and by the ::grafana class below: 
+    docroot         => '/sites/apps/grafana/grafana',
     servername      => "grafana.${fqdn}",
     access_log => true,
     access_log_syslog=> 'syslog:local1',
@@ -23,7 +25,8 @@ class profile::grafana {
   # https://github.com/bfraser/puppet-grafana
   class { '::grafana':
     version => '1.9.1',
-    #install_method => 'archive',
+    #This will install Grafana to /sites/apps/grafana/grafana
+    #/sites/apps/grafana/grafana will be symlinked to something like /sites/apps/grafana/grafana-1.9.1
     install_dir => '/sites/apps/grafana',
     grafana_user => 'www-data',
     grafana_group => 'www-data',
