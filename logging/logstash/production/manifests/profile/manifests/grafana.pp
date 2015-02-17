@@ -34,12 +34,15 @@ class profile::grafana {
       'influxdbdata' => {
         'type'    => 'influxdb',
         'url'     => 'http://logstashmetrics.local:8086/db/riemann-data',
-        'default' => 'true'
+        'username' => 'nick',
+        'password' => 'password',
+        'default' => 'true',
       },
       'grafanadb' => {
         'type'      => 'influxdb',
         'url'       => 'http://logstashmetrics.local:8086/db/grafana',
-        'index'     => 'grafana',
+        'username' => 'nick',
+        'password' => 'password',
         'grafanaDB' => 'true',
       },
     }

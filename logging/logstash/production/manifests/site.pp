@@ -26,6 +26,11 @@ node 'logstashmaster.local' {
   #Make this machine a Consul server:
   include profile::consul::server
 
+  #Install ColllectD, gather some system metrics and write them to the metrics VM:
+  include profile::collectd
+  include profile::collectd::system_metrics
+  include profile::collectd::write_graphite
+
 }
 
 node 'logstash.local' {
@@ -52,6 +57,11 @@ node 'logstash.local' {
   #Include a profile that installs and configures Postfix:
   include profile::postfix::server
 
+  #Install ColllectD, gather some system metrics and write them to the metrics VM:
+  include profile::collectd
+  include profile::collectd::system_metrics
+  include profile::collectd::write_graphite
+
 }
 
 node 'kibana.local' {
@@ -77,6 +87,11 @@ node 'kibana.local' {
   #Make this machine a Consul server:
   include profile::consul::server
 
+  #Install ColllectD, gather some system metrics and write them to the metrics VM:
+  include profile::collectd
+  include profile::collectd::system_metrics
+  include profile::collectd::write_graphite
+
 }
 
 node 'elasticsearch1.local' {
@@ -95,6 +110,11 @@ node 'elasticsearch1.local' {
 
   #Make this machine a Consul client:
   include profile::consul::client
+
+  #Install ColllectD, gather some system metrics and write them to the metrics VM:
+  include profile::collectd
+  include profile::collectd::system_metrics
+  include profile::collectd::write_graphite
 
 }
 
@@ -115,6 +135,11 @@ node 'elasticsearch2.local' {
   #Make this machine a Consul client:
   include profile::consul::client
 
+  #Install ColllectD, gather some system metrics and write them to the metrics VM:
+  include profile::collectd
+  include profile::collectd::system_metrics
+  include profile::collectd::write_graphite
+
 }
 
 node 'elasticsearch3.local' {
@@ -134,6 +159,11 @@ node 'elasticsearch3.local' {
   #Make this machine a Consul client:
   include profile::consul::client
 
+  #Install ColllectD, gather some system metrics and write them to the metrics VM:
+  include profile::collectd
+  include profile::collectd::system_metrics
+  include profile::collectd::write_graphite
+
 }
 
 node 'rsyslog1.local' {
@@ -149,6 +179,11 @@ node 'rsyslog1.local' {
 
   #Make this machine a Consul client:
   include profile::consul::client
+
+  #Install ColllectD, gather some system metrics and write them to the metrics VM:
+  include profile::collectd
+  include profile::collectd::system_metrics
+  include profile::collectd::write_graphite
 
 }
 
@@ -166,6 +201,11 @@ node 'rsyslog2.local' {
   #Make this machine a Consul client:
   include profile::consul::client
 
+  #Install ColllectD, gather some system metrics and write them to the metrics VM:
+  include profile::collectd
+  include profile::collectd::system_metrics
+  include profile::collectd::write_graphite
+
 }
 
 node 'rsyslog3.local' {
@@ -181,6 +221,11 @@ node 'rsyslog3.local' {
 
   #Make this machine a Consul client:
   include profile::consul::client
+
+  #Install ColllectD, gather some system metrics and write them to the metrics VM:
+  include profile::collectd
+  include profile::collectd::system_metrics
+  include profile::collectd::write_graphite
 
 }
 
