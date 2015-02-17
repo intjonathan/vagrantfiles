@@ -23,7 +23,8 @@ class profile::kibana3::apache_virtualhost {
       </Directory>
     ',
   }
-
+  
+  #Install Kibana 3 with this module: https://github.com/thejandroman/puppet-kibana3
   class { '::kibana3':
     config_es_port      => '9200',
     config_es_protocol  => 'http',
