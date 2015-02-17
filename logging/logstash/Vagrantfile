@@ -162,6 +162,21 @@ Vagrant.configure("2") do |config|
   rsyslog3_config.vm.provision :shell, :path => "../provisioning_scripts/el7_puppet_agent.sh"
   end
 
+  #A DNS server VM so we can test sending BIND logs to Logstash:
+  config.vm.define "logstashdns".to_sym do |logstashdns_config|
+    logstashdns_config.vm.box = "centos-7.0-amd64"
+    logstashdns_config.vm.hostname = "logstashdns.local"
+    logstashdns_config.hostmanager.aliases = %w(logstashdns.local)
+    logstashdns_config.hostmanager.enabled = true
+    logstashdns_config.vm.network :private_network, ip: "10.0.1.148"
+    #set some machine-specific options	
+    logstashdns_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "128"]
+    end
+  logstashdns_config.vm.provision :shell, :path => "../provisioning_scripts/el7_puppet_agent.sh"
+  end
+
   #A VM running Riemann, InfluxDB and Grafana for getting metrics about the Logstash environment;
   #It's also a place where Logstash can send Graphite metrics:
   config.vm.define "logstashmetrics".to_sym do |logstashmetrics_config|

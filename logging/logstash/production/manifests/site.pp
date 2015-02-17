@@ -262,3 +262,27 @@ node 'logstashmetrics.local' {
   include profile::grafana
 
 }
+
+node 'logstashdns.local' {
+
+  #Include a profile that sets up our usual SSH settings:
+  include profile::ssh
+
+  #Include a profile that sets up NTP
+  include profile::ntp::client
+
+  #Include the rsyslog::client profile to set up logging
+  include profile::rsyslog::client
+
+  #Make this machine a Consul client:
+  include profile::consul::client
+
+  #Install ColllectD, gather some system metrics and write them to the metrics VM:
+  include profile::collectd
+  include profile::collectd::system_metrics
+  include profile::collectd::write_graphite
+
+  #Install BIND and some sample zone data files:
+  #include profile::bind::master
+
+}
