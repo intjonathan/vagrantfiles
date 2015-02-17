@@ -5,4 +5,11 @@ class profile::riemann {
     riemann_config_source => 'puppet:///riemann/configs/riemann.config',
   }
 
+  rsyslog::imfile { 'riemann_logs':
+    file_name => '/var/log/riemann/riemann.log',
+    file_tag => 'riemann',
+    file_facility => 'local7',
+    file_severity => 'info',
+  }
+
 }
