@@ -204,6 +204,15 @@ node 'logstashmetrics.local' {
   #Install Apache so we use Grafana:
   include profile::apache
 
+  #Install Java...
+  include profile::java
+
+  #Install Riemann
+  include profile::riemann
+
+  #Install InfluxDB
+  include profile::influxdb
+
   #Include the Grafana profile
   include profile::grafana
 
