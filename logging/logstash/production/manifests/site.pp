@@ -23,7 +23,7 @@ node 'logstashmaster.local' {
   #Include the role that sets up PuppetDB, the Puppet master to work with PuppetDB and Puppetboard:
   include role::puppetdb::puppet_master_and_puppetdb_server_with_puppetboard
   
-  #Make this machine a Consul server for all of the Icinga 2 client and server VMs
+  #Make this machine a Consul server:
   include profile::consul::server
 
 }
@@ -40,6 +40,8 @@ node 'logstash.local' {
   include profile::logstash
   include profile::logstash::config
 
+  #Make this machine a Consul server:
+  include profile::consul::server
 
 }
 
@@ -59,6 +61,9 @@ node 'kibana.local' {
 
   #Make this machine a Consul client:
   include profile::consul::client
+
+  #Make this machine a Consul server:
+  include profile::consul::server
 
 }
 
@@ -83,16 +88,6 @@ node 'elasticsearch2.local' {
 }
 
 node 'elasticsearch3.local' {
-
-  #Include Elasticsearch
-  include profile::elasticsearch
-
-  #Install Java...
-  include profile::java
-
-}
-
-node 'elasticsearch4.local' {
 
   #Include Elasticsearch
   include profile::elasticsearch
