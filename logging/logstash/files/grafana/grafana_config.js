@@ -22,13 +22,13 @@ function (Settings) {
     datasources: {
       influxdb: {
         type: 'influxdb',
-        url: "http://dnsmonitoring.local:8086/db/riemann-data",
+        url: "http://logstashmetrics.local:8086/db/riemann-data",
         username: 'nick',
         password: 'password',
       },
       grafana: {
         type: 'influxdb',
-        url: "http://dnsmonitoring.local:8086/db/grafana",
+        url: "http://logstashmetrics.local:8086/db/grafana",
         username: 'nick',
         password: 'password',
         grafanaDB: true
