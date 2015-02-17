@@ -18,5 +18,28 @@ class profile::grafana {
       </Directory>
     ',
   }
+  
+  #Install Grafana with this module:
+  # https://github.com/bfraser/puppet-grafana
+  class { '::grafana':
+    version => '1.9.1',
+    #install_method => 'archive',
+    install_dir => '/sites/apps/grafana',
+    grafana_user => 'www-data',
+    grafana_group => 'www-data',
+    datasources  => {
+      'graphite' => {
+        'type'    => 'influxdb',
+        'url'     => 'http://logstashmetrics.local:8086/db/riemann-data',
+        'default' => 'true'
+      },
+      'elasticsearch' => {
+        'type'      => 'influxdb',
+        'url'       => 'http://logstashmetrics.local:8086/db/grafana',
+        'index'     => 'grafana',
+        'grafanaDB' => 'true',
+      },
+    }
+  }
 
 }
