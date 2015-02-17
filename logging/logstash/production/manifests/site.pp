@@ -283,6 +283,6 @@ node 'logstashdns.local' {
   include profile::collectd::write_graphite
 
   #Install BIND and some sample zone data files:
-  #include profile::bind::master
+  include profile::bind::master
 
 }
