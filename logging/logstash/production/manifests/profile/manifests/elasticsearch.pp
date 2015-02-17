@@ -32,9 +32,4 @@ class profile::elasticsearch {
     instances  => $fqdn,
   }
 
-  ::elasticsearch::plugin{'royrusso/elasticsearch-HQ':
-    module_dir => 'hq',
-    instances  => $fqdn,
-  }
-
 }
