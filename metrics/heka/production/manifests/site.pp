@@ -26,6 +26,9 @@ node 'hekamaster.local' {
   #sends it to a Graphite (in this case, Heka) server:
   include role::collectd::collectd_system_and_ntp_metrics_and_write_graphite
 
+  #Make this machine a Consul server:
+  include profile::consul::server
+
 }
 
 node 'heka1.local' {
@@ -38,6 +41,9 @@ node 'heka1.local' {
 
   #Include a profile that sets up NTP
   include profile::ntp::client
+
+  #Make this machine a Consul server:
+  include profile::consul::server
 
 }
 
@@ -56,6 +62,9 @@ node 'heka2.local' {
   #sends it to a Graphite (in this case, Heka) server:
   include role::collectd::collectd_system_and_ntp_metrics_and_write_graphite
 
+  #Make this machine a Consul server:
+  include profile::consul::server
+
 }
 
 node 'heka3.local' {
@@ -68,6 +77,9 @@ node 'heka3.local' {
 
   #Include a profile that sets up NTP
   include profile::ntp::client
+
+  #Make this machine a Consul client:
+  include profile::consul::client
 
 }
 
@@ -116,6 +128,9 @@ node 'collectd1.local' {
   #Include the role that sets up CollectD, sets it up to gather system and NTP metrics and
   #sends it to a Graphite (in this case, Heka) server:
   include role::collectd::collectd_system_and_ntp_metrics_and_write_graphite
+
+  #Make this machine a Consul client:
+  include profile::consul::client
 
 }
 
@@ -168,6 +183,9 @@ node 'collectd2.local' {
   #sends it to a Graphite (in this case, Heka) server:
   include role::collectd::collectd_system_and_ntp_metrics_and_write_graphite
 
+  #Make this machine a Consul client:
+  include profile::consul::client
+
 }
 
 node 'hekamonitoring.local' {
@@ -218,5 +236,8 @@ node 'hekamonitoring.local' {
 
   #Include the profile that sets up my user account:
   include profile::users
+
+  #Make this machine a Consul client:
+  include profile::consul::client
 
 }
