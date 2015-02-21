@@ -33,14 +33,14 @@ class profile::grafana {
     datasources  => {
       'influxdbdata' => {
         'type'    => 'influxdb',
-        'url'     => 'http://hekastashmetrics.local:8086/db/riemann-data',
+        'url'     => 'http://hekamonitoring.local:8086/db/riemann-data',
         'username' => 'nick',
         'password' => 'password',
         'default' => 'true',
       },
       'grafanadb' => {
         'type'      => 'influxdb',
-        'url'       => 'http://hekastashmetrics.local:8086/db/grafana',
+        'url'       => 'http://hekamonitoring.local:8086/db/grafana',
         'username' => 'nick',
         'password' => 'password',
         'grafanaDB' => 'true',

@@ -170,7 +170,7 @@ node 'collectd2.local' {
 
 }
 
-node 'hekametrics.local' {
+node 'hekamonitoring.local' {
 
   #Include a profile that sets up our usual SSH settings:
   include profile::ssh
@@ -184,6 +184,9 @@ node 'hekametrics.local' {
   #Include the role that sets up CollectD, sets it up to gather system and NTP metrics and
   #sends it to a Graphite (in this case, Heka) server:
   include role::collectd::collectd_system_and_ntp_metrics_and_write_graphite
+
+  #Include the Apache profile so we can set up Grafana and Kibana 3 with it:
+  include profile::apache
   
   #Install Java via the Java profile
   include profile::java
@@ -199,28 +202,6 @@ node 'hekametrics.local' {
   
   #Include the Grafana profile
   include profile::grafana
-  
-  #Include the Apache profile so we can set up Grafana with it:
-  include profile::apache
-
-}
-
-node 'hekalogging.local' {
-
-  #Include a profile that sets up our usual SSH settings:
-  include profile::ssh
-  
-  #Include the rsyslog::client profile to set up logging
-  include profile::rsyslog::client
-
-  #Include a profile that sets up NTP
-  include profile::ntp::client
-
-  #Install Apache so we test collectd's Apache metrics gathering.
-  include profile::apache
-
-  #Install Java...
-  include profile::java
 
   #Include Logstash
   include profile::logstash
@@ -231,23 +212,6 @@ node 'hekalogging.local' {
 
   #Include the profile that sets up a virtual host for Kibana3:
   include profile::kibana3::apache_virtualhost
-
-  #Include the role that sets up CollectD, sets it up to gather system and NTP metrics and
-  #sends it to a Graphite (in this case, Heka) server:
-  include role::collectd::collectd_system_and_ntp_metrics_and_write_graphite
-
-}
-
-node 'hekamail.local' {
-
-  #Include a profile that sets up our usual SSH settings:
-  include profile::ssh
-
-  #Include the rsyslog::client profile to set up logging
-  include profile::rsyslog::client
-
-  #Include a profile that sets up NTP
-  include profile::ntp::client
 
   #Include a profile that installs and configures Postfix:
   include profile::postfix

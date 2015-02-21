@@ -14,5 +14,5 @@ emit_in_fields = true
 
 [CarbonOutput]
 message_matcher = "Type == 'heka.statmetric'"
-address = "hekametrics.local:2003"
+address = "hekamonitoring.local:2003"
 protocol = "udp"

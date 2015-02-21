@@ -6,5 +6,4 @@ class profile::java {
     distribution => 'jdk',
   }
 
-  
 }

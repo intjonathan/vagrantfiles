@@ -22,13 +22,13 @@ function (Settings) {
     datasources: {
       influxdb: {
         type: 'influxdb',
-        url: "http://hekametrics.local:8086/db/riemann-data",
+        url: "http://hekamonitoring.local:8086/db/riemann-data",
         username: 'nick',
         password: 'password',
       },
       grafana: {
         type: 'influxdb',
-        url: "http://hekametrics.local:8086/db/grafana",
+        url: "http://hekamonitoring.local:8086/db/grafana",
         username: 'nick',
         password: 'password',
         grafanaDB: true

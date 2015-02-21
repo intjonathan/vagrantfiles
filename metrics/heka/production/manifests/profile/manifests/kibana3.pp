@@ -28,7 +28,7 @@ class profile::kibana3::apache_virtualhost {
   class { '::kibana3':
     config_es_port      => '9200',
     config_es_protocol  => 'http',
-    config_es_server    => 'elasticsearch1.local',
+    config_es_server    => 'hekamonitoring.local',
     manage_ws           => false,
     manage_git          => false,
     k3_install_folder   => '/sites/apps/kibana3',
