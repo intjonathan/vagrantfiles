@@ -10,7 +10,7 @@ class profile::consul::agent {
 class profile::consul::server {
 
   class { '::consul':
-    version => '0.4.1',
+    version => '0.5.0',
     config_hash => {
       'bind_addr'             => $ipaddress_eth1,
       'bootstrap_expect'      => 1,
@@ -31,7 +31,7 @@ class profile::consul::server {
 class profile::consul::client {
 
   class { '::consul':
-    version => '0.4.1',
+    version => '0.5.0',
     config_hash => {
       'bind_addr'             => $ipaddress_eth1,
       'start_join'            => ['10.0.1.80'],
