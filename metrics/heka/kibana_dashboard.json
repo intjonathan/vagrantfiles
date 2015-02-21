@@ -1,10 +1,10 @@
 {
-  "title": "Icinga 2 environment logs",
+  "title": "Heka environment logs",
   "services": {
     "query": {
       "list": {
         "0": {
-          "query": "",
+          "query": "*",
           "alias": "",
           "color": "#7EB26D",
           "id": 0,
@@ -139,7 +139,7 @@
           ],
           "type": "table",
           "size": 100,
-          "pages": 10,
+          "pages": 5,
           "offset": 0,
           "sort": [
             "@timestamp",
@@ -151,10 +151,9 @@
           "overflow": "min-height",
           "fields": [
             "@host",
-            "client_ip",
             "@message",
             "syslog_program",
-            "syslog_severity",
+            "syslog_facility",
             "@timestamp"
           ],
           "localTime": true,
@@ -181,51 +180,18 @@
     },
     {
       "title": "",
-      "height": "500px",
+      "height": "300px",
       "editable": true,
       "collapse": false,
       "collapsable": true,
       "panels": [
         {
           "error": false,
-          "span": 5,
+          "span": 6,
           "editable": true,
           "type": "terms",
           "loadingEditor": false,
-          "field": "@host",
-          "exclude": [],
-          "missing": true,
-          "other": true,
-          "size": 10,
-          "order": "count",
-          "style": {
-            "font-size": "10pt"
-          },
-          "donut": false,
-          "tilt": false,
-          "labels": true,
-          "arrangement": "horizontal",
-          "chart": "pie",
-          "counter_pos": "above",
-          "spyable": true,
-          "queries": {
-            "mode": "all",
-            "ids": [
-              0
-            ]
-          },
-          "tmode": "terms",
-          "tstat": "total",
-          "valuefield": "",
-          "title": "logs by host"
-        },
-        {
-          "error": false,
-          "span": 5,
-          "editable": true,
-          "type": "terms",
-          "loadingEditor": false,
-          "field": "syslog_program",
+          "field": "@source_host",
           "exclude": [],
           "missing": true,
           "other": true,
@@ -250,7 +216,7 @@
           "tmode": "terms",
           "tstat": "total",
           "valuefield": "",
-          "title": "Logs by program"
+          "title": "# of logs by host"
         }
       ],
       "notice": false
@@ -273,18 +239,7 @@
       "notice": false,
       "query": "*",
       "pinned": true,
-      "history": [
-        "",
-        "syslog_program:systemd",
-        "check_smtp.conf",
-        "check_smtp.conf]",
-        "check_smtp",
-        "\"centos7icinga2client.local!check_smtp\"",
-        "centos7icinga2client.local!check_smtp",
-        "*",
-        "syslog_program:sudo",
-        "\" session closed for user root\""
-      ],
+      "history": [],
       "remember": 10,
       "enable": true
     },
@@ -302,26 +257,29 @@
       "notice": false,
       "status": "Stable",
       "time_options": [
-        "30s",
-        "60s",
         "90s",
         "2m",
         "5m",
-        "7m",
         "10m",
         "15m",
         "20m",
+        "30m",
+        "45m",
         "1h",
-        "90m",
         "2h",
+        "90m",
         "3h",
         "4h",
         "5h",
         "6h",
+        "8h",
         "9h",
         "12h",
+        "16h",
+        "18h",
         "24h",
-        "36h2d",
+        "36h",
+        "2d",
         "7d",
         "30d"
       ],
