@@ -23,7 +23,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "hekamaster".to_sym do |hekamaster_config|
     hekamaster_config.vm.box = "ubuntu-14.04-server-amd64"
     hekamaster_config.vm.hostname = "hekamaster.local"
-    hekamaster_config.hostmanager.aliases = %w(master puppet master.local puppetboard.hekamaster.local)
+    hekamaster_config.hostmanager.aliases = %w(master puppet master.local puppetboard.hekamaster.local puppetexplorer.hekamaster.local)
     hekamaster_config.vm.network :private_network, ip: "10.0.1.110"
     #set some machine-specific options	
     hekamaster_config.vm.provider "virtualbox" do |v|
@@ -100,7 +100,7 @@ Vagrant.configure("2") do |config|
 
   #A machine running collectd that will send metrics to the heka machines
   config.vm.define "collectd2".to_sym do |collectd2_config|
-    collectd2_config.vm.box = "ubuntu-14.04-server-amd64"
+    collectd2_config.vm.box = "centos-7.0-amd64"
     collectd2_config.vm.hostname = "collectd2.local"
     collectd2_config.vm.network :private_network, ip: "10.0.1.114"
     #set some machine-specific options	
@@ -109,7 +109,7 @@ Vagrant.configure("2") do |config|
       v.customize ["modifyvm", :id, "--memory", "128"]
     end
     #Puppet agent provisioning script
-	  collectd2_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+	  collectd2_config.vm.provision :shell, :path => "../provisioning_scripts/el7_puppet_agent.sh"
   end
   
   #A machine running Riemann, InfluxDB and Grafana to test:

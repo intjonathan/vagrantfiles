@@ -3,10 +3,13 @@ node 'hekamaster.local' {
 
   #Apache modules for PuppetBoard:
   include profile::apache::wsgi
-  
+
   #Profiles for Puppetboard itself and its vhost:
   include profile::puppetboard
- 
+
+  #Profile for setting up puppetexplorer:
+  include profile::puppetexplorer
+
   #Include the rsyslog::client profile to set up logging
   include profile::rsyslog::client
 
@@ -22,7 +25,7 @@ node 'hekamaster.local' {
   #Include the role that sets up CollectD, sets it up to gather system and NTP metrics and
   #sends it to a Graphite (in this case, Heka) server:
   include role::collectd::collectd_system_and_ntp_metrics_and_write_graphite
-  
+
 }
 
 node 'heka1.local' {
