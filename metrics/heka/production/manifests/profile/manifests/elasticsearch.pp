@@ -2,13 +2,13 @@ class profile::elasticsearch {
 
     class { '::elasticsearch':
     java_install => false,
-    package_url => 'https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.4.1.deb',
-    config => { 'cluster.name'             => 'heka',
+    package_url => 'https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.4.4.deb',
+    config => { 'cluster.name'             => 'logstash',
                 'network.host'             => $ipaddress_eth1,
                 'index.number_of_replicas' => '1',
                 'index.number_of_shards'   => '4',
                 'http.cors.enabled'        => 'true',
-                'http.cors.allow-origin'   => 'http://kibana.hekalogging.local'
+                'http.cors.allow-origin'   => "http://kibana3.hekalogging.local"
     },
   }
 

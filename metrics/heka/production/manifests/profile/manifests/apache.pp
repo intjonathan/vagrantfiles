@@ -35,6 +35,21 @@ class profile::apache {
       mode => '755',
     }
 
+  #Make rsyslog watch the Apache log files:
+  rsyslog::imfile { 'apache-access':
+    file_name => '/var/log/apache2/access.log',
+    file_tag => 'apache-access',
+    file_facility => 'local7',
+    file_severity => 'info',
+  }
+
+  rsyslog::imfile { 'apache-error':
+    file_name => '/var/log/apache2/error.log',
+    file_tag => 'apache-errors',
+    file_facility => 'local7',
+    file_severity => 'error',
+  }
+
 }
 
 class profile::apache::wsgi {
@@ -45,8 +60,6 @@ class profile::apache::wsgi {
   }  
 
   ::apache::mod { 'ssl': } #Install/enable the SSL module
-  ::apache::mod { 'proxy': } #Install/enable the proxy module
-  ::apache::mod { 'proxy_http': } #Install/enable the HTTP proxy module
   ::apache::mod { 'headers': }
 
   class { '::apache::mod::wsgi': }
