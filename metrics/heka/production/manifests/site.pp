@@ -45,6 +45,8 @@ node 'heka1.local' {
   #Make this machine a Consul server:
   include profile::consul::server
 
+  include profile::heka
+
 }
 
 node 'heka2.local' {
@@ -65,6 +67,8 @@ node 'heka2.local' {
   #Make this machine a Consul server:
   include profile::consul::server
 
+  include profile::heka
+
 }
 
 node 'heka3.local' {
@@ -80,6 +84,8 @@ node 'heka3.local' {
 
   #Make this machine a Consul client:
   include profile::consul::client
+
+  include profile::heka
 
 }
 
