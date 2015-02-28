@@ -57,6 +57,19 @@ class profile::heka {
     },
   }
 
-
+  ::heka::plugin { 'nginx_access_decoder':
+    refresh_heka_service => true,
+    type => 'SandboxDecoder',
+    settings => {
+      'script_type' => '"lua"',
+      'filename' => '"lua_decoders/nginx_access.lua"',
+    },
+    subsetting_sections => {
+      'config' => {
+        'log_format' => '\'$remote_addr - $remote_user [$time_local] "$request" $status $body_bytes_sent "$http_referer" "$http_user_agent"\'',
+        'type' => '"nginx.access"',
+      },
+    }
+  }
 
 }
