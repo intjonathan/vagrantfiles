@@ -36,7 +36,7 @@ class profile::heka {
   ::heka::plugin { 'dashboard1':
     type => 'DashboardOutput',
     settings => {
-      'address' => '"10.0.1.120:4352"',
+      'address' => '"0.0.0.0:4352"',
       'ticker_interval' => 6,
     },
   }
@@ -44,7 +44,7 @@ class profile::heka {
   ::heka::plugin { 'dashboard2':
     type => 'DashboardOutput',
     settings => {
-      'address' => '"10.0.1.120:4353"',
+      'address' => '"0.0.0.0:4353"',
       'ticker_interval' => 6,
     },
   }
@@ -52,7 +52,7 @@ class profile::heka {
   ::heka::plugin { 'dashboard3':
     type => 'DashboardOutput',
     settings => {
-      'address' => '"10.0.1.120:4354"',
+      'address' => '"0.0.0.0:4354"',
       'ticker_interval' => 6,
     },
   }
