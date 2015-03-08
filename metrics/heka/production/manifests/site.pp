@@ -29,6 +29,9 @@ node 'hekamaster.local' {
   #Make this machine a Consul server:
   include profile::consul::server
 
+  #Install Heka and configure it with some plugins:
+  include profile::heka
+
 }
 
 node 'heka1.local' {
@@ -45,6 +48,7 @@ node 'heka1.local' {
   #Make this machine a Consul server:
   include profile::consul::server
 
+  #Install Heka and configure it with some plugins:
   include profile::heka
 
 }
@@ -67,6 +71,7 @@ node 'heka2.local' {
   #Make this machine a Consul server:
   include profile::consul::server
 
+  #Install Heka and configure it with some plugins:
   include profile::heka
 
 }
@@ -85,6 +90,7 @@ node 'heka3.local' {
   #Make this machine a Consul client:
   include profile::consul::client
 
+  #Install Heka and configure it with some plugins:
   include profile::heka
 
 }
@@ -137,6 +143,9 @@ node 'collectd1.local' {
 
   #Make this machine a Consul client:
   include profile::consul::client
+
+  #Install Heka and configure it with some plugins:
+  include profile::heka
 
 }
 
@@ -192,6 +201,9 @@ node 'collectd2.local' {
   #Make this machine a Consul client:
   include profile::consul::client
 
+  #Install Heka and configure it with some plugins:
+  include profile::heka
+
 }
 
 node 'hekamonitoring.local' {
@@ -245,5 +257,8 @@ node 'hekamonitoring.local' {
 
   #Make this machine a Consul client:
   include profile::consul::client
+
+  #Install Heka and configure it with some plugins:
+  include profile::heka
 
 }
