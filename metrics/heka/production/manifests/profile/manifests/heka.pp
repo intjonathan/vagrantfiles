@@ -1,6 +1,10 @@
 class profile::heka {
 
   class { '::heka':
+    global_config_settings => {
+      'poolsize' => 10000,
+      'hostname' => "\"${::fqdn}\"",
+    },
   }
 
 
@@ -28,9 +32,14 @@ class profile::heka {
     refresh_heka_service => true,
     type => 'TcpInput',
     settings => {
-      'address' => '"127.0.0.1:5568"',
-      'parser_type' => '"token"',
+      'address' => '"127.0.0.1:556"',
     },
+  }
+
+  ::heka::plugin::input::statsdinput { 'statsdinput1':
+   refresh_heka_service => true,
+   address => '0.0.0.0:8125',
+   stat_accum_name => 'stat_accumulator1',
   }
 
   ::heka::plugin { 'dashboard1':
@@ -56,6 +65,15 @@ class profile::heka {
       'ticker_interval' => 6,
     },
   }
+
+  ::heka::plugin { 'stat_accumulator1':
+    type => 'StatAccumInput',
+    settings => {
+      'ticker_interval' => 1,
+      'emit_in_fields' => true,
+    },
+  }
+
 
   ::heka::plugin { 'nginx_access_decoder':
     refresh_heka_service => true,
