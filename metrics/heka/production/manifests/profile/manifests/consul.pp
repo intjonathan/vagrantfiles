@@ -24,7 +24,8 @@ class profile::consul::server {
       'enable_syslog'         => true,
       'log_level'             => 'INFO',
       'node_name'             => $fqdn,
-      'server'                => true
+      'server'                => true,
+      'statsd_addr'           => '127.0.0.1',
     }
   }
 
@@ -46,6 +47,7 @@ class profile::consul::client {
       'enable_syslog'         => true,
       'log_level'             => 'INFO',
       'node_name'             => $fqdn,
+      'statsd_addr'           => '127.0.0.1',
     }
   }
 
