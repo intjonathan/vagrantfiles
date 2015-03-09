@@ -39,7 +39,19 @@ class profile::heka {
   ::heka::plugin::input::statsdinput { 'statsdinput1':
    refresh_heka_service => true,
    address => '0.0.0.0:8125',
-   stat_accum_name => 'stat_accumulator1',
+   stat_accum_name => 'stataccuminput1',
+  }
+
+  ::heka::plugin::input::stataccuminput { 'stataccuminput1':
+    refresh_heka_service => true,
+    ticker_interval => 1,
+    emit_in_fields => true,
+  }
+
+  ::heka::plugin::output::carbonoutput { 'carbonoutput1':
+    address => 'hekamonitoring.local:2003',
+    message_matcher => "Type == 'heka.statmetric'",
+    protocol => 'udp',
   }
 
   ::heka::plugin { 'dashboard1':
@@ -65,15 +77,6 @@ class profile::heka {
       'ticker_interval' => 6,
     },
   }
-
-  ::heka::plugin { 'stat_accumulator1':
-    type => 'StatAccumInput',
-    settings => {
-      'ticker_interval' => 1,
-      'emit_in_fields' => true,
-    },
-  }
-
 
   ::heka::plugin { 'nginx_access_decoder':
     refresh_heka_service => true,
