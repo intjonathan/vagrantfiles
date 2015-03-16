@@ -1,0 +1,4 @@
+---
+blahmessage: 'some other OS i do not know about'
+allowed_hosts:
+  - 10.0.1.70

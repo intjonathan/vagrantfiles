@@ -1,0 +1,113 @@
+--- 
+  sshrsakey: "AAAAB3NzaC1yc2EAAAADAQABAAABAQDwj+rA69FoewhPa2jPFN8DJFYgL7nk+D87ecINBjoVirGTzzyxacnXsI36Kj3IvI2Txx6nOMHZmT8068391HtWceM+5Cyfj96ypFNOnNaKZIiB571x3dRZZ99vNduqo06YckRe/r2WFawMYKZEbw4k6aB+HumfJ3t+jBhC+YdpH183e6RzEbSviwaRtYbZZ2AnVKIc7Go/iUwbpSyQ50ZmcxYZdj0e2kx9q3/QQK6Js1GIlkdok/6tnzUaANMjpQRK6gJlgZgfcssscooWt7yXb+w/MOKZYyxBMH5i00zNFbBkg7kWhdvq1F5giE/NGNgexhvHRZvBfrqRy+Y6kKWz"
+  sshfp_rsa: |-
+    SSHFP 1 1 5c5d048d767de635bb6702a54d20b18b81902570
+    SSHFP 1 2 cd0d31374fb2cc724236f2392f6e94b7199a81b0fb03ff341554ee68370529ad
+  sshecdsakey: "AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBGZWd9IfW2fpjD5G+PQoofk0MOHjCGub+b440W9QsfxhGreuHWNPAvAFQANov4RCG9uqHfRpKENxaDSZVQihYU4="
+  sshfp_ecdsa: |-
+    SSHFP 3 1 69a9c82a0b3877101a735d7f3c99b7d919045a99
+    SSHFP 3 2 fd6f7f4567de825e852e4ef95c6c632f96548009815c91f0a4737c4460a24ebd
+  architecture: x86_64
+  system_uptime: 
+    seconds: 18248
+    hours: 5
+    days: 0
+    uptime: "5:04 hours"
+  augeasversion: "1.1.0"
+  timezone: PDT
+  kernel: Linux
+  blockdevice_sda_size: 68719476736
+  blockdevice_sda_vendor: ATA
+  blockdevice_sda_model: "VBOX HARDDISK"
+  blockdevices: sda
+  domain: local
+  virtual: virtualbox
+  is_virtual: true
+  hardwaremodel: x86_64
+  operatingsystem: CentOS
+  os: 
+    name: CentOS
+    family: RedHat
+    release: 
+      major: "7"
+      minor: "0"
+      full: "7.0.1406"
+  facterversion: "2.4.1"
+  filesystems: xfs
+  fqdn: cassandra2.local
+  gid: root
+  hardwareisa: x86_64
+  hostname: cassandra2
+  id: root
+  interfaces: "enp0s3,enp0s8,lo"
+  ipaddress_enp0s3: "10.0.2.15"
+  macaddress_enp0s3: "08:00:27:64:b1:cd"
+  netmask_enp0s3: "255.255.255.0"
+  mtu_enp0s3: 1500
+  ipaddress_enp0s8: "10.0.1.112"
+  macaddress_enp0s8: "08:00:27:7b:f0:d8"
+  netmask_enp0s8: "255.255.255.0"
+  mtu_enp0s8: 1500
+  ipaddress_lo: "127.0.0.1"
+  netmask_lo: "255.0.0.0"
+  mtu_lo: 65536
+  ipaddress: "10.0.2.15"
+  kernelmajversion: "3.10"
+  kernelrelease: "3.10.0-123.13.2.el7.x86_64"
+  kernelversion: "3.10.0"
+  rubyplatform: x86_64-linux
+  rubysitedir: /usr/local/share/ruby/site_ruby/
+  macaddress: "08:00:27:64:b1:cd"
+  boardmanufacturer: "Oracle Corporation"
+  boardproductname: VirtualBox
+  boardserialnumber: "0"
+  bios_vendor: "innotek GmbH"
+  bios_version: VirtualBox
+  bios_release_date: "12/01/2006"
+  manufacturer: "innotek GmbH"
+  productname: VirtualBox
+  serialnumber: "0"
+  uuid: EF409577-2517-4843-AEDB-631FA229F712
+  type: Other
+  memorysize: "490.40 MB"
+  memoryfree: "190.88 MB"
+  swapsize: "1.03 GB"
+  swapfree: "1.01 GB"
+  swapsize_mb: "1056.00"
+  swapfree_mb: "1036.95"
+  memorysize_mb: "490.40"
+  memoryfree_mb: "190.88"
+  netmask: "255.255.255.0"
+  network_enp0s3: "10.0.2.0"
+  network_enp0s8: "10.0.1.0"
+  network_lo: "127.0.0.0"
+  operatingsystemmajrelease: "7"
+  rubyversion: "2.0.0"
+  operatingsystemrelease: "7.0.1406"
+  osfamily: RedHat
+  partitions: 
+    sda1: 
+      uuid: "9ddaabb8-1149-4793-859d-efb2721d9d94"
+      size: "1024000"
+      mount: /boot
+      filesystem: xfs
+    sda2: 
+      size: "133191680"
+      filesystem: LVM2_member
+  path: "/root/.rbenv/shims:/root/.rbenv/shims:/root/.rbenv/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/texbin:/usr/local/share/npm/bin:/opt/local/bin:/opt/local/sbin"
+  selinux: false
+  physicalprocessorcount: 1
+  processors: 
+    models: 
+      - "Intel(R) Core(TM) i5-3210M CPU @ 2.50GHz"
+    count: 1
+    physicalcount: 1
+  processor0: "Intel(R) Core(TM) i5-3210M CPU @ 2.50GHz"
+  processorcount: 1
+  ps: "ps -ef"
+  puppetversion: "3.7.4"
+  uniqueid: "007f0100"
+  uptime: "5:04 hours"
+  uptime_days: 0
+  uptime_hours: 5
+  uptime_seconds: 18248

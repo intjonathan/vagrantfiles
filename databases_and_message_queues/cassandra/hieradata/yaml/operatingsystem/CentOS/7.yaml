@@ -1,0 +1,3 @@
+---
+blahmessage: 'CentOS 7'
+host_only_interface: '$::ipaddress_enp0s8'

@@ -1,0 +1,101 @@
+Vagrant.configure("2") do |config|
+  # All Vagrant configuration is done here. The most common configuration
+  # options are documented and commented below. For a complete reference,
+  # please see the online documentation at vagrantup.com.
+  
+  ####################
+  # Snippets to use
+  ####################
+  
+  #NFS folder sharing
+  #config.vm.synced_folder "modules", "/etc/puppet/modules", :nfs => true
+  
+  ####################
+  ####################
+  
+  #vagrant-hostmanager plugin options
+  config.hostmanager.enabled = true
+  config.hostmanager.ignore_private_ip = false
+  #update the /etc/hosts of the host OS
+  config.hostmanager.manage_host = true
+  
+  #Puppet master
+  config.vm.define "cassandramaster".to_sym do |cassandramaster_config|
+    cassandramaster_config.vm.box = "ubuntu-14.04-server-amd64"
+    cassandramaster_config.vm.hostname = "cassandramaster.local"
+    cassandramaster_config.hostmanager.aliases = %w(master puppet master.local puppetboard.cassandramaster.local puppetexplorer.cassandramaster.local)
+    cassandramaster_config.vm.network :private_network, ip: "10.0.1.110"
+    #set some machine-specific options	
+    cassandramaster_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    #NFS folder sharing for Puppet modules and manifests
+    cassandramaster_config.vm.synced_folder "production/", "/etc/puppet/environments/production", :nfs => true
+    cassandramaster_config.vm.synced_folder "~/Documents/git/puppet-code/modules", "/etc/puppet/environments/production/modules", :nfs => true
+    cassandramaster_config.vm.synced_folder "hieradata/", "/etc/puppet/hieradata", :nfs => true
+    cassandramaster_config.vm.synced_folder "files/", "/etc/puppet/files", :nfs => true
+    #Puppet master provisioning script
+    cassandramaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_master.sh"
+  end
+
+  #An Ubuntu machine running cassandra
+  config.vm.define "cassandra1".to_sym do |cassandra1_config|
+    cassandra1_config.vm.box = "centos-7.0-amd64"
+    cassandra1_config.vm.hostname = "cassandra1.local"
+    cassandra1_config.vm.network :private_network, ip: "10.0.1.111"
+    #set some machine-specific options	
+    cassandra1_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    #Puppet agent provisioning script
+	  cassandra1_config.vm.provision :shell, :path => "../provisioning_scripts/el7_puppet_agent.sh"
+  end
+
+  #A CentOS 6 machine running cassandra
+  config.vm.define "cassandra2".to_sym do |cassandra2_config|
+    cassandra2_config.vm.box = "centos-7.0-amd64"
+    cassandra2_config.vm.hostname = "cassandra2.local"
+    cassandra2_config.vm.network :private_network, ip: "10.0.1.112"
+    #set some machine-specific options	
+    cassandra2_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    #Puppet agent provisioning script
+    cassandra2_config.vm.provision :shell, :path => "../provisioning_scripts/el7_puppet_agent.sh"
+  end
+
+  #A CentOS 7 machine running cassandra
+  config.vm.define "cassandra3".to_sym do |cassandra3_config|
+    cassandra3_config.vm.box = "centos-7.0-amd64"
+    cassandra3_config.vm.hostname = "cassandra3.local"
+    cassandra3_config.vm.network :private_network, ip: "10.0.1.120"
+    #set some machine-specific options	
+    cassandra3_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    #Puppet agent provisioning script
+    cassandra3_config.vm.provision :shell, :path => "../provisioning_scripts/el7_puppet_agent.sh"
+  end
+
+  #A machine running...
+  #...Riemann, InfluxDB and Grafana for metrics:
+  #...Logstash, Elasticsearch and Kibana for logging
+  #...Postfix and Dovecot for testing getting email alerts
+  config.vm.define "cassandramonitoring".to_sym do |cassandramonitoring_config|
+    cassandramonitoring_config.vm.box = "ubuntu-14.04-server-amd64"
+    cassandramonitoring_config.vm.hostname = "cassandramonitoring.local"
+    cassandramonitoring_config.hostmanager.aliases = %w(cassandramonitoring grafana.cassandramonitoring.local kibana3.cassandramonitoring.local kibana.cassandramonitoring.local)
+    cassandramonitoring_config.vm.network :private_network, ip: "10.0.1.115"
+    #set some machine-specific options	
+    cassandramonitoring_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+    #Puppet agent provisioning script
+	  cassandramonitoring_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+  end
+end
