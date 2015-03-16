@@ -51,6 +51,9 @@ node 'cassandra1.local' {
   #Install cassandra and configure it with some plugins:
   include profile::heka
 
+  #Install Java via the Java profile
+  include profile::java
+
 }
 
 node 'cassandra2.local' {
@@ -70,6 +73,9 @@ node 'cassandra2.local' {
   #Install cassandra and configure it with some plugins:
   include profile::heka
 
+  #Install Java via the Java profile
+  include profile::java
+
 }
 
 node 'cassandra3.local' {
@@ -88,6 +94,9 @@ node 'cassandra3.local' {
 
   #Install cassandra and configure it with some plugins:
   include profile::heka
+
+  #Install Java via the Java profile
+  include profile::java
 
 }
 
