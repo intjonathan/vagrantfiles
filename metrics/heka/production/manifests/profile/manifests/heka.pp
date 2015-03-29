@@ -48,11 +48,11 @@ class profile::heka {
     emit_in_fields => true,
   }
 
-  ::heka::plugin::output::carbonoutput { 'carbonoutput1':
-    address => 'hekamonitoring.local:2003',
-    message_matcher => "Type == 'heka.statmetric'",
-    protocol => 'udp',
-  }
+  #::heka::plugin::output::carbonoutput { 'carbonoutput1':
+  #  address => 'hekamonitoring.local:2003',
+  #  message_matcher => "Type == 'heka.statmetric'",
+  #  protocol => 'udp',
+  #}
 
   ::heka::plugin { 'dashboard1':
     type => 'DashboardOutput',
