@@ -3,8 +3,9 @@
 class profile::hiera {
 
   class { '::hiera':
-    datadir => '/etc/puppet/hieradata/yaml',
-    hierarchy => [
+    datadir        => '/etc/puppet/hieradata/yaml',
+    datadir_manage => false,
+    hierarchy      => [
       'node/%{fqdn}',
       'operatingsystem/%{operatingsystem}/%{operatingsystemmajrelease}',
       'operatingsystem/%{operatingsystem}',
