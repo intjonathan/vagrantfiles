@@ -8,6 +8,10 @@ class profile::logstash {
     contrib_package_url => 'https://download.elasticsearch.org/logstash/logstash/packages/debian/logstash-contrib_1.4.2-1-efd53ef_all.deb',
   }
 
+  service { 'logstash-web':
+    ensure => stopped,
+  }
+
 }
 
 class profile::logstash::config {
