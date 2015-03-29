@@ -22,6 +22,9 @@ node 'cassandramaster.local' {
   #Include the role that sets up PuppetDB, the Puppet master to work with PuppetDB and Puppetboard:
   include role::puppetdb::puppet_master_and_puppetdb_server_with_puppetboard
 
+  #Set up Hiera:
+  include profile::hiera
+
   #Include the role that sets up CollectD, sets it up to gather system and NTP metrics and
   #sends it to a Graphite (in this case, cassandra) server:
   include role::collectd::collectd_system_and_ntp_metrics_and_write_graphite

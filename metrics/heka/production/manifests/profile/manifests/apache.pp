@@ -23,15 +23,15 @@ class profile::apache {
   #Create /sites/apps for Apache to serve static applications out of:
   file {'/sites/': 
       ensure => directory,
-      owner => 'www-data',
-      group => 'www-data',
+      owner => hiera('apache_user'),
+      group => hiera('apache_group'),
       mode => '755',
     }
 
   file {'/sites/apps/': 
       ensure => directory,
-      owner => 'www-data',
-      group => 'www-data',
+      owner => hiera('apache_user'),
+      group => hiera('apache_group'),
       mode => '755',
     }
 

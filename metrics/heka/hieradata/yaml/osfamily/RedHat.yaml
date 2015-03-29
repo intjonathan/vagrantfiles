@@ -1,5 +1,7 @@
 ---
 blahmessage : 'Red Hat'
+apache_user: 'apache'
+apache_group: 'apache'
 allowed_hosts:
   - 10.0.1.71
   - 10.0.1.72

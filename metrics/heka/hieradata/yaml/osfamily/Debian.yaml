@@ -1,2 +1,4 @@
 ---
 blahmessage: 'This is a Debian-family OS machine.'
+apache_user: 'www-data'
+apache_group: 'www-data'
