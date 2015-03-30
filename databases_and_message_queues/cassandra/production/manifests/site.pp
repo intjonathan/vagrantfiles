@@ -25,9 +25,9 @@ node 'cassandramaster.local' {
   #Set up Hiera:
   include profile::hiera
 
-  #Include the role that sets up CollectD, sets it up to gather system and NTP metrics and
-  #sends it to a Graphite (in this case, cassandra) server:
-  include role::collectd::collectd_system_and_ntp_metrics_and_write_graphite
+  #Include the role that sets up CollectD, sets it up to gather system and
+  #sends it to a Graphite (in this case, Riemann) server:
+  include role::collectd::collectd_system_metrics_and_write_graphite
 
   #Make this machine a Consul server:
   include profile::consul::server
@@ -48,8 +48,12 @@ node 'cassandra1.local' {
   #Include a profile that sets up NTP
   include profile::ntp::client
 
-  #Make this machine a Consul server:
-  include profile::consul::server
+  #Make this machine a Consul client:
+  include profile::consul::client
+
+  #Include the role that sets up CollectD, sets it up to gather system and
+  #sends it to a Graphite (in this case, Riemann) server:
+  include role::collectd::collectd_system_metrics_and_write_graphite
 
   #Install cassandra and configure it with some plugins:
   include profile::heka
@@ -70,14 +74,18 @@ node 'cassandra2.local' {
   #Include a profile that sets up NTP
   include profile::ntp::client
 
-  #Make this machine a Consul server:
-  include profile::consul::server
+  #Make this machine a Consul client:
+  include profile::consul::client
 
   #Install cassandra and configure it with some plugins:
   include profile::heka
 
   #Install Java via the Java profile
   include profile::java
+
+  #Include the role that sets up CollectD, sets it up to gather system and
+  #sends it to a Graphite (in this case, Riemann) server:
+  include role::collectd::collectd_system_metrics_and_write_graphite
 
 }
 
@@ -92,14 +100,18 @@ node 'cassandra3.local' {
   #Include a profile that sets up NTP
   include profile::ntp::client
 
-  #Make this machine a Consul server:
-  include profile::consul::server
+  #Make this machine a Consul client:
+  include profile::consul::client
 
   #Install cassandra and configure it with some plugins:
   include profile::heka
 
   #Install Java via the Java profile
   include profile::java
+
+  #Include the role that sets up CollectD, sets it up to gather system and
+  #sends it to a Graphite (in this case, Riemann) server:
+  include role::collectd::collectd_system_metrics_and_write_graphite
 
 }
 
@@ -114,9 +126,9 @@ node 'cassandramonitoring.local' {
   #Include a profile that sets up NTP
   include profile::ntp::client
 
-  #Include the role that sets up CollectD, sets it up to gather system and NTP metrics and
-  #sends it to a Graphite (in this case, cassandra) server:
-  include role::collectd::collectd_system_and_ntp_metrics_and_write_graphite
+  #Include the role that sets up CollectD, sets it up to gather system and
+  #sends it to a Graphite (in this case, Riemann) server:
+  include role::collectd::collectd_system_metrics_and_write_graphite
 
   #Include the Apache profile so we can set up Grafana and Kibana 3 with it:
   include profile::apache
