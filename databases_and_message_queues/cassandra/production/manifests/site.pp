@@ -59,7 +59,7 @@ node 'cassandra1.local' {
   include profile::heka
 
   #Install Java via the Java profile
-  include profile::java
+  #include profile::java
 
 }
 
@@ -81,7 +81,7 @@ node 'cassandra2.local' {
   include profile::heka
 
   #Install Java via the Java profile
-  include profile::java
+  #include profile::java
 
   #Include the role that sets up CollectD, sets it up to gather system and
   #sends it to a Graphite (in this case, Riemann) server:
@@ -107,7 +107,7 @@ node 'cassandra3.local' {
   include profile::heka
 
   #Install Java via the Java profile
-  include profile::java
+  #include profile::java
 
   #Include the role that sets up CollectD, sets it up to gather system and
   #sends it to a Graphite (in this case, Riemann) server:
