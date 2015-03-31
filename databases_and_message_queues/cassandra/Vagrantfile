@@ -47,7 +47,7 @@ Vagrant.configure("2") do |config|
     #set some machine-specific options	
     cassandra1_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
-      v.customize ["modifyvm", :id, "--memory", "512"]
+      v.customize ["modifyvm", :id, "--memory", "1024"]
     end
     #Puppet agent provisioning script
 	  cassandra1_config.vm.provision :shell, :path => "../provisioning_scripts/el7_puppet_agent.sh"
@@ -61,7 +61,7 @@ Vagrant.configure("2") do |config|
     #set some machine-specific options	
     cassandra2_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
-      v.customize ["modifyvm", :id, "--memory", "512"]
+      v.customize ["modifyvm", :id, "--memory", "1024"]
     end
     #Puppet agent provisioning script
     cassandra2_config.vm.provision :shell, :path => "../provisioning_scripts/el7_puppet_agent.sh"
@@ -75,7 +75,7 @@ Vagrant.configure("2") do |config|
     #set some machine-specific options	
     cassandra3_config.vm.provider "virtualbox" do |v|
       #change the amount of RAM 
-      v.customize ["modifyvm", :id, "--memory", "512"]
+      v.customize ["modifyvm", :id, "--memory", "1024"]
     end
     #Puppet agent provisioning script
     cassandra3_config.vm.provision :shell, :path => "../provisioning_scripts/el7_puppet_agent.sh"
