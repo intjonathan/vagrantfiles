@@ -2,7 +2,7 @@ class profile::heka {
 
   class { '::heka':
     global_config_settings => {
-      'poolsize' => 10000,
+      'poolsize' => 100,
       'hostname' => "\"${::fqdn}\"",
     },
   }
