@@ -1,0 +1,4 @@
+---
+blahmessage: 'zookeepermaster.local'
+allowed_hosts:
+  - 10.0.1.70
