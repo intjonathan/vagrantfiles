@@ -2,3 +2,4 @@
 blahmessage: 'some other OS i do not know about'
 allowed_hosts:
   - 10.0.1.70
+cassandra_seed_node: "10.0.1.111"
