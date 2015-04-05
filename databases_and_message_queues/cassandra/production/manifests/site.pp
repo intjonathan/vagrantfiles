@@ -61,8 +61,8 @@ node 'cassandra1.local' {
   #Install Java via the Java profile
   #include profile::java
 
-  #Include the Cassandra profile:
-  include profile::cassandra
+  #Include the Cassandra seed profile:
+  include profile::cassandra::seed
 
 }
 
@@ -90,8 +90,8 @@ node 'cassandra2.local' {
   #sends it to a Graphite (in this case, Riemann) server:
   include role::collectd::collectd_system_metrics_and_write_graphite
   
-  #Include the Cassandra profile:
-  include profile::cassandra
+  #Include the Cassandra node profile:
+  include profile::cassandra::node
 
 }
 
@@ -119,8 +119,8 @@ node 'cassandra3.local' {
   #sends it to a Graphite (in this case, Riemann) server:
   include role::collectd::collectd_system_metrics_and_write_graphite
 
-  #Include the Cassandra profile:
-  include profile::cassandra
+  #Include the Cassandra node profile:
+  include profile::cassandra::node
 
 }
 
