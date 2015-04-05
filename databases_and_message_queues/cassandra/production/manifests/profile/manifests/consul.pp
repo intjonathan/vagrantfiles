@@ -39,7 +39,7 @@ class profile::consul::server {
       version => '0.5.0',
       config_hash => {
         'bind_addr'             => $::ipaddress_eth1,
-        'bootstrap_expect'      => 3,
+        'bootstrap_expect'      => 1,
         'check_update_interval' => '2m',
         'retry_join'            => ['10.0.1.110'],
         'retry_interval'        => '10s',
