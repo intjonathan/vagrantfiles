@@ -2,3 +2,4 @@
 blahmessage : 'ubuntu'
 allowed_hosts:
   - 10.0.1.70
+heka_package_url: 'https://github.com/mozilla-services/heka/releases/download/v0.9.2/heka_0.9.2_amd64.deb'
