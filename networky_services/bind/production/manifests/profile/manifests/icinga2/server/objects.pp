@@ -91,23 +91,6 @@ class profile::icinga2::server::objects {
     target_dir => '/etc/icinga2/objects/hostgroups',
   }
 
-  #Dependency object to test out this PR: https://github.com/Icinga/puppet-icinga2/pull/28
-  icinga2::object::dependency { "dnsdnsusermail to dnsmailrelay":
-    object_name => "dnsusermail_dep_on_dnsmailrelay",
-    #hieravaluereplace
-    parent_host_name => 'dnsmailrelay.local',
-    child_host_name => 'dnsusermail.local',
-    target_dir => '/etc/icinga2/objects/dependencies',
-    target_file_name => "dnsusermail_to_dnsmailrelay.conf",
-  }
-
-  #Apply_dependency object to test out this PR: https://github.com/Icinga/puppet-icinga2/pull/28
-  icinga2::object::apply_dependency { 'dnsusermail_dep_on_dnsmailrelay':
-    #hieravaluereplace
-    parent_host_name => 'dnsmailrelay.local',
-    assign_where => 'match("^dnsusermail*", host.name)',
-  }
-
   #Apply_dependency object to test out this PR: https://github.com/Icinga/puppet-icinga2/pull/28
   icinga2::object::apply_dependency { 'imap_dep_on_smtp':
     parent_service_name => 'check_ssh',
@@ -304,17 +287,6 @@ class profile::icinga2::server::objects {
       update_interval => 30s
   }
 
-  #Create a scheduled downtime object to test this PR: https://github.com/Icinga/puppet-icinga2/pull/38
-  icinga2::object::scheduleddowntime {'some-downtime':
-    host_name    => 'dnsusermail.local',
-    service_name => 'ping4',
-    author       => 'icingaadmin',
-    comment      => 'Some comment',
-    fixed        => false,
-    duration     => '30m',
-    ranges       => { 'sunday' => '02:00-03:00' }
-  }
-
   #Create an apply_notification_to_host object to test this PR: https://github.com/Icinga/puppet-icinga2/pull/43
   icinga2::object::apply_notification_to_host { 'pagerduty-host':
     assign_where => 'host.vars.enable_pagerduty == "true"',
@@ -365,14 +337,6 @@ class profile::icinga2::server::objects {
       'vars.http_sni'     => 'false'
     }
   }
-
-  #Create a notification object to test this PR: https://github.com/Icinga/puppet-icinga2/pull/36
-  icinga2::object::notification { 'dnsusermail-ping-notification':
-    host_name => "dnsusermail.local",
-    service_name => "ping4",
-    command => "mail-service-notification",
-    types => [ 'Problem', 'Recovery' ]
-    }
 
   #Created a checkplugin object to test out this PR's feature of specifying content inline: https://github.com/Icinga/puppet-icinga2/pull/77:
   ::icinga2::checkplugin { 'check_diskstats':
