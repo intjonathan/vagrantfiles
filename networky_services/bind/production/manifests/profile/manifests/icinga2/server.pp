@@ -9,7 +9,7 @@ class profile::icinga2::server {
     db_password    => 'password',
     db_host        => '127.0.0.1',
     db_port        => '5432',
-    server_install_nagios_plugins => false,
+    install_nagios_plugins => false,
     install_mail_utils_package => true,
     server_enabled_features  => ['checker','notification', 'livestatus', 'syslog'],
     server_disabled_features => ['graphite', 'api'],
