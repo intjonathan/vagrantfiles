@@ -22,8 +22,15 @@ node 'dnspuppetmaster.local' {
   #Include the role that sets up PuppetDB, the Puppet master to work with PuppetDB and Puppetboard:
   include role::puppetdb::puppet_master_and_puppetdb_server_with_puppetboard
   
-  #Make this machine a Consul server for all of the Icinga 2 client and server VMs
+  #Set up Hiera:
+  include profile::hiera
+
+  #Make this machine a Consul server:
   include profile::consul::server
+
+  #Install Heka and configure it with some plugins:
+  include profile::heka
+
 }
 
 node 'dnsmaster1.local' {
@@ -48,7 +55,21 @@ node 'dnsmaster1.local' {
 
   #Include a profile that sets up NTP
   include profile::ntp::client
- 
+
+  ###############################
+  # Heka installation/setup
+  ###############################
+
+  #Install Heka and configure it with some plugins:
+  include profile::heka
+
+  ###############################
+  # Consul installation/setup
+  ###############################
+
+  #Make this machine a Consul client:
+  include profile::consul::client
+
   ###############################
   # collectd installation/setup
   ###############################
@@ -111,7 +132,21 @@ node 'dnsmaster2.local' {
 
   #Include a profile that sets up NTP
   include profile::ntp::client
- 
+
+  ###############################
+  # Heka installation/setup
+  ###############################
+
+  #Install Heka and configure it with some plugins:
+  include profile::heka
+
+  ###############################
+  # Consul installation/setup
+  ###############################
+
+  #Make this machine a Consul client:
+  include profile::consul::client
+
   ###############################
   # collectd installation/setup
   ###############################
@@ -174,7 +209,21 @@ node 'dnsslave1.local' {
 
   #Include a profile that sets up NTP
   include profile::ntp::client
- 
+
+  ###############################
+  # Heka installation/setup
+  ###############################
+
+  #Install Heka and configure it with some plugins:
+  include profile::heka
+
+  ###############################
+  # Consul installation/setup
+  ###############################
+
+  #Make this machine a Consul client:
+  include profile::consul::client
+
   ###############################
   # collectd installation/setup
   ###############################
@@ -239,7 +288,21 @@ node 'dnsslave2.local' {
 
   #Include a profile that sets up NTP
   include profile::ntp::client
- 
+
+  ###############################
+  # Heka installation/setup
+  ###############################
+
+  #Install Heka and configure it with some plugins:
+  include profile::heka
+
+  ###############################
+  # Consul installation/setup
+  ###############################
+
+  #Make this machine a Consul client:
+  include profile::consul::client
+
   ###############################
   # collectd installation/setup
   ###############################
@@ -306,6 +369,20 @@ node 'dnsclient1.local' {
   include profile::ntp::client
 
   ###############################
+  # Heka installation/setup
+  ###############################
+
+  #Install Heka and configure it with some plugins:
+  include profile::heka
+
+  ###############################
+  # Consul installation/setup
+  ###############################
+
+  #Make this machine a Consul client:
+  include profile::consul::client
+
+  ###############################
   # collectd installation/setup
   ###############################
 
@@ -361,6 +438,20 @@ node 'dnsclient2.local' {
 
   #Include a profile that sets up NTP
   include profile::ntp::client
+
+  ###############################
+  # Heka installation/setup
+  ###############################
+
+  #Install Heka and configure it with some plugins:
+  include profile::heka
+
+  ###############################
+  # Consul installation/setup
+  ###############################
+
+  #Make this machine a Consul client:
+  include profile::consul::client
 
   ###############################
   # collectd installation/setup
@@ -421,6 +512,20 @@ node 'dnsmonitoring.local' {
 
   #Install Apache so we can run Kibana and Grafana:
   include profile::apache
+
+  ###############################
+  # Heka installation/setup
+  ###############################
+
+  #Install Heka and configure it with some plugins:
+  include profile::heka
+
+  ###############################
+  # Consul installation/setup
+  ###############################
+
+  #Make this machine a Consul client:
+  include profile::consul::client
 
   ###############################
   # Riemann installation/setup
@@ -526,7 +631,21 @@ node 'dnsmailrelay.local' {
 
   #Include a profile that sets up NTP
   include profile::ntp::client
- 
+
+  ###############################
+  # Heka installation/setup
+  ###############################
+
+  #Install Heka and configure it with some plugins:
+  include profile::heka
+
+  ###############################
+  # Consul installation/setup
+  ###############################
+
+  #Make this machine a Consul client:
+  include profile::consul::client
+
   ###############################
   # collectd installation/setup
   ###############################
@@ -593,7 +712,21 @@ node 'dnsusermail.local' {
 
   #Include a profile that sets up NTP
   include profile::ntp::client
- 
+
+  ###############################
+  # Heka installation/setup
+  ###############################
+
+  #Install Heka and configure it with some plugins:
+  include profile::heka
+
+  ###############################
+  # Consul installation/setup
+  ###############################
+
+  #Make this machine a Consul client:
+  include profile::consul::client
+
   ###############################
   # collectd installation/setup
   ###############################
