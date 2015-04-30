@@ -18,5 +18,126 @@ Vagrant.configure("2") do |config|
   config.hostmanager.ignore_private_ip = false
   #update the /etc/hosts of the host OS
   config.hostmanager.manage_host = true
+  
+  #Puppet master
+  config.vm.define "mesospherepuppetmaster".to_sym do |mesospherepuppetmaster_config|
+    mesospherepuppetmaster_config.vm.box = "ubuntu-14.04-server-amd64"
+    mesospherepuppetmaster_config.vm.hostname = "mesospherepuppetmaster.local"
+    mesospherepuppetmaster_config.hostmanager.aliases = %w(master puppet master.local puppetboard.mesospherepuppetmaster.local puppetexplorer.mesospherepuppetmaster.local)
+    mesospherepuppetmaster_config.vm.network :private_network, ip: "10.0.1.110"
+    #set some machine-specific options	
+    mesospherepuppetmaster_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "512"]
+    end
+    #NFS folder sharing for Puppet modules and manifests
+    mesospherepuppetmaster_config.vm.synced_folder "production/", "/etc/puppet/environments/production", :nfs => true
+    mesospherepuppetmaster_config.vm.synced_folder "~/Documents/git/puppet-code/modules", "/etc/puppet/environments/production/modules", :nfs => true
+    mesospherepuppetmaster_config.vm.synced_folder "hieradata/", "/etc/puppet/hieradata", :nfs => true
+    mesospherepuppetmaster_config.vm.synced_folder "files/", "/etc/puppet/files", :nfs => true
+    #Puppet master provisioning script
+    mesospherepuppetmaster_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_master.sh"
+  end
 
+  #A CentOS 7 machine running the Mesos master and Zookeeper:
+  config.vm.define "mesosmaster1".to_sym do |mesosmaster1_config|
+    mesosmaster1_config.vm.box = "centos-7.0-amd64"
+    mesosmaster1_config.vm.hostname = "mesosmaster1.local"
+    mesosmaster1_config.vm.network :private_network, ip: "10.0.1.114"
+    #set some machine-specific options	
+    mesosmaster1_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "256"]
+    end
+    #Puppet agent provisioning script
+    mesosmaster1_config.vm.provision :shell, :path => "../provisioning_scripts/el7_puppet_agent.sh"
+  end
+
+  #A CentOS 7 machine running the Mesos master and Zookeeper:
+  config.vm.define "mesosmaster2".to_sym do |mesosmaster2_config|
+    mesosmaster2_config.vm.box = "centos-7.0-amd64"
+    mesosmaster2_config.vm.hostname = "mesosmaster2.local"
+    mesosmaster2_config.vm.network :private_network, ip: "10.0.1.115"
+    #set some machine-specific options	
+    mesosmaster2_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "256"]
+    end
+    #Puppet agent provisioning script
+    mesosmaster2_config.vm.provision :shell, :path => "../provisioning_scripts/el7_puppet_agent.sh"
+  end
+
+  #A CentOS 7 machine running the Mesos master and Zookeeper:
+  config.vm.define "mesosmaster3".to_sym do |mesosmaster3_config|
+    mesosmaster3_config.vm.box = "centos-7.0-amd64"
+    mesosmaster3_config.vm.hostname = "mesosmaster3.local"
+    mesosmaster3_config.vm.network :private_network, ip: "10.0.1.116"
+    #set some machine-specific options	
+    mesosmaster3_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "256"]
+    end
+    #Puppet agent provisioning script
+    mesosmaster3_config.vm.provision :shell, :path => "../provisioning_scripts/el7_puppet_agent.sh"
+  end
+
+  #A CentOS 7 machine running the Mesos worker:
+  config.vm.define "mesosworker2".to_sym do |mesosworker2_config|
+    mesosworker2_config.vm.box = "centos-7.0-amd64"
+    mesosworker2_config.vm.hostname = "mesosworker2.local"
+    mesosworker2_config.vm.network :private_network, ip: "10.0.1.117"
+    #set some machine-specific options	
+    mesosworker2_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+    #Puppet agent provisioning script
+    mesosworker2_config.vm.provision :shell, :path => "../provisioning_scripts/el7_puppet_agent.sh"
+  end
+
+  #A CentOS 7 machine running the Mesos worker:
+  config.vm.define "mesosworker2".to_sym do |mesosworker2_config|
+    mesosworker2_config.vm.box = "centos-7.0-amd64"
+    mesosworker2_config.vm.hostname = "mesosworker2.local"
+    mesosworker2_config.vm.network :private_network, ip: "10.0.1.118"
+    #set some machine-specific options	
+    mesosworker2_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+    #Puppet agent provisioning script
+    mesosworker2_config.vm.provision :shell, :path => "../provisioning_scripts/el7_puppet_agent.sh"
+  end
+
+  #A CentOS 7 machine running the Mesos worker:
+  config.vm.define "mesosworker3".to_sym do |mesosworker3_config|
+    mesosworker3_config.vm.box = "centos-7.0-amd64"
+    mesosworker3_config.vm.hostname = "mesosworker3.local"
+    mesosworker3_config.vm.network :private_network, ip: "10.0.1.119"
+    #set some machine-specific options	
+    mesosworker3_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+    #Puppet agent provisioning script
+    mesosworker3_config.vm.provision :shell, :path => "../provisioning_scripts/el7_puppet_agent.sh"
+  end
+
+  #A machine running...
+  #...Riemann, InfluxDB and Grafana for metrics:
+  #...Logstash, Elasticsearch and Kibana for logging
+  #...Postfix and Dovecot for testing getting email alerts
+  config.vm.define "mesospheremonitoring".to_sym do |mesospheremonitoring_config|
+    mesospheremonitoring_config.vm.box = "ubuntu-14.04-server-amd64"
+    mesospheremonitoring_config.vm.hostname = "mesospheremonitoring.local"
+    mesospheremonitoring_config.hostmanager.aliases = %w(mesospheremonitoring grafana.mesospheremonitoring.local kibana3.mesospheremonitoring.local kibana4.mesospheremonitoring.local)
+    mesospheremonitoring_config.vm.network :private_network, ip: "10.0.1.115"
+    #set some machine-specific options	
+    mesospheremonitoring_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+    end
+    #Puppet agent provisioning script
+	  mesospheremonitoring_config.vm.provision :shell, :path => "../provisioning_scripts/ubuntu_puppet_agent.sh"
+  end
 end
