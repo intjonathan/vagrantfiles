@@ -35,6 +35,22 @@ ssl_client_verify_header = SSL_CLIENT_VERIFY
 environmentpath = $confdir/environments
 EOF
 
+sudo cat > /etc/puppet/hiera.yaml <<"EOF"
+---
+#Our hierarcy
+:hierarchy:
+  - node/%{fqdn}
+  - operatingsystem/%{operatingsystem}
+  - osfamily/%{osfamily}
+  - common
+#List the backends we want to use
+:backends:
+ - yaml
+#For the YAML backend, specify the location of YAML data
+:yaml:
+  :datadir: '/etc/puppet/hieradata/yaml'
+EOF
+
   sudo /etc/init.d/puppetmaster stop
   sudo puppet cert clean --all
   sudo puppet cert generate master --dns_alt_names=puppet,master,puppetmaster,puppet.local,master.local,puppetmaster.local
