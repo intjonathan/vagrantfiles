@@ -10,7 +10,7 @@ $TTL 1h
 ; SOA- stands for Status Of Authority; this means that the hostname after the 'IN SOA' is
 ; authoritative for this zone
 
-10.in-addr.arpa IN SOA 10.in-addr.arpa. root.10.in-addr.arpa. (
+10.in-addr.arpa. IN SOA 10.in-addr.arpa. root.10.in-addr.arpa. (
   1   ; Serial
   3h  ; Refresh after 3 hours
   1h  ; Retry after 1 hour
