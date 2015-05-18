@@ -89,6 +89,34 @@ class profile::bind::master {
       'allow-transfer { 10net; }',
       'allow-update { local; }',
       ],
+    '12.in-addr.arpa' => [
+      'type master',
+      'file "/var/named/data/db.12.zone2.local.zone"',
+      'allow-query { any; }',
+      'allow-transfer { 10net; }',
+      'allow-update { local; }',
+      ],
+    '13.in-addr.arpa' => [
+      'type master',
+      'file "/var/named/data/db.13.zone3.local.zone"',
+      'allow-query { any; }',
+      'allow-transfer { 10net; }',
+      'allow-update { local; }',
+      ],
+    '14.in-addr.arpa' => [
+      'type master',
+      'file "/var/named/data/db.14.zone4.local.zone"',
+      'allow-query { any; }',
+      'allow-transfer { 10net; }',
+      'allow-update { local; }',
+      ],
+    '15.in-addr.arpa' => [
+      'type master',
+      'file "/var/named/data/db.15.zone5.local.zone"',
+      'allow-query { any; }',
+      'allow-transfer { 10net; }',
+      'allow-update { local; }',
+      ],
     }
   }
 
@@ -125,22 +153,22 @@ class profile::bind::master {
     source_base => 'puppet:///bind/zone_files/',
   }
 
-  ::bind::server::file { [ 'db.10.zone2.local.zone' ]:
+  ::bind::server::file { [ 'db.12.zone2.local.zone' ]:
     zonedir => '/var/named/data',
     source_base => 'puppet:///bind/zone_files/',
   }
 
-  ::bind::server::file { [ 'db.10.zone3.local.zone' ]:
+  ::bind::server::file { [ 'db.13.zone3.local.zone' ]:
     zonedir => '/var/named/data',
     source_base => 'puppet:///bind/zone_files/',
   }
 
-  ::bind::server::file { [ 'db.10.zone4.local.zone' ]:
+  ::bind::server::file { [ 'db.14.zone4.local.zone' ]:
     zonedir => '/var/named/data',
     source_base => 'puppet:///bind/zone_files/',
   }
 
-  ::bind::server::file { [ 'db.10.zone5.local.zone' ]:
+  ::bind::server::file { [ 'db.15.zone5.local.zone' ]:
     zonedir => '/var/named/data',
     source_base => 'puppet:///bind/zone_files/',
   }
