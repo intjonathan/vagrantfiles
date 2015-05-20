@@ -4,7 +4,7 @@ class profile::apache {
 
   #This is the Puppet Labs Apache module: https://github.com/puppetlabs/puppetlabs-apache
   class { '::apache': 
-    purge_configs => 'true'
+    purge_configs => 'false'
   }  
 
   ::apache::mod { 'ssl': } #Install/enable the SSL module
