@@ -87,12 +87,6 @@ node 'dnsmaster1.local' {
   include profile::collectd::write_graphite
 
   ###############################
-  # Icinga 2 host export stuff
-  ###############################
-
-  include profile::icinga2::hostexport
-
-  ###############################
   # NRPE installation/configuration
   ###############################
 
@@ -106,6 +100,9 @@ node 'dnsmaster1.local' {
   # BIND installation/setup
   ###############################
   
+  #Include the BIND base profile so that we get the host export
+  #for monitoring set up:
+  include profile::bind  
   include profile::bind::master
 
 }
@@ -164,12 +161,6 @@ node 'dnsmaster2.local' {
   include profile::collectd::write_graphite
 
   ###############################
-  # Icinga 2 host export stuff
-  ###############################
-
-  include profile::icinga2::hostexport
-
-  ###############################
   # NRPE installation/configuration
   ###############################
 
@@ -183,7 +174,11 @@ node 'dnsmaster2.local' {
   # BIND installation/setup
   ###############################
   
+  #Include the BIND base profile so that we get the host export
+  #for monitoring set up:
+  include profile::bind  
   include profile::bind::master
+
 
 }
 
@@ -239,12 +234,6 @@ node 'dnsslave1.local' {
   
   #Send collectd metrics to the monitoring VM
   include profile::collectd::write_graphite
-
-  ###############################
-  # Icinga 2 host export stuff
-  ###############################
-
-  include profile::icinga2::hostexport
 
   ###############################
   # NRPE installation/configuration
@@ -318,12 +307,6 @@ node 'dnsslave2.local' {
   
   #Send collectd metrics to the monitoring VM
   include profile::collectd::write_graphite
-
-  ###############################
-  # Icinga 2 host export stuff
-  ###############################
-
-  include profile::icinga2::hostexport
 
   ###############################
   # NRPE installation/configuration

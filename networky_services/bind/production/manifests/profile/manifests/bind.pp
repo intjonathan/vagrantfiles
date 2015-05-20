@@ -1,4 +1,24 @@
-class profile::bind { }
+class profile::bind {
+
+  ###############################
+  # Icinga 2 host exporting
+  ###############################
+
+  @@icinga2::object::host { $::fqdn:
+    display_name => $::fqdn,
+    ipv4_address => $::ipaddress_eth1,
+    #hieravaluereplace
+    groups => ['linux_servers', 'clients', 'ssh_servers', 'dns_servers'],
+    vars => {
+      os              => 'linux',
+      virtual_machine => 'true',
+      distro          => $::operatingsystem,
+    },
+    target_dir => '/etc/icinga2/objects/hosts',
+    target_file_name => "${fqdn}.conf"
+  }
+
+}
 
 class profile::bind::master { 
 

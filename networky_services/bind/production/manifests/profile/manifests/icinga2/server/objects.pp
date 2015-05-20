@@ -25,3 +25,17 @@ class profile::icinga2::server::objects {
   }
 
 }
+
+
+  #Create an apply that checks the number of total processes:
+  icinga2::object::apply_service_to_host { 'check_total_procs':
+    display_name => 'Total procs',
+    check_command => 'nrpe',
+    vars => {
+      service_type => 'production',
+      nrpe_command => 'check_total_procs',
+    },
+    assign_where => '"linux_servers" in host.groups',
+    ignore_where => 'host.name == "localhost"',
+    target_dir => '/etc/icinga2/objects/applys'
+  }
