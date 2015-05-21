@@ -5,7 +5,6 @@ class profile::icinga2::server {
     server_db_type => 'pgsql',
     db_user        => 'icinga2',
     db_name        => 'icinga2_data',
-    #hieravaluereplace
     db_password    => 'password',
     db_host        => '127.0.0.1',
     db_port        => '5432',
