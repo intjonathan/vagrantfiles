@@ -17,7 +17,7 @@ class profile::logstash {
 class profile::logstash::config {
 
   ::logstash::configfile { 'logstash_monolithic':
-    source => 'puppet:///logstash/configs/logstash.conf',
+    source => 'puppet:///files/logstash/configs/logstash.conf',
     order   => 10
   }
 
