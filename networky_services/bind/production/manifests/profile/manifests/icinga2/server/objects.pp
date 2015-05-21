@@ -7,7 +7,7 @@ class profile::icinga2::server::objects {
   }
 
   #Create a clients hostgroup:
-  icinga2::object::hostgroup { 'clients':
+  icinga2::object::hostgroup { 'icinga2_clients':
     display_name => 'Icinga 2 client machines',
     target_dir => '/etc/icinga2/objects/hostgroups',
   }

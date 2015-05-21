@@ -8,7 +8,7 @@ class profile::bind {
     display_name => $::fqdn,
     ipv4_address => $::ipaddress_eth1,
     #hieravaluereplace
-    groups => ['linux_servers', 'clients', 'ssh_servers', 'dns_servers'],
+    groups => ['linux_servers', 'icinga2_clients', 'ssh_servers', 'dns_servers'],
     vars => {
       os              => 'linux',
       virtual_machine => 'true',
