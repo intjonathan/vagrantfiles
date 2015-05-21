@@ -144,53 +144,53 @@ class profile::bind::master {
   #Forward zones:
   ::bind::server::file { [ 'zone1.local.zone' ]:
     zonedir => '/var/named/data',
-    source_base => 'puppet:///bind/zone_files/',
+    source_base => 'puppet:///files/bind/zone_files/',
   }
 
   ::bind::server::file { [ 'zone2.local.zone' ]:
     zonedir => '/var/named/data',
-    source_base => 'puppet:///bind/zone_files/',
+    source_base => 'puppet:///files/bind/zone_files/',
   }
 
   ::bind::server::file { [ 'zone3.local.zone' ]:
     zonedir => '/var/named/data',
-    source_base => 'puppet:///bind/zone_files/',
+    source_base => 'puppet:///files/bind/zone_files/',
   }
 
   ::bind::server::file { [ 'zone4.local.zone' ]:
     zonedir => '/var/named/data',
-    source_base => 'puppet:///bind/zone_files/',
+    source_base => 'puppet:///files/bind/zone_files/',
   }
 
   ::bind::server::file { [ 'zone5.local.zone' ]:
     zonedir => '/var/named/data',
-    source_base => 'puppet:///bind/zone_files/',
+    source_base => 'puppet:///files/bind/zone_files/',
   }
   
   #Reverse zones:
   ::bind::server::file { [ 'db.10.zone1.local.zone' ]:
     zonedir => '/var/named/data',
-    source_base => 'puppet:///bind/zone_files/',
+    source_base => 'puppet:///files/bind/zone_files/',
   }
 
   ::bind::server::file { [ 'db.12.zone2.local.zone' ]:
     zonedir => '/var/named/data',
-    source_base => 'puppet:///bind/zone_files/',
+    source_base => 'puppet:///files/bind/zone_files/',
   }
 
   ::bind::server::file { [ 'db.13.zone3.local.zone' ]:
     zonedir => '/var/named/data',
-    source_base => 'puppet:///bind/zone_files/',
+    source_base => 'puppet:///files/bind/zone_files/',
   }
 
   ::bind::server::file { [ 'db.14.zone4.local.zone' ]:
     zonedir => '/var/named/data',
-    source_base => 'puppet:///bind/zone_files/',
+    source_base => 'puppet:///files/bind/zone_files/',
   }
 
   ::bind::server::file { [ 'db.15.zone5.local.zone' ]:
     zonedir => '/var/named/data',
-    source_base => 'puppet:///bind/zone_files/',
+    source_base => 'puppet:///files/bind/zone_files/',
   }
 
 }
