@@ -1,0 +1,67 @@
+Vagrant.configure("2") do |config|
+  # All Vagrant configuration is done here. The most common configuration
+  # options are documented and commented below. For a complete reference,
+  # please see the online documentation at vagrantup.com.
+  
+  #vagrant-hostmanager plugin options
+  config.hostmanager.enabled = true
+  config.hostmanager.ignore_private_ip = true
+  #update the /etc/hosts of the host OS
+  config.hostmanager.manage_host = true
+  
+  #A CentOS 7 VMware machine:
+  config.vm.define "centos7".to_sym do |centos7_config|
+    centos7_config.vm.box = "centos-7.1-amd64-vmware"
+    centos7_config.vm.hostname = "centos7.local"
+    centos7_config.vm.network :private_network, ip: "10.0.2.2"
+    #Set some machine-specific options for either Virtualbox or VMWare:
+    centos7_config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+      v.gui = false
+    end
+    config.vm.provider "vmware_fusion" do |v, override|
+      #override.vm.provision "shell", inline: "sudo /sbin/ifdown ens33; sudo /sbin/ifup ens33;"
+      v.vmx["memsize"] = "256"
+      v.vmx["numvcpus"] = "1"
+    end
+  end
+
+  #A CentOS 7 VMware machine:
+  config.vm.define "centos72".to_sym do |centos72config|
+    centos72config.vm.box = "centos-7.1-amd64-vmware"
+    centos72config.vm.hostname = "centos72.local"
+    centos72config.vm.network :private_network, ip: "10.0.2.3"
+    #Set some machine-specific options for either Virtualbox or VMWare:
+    centos72config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+      v.gui = false
+    end
+    config.vm.provider "vmware_fusion" do |v, override|
+      #override.vm.provision "shell", inline: "/sbin/ifdown ens33; /sbin/ifup ens33;"      
+      v.vmx["memsize"] = "256"
+      v.vmx["numvcpus"] = "1"
+    end
+  end
+
+  #A CentOS 7 VMware machine:
+  config.vm.define "centos73".to_sym do |centos73config|
+    centos73config.vm.box = "centos-7.1-amd64-vmware"
+    centos73config.vm.hostname = "centos7too.local"
+    centos73config.vm.network :private_network, ip: "10.0.2.4"
+    #Set some machine-specific options for either Virtualbox or VMWare:
+    centos73config.vm.provider "virtualbox" do |v|
+      #change the amount of RAM 
+      v.customize ["modifyvm", :id, "--memory", "1024"]
+      v.gui = false
+    end
+    config.vm.provider "vmware_fusion" do |v, override|
+      #override.vm.provision "shell", inline: "/sbin/ifdown ens33; /sbin/ifup ens33;"
+      v.vmx["memsize"] = "256"
+      v.vmx["numvcpus"] = "1"
+    end
+  end
+end
+
+
