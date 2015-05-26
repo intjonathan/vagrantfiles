@@ -47,6 +47,28 @@ class profile::bind::master {
     allow_query       => [ 'localhost', 'local' ],
     recursion         => 'no',
     allow_recursion   => [ 'localhost', 'local', '10net'],
+    #Enable logging to /var/log/named/named.log
+    #See http://www.zytrax.com/books/dns/ch7/logging.html for more info on BIND logging options.
+    logging => {
+      'categories' => { 'default' => 'main_log', 'lame-servers' => 'null' },
+      'channels' => { 
+        'main_log' => {
+          channel_type   => 'file',
+          #This parameter only applies if the 'channel_type' is set to 'syslog':
+          facility       => 'daemon',
+          #'file_location', 'versions' and 'size' only get applied if the 'channel_type' is set to 'file':
+          file_location  => '/var/log/named/named.log',
+          #Keep 3 older rotated logs
+          versions       => '3',
+          #Rotate named.log when it reaches 5MB in size:
+          size           => '5m',
+          severity       => 'info',
+          print-time     => 'yes',
+          print-severity => 'yes',
+          print-category => 'yes'
+        },
+      },
+    },
     #Enable a statistics channel so collectd can gather DNS metrics:
     statistics_channels    => {
       'channel-1' => {
