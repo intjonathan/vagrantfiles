@@ -18,17 +18,7 @@ class profile::icinga2::server {
   #Collect all @@icinga2::object::host resources from PuppetDB that were exported by other machines:
   Icinga2::Object::Host <<| |>> { }
 
-
-#  #A non-SSL virtual host Icinga 2's classic UI:
-#  ::apache::vhost { "icinga2.${fqdn}_non-ssl":
-#    docroot => '/usr/share/icinga2/classicui',
-#    port            => 80, 
-#    servername      => "icinga2.${fqdn}",
-#    access_log => true,
-#    access_log_syslog=> 'syslog:local1',
-#    error_log => true,
-#    error_log_syslog=> 'syslog:local1',
-
+  #Add a custom config fragment that loads the 
   apache::custom_config { 'icinga2_classicui':
     content => '
       ScriptAlias /cgi-bin/icinga2-classicui /usr/lib/cgi-bin/icinga
