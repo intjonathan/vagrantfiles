@@ -58,6 +58,7 @@ class profile::bind::master {
         'queries'      => 'query_log'
       },
       'channels' => {
+        #This channel gets all logs except query logs:
         'main_log' => {
           channel_type   => 'file',
           #This parameter only applies if the 'channel_type' is set to 'syslog':
@@ -73,6 +74,7 @@ class profile::bind::master {
           print-severity => 'yes',
           print-category => 'yes'
         },
+        #This channel gets query logs:
         'query_log' => {
           channel_type   => 'file',
           #This parameter only applies if the 'channel_type' is set to 'syslog':
