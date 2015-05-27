@@ -248,6 +248,36 @@ class profile::bind::master {
     settings => {
       'log_directory' => '"/var/log/named"',
       'file_match' => "'named_query.log'",
+      'decoder' => '"bind_query_log_decoder"',
+    },
+  }
+
+  #BIND query log decoder plugin:
+  ::heka::plugin { 'bind_query_log_decoder':
+    type => 'SandboxDecoder',
+    settings => {
+      'filename' => '"lua_decoders/bind_queryies.lua"',
+
+    },
+  }
+
+  #Add a PayloadEncoder and LogOutput so that we can see the BIND query logs get sent to
+  #Heka's standard output to make sure things are working. Adapted from:
+  #https://hekad.readthedocs.org/en/latest/getting_started.html#simplest-heka-config
+  #Keep this commented out so it's not used all the time. It's mostly only useful for
+  #debugging:
+  ::heka::plugin { 'bind_query_log_payload_encoder':
+    type => 'PayloadEncoder',
+    settings => {
+      'append_newlines' => 'false',
+    },
+  }
+  #Use the 'bind_query_log_stdout_output' PayloadEncoder we defined above:
+  ::heka::plugin { 'bind_query_log_stdout_output':
+    type => 'LogOutput',
+    settings => {
+      'message_matcher' => '"TRUE"',
+      'encoder' => '"bind_query_log_payload_encoder"'
     },
   }
 
