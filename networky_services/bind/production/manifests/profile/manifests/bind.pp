@@ -237,4 +237,18 @@ class profile::bind::master {
     source_base => 'puppet:///files/bind/zone_files/',
   }
 
+  ###########################################
+  # Heka setup for DNS query log parsing
+  ###########################################
+  
+  #Take in the query logs from the file they get written to by the query_log channel
+  #defined above:
+  ::heka::plugin { 'bind_query_logs':
+    type => 'LogstreamerInput',
+    settings => {
+      'log_directory' => '"/var/log/named"',
+      'file_match' => "'named_query.log'",
+    },
+  }
+
 }
