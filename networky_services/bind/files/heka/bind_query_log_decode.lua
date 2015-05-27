@@ -1,1 +1,1 @@
-#BIND query log Lua decoder script
+--BIND query log Lua decoder script
