@@ -34,12 +34,14 @@ class profile::bind::master {
     service_restart_command => '/sbin/named-checkconf -z /etc/named.conf && /sbin/service named restart'
   }
    
+  #Configure BIND:
   ::bind::server::conf { '/etc/named.conf':
     acls => {
       'rfc1918' => [ '10/8', '172.16/12', '192.168/16' ],
       'local'   => [ '127.0.0.1' ],
       '10net'   => [ '10.0.0.0/24', '10.0.1.0/24', '10.1.1.0/24', '10.1.0.0/24'],
     },
+    #Where BIND will keep its data:
     directory => '/var/named/',
     listen_on_addr    => [ '127.0.0.1' ],
     listen_on_v6_addr => [ '::1' ],
@@ -180,7 +182,6 @@ class profile::bind::master {
       ],
     }
   }
-
 
   #Forward zones:
   ::bind::server::file { [ 'zone1.local.zone' ]:
