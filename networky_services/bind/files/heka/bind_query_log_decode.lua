@@ -37,13 +37,15 @@ local msg_type = read_config("type")
 local dt = require "date_time"
 
 local msg = {
-  Timestamp   = nil,
+
   Type        = msg_type,
-  Hostname    = nil,
   Payload     = nil,
   Pid         = nil,
   Severity    = nil,
-  Fields      = nil
+  Fields      = {  Query      = nil,
+                   RecordType = nil,
+                   ClientIP   = nil
+                   }
 }
 
 function process_message ()
@@ -62,7 +64,4 @@ function process_message ()
   inject_message(msg)
 
   return 0
-end
-
-function timer_event(ns)
 end
