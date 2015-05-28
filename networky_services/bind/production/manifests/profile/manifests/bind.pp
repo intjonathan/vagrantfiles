@@ -257,7 +257,14 @@ class profile::bind::master {
     type => 'SandboxDecoder',
     settings => {
       'filename' => '"lua_decoders/bind_query_log_decoder.lua"',
-
+    },
+    subsetting_sections => {
+      'config' => {
+      #Sample query log line:
+      #27-May-2015 21:06:49.246 queries: info: client 127.0.0.1#33182 (webserver.company.com): query: webserver.company.com IN A +E (127.0.0.1)
+        'log_format' => '',
+        'type' => '"bind.query"',
+      },
     },
   }
 
