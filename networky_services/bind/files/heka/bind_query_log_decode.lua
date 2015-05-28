@@ -12,6 +12,13 @@ decoder = "bind_query_log_decoder"
 file_match = 'named_query.log'
 log_directory = "/var/log/named"
 
+[bind_query_log_decoder]
+type = "SandboxDecoder"
+filename = "lua_decoders/bind_query_log_decoder.lua"
+  [bind_query_log_decoder.config]
+  log_format = ''
+  type = "bind.query"
+
 Sample BIND query log message, with the print-category, print-severity and print-time options
 all set to 'yes':
 
