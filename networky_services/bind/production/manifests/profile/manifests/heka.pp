@@ -3,30 +3,28 @@ class profile::heka {
   class { '::heka':
     package_download_url => hiera('heka_package_url'),
     version => hiera('heka_version'),
+    #heka_max_procs         => '4',
+    purge_unmanaged_configs => true,
     global_config_settings => {
       'poolsize' => 100,
-      'hostname' => "\"${::fqdn}\"",
+      #'hostname' => "\"${::fqdn}\"",
     },
   }
 
   ::heka::plugin::input::tcpinput { 'tcpinput1':
-    refresh_heka_service => true,
     address => "${::ipaddress_lo}:5565"
   }
 
   ::heka::plugin::input::udpinput { 'udpinput1':
-    refresh_heka_service => true,
     address => "${::ipaddress_lo}:4880"
   }
 
   ::heka::plugin::input::statsdinput { 'statsdinput1':
-   refresh_heka_service => true,
    address => '0.0.0.0:8125',
    stat_accum_name => 'stataccuminput1',
   }
 
   ::heka::plugin::input::stataccuminput { 'stataccuminput1':
-    refresh_heka_service => true,
     ticker_interval => 1,
     emit_in_fields => true,
   }
@@ -46,7 +44,6 @@ class profile::heka {
   }
 
   ::heka::plugin { 'nginx_access_decoder':
-    refresh_heka_service => true,
     type => 'SandboxDecoder',
     settings => {
       'script_type' => '"lua"',
