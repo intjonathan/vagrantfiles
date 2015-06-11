@@ -8,6 +8,8 @@ Adapted from: https://github.com/mozilla-services/heka/wiki/How-to-convert-a-Pay
 
 Built with the help of: http://lpeg.trink.com/
 
+Reference for LPEG functions and uses: http://www.inf.puc-rio.br/~roberto/lpeg/lpeg.html
+
 Example use:
 
 [bind_query_logs]
