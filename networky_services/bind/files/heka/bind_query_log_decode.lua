@@ -26,7 +26,7 @@ filename = "lua_decoders/bind_query_log_decoder.lua"
   type = "bind.query"
 
 Sample BIND query log message, with the print-category, print-severity and print-time options
-all set to 'yes':
+all set to 'yes' in the logging channel options in named.conf:
 
 27-May-2015 21:06:49.246 queries: info: client 10.0.1.70#41242 (webserver.company.com): query: webserver.company.com IN A +E (10.0.1.71)
 
