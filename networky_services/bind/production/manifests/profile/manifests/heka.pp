@@ -3,11 +3,11 @@ class profile::heka {
   class { '::heka':
     package_download_url => hiera('heka_package_url'),
     version => hiera('heka_version'),
-    #heka_max_procs         => '4',
+    heka_max_procs         => 4,
     purge_unmanaged_configs => true,
     global_config_settings => {
       'poolsize' => 100,
-      #'hostname' => "\"${::fqdn}\"",
+      'hostname' => "\"${::fqdn}\"",
     },
   }
 
@@ -28,12 +28,6 @@ class profile::heka {
     ticker_interval => 1,
     emit_in_fields => true,
   }
-
-  #::heka::plugin::output::carbonoutput { 'carbonoutput1':
-  #  address => 'hekamonitoring.local:2003',
-  #  message_matcher => "Type == 'heka.statmetric'",
-  #  protocol => 'udp',
-  #}
 
   ::heka::plugin { 'dashboard1':
     type => 'DashboardOutput',

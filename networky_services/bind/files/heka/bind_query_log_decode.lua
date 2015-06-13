@@ -52,10 +52,34 @@ local formats  = read_config("formats")
 --The config for the SandboxDecoder plugin should have the type set to 'bindquerylog'
 local msg_type = read_config("type")
 
+
+
+
+
+
+--[[ Generic Grammars --]]
+
+--A space character:
 local space = l.space
+
+
+--DNS query record types:
+
+dns_record_type = l.Cg(
+      l.P"A" /"A record"
+    + l.P"CNAME" /"CNAME record"
+    + l.P"MX" /"MX record"
+    + l.P"PTR" /"PTR record"
+    + l.P"AAAA" /"AAAA record"
+    + l.P"SOA" /"SOA record"
+    + l.P"NS" /"NS record"
+    + l.P"SRV" /"SRV record"
+    , "record_type")
+
 local timestamp = l.Cg(date_time.build_strftime_grammar("%Y/%m/%d %H:%M:%S") / date_time.time_to_ns, "Timestamp")
+
 local remoteaddr = l.P"remoteaddr=" * l.Cg(l.Ct(l.Cg(ip.v4, "value") * l.Cg(l.Cc"ipv4", "representation")), "Remoteaddr")
-local headers = l.Cg(l.P(1)^0, "Headers")
+
 local bind_query = date * space * timestamp * space * 'queries:' * 'info:' * 'client' * space * client_ip * space * '(' * query * '):' * space * 'query:' * space * query * space * 'IN' * record_type * space '+E' * space * '(' * reply_address * ')' 
 
 --Individual pieces I need to create patterns for:
