@@ -153,7 +153,7 @@ class profile::heka {
     subsetting_sections => {
       'command.0' => {
         'bin'  => '"/usr/lib64/nagios/plugins/check_procs"',
-        'args' => '["-w 1:1 -c 2 -C sshd "]'
+        'args' => '["-c 1 -C sshd "]'
       },
     }
   }
