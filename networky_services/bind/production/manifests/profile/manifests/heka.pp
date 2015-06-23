@@ -102,4 +102,60 @@ class profile::heka {
     type => 'RstEncoder',
   }
 
+  ###############################
+  # Other plugin definitions
+  ###############################
+
+  #Check that will pass with an OK:
+  ::heka::plugin { 'check_procs_ok':
+    type => 'ProcessInput',
+    settings => {
+      'ticker_interval' => '10',
+      'splitter' => '"newline_splitter"',
+      'stdout' => 'true',
+      'stderr' => 'true',
+    },
+    subsetting_sections => {
+      'command.0' => {
+        'bin' => '"/usr/lib64/nagios/plugins/check_procs"',
+      },
+    }
+  }
+
+  #Check that will pass with a WARNING:
+  #/usr/lib64/nagios/plugins/check_procs -w 1:1 -c 4 -C sshd
+  ::heka::plugin { 'check_procs_warning':
+    type => 'ProcessInput',
+    settings => {
+      'ticker_interval' => '10',
+      'splitter' => '"newline_splitter"',
+      'stdout' => 'true',
+      'stderr' => 'true',
+    },
+    subsetting_sections => {
+      'command.0' => {
+        'bin'  => '"/usr/lib64/nagios/plugins/check_procs"',
+        'args' => '["-w 1:1 -c 4 -C sshd"]'
+      },
+    }
+  }
+
+  #Check that will pass with a CRITICAL:
+  #/usr/lib64/nagios/plugins/check_procs -w 1:1 -c 2 -C sshd
+  ::heka::plugin { 'check_procs_critical':
+    type => 'ProcessInput',
+    settings => {
+      'ticker_interval' => '10',
+      'splitter' => '"newline_splitter"',
+      'stdout' => 'true',
+      'stderr' => 'true',
+    },
+    subsetting_sections => {
+      'command.0' => {
+        'bin'  => '"/usr/lib64/nagios/plugins/check_procs"',
+        'args' => '["-w 1:1 -c 2 -C sshd "]'
+      },
+    }
+  }
+
 }
