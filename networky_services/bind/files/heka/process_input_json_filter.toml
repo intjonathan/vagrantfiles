@@ -1,13 +1,8 @@
 #ProcessInput JSON filter
 
-[process_input]
+[process_input_filter]
 type = "SandboxFilter"
-filename = "lua_filters/http_status.lua"
+filename = "lua_filters/processinput.lua"
 ticker_interval = 1
 preserve_data = true
-message_matcher = "Type == 'nginx.access'"
-
-        [http_status.config]
-        sec_per_row = 1
-        rows = 1800
-        perservation_version = 0
+message_matcher = "Type == 'heka.sandbox.'"
