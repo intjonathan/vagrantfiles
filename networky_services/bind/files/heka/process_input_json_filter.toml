@@ -1,0 +1,13 @@
+#ProcessInput JSON filter
+
+[process_input]
+type = "SandboxFilter"
+filename = "lua_filters/http_status.lua"
+ticker_interval = 1
+preserve_data = true
+message_matcher = "Type == 'nginx.access'"
+
+        [http_status.config]
+        sec_per_row = 1
+        rows = 1800
+        perservation_version = 0
