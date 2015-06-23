@@ -12,7 +12,7 @@ Sample message in RestructuredText format:
 :Logger: check_procs_critical
 :Payload: PROCS WARNING: 98 processes | procs=98; 1:1 -c 2 -C sshd ;;0;
 
-:EnvVersion: 
+:EnvVersion:
 :Severity: 7
 :Fields:
     | name:"ProcessInputName" type:string value:"check_procs_critical.stdout"
@@ -28,29 +28,49 @@ require "string"
 require "lpeg"
 require "cjson"
 
-local msg = {
-  Type        = msg_type,
-  Payload     = nil,
-  Pid         = nil,
-  Severity    = nil,
-  Fields      = {
-    -- 
-    Query       = nil, -- webserber
-    QueryDomain = nil, -- company.com
-    RecordType  = nil, -- A, MX, PTR, etc.
-    ClientIP    = nil
-  }
-}
+
 
 function process_message ()
 
+  local msg = {
+    Timestamp = read_message('Timestamp'),
+    Type = 'blah',
+    Hostname = read_message('Hostname'),
+    Pid = read_message('Pid'),
+    Uuid = read_message('Uuid'),
+    Logger = read_message('Logger'),
+    Payload = read_message('Payload'),
+    EnvVersion = read_message('EnvVersion'),
+    Severity = read_message('Severity'),
+    Fields     = {
+      --
+      ExitCode = nil,
+      State  = nil, -- This will be either OK, WARNING, CRITICAL or UNKNOWN
+    }
+  }
 
-  local payload = read_message("Payload")
+--[[
+  msg.Timestamp = read_message('Timestamp')
+  msg.Type = 'blah'
+  msg.Hostname = read_message('Hostname')
+  msg.Pid = read_message('Pid')
+  msg.Uuid = read_message('Uuid')
+  msg.Logger = read_message('Logger')
+  msg.Payload = read_message('Payload')
+  msg.EnvVersion = read_message('EnvVersion')
+  msg.Severity = read_message('Severity')
+]]--
 
+  local old_payload = read_message("Payload")
 
-  msg.Fields = fields
-  inject_message(msg)
+  msg.Payload = read_message('Payload')
+  msg.Fields = read_message('Fields')
 
+  inject_payload("json", msg.Logger, msg.Payload)
   return 0
+
+end
+
+function timer_event(ns)
 
 end
