@@ -1,5 +1,9 @@
 class profile::heka {
 
+  ###############################
+  # Heka installation/setup
+  ###############################
+
   class { '::heka':
     package_download_url => hiera('heka_package_url'),
     version => hiera('heka_version'),
@@ -11,6 +15,36 @@ class profile::heka {
     },
   }
 
+  ###############################
+  # Splitter definitions
+  ###############################
+
+  #Define some splitters that we can use in other plugins:
+
+  ::heka::plugin { 'newline_splitter':
+    type => 'TokenSplitter',
+    settings => {
+      'delimiter' => '"\n"',
+    },
+  }
+
+  ::heka::plugin { 'space_splitter':
+    type => 'TokenSplitter',
+    settings => {
+      'delimiter' => '" "',
+    },
+  }
+
+  heka::plugin { 'null_splitter':
+    type   => 'NullSplitter',
+  }
+
+  ###############################
+  # Input definitions
+  ###############################
+
+  #Define some inputs:
+
   ::heka::plugin::input::tcpinput { 'tcpinput1':
     address => "${::ipaddress_lo}:5565"
   }
@@ -19,6 +53,7 @@ class profile::heka {
     address => "${::ipaddress_lo}:4880"
   }
 
+  #Start up a StatsD server:
   ::heka::plugin::input::statsdinput { 'statsdinput1':
    address => '0.0.0.0:8125',
    stat_accum_name => 'stataccuminput1',
@@ -29,6 +64,25 @@ class profile::heka {
     emit_in_fields => true,
   }
 
+  ###############################
+  # Output definitions
+  ###############################
+
+  #Define some outputs that we can use in other plugins:
+
+  #Output to Heka's standard out all messages going through the message router
+  #Output them in RST format with the rstencoder defined above.
+  #See the following page for more info on message_matcher syntax:
+  # https://hekad.readthedocs.org/en/latest/message_matcher.html#message-matcher
+  ::heka::plugin { 'logoutput1':
+    type => 'LogOutput',
+    settings => {
+      'message_matcher' => "\"Type != 'heka.statmetric' && Type != 'heka.all-report' && Type != 'heka.memstat'\"",
+      'encoder' => '"rstencoder"',
+    },
+  }
+
+  #Start a dashboard:
   ::heka::plugin { 'dashboard1':
     type => 'DashboardOutput',
     settings => {
@@ -37,18 +91,15 @@ class profile::heka {
     },
   }
 
-  ::heka::plugin { 'nginx_access_decoder':
-    type => 'SandboxDecoder',
-    settings => {
-      'script_type' => '"lua"',
-      'filename' => '"lua_decoders/nginx_access.lua"',
-    },
-    subsetting_sections => {
-      'config' => {
-        'log_format' => '\'$remote_addr - $remote_user [$time_local] "$request" $status $body_bytes_sent "$http_referer" "$http_user_agent"\'',
-        'type' => '"nginx.access"',
-      },
-    }
+  ###############################
+  # Encoder definitions
+  ###############################
+
+  #Define some encoders that we can use in other plugins:
+
+  #Turn Heka messages into Restructured text:
+  ::heka::plugin { 'rstencoder':
+    type => 'RstEncoder',
   }
 
 }
