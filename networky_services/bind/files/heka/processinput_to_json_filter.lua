@@ -49,22 +49,9 @@ function process_message ()
     }
   }
 
---[[
-  msg.Timestamp = read_message('Timestamp')
-  msg.Type = 'blah'
-  msg.Hostname = read_message('Hostname')
-  msg.Pid = read_message('Pid')
-  msg.Uuid = read_message('Uuid')
-  msg.Logger = read_message('Logger')
-  msg.Payload = read_message('Payload')
-  msg.EnvVersion = read_message('EnvVersion')
-  msg.Severity = read_message('Severity')
-]]--
-
-  local old_payload = read_message("Payload")
-
   msg.Payload = read_message('Payload')
   msg.Fields = read_message('Fields')
+  msg.Logger = read_message('Logger')
 
   -- The inject_payload function below injects new Heka messages with the input message encoded
   -- into JSON as the payload.
