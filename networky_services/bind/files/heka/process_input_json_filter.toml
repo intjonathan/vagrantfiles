@@ -1,8 +1,0 @@
-#ProcessInput JSON filter
-
-[process_input_filter]
-type = "SandboxFilter"
-filename = "lua_filters/processinput.lua"
-ticker_interval = 1
-preserve_data = true
-message_matcher = "Type == 'heka.sandbox.'"

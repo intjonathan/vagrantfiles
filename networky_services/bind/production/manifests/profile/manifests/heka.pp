@@ -163,10 +163,10 @@ class profile::heka {
   ::heka::plugin { 'process_input_filter':
     type => 'SandboxFilter',
     settings => {
-      'filename' => '"lua_filters/processinput.lua"',
+      'filename' => '"lua_filters/processinput_to_json_filter.lua"',
       'ticker_interval' => '1',
       'preserve_data' => 'true',
-      'message_matcher' => "\"Type == 'heka.sandbox.'\"",
+      'message_matcher' => "\"Type == 'ProcessInput'\"",
     },
   }
 

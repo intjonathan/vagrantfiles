@@ -34,7 +34,7 @@ function process_message ()
 
   local msg = {
     Timestamp = read_message('Timestamp'),
-    Type = 'blah',
+    Type = read_message('Type'),
     Hostname = read_message('Hostname'),
     Pid = read_message('Pid'),
     Uuid = read_message('Uuid'),
@@ -66,7 +66,14 @@ function process_message ()
   msg.Payload = read_message('Payload')
   msg.Fields = read_message('Fields')
 
-  inject_payload("json", msg.Logger, msg.Payload)
+  -- The inject_payload function below injects new Heka messages with the input message encoded
+  -- into JSON as the payload.
+  -- "json"- sets the extension of the file that gets written out and that the dashboard will serve
+  -- msg.Logger - sets the endpoint that the dashboard serves JSON at. A msg.Logger value of
+  -- 'check_procs_ok' will set the endpoint to 'http://hekaserver:4352/data/process_input_filter.check_procs_ok.json',
+  -- for instance.
+  -- cjson.encode(msg) - encodes the Heka message given to this Lua script as JSON; since this is the 3rd argument,
+  inject_payload("json", msg.Logger, cjson.encode(msg))
   return 0
 
 end
