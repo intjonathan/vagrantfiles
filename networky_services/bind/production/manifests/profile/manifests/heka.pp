@@ -158,4 +158,16 @@ class profile::heka {
     }
   }
 
+  #SandboxFilter that will process the ProcessInput messages
+  #and turn them into a form the DashbardOutput can display:
+  ::heka::plugin { 'process_input_filter':
+    type => 'SandboxFilter',
+    settings => {
+      'filename' => '"lua_filters/processinput.lua"',
+      'ticker_interval' => '1',
+      'preserve_data' => 'true',
+      'message_matcher' => "\"Type == 'heka.sandbox.'\"",
+    },
+  }
+
 }
