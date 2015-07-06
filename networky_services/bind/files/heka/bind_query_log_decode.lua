@@ -71,10 +71,29 @@ local open_paran_literal = l.P"("
 local close_paran_literal = l.P")"
 -- 'query'
 local query_literal = l.P"query:"
--- 'IN'
+-- 'IN' literal string; 
 local in_literal = l.P"IN"
--- '+E'
-local plus_e_literal = l.P"+E"
+-- '+' literal character; + indicates that recursion was requested.
+local plus_literal = l.P"+"
+-- '-' literal character; - indicates that recursion was not requested.
+local plus_literal = l.P"-"
+-- 'E' literal character; E indicates that extended DNS was used
+-- Source: http://ftp.isc.org/isc/bind9/cur/9.9/doc/arm/Bv9ARM.ch06.html#id2575001
+-- More about EDNS: https://en.wikipedia.org/wiki/Extension_mechanisms_for_DNS
+local e_literal = l.P"E"
+-- 'S' literal character; s indicates that the query was signed
+-- Source: http://ftp.isc.org/isc/bind9/cur/9.9/doc/arm/Bv9ARM.ch06.html#id2575001
+local s_literal = l.P"S"
+--'D' literal character; if DNSSEC Ok was set
+-- Source: http://ftp.isc.org/isc/bind9/cur/9.9/doc/arm/Bv9ARM.ch06.html#id2575001
+local d_literal = l.P"D"
+--'T' literal character; if TCP was used
+-- Source: http://ftp.isc.org/isc/bind9/cur/9.9/doc/arm/Bv9ARM.ch06.html#id2575001
+local t_literal = l.P"T"
+--'C' literal character; if checking disabled was set
+-- Source: http://ftp.isc.org/isc/bind9/cur/9.9/doc/arm/Bv9ARM.ch06.html#id2575001
+local c_literal = l.P"C"
+
 
 --[[ More complicated patterns for things that do change from line to line: --]]
 
