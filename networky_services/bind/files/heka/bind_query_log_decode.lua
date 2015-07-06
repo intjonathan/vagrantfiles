@@ -80,14 +80,14 @@ local plus_e_literal = l.P"+E"
 
 --The below pattern matches date/timestamps in the following format:
 -- 27-May-2015 21:06:49.246
--- The milliseconds (the .246) are discarded
+-- The milliseconds (the .246) are discarded by the `l.P"." * l.P(3)` at the end:
 --Source: https://github.com/mozilla-services/lua_sandbox/blob/dev/modules/date_time.lua
 local timestamp = l.Cg(date_time.build_strftime_grammar("%d-%B-%Y %H:%M:%S") / date_time.time_to_ns, "timestamp") * l.P"." * l.P(3)
 local x4            = l.xdigit * l.xdigit * l.xdigit * l.xdigit
 
 --The below pattern matches IPv4 addresses from BIND query logs like the following:
 -- 10.0.1.70#41242
--- The # and ephemeral port number are discarded.
+-- The # and ephemeral port number are discarded by the `pound_literal * l.P(5)` at the end:
 local client_address = l.Cg(l.Ct(l.Cg(ip.v4, "value") * l.Cg(l.Cc"ipv4", "representation")), "client_address") * pound_literal * l.P(5)
 
 --DNS query record types:
