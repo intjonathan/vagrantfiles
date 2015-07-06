@@ -52,46 +52,63 @@ local formats  = read_config("formats")
 --The config for the SandboxDecoder plugin should have the type set to 'bindquerylog'
 local msg_type = read_config("type")
 
-
-
-
-
-
---[[ Generic Grammars --]]
-
---A space character:
+--[[ Generic patterns --]]
+--Patterns for the literals in the log lines that don't change from query to query
 local space = l.space
+-- ':'
+local colon_literal = l.P":"
+-- 'queries'
+local queries_literal = l.P"queries:"
+-- '#'
+local pound_literal = l.P"#" 
+-- 'info'
+local info_literal = l.P"info:"
+-- 'client'
+local client_literal = l.P"client:"
+-- '('
+local open_paran_literal = l.P"("
+-- ')'
+local close_paran_literal = l.P")"
+-- 'query'
+local query_literal = l.P"query:"
+-- 'IN'
+local in_literal = l.P"IN"
+-- '+E'
+local plus_e_literal = l.P"+E"
 
+--[[ More complicated patterns for things that do change from line to line: --]]
+
+--The below pattern matches date/timestamps in the following format:
+-- 27-May-2015 21:06:49.246
+-- The milliseconds (the .246) are discarded
+--Source: https://github.com/mozilla-services/lua_sandbox/blob/dev/modules/date_time.lua
+local timestamp = l.Cg(date_time.build_strftime_grammar("%d-%B-%Y %H:%M:%S") / date_time.time_to_ns, "timestamp") * l.P"." * l.P(3)
+local x4            = l.xdigit * l.xdigit * l.xdigit * l.xdigit
+
+--The below pattern matches IPv4 addresses from BIND query logs like the following:
+-- 10.0.1.70#41242
+-- The # and ephemeral port number are discarded.
+local client_address = l.Cg(l.Ct(l.Cg(ip.v4, "value") * l.Cg(l.Cc"ipv4", "representation")), "client_address") * pound_literal * l.P(5)
 
 --DNS query record types:
-
+--Create a capture group that will match the DNS record type:
 dns_record_type = l.Cg(
-      l.P"A" /"A record"
-    + l.P"CNAME" /"CNAME record"
-    + l.P"MX" /"MX record"
-    + l.P"PTR" /"PTR record"
-    + l.P"AAAA" /"AAAA record"
-    + l.P"SOA" /"SOA record"
-    + l.P"NS" /"NS record"
-    + l.P"SRV" /"SRV record"
+      l.P"A" /"A"
+    + l.P"CNAME" /"CNAME"
+    + l.P"MX" /"MX"
+    + l.P"PTR" /"PTR"
+    + l.P"AAAA" /"AAAA"
+    + l.P"SOA" /"SOA"
+    + l.P"NS" /"NS"
+    + l.P"SRV" /"SRV"
     , "record_type")
 
-local timestamp = l.Cg(date_time.build_strftime_grammar("%Y/%m/%d %H:%M:%S") / date_time.time_to_ns, "Timestamp")
+-- 27-May-2015 21:06:49.246 queries: info: client 10.0.1.70#41242 (webserver.company.com): query: webserver.company.com IN A +E (10.0.1.71)
 
-local remoteaddr = l.P"remoteaddr=" * l.Cg(l.Ct(l.Cg(ip.v4, "value") * l.Cg(l.Cc"ipv4", "representation")), "Remoteaddr")
+local bind_query = timestamp * space * queries_literal * space * info_literal * space * client_literal * space * client_address
 
-local bind_query = date * space * timestamp * space * 'queries:' * 'info:' * 'client' * space * client_ip * space * '(' * query * '):' * space * 'query:' * space * query * space * 'IN' * record_type * space '+E' * space * '(' * reply_address * ')' 
-
---Individual pieces I need to create patterns for:
---date
---timestamp
---client_ip
---query
---record_type
---reply_address
 
 grammar = l.Ct(bind_query)
-
 local msg = {
   Type        = msg_type,
   Payload     = nil,
