@@ -40,14 +40,17 @@ The things we want out of it are:
 
 --]]
 
-require "table"
-require "string"
-require "lpeg"
-local date_time = require "date_time"
-local ip = require "ip_address"
+
+local l = require 'lpeg'
+local math = require 'math'
+local string = require 'string'
+local date_time = require 'date_time'
+local ip = require 'ip_address'
+local table = require 'table'
+local syslog   = require "syslog"
 l.locale(l)
 
-local syslog   = require "syslog"
+
 local formats  = read_config("formats")
 --The config for the SandboxDecoder plugin should have the type set to 'bindquerylog'
 local msg_type = read_config("type")
@@ -64,11 +67,11 @@ local pound_literal = l.P"#"
 -- 'info'
 local info_literal = l.P"info:"
 -- 'client'
-local client_literal = l.P"client:"
+local client_literal = l.P"client"
 -- '('
-local open_paran_literal = l.P"("
+local open_paren_literal = l.P"("
 -- ')'
-local close_paran_literal = l.P")"
+local close_paren_literal = l.P")"
 -- 'query'
 local query_literal = l.P"query:"
 -- 'IN' literal string; 
@@ -109,8 +112,16 @@ local x4            = l.xdigit * l.xdigit * l.xdigit * l.xdigit
 -- The # and ephemeral port number are discarded by the `pound_literal * l.P(5)` at the end:
 local client_address = l.Cg(l.Ct(l.Cg(ip.v4, "value") * l.Cg(l.Cc"ipv4", "representation")), "client_address") * pound_literal * l.P(5)
 
---DNS query record types:
---Create a capture group that will match the DNS record type:
+--[[DNS query record types:
+
+Create a capture group that will match the DNS record type.
+
+The + signs mean to select A or CNAME or MX or PTR and so on.
+
+The ', "record_type"' part sets the name of the capture's entry in the table of
+matches that gets built.
+
+--]]
 dns_record_type = l.Cg(
       l.P"A" /"A"
     + l.P"CNAME" /"CNAME"
@@ -122,9 +133,32 @@ dns_record_type = l.Cg(
     + l.P"SRV" /"SRV"
     , "record_type")
 
+--[[Hostname and domain name patterns
+
+Hostnames and domain names are broken up into fragments that are called 
+"labels", which are the parts between the dots.
+
+Source: https://en.wikipedia.org/wiki/Hostname#Restrictions_on_valid_host_names
+
+For instance, webserver.company.com has the labels "webserver", "company" and 
+"com"
+
+The pattern below uses the upper, lower and digit shortcuts from the main LPEG 
+library and combines them with the hyphen (-) character to match anything that's
+part of a valid hostname label. The ^1 means match one or more instances of it.
+--]]
+local hostname_fragment = (l.upper + l.lower + l.digit +  "-")^1
+
+--The pattern below matches one or more hostname_fragments, followed by a . 
+--and followed by one more hostname_fragment, indicating the end of a complete
+--hostname. The open and close parens and colon are to match the decorations
+--BIND puts around the name: 
+-- (webserver.company.com):
+local enclosed_query = "(" * l.Cg((hostname_fragment * ".")^1 * hostname_fragment, "Query") * "):"
+
 -- 27-May-2015 21:06:49.246 queries: info: client 10.0.1.70#41242 (webserver.company.com): query: webserver.company.com IN A +E (10.0.1.71)
 
-local bind_query = timestamp * space * queries_literal * space * info_literal * space * client_literal * space * client_address
+local bind_query = timestamp * space * queries_literal * space * info_literal * space * client_literal * space * client_address * space * enclosed_query
 
 
 grammar = l.Ct(bind_query)
