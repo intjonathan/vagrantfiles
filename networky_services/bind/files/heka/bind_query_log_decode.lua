@@ -215,6 +215,7 @@ local bind_query = timestamp * space * "queries:" * space * "info:" * space * "c
 --Use the bind_query grammar from above to match various things out of query log
 -- lines and build a Lua table of values out of it:
 grammar = l.Ct(bind_query)
+
 local msg = {
   Type        = msg_type,
   Payload     = nil,
@@ -223,10 +224,12 @@ local msg = {
   Fields      = {
     -- If the query was for webserver.company.com, the fields would get filled in as follows:
     -- webserver
-    Query       = nil, -- webserber
+    Query       = nil, -- webserver.company.com
+    QueryName   = nil, -- webserver
     QueryDomain = nil, -- company.com
     RecordType  = nil, -- A, MX, PTR, etc.
-    ClientIP    = nil
+    RecordClass = nil, -- almost always IN
+    ClientIP    = nil  -- the IPv4 address of the client
   }
 }
 
