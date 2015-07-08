@@ -110,7 +110,7 @@ local x4            = l.xdigit * l.xdigit * l.xdigit * l.xdigit
 --The below pattern matches IPv4 addresses from BIND query logs like the following:
 -- 10.0.1.70#41242
 -- The # and ephemeral port number are discarded by the `pound_literal * l.P(5)` at the end:
-local client_address = l.Cg(l.Ct(l.Cg(ip.v4, "value") * l.Cg(l.Cc"ipv4", "representation")), "ClientAddress") * pound_literal * l.P(5)
+local client_ip = l.Cg(l.Ct(l.Cg(ip.v4, "value") * l.Cg(l.Cc"ipv4", "representation")), "ClientIP") * pound_literal * l.P(5)
 
 --[[DNS query record types:
 
