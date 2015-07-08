@@ -122,15 +122,50 @@ The ', "record_type"' part sets the name of the capture's entry in the table of
 matches that gets built.
 
 --]]
+
+--A capture group for various DNS record types.
+-- Source: https://en.wikipedia.org/wiki/List_of_DNS_record_types
 dns_record_type = l.Cg(
       l.P"A" /"A"
-    + l.P"CNAME" /"CNAME"
-    + l.P"MX" /"MX"
-    + l.P"PTR" /"PTR"
     + l.P"AAAA" /"AAAA"
-    + l.P"SOA" /"SOA"
+    + l.P"AFSDB" /"AFSDB"
+    + l.P"APL" /"APL"
+    + l.P"AXFR" /"AXFR"
+    + l.P"CAA" /"CAA"
+    + l.P"CDNSKEY" /"CDNSKEY"
+    + l.P"CDS" /"CDS"
+    + l.P"CERT" /"CERT"
+    + l.P"CNAME" /"CNAME"
+    + l.P"DHCID" /"DHCID"
+    + l.P"DLV" /"DLV"
+    + l.P"DNAME" /"DNAME"
+    + l.P"DS" /"DS"
+    + l.P"HIP" /"HIP"
+    + l.P"IPSECKEY" /"IPSECKEY"
+    + l.P"IXFR" /"IXFR"
+    + l.P"KEY" /"KEY"
+    + l.P"KX" /"KX"
+    + l.P"LOC" /"LOC"
+    + l.P"MX" /"MX"
+    + l.P"NAPTR" /"NAPTR"
     + l.P"NS" /"NS"
+    + l.P"NSEC" /"NSEC"
+    + l.P"NSEC3" /"NSEC3"
+    + l.P"NSEC3PARAM" /"NSEC3PARAM"
+    + l.P"OPT" /"OPT"
+    + l.P"PTR" /"PTR"
+    + l.P"RRSIG" /"RRSIG"
+    + l.P"RP" /"RP"
+    + l.P"SIG" /"SIG"
+    + l.P"SOA" /"SOA"
     + l.P"SRV" /"SRV"
+    + l.P"SSHFP" /"SSHFP"
+    + l.P"TA" /"TA"
+    + l.P"TKEY" /"TKEY"
+    + l.P"TLSA" /"TLSA"
+    + l.P"TSIG" /"TSIG"
+    + l.P"TXT" /"TXT"
+    + l.P"*" /"*"
     , "RecordType")
 
 --[[Hostname and domain name patterns
