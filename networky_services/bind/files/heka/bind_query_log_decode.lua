@@ -211,7 +211,7 @@ local query = l.Cg((hostname_fragment)^-1, "QueryName") * "." * l.Cg((hostname_f
 
 -- 27-May-2015 21:06:49.246 queries: info: client 10.0.1.70#41242 (webserver.company.com): query: webserver.company.com IN A +E (10.0.1.71)
 
-local bind_query = timestamp * space * queries_literal * space * info_literal * space * client_literal * space * client_address * space * enclosed_query
+local bind_query = timestamp * space * queries_literal * space * info_literal * space * client_literal * space * client_address * space * enclosed_query * space * query_literal * space * query * space * dns_record_class * space * dns_record_type
 
 
 grammar = l.Ct(bind_query)
