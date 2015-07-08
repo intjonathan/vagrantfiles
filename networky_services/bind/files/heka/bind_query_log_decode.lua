@@ -40,7 +40,6 @@ The things we want out of it are:
 
 --]]
 
-
 local l = require 'lpeg'
 local math = require 'math'
 local string = require 'string'
@@ -49,7 +48,6 @@ local ip = require 'ip_address'
 local table = require 'table'
 local syslog   = require "syslog"
 l.locale(l)
-
 
 local formats  = read_config("formats")
 --The config for the SandboxDecoder plugin should have the type set to 'bindquerylog'
@@ -210,7 +208,7 @@ local enclosed_query = "(" * l.Cg((hostname_fragment * ".")^1 * hostname_fragmen
 local query = l.Cg((hostname_fragment)^-1, "QueryName") * "." * l.Cg((hostname_fragment * ".")^1 * hostname_fragment, "QueryDomain")
 
 --Use all of the previously defined patterns to build a grammar:
-local bind_query = timestamp * space * "queries:" * space * "info:" * space * "client" * space * client_address * space * enclosed_query * space * "query:" * space * query * space * dns_record_class * space * dns_record_type
+local bind_query = timestamp * space * queries_literal * space * info_literal * space * client_literal * space * client_address * space * enclosed_query * space * query_literal * space * query * space * dns_record_class * space * dns_record_type
 
 --Use the bind_query grammar from above to match various things out of query log
 -- lines and build a Lua table of values out of it:
