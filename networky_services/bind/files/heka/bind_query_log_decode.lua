@@ -168,6 +168,17 @@ dns_record_type = l.Cg(
     + l.P"*" /"*"
     , "RecordType")
 
+--A capture group for the 3 kinds of DNS record classes.
+-- Source: https://en.wikipedia.org/wiki/Domain_Name_System#DNS_resource_records
+dns_record_class = l.Cg(
+      --For internet records:
+      l.P"IN" /"IN"
+      --For CHAOS records:
+    + l.P"CH" /"CH"
+      --For Hesiod records:
+    + l.P"HS" /"HS"
+    , "RecordClass")
+
 --[[Hostname and domain name patterns
 
 Hostnames and domain names are broken up into fragments that are called 
