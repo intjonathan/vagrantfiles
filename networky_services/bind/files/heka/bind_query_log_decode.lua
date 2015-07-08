@@ -111,7 +111,6 @@ local x4            = l.xdigit * l.xdigit * l.xdigit * l.xdigit
 local client_ip = l.Cg(l.Ct(l.Cg(ip.v4, "value") * l.Cg(l.Cc"ipv4", "representation")), "ClientIP") * pound_literal * l.P(5)
 
 --[[DNS query record types:
-
 Create a capture group that will match the DNS record type.
 
 The + signs mean to select A or CNAME or MX or PTR and so on.
@@ -119,10 +118,8 @@ The + signs mean to select A or CNAME or MX or PTR and so on.
 The ', "record_type"' part sets the name of the capture's entry in the table of
 matches that gets built.
 
+Source: https://en.wikipedia.org/wiki/List_of_DNS_record_types
 --]]
-
---A capture group for various DNS record types.
--- Source: https://en.wikipedia.org/wiki/List_of_DNS_record_types
 dns_record_type = l.Cg(
       l.P"A" /"A"
     + l.P"AAAA" /"AAAA"
