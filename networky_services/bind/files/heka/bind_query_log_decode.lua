@@ -209,8 +209,7 @@ local enclosed_query = "(" * l.Cg((hostname_fragment * ".")^1 * hostname_fragmen
 --and `l.Cg((hostname_fragment...` matches company.com
 local query = l.Cg((hostname_fragment)^-1, "QueryName") * "." * l.Cg((hostname_fragment * ".")^1 * hostname_fragment, "QueryDomain")
 
--- 27-May-2015 21:06:49.246 queries: info: client 10.0.1.70#41242 (webserver.company.com): query: webserver.company.com IN A +E (10.0.1.71)
-
+--Use all of the previously defined patterns to build a grammar:
 local bind_query = timestamp * space * queries_literal * space * info_literal * space * client_literal * space * client_address * space * enclosed_query * space * query_literal * space * query * space * dns_record_class * space * dns_record_type
 
 
