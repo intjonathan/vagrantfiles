@@ -200,7 +200,7 @@ local hostname_fragment = (l.upper + l.lower + l.digit +  "-")^1
 --hostname. The open and close parens and colon are to match the decorations
 --BIND puts around the name: 
 -- (webserver.company.com):
-local enclosed_query = "(" * l.Cg((hostname_fragment * ".")^1 * hostname_fragment, "Query") * "):"
+local enclosed_query = "(" * l.Cg((hostname_fragment * ".")^1 * hostname_fragment, "FullQuery") * "):"
 
 --The ^-1 means match at most 1 instance of the pattern. We want this so that we 
 --can match the first part of a hostname and leave the rest for the l.Cg((hostname_fragment...
