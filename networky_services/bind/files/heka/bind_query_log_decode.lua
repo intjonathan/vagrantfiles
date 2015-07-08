@@ -202,6 +202,13 @@ local hostname_fragment = (l.upper + l.lower + l.digit +  "-")^1
 -- (webserver.company.com):
 local enclosed_query = "(" * l.Cg((hostname_fragment * ".")^1 * hostname_fragment, "Query") * "):"
 
+--The ^-1 means match at most 1 instance of the pattern. We want this so that we 
+--can match the first part of a hostname and leave the rest for the l.Cg((hostname_fragment...
+--capture group to match into the QueryDomain table entry.
+--In webserver.company.com, `(hostname_fragment * ".")^-1` matches webserver.
+--and `l.Cg((hostname_fragment...` matches company.com
+local query = l.Cg((hostname_fragment)^-1, "QueryName") * "." * l.Cg((hostname_fragment * ".")^1 * hostname_fragment, "QueryDomain")
+
 -- 27-May-2015 21:06:49.246 queries: info: client 10.0.1.70#41242 (webserver.company.com): query: webserver.company.com IN A +E (10.0.1.71)
 
 local bind_query = timestamp * space * queries_literal * space * info_literal * space * client_literal * space * client_address * space * enclosed_query
